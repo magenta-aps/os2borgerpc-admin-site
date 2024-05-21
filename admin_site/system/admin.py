@@ -142,6 +142,31 @@ class PCInlineForConfiguration(admin.TabularInline):
         return False
 
 
+class PCInlineForProduct(admin.TabularInline):
+    model = m.PC
+    extra = 0
+    exclude = [
+        "mac",
+        "configuration",
+        "created",
+        "last_seen",
+        "description",
+        "pc_groups",
+        "location",
+        "is_activated",
+        "uid",
+    ]
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+
 class PCInlineForSiteAdmin(admin.TabularInline):
     model = m.PC
     fields = ("name", "uid")
@@ -445,7 +470,7 @@ class PCGroupAdmin(admin.ModelAdmin):
 
 @admin.register(m.Product)
 class ProductAdmin(admin.ModelAdmin):
-    inlines = [ImageVersionInline]
+    inlines = [ImageVersionInline, PCInlineForProduct]
 
 
 @admin.register(m.Script)

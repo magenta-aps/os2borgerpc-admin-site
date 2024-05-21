@@ -12,6 +12,7 @@ from django.db.models import Q
 from system.models import PC, Site, Configuration, ConfigurationEntry
 from system.models import Job, SecurityProblem, SecurityEvent
 from system.models import Citizen, LoginLog
+from system.models import Product
 
 from system.utils import (
     get_citizen_login_api_validator,
@@ -75,6 +76,9 @@ def register_new_computer_v2(mac, name, site, configuration):
         else:
             product = "os2borgerpc kiosk"
         configuration.update({"os2_product": product})
+        new_pc.product = Product.objects.get(name=product)
+    else:
+        new_pc.product = Product.objects.get(name=configuration["os2_product"])
 
     # remove mac and uid from the configuration
     # We don't need them saved as both attributes and configuration entries

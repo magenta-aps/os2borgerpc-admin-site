@@ -152,7 +152,7 @@ msgstr "Tillbaka till föregående sida"
 msgid "Search..."
 msgstr "Sök på..."
 
-#: changelog/templates/list.html
+#: changelog/templates/list.html templates/system/scripts/run_step1.html
 msgid "All"
 msgstr "Alla"
 
@@ -5495,8 +5495,16 @@ msgstr ""
 "Grupper som har minst 1 dator ansluten.."
 
 #: templates/system/scripts/run_step1.html
-msgid "Choose all Computers"
-msgstr "Välj alla datorer"
+msgid "Choose"
+msgstr "Välj"
+
+#: templates/system/scripts/run_step1.html
+msgid "All OS2borgerPC"
+msgstr "Alla Sambruk MedborgarPC"
+
+#: templates/system/scripts/run_step1.html
+msgid "All OS2borgerPC Kiosk"
+msgstr "Alla Sambruk MedborgarPC Kiosk"
 
 #: templates/system/scripts/run_step1.html
 msgid "Choose all Groups"

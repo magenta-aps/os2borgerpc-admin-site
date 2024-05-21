@@ -703,6 +703,19 @@ class PCGroup(models.Model):
         ordering = ["name"]
 
 
+class Product(models.Model):
+    """A model for Product (e.g. OS2borgerPC or OS2borgerPC Kiosk), related to Image Versions and Scripts."""
+
+    name = models.CharField(verbose_name=_("name"), max_length=128)
+    multilang = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
+
+
 class PC(models.Model):
     """This class represents one PC, i.e. one client of the admin system."""
 
@@ -725,6 +738,7 @@ class PC(models.Model):
     location = models.CharField(
         verbose_name=_("location"), max_length=1024, blank=True, default=""
     )
+    product = models.ForeignKey(Product, on_delete=models.PROTECT, blank=True)
 
     @property
     def online(self):
@@ -806,9 +820,9 @@ class PC(models.Model):
     def get_absolute_url(self):
         return reverse("computer", args=(self.site.uid, self.uid))
 
-    def product(self):
+    def get_product(self):
         """Return which Product the PC is an installation of."""
-        return self.get_config_value("os2_product")
+        return self.product.name
 
     def __str__(self):
         return self.name
@@ -821,19 +835,6 @@ class ScriptTag(models.Model):
     """A tag model for scripts."""
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
-
-    class Meta:
-        ordering = ["name"]
-
-    def __str__(self):
-        return self.name
-
-
-class Product(models.Model):
-    """A model for Product (e.g. OS2borgerPC or OS2borgerPC Kiosk), related to Image Versions and Scripts."""
-
-    name = models.CharField(verbose_name=_("name"), max_length=128)
-    multilang = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["name"]

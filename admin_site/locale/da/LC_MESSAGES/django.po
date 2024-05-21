@@ -152,7 +152,7 @@ msgstr "Tilbage til forrige side"
 msgid "Search..."
 msgstr "Søg..."
 
-#: changelog/templates/list.html
+#: changelog/templates/list.html templates/system/scripts/run_step1.html
 msgid "All"
 msgstr "Alle"
 
@@ -5501,8 +5501,20 @@ msgstr ""
 "grupper, der har tilknyttet minimum 1 computer."
 
 #: templates/system/scripts/run_step1.html
-msgid "Choose all Computers"
-msgstr "Vælg alle Computere"
+msgid "Choose"
+msgstr "Vælg"
+
+#: templates/system/scripts/run_step1.html
+#, fuzzy
+#| msgid "OS2borgerPC"
+msgid "All OS2borgerPC"
+msgstr "OS2borgerPC"
+
+#: templates/system/scripts/run_step1.html
+#, fuzzy
+#| msgid "OS2borgerPC Kiosk"
+msgid "All OS2borgerPC Kiosk"
+msgstr "OS2borgerPC Kiosk"
 
 #: templates/system/scripts/run_step1.html
 msgid "Choose all Groups"

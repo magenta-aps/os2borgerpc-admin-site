@@ -11,24 +11,39 @@
 {% block run_dialog_content %}
     <p>{% blocktranslate trimmed %}Note: Scripts can only be run on computers that have been activated
         and groups that have at least 1 associated computer.{% endblocktranslate %}</p>
-  
+
     <div class="row">
       <div class="col-6">
         <h4>Computere</h4>
         <ul class="list-unstyled">
+            <div><strong>{% translate "Choose" %}</strong>: </div>
+            <li>
+              <input type="checkbox" onclick="toggle_checks(this, 'Kiosk'); toggle_checks(this, 'PC'); uncheckOthers(this);" id="pick-all"/>
+              <label for="pick-all">{% translate "All" %}</label>
+              <br/>
+            </li>
+            <li>
+              <input type="checkbox" onclick="toggle_checks(this, 'PC'); uncheckOthers(this);" id="pick-all-PC"/>
+              <label for="pick-all-PC">{% translate "All OS2borgerPC" %}</label>
+              <br/>
+            </li>
             <li class="mb-3">
-              <input type="checkbox" onclick="toggle_checks(this, 'pcs')" id="pick-all-pcs"/>
-              <label for="pick-all-pcs"><strong>{% translate "Choose all Computers" %}</strong></label>
+              <input type="checkbox" onclick="toggle_checks(this, 'Kiosk'); uncheckOthers(this);" id="pick-all-kiosk"/>
+              <label for="pick-all-kiosk">{% translate "All OS2borgerPC Kiosk" %}</label>
               <br/>
             </li>
             {% for pc in pcs %}
-            {% if pc.is_activated %}
-              <li>
-                <input type="checkbox" name="pcs" id="check-pc-{{pc.pk}}" value="{{pc.pk}}">
-                <label for="check-pc-{{pc.pk}}">{{pc.name}}</label>
-              </li>
-            {% endif %}
-          {% endfor %}
+              {% if pc.is_activated %}
+                <li>
+                    <input type="checkbox"
+                           name = "pcs"
+                           class ="{% if pc.product.name == 'os2borgerpc kiosk' %}Kiosk{% else %}PC{% endif %}"
+                           id="check-pc-{{pc.pk}}"
+                           value="{{pc.pk}}">
+                    <label for="check-pc-{{pc.pk}}">{{pc.name}}</label>
+                 </li>
+              {% endif %}
+            {% endfor %}
         </ul>
       </div>
       <div class="col-6">
@@ -52,13 +67,35 @@
     <!-- Function for selecting all checkboxes: -->
     <script>
       function toggle_checks(source, checkboxes_name) {
-        checkboxes = document.getElementsByName(checkboxes_name);
+        checkboxes = document.getElementsByClassName(checkboxes_name);
         for(var i=0, n=checkboxes.length;i<n; i++) {
           checkboxes[i].checked = source.checked;
         }
       }
+
+      // makes sure that only one of the "pick-all" checkboxes can be checked at a time
+      function uncheckOthers(element) {
+        if (element.checked) {
+          if (element.id === 'pick-all-kiosk') {
+            document.getElementById('pick-all-PC').checked = false;
+            document.getElementById('pick-all').checked = false;
+            toggle_checks({checked: false}, 'PC');
+          }
+          if (element.id === 'pick-all-PC') {
+            document.getElementById('pick-all-kiosk').checked = false;
+            document.getElementById('pick-all').checked = false;
+            toggle_checks({checked: false}, 'Kiosk');
+          }
+          if (element.id === 'pick-all') {
+            document.getElementById('pick-all-kiosk').checked = false;
+            document.getElementById('pick-all-PC').checked = false;
+            toggle_checks({checked: true}, 'Kiosk');
+            toggle_checks({checked: true}, 'PC');
+          }
+        }
+      }
     </script>
-  
+
 {% endblock %}
 
 {% block run_dialog_footer %}

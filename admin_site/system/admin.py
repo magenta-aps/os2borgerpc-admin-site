@@ -254,12 +254,16 @@ class CustomerAdmin(admin.ModelAdmin):
         "number_of_kioskpc_computers",
         "paid_for_access_until",
         "feature_permissions",
+        "sites",
     )
     search_fields = ("name",)
     inlines = (
         SiteInlineForCustomerAdmin,
         FeaturePermissionInlineForCustomerAdmin,
     )
+
+    def sites(self, obj):
+        return list(obj.sites.all())
 
     def number_of_computers(self, obj):
         computers_count = PC.objects.filter(site__customer=obj).count()

@@ -72,11 +72,13 @@ li .dropdown-item:active {
   background: $gray-100;
   border: 1px solid $gray-300;
   padding: 10px;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .customer small {
   position: relative;
-  top: -31px;
+  top: -17px;
 }
 
 .sites .container {

@@ -620,14 +620,8 @@ def sms_login(
             return int(0), citizen_hash
         site = pc.site
     except PC.DoesNotExist:
-        # The function is ultimately supposed to exit here, but for the sake of backwards
-        # compatibility, we initially handle the old version
-        site_uid = pc_uid
-        try:
-            site = Site.objects.get(uid=site_uid)
-        except Site.DoesNotExist:
-            logger.error(f"Site {site_uid} does not exist - unable to proceed.")
-            return int(0), citizen_hash
+        # Fail silently
+        return int(0), citizen_hash
 
     if login_duration:
         login_duration = timedelta(minutes=login_duration)
@@ -768,14 +762,8 @@ def sms_login_finalize(
             return 0
         site = pc.site
     except PC.DoesNotExist:
-        # The function is ultimately supposed to exit here, but for the sake of backwards
-        # compatibility, we initially handle the old version
-        site_uid = pc_uid
-        try:
-            site = Site.objects.get(uid=site_uid)
-        except Site.DoesNotExist:
-            logger.error(f"Site {site_uid} does not exist - unable to proceed.")
-            return 0
+        # Fail silently
+        return 0
     # If booking is not required, we use the standard quarantine system
     # time_allowed has already been checked by sms_login, so we only need
     # to update last_successful_login and/or logged_in
@@ -855,14 +843,8 @@ def citizen_login(username, password, pc_uid, prevent_dual_login=False):
             return time_allowed
         site = pc.site
     except PC.DoesNotExist:
-        # The function is ultimately supposed to exit here, but for the sake of backwards
-        # compatibility, we initially handle the old version
-        site_uid = pc_uid
-        try:
-            site = Site.objects.get(uid=site_uid)
-        except Site.DoesNotExist:
-            logger.error(f"Site {site_uid} does not exist - unable to proceed.")
-            return time_allowed
+        # Fail silently
+        return time_allowed
     login_validator = get_citizen_login_api_validator()
     citizen_id = login_validator(username, password, site)
     citizen_hash = ""

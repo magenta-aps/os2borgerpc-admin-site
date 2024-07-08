@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-25 13:57+0200\n"
+"POT-Creation-Date: 2024-07-09 13:41+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -208,6 +208,14 @@ msgstr "Nästa"
 #, python-format
 msgid "There is no news category with the following ID: %s"
 msgstr "Det finns ingen nyhetskategori med följande ID: %s"
+
+#: system/admin.py
+msgid ""
+"Remove image file references and delete them from disk (keeps the "
+"ImageVersion object)"
+msgstr ""
+"Ta bort image-filreferenser och rena dem från disken (behåller ImageVersion "
+"objektet)"
 
 #: system/admin.py templates/system/scripts/search_result.html
 msgid "Global"
@@ -4028,8 +4036,8 @@ msgid ""
 "Note: Contact Magenta if a user on your site needs to be changed to a "
 "usertype that none of your users have permission to choose."
 msgstr ""
-"Obs: Kontakta Magenta om en användare på din site behöver ändras till "
-"en användartyp som ingen av dina användare har behörighet att välja."
+"Obs: Kontakta Magenta om en användare på din site behöver ändras till en "
+"användartyp som ingen av dina användare har behörighet att välja."
 
 #: templates/documentation/users/index.html
 msgid "All permissions, except deleting Customer Admins"
@@ -5610,7 +5618,7 @@ msgid "Handled by"
 msgstr "Hanteras av"
 
 #: templates/system/site_images.html
-msgid "Newest version of"
+msgid "Most recent version of"
 msgstr "Senaste upplagan av"
 
 #: templates/system/site_images.html

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-25 13:57+0200\n"
+"POT-Creation-Date: 2024-07-09 13:41+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -208,6 +208,14 @@ msgstr "Næste"
 #, python-format
 msgid "There is no news category with the following ID: %s"
 msgstr "Der findes ingen nyhedskategori med følgende ID: %s"
+
+#: system/admin.py
+msgid ""
+"Remove image file references and delete them from disk (keeps the "
+"ImageVersion object)"
+msgstr ""
+"Fjern image-fil referencer og slet dem fra disken (beholder ImageVersion-"
+"objektet)"
 
 #: system/admin.py templates/system/scripts/search_result.html
 msgid "Global"
@@ -5615,7 +5623,7 @@ msgid "Handled by"
 msgstr "Håndteres af"
 
 #: templates/system/site_images.html
-msgid "Newest version of"
+msgid "Most recent version of"
 msgstr "Nyeste udgave af"
 
 #: templates/system/site_images.html

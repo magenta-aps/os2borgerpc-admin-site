@@ -1430,24 +1430,21 @@ class ImageVersion(models.Model):
         Product,
         verbose_name=_("product"),
         on_delete=models.PROTECT,
-        null=True,  # TODO: Migrate to make this mandatory later
     )
     image_version = models.CharField(max_length=7)
     release_date = models.DateField()
     published = models.BooleanField(verbose_name=_("published (visible)"), default=True)
     os = models.CharField(verbose_name="OS", max_length=30)
     release_notes = models.TextField(max_length=6000)
-    image_upload = models.FileField(upload_to="images", default="#")
+    image_upload = models.FileField(
+        upload_to="images", default="#", blank=True, null=True
+    )
     image_upload_multilang = models.FileField(
         upload_to="images", default="#", blank=True, null=True
     )
 
     def __str__(self):
-        # TODO: Delete the second path here once product has been changed to mandatory
-        if self.product and self.product.name:
-            return f"{self.product.name} {self.image_version}"
-        else:
-            return f"{self.image_version}"
+        return f"{self.product.name} {self.image_version}"
 
 
 # Last_successful_login is only updated whenever the citizen user:

@@ -3966,9 +3966,10 @@ class ImageVersionView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
                 .order_by("-image_version")
             )
 
-        # If the product is multilang: Don't show images besides multilang for all languages besides danish
+        # If the Product is multilang and the user language isn't Danish: Hide image versions that don't have a multilang image
         user_language = self.request.user.user_profile.language
         if selected_product.multilang and user_language != "da":
+            # FileFields cannot currently be set to None, but new versions are created with the FileField's "name" attribute set to an empty string.
             versions_accessible_by_user = versions_accessible_by_user.exclude(
                 image_upload_multilang="#"
             )  # The hash symbol is the default for the field, indicating no file was uploaded

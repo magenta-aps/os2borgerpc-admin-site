@@ -3945,15 +3945,21 @@ class ImageVersionView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
 
         selected_product = get_object_or_404(Product, id=self.kwargs.get("product_id"))
 
+        # Only superusers can see unpublished image versions
+        if not self.request.user.is_superuser:
+            visible_image_versions = ImageVersion.objects.exclude(published=False)
+        else:
+            visible_image_versions = ImageVersion.objects.all()
+
         # If client's last pay date is set, exclude versions where
         # image release date > client's last pay date.
         if not site.customer.paid_for_access_until:
-            versions_accessible_by_user = ImageVersion.objects.filter(
+            versions_accessible_by_user = visible_image_versions.filter(
                 product=selected_product
             ).order_by("-image_version")
         else:
             versions_accessible_by_user = (
-                ImageVersion.objects.exclude(
+                visible_image_versions.exclude(
                     release_date__gt=site.customer.paid_for_access_until
                 )
                 .filter(product=selected_product)

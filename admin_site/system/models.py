@@ -1434,8 +1434,9 @@ class ImageVersion(models.Model):
     )
     image_version = models.CharField(max_length=7)
     release_date = models.DateField()
+    published = models.BooleanField(verbose_name=_("published (visible)"), default=True)
     os = models.CharField(verbose_name="OS", max_length=30)
-    release_notes = models.TextField(max_length=1500)
+    release_notes = models.TextField(max_length=6000)
     image_upload = models.FileField(upload_to="images", default="#")
     image_upload_multilang = models.FileField(
         upload_to="images", default="#", blank=True, null=True

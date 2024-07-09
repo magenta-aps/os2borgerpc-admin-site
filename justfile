@@ -11,8 +11,8 @@ set shell := ["bash", "-uc"]
 # NOTE: If you get a permissions error running the server, you can try commenting these out. Doing so might cause some other issues, though,
 # such as /media and /log being owned by the bpc user (set by Dockerfile) and thus script uploads fail.
 # We've also seen an occasional permissions error related to .po files
-# export UID := `id -u`
-# export GID := `id -g`
+# export DEV_UID := `id -u`
+# export DEV_GID := `id -g`
 
 # Aliases
 alias r := run

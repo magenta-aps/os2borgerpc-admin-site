@@ -13,7 +13,7 @@ services:
             # volume comes after the above bind to work.
             - /code/nodejs/node_modules/
     os2borgerpc-admin:
-        user: "${UID}:${GID}"
+        user: "${DEV_UID}:${DEV_GID}"
         build:
             context: .
             dockerfile: docker/Dockerfile

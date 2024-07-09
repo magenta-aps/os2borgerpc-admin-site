@@ -24,7 +24,6 @@ node_modules/
 .vim
 .ropeproject
 *.egg-info
-.env
 .idea
 *.mo
 # These files are created when running "npm run build-for-dev"

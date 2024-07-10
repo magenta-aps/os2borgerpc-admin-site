@@ -13,7 +13,7 @@
 
 {% block subnav %}
 <ul class="sublevelnav item-list">
-  {% if not pc_list.all%}
+  {% if not pc_list.all %}
     <li>{% translate "There are no computers" %}</li>
   {% endif %}
   {% for pc in pc_list %}

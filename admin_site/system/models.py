@@ -84,12 +84,12 @@ class Configuration(models.Model):
                     cnf = ConfigurationEntry(key=k, value=v, owner_configuration=self)
                     cnf.save()
             else:
-                # Update submitted entry
+                # Update submitted entry unless it is read only
                 cnf = ConfigurationEntry.objects.get(pk=pk)
-                cnf.key = key[0]
-                cnf.value = value[0]
                 seen_set.add(cnf.pk)
-                cnf.save()
+                if not cnf.read_only:
+                    cnf.value = value[0]
+                    cnf.save()
 
         # Delete entries that were not in the submitted data
         for pk in existing_set - seen_set:
@@ -99,12 +99,15 @@ class Configuration(models.Model):
     def remove_entry(self, key):
         return self.entries.filter(key=key).delete()
 
-    def update_entry(self, key, value):
+    def update_entry(self, key, value, read_only=False):
         try:
             e = self.entries.get(key=key)
             e.value = value
+            e.read_only = read_only
         except ConfigurationEntry.DoesNotExist:
-            e = ConfigurationEntry(owner_configuration=self, key=key, value=value)
+            e = ConfigurationEntry(
+                owner_configuration=self, key=key, value=value, read_only=read_only
+            )
         finally:
             e.save()
 
@@ -133,6 +136,7 @@ class ConfigurationEntry(models.Model):
 
     key = models.CharField(max_length=32)
     value = models.CharField(max_length=4096)
+    read_only = models.BooleanField(default=False)
     owner_configuration = models.ForeignKey(
         Configuration,
         related_name="entries",
@@ -141,7 +145,7 @@ class ConfigurationEntry(models.Model):
     )
 
     class Meta:
-        ordering = ["key"]
+        ordering = ["read_only", "key"]
         verbose_name_plural = "configuration entries"
 
 
@@ -728,7 +732,13 @@ class PC(models.Model):
     """This class represents one PC, i.e. one client of the admin system."""
 
     mac = models.CharField(verbose_name=_("MAC"), max_length=255, blank=True)
-    name = models.CharField(verbose_name=_("name"), max_length=255)
+    name = models.CharField(
+        verbose_name=_("name"),
+        max_length=255,
+        help_text=_(
+            "Valid characters are a-z, A-Z, 0-9 and hyphen (-). The length must be 1-63 characters"
+        ),
+    )
     uid = models.CharField(
         verbose_name=_("UID"), max_length=255, db_index=True, unique=True
     )

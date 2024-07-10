@@ -10,6 +10,7 @@
     <span class="config-print-value">{{ value }}</span>
   </td>
   <td>
+    {% if not read_only %}
     <p class="mb-0" style="margin-left: -.5rem;">
       <a class="btn btn-sm" href="javascript:void(0)" onclick="BibOS.ConfigList.startEdit(this, '{{ submit_name }}')">
         <span class='material-icons'>edit</span>{% translate "Edit" %}
@@ -18,6 +19,8 @@
         <span class='material-icons'>delete</span>{% translate "Delete" %}
       </a>
     </p>
-
+    {% else %}
+    {% translate "This configuration cannot be changed here" %}
+    {% endif %}
   </td>
 </tr>

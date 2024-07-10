@@ -72,7 +72,6 @@ class SiteForm(forms.ModelForm):
 
 
 class SiteCreateForm(forms.ModelForm):
-
     class Meta:
         model = Site
         fields = ("name", "uid")
@@ -141,7 +140,7 @@ class ScriptForm(forms.ModelForm):
 class ConfigurationEntryForm(forms.ModelForm):
     class Meta:
         model = ConfigurationEntry
-        exclude = ["owner_configuration"]
+        exclude = ["owner_configuration", "read_only"]
 
 
 class UserLinkForm(forms.Form):
@@ -323,6 +322,9 @@ class PCForm(forms.ModelForm):
     class Meta:
         model = PC
         exclude = ("configuration", "site", "created", "last_seen", "product")
+        widgets = {
+            "name": forms.widgets.TextInput(attrs={"pattern": "[\-a-z0-9A-Z]{1,63}"}),
+        }
 
 
 class SecurityEventForm(forms.ModelForm):

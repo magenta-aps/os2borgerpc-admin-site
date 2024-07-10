@@ -68,7 +68,10 @@
     {% translate "Delete"|bold as delete %}
     {% blocktranslate trimmed %}
     In order to edit or delete a value, you must click on {{ edit }} or {{ delete }} to the
-    right of the individual key.
+    right of the individual key. Note that most of the built-in configurations that are
+    created automatically by the OS2borgerPC system cannot be edited or deleted via the
+    admin interface. This is meant to prevent users from accidentally deleting relevant
+    information or making changes that negatively impact their computers.
     {% endblocktranslate %}
   </p>
 
@@ -113,12 +116,14 @@
   <p class="alert alert-info">
     {% blocktranslate trimmed %}
     All values without _ in front are controlled by the admin-site while values with _ are controlled
-    by the computer / the client.
+    by the computer / the client. Values with _ in front can thus not be changed via the admin interface.
     {% endblocktranslate %}
     <br/>
     {% blocktranslate trimmed with version="os2borgerpc_version"|bold %}
     This means that if one were to change e.g. {{ version }} on the computer, then the value would be overwritten
-    during the next check-in with the admin-site. {% endblocktranslate %}
+    during the next check-in with the admin-site. Note that "job_timeout" is the only
+    built-in configuration that can be changed via the admin interface.
+    {% endblocktranslate %}
   </p>
 
   <table class="table table-hover">
@@ -166,11 +171,6 @@
         <td></td>
       </tr>
       <tr>
-        <td>distribution</td>
-        <td>{% translate "The name of the operating system" %}</td>
-        <td></td>
-      </tr>
-      <tr>
         <td>hostname</td>
         <td>{% translate "The computer's hostname" %}</td>
         <td>{% translate "Is currently only set during the registration" %}</td>
@@ -194,11 +194,6 @@
         <td>os2borgerpc_version</td>
         <td>{% translate "The version of the OS2borgerPC-image that was installed" %}</td>
         <td>{% translate "Unless the computer is reinstalled, this number does not change" %}</td>
-      </tr>
-      <tr>
-        <td>site</td>
-        <td>{% translate "The site that the computer belongs to" %}</td>
-        <td></td>
       </tr>
     </tbody>
   </table>
@@ -225,8 +220,8 @@
       <tr>
         <td>get_os2borgerpc_config</td>
         <td>{% translate "Retrieves the value of a configuration value" %}</td>
-        <td>get_os2borgerpc_config site<br/> <br/>
-          {% translate "Retrieves the UID of the site where the computer is registered." %}</td>
+        <td>get_os2borgerpc_config admin_url<br/> <br/>
+          {% translate "Retrieves the address of the server where the computer is registered." %}</td>
       </tr>
       <tr>
         <td>set_os2borgerpc_config</td>

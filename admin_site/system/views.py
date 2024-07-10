@@ -1730,6 +1730,12 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
             pc.configuration.update_from_request(self.request.POST, "pc_config")
             response = super(PCUpdate, self).form_valid(form)
 
+            # Keep the name and hostname configuration in sync
+            hostname_config = pc.configuration.entries.filter(key="hostname").first()
+            if hostname_config and pc.name.lower() != hostname_config.value:
+                hostname_config.value = pc.name.lower()
+                hostname_config.save()
+
             # If this PC has joined any groups that have policies attached
             # to them, then run their scripts (first making sure that this
             # PC is capable of doing so!)

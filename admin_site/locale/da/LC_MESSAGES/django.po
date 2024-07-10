@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-12 09:53+0200\n"
+"POT-Creation-Date: 2024-10-09 15:44+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -973,10 +973,18 @@ msgstr "Slet"
 #, python-format
 msgid ""
 "In order to edit or delete a value, you must click on %(edit)s or %(delete)s "
-"to the right of the individual key."
+"to the right of the individual key. Note that most of the built-in "
+"configurations that are created automatically by the OS2borgerPC system "
+"cannot be edited or deleted via the admin interface. This is meant to "
+"prevent users from accidentally deleting relevant information or making "
+"changes that negatively impact their computers."
 msgstr ""
 "For at rette eller slette en værdi, skal du klikke på %(edit)s eller "
-"%(delete)s ud for den enkelte nøgle."
+"%(delete)s ud for den enkelte nøgle. Bemærk at størstedelen af de indbyggede "
+"konfigurationer, som automatisk oprettes af OS2borgerPC-systemet, ikke kan "
+"redigeres eller slettes via admininistrationsinterfacet. Dette har til "
+"formål at forhindre at anvendere ved en fejl kommer til at slette relevant "
+"information eller lave ændringer, som negativt påvirker deres computere."
 
 #: docs/templates/configuration/index.html
 msgid "Configurations at different levels"
@@ -1045,19 +1053,25 @@ msgstr "Betydningen af de indbyggede konfigurationer"
 #: docs/templates/configuration/index.html
 msgid ""
 "All values without _ in front are controlled by the admin-site while values "
-"with _ are controlled by the computer / the client."
+"with _ are controlled by the computer / the client. Values with _ in front "
+"can thus not be changed via the admin interface."
 msgstr ""
 "Alle værdier uden _ foran bestemmes af adminsitet, mens værdier med _ "
-"bestemmes af computeren / klienten."
+"bestemmes af computeren / klienten. Værdier med _ foran kan således ikke "
+"ændres via administrationsinterfacet."
 
 #: docs/templates/configuration/index.html
 #, python-format
 msgid ""
 "This means that if one were to change e.g. %(version)s on the computer, then "
-"the value would be overwritten during the next check-in with the admin-site."
+"the value would be overwritten during the next check-in with the admin-site. "
+"Note that \"job_timeout\" is the only built-in configuration that can be "
+"changed via the admin interface."
 msgstr ""
 "Det vil i praksis sige, at hvis man eks. ændrer %(version)s på computeren, "
-"så vil den blive overskrevet efter næste tjek-ind med adminsitet."
+"så vil den blive overskrevet efter næste tjek-ind med adminsitet. Bemærk at "
+"\"job_timeout\" er den eneste indbyggede konfiguration, som kan ændres via "
+"administrationsinterfacet."
 
 #: docs/templates/configuration/index.html
 #: templates/system/configs/templates.html templates/system/scripts/form.html
@@ -1155,10 +1169,6 @@ msgid "Unless the computer is reinstalled, this number does not change"
 msgstr "Medmindre computeren geninstalleres, vil dette tal ikke ændre sig"
 
 #: docs/templates/configuration/index.html
-msgid "The site that the computer belongs to"
-msgstr "Hvilket site computeren er tilknyttet"
-
-#: docs/templates/configuration/index.html
 msgid "Technical information for script developers"
 msgstr "Teknisk information til scriptudviklere"
 
@@ -1201,8 +1211,8 @@ msgid "Retrieves the value of a configuration value"
 msgstr "Henter værdien af en konfigurationværdi"
 
 #: docs/templates/configuration/index.html
-msgid "Retrieves the UID of the site where the computer is registered."
-msgstr "Får fat i UID'et på det site, som computeren er tilknyttet."
+msgid "Retrieves the address of the server where the computer is registered."
+msgstr "Får fat i adressen på den server, hvor computeren er registreret."
 
 #: docs/templates/configuration/index.html
 msgid "Sets the value of a configuration value"
@@ -4273,6 +4283,13 @@ msgid "MAC"
 msgstr "MAC"
 
 #: system/models.py
+msgid ""
+"Valid characters are a-z, A-Z, 0-9 and hyphen (-). The length must be 1-63 "
+"characters"
+msgstr ""
+"Gyldige tegn er a-z, A-Z, 0-9 og bindestreg (-). Længden skal være 1-63 tegn"
+
+#: system/models.py
 msgid "last seen"
 msgstr "seneste tjek-ind"
 
@@ -4799,6 +4816,10 @@ msgstr "Velkommen"
 #: templates/sitebase.html
 msgid "Log out"
 msgstr "Log ud"
+
+#: templates/system/configs/item.html
+msgid "This configuration cannot be changed here"
+msgstr "Denne konfiguration kan ikke ændres her"
 
 #: templates/system/configs/list.html
 #: templates/system/site_settings/api_keys/api_keys.html

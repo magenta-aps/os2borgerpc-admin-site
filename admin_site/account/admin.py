@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 from django.db import transaction
 
-from account.models import UserProfile, SiteMembership
+import account.models as m
 
 admin.site.unregister(User)
 
@@ -11,7 +11,7 @@ admin.site.unregister(User)
 
 
 class UserProfileInline(admin.TabularInline):
-    model = UserProfile
+    model = m.UserProfile
     readonly_fields = (
         "id",
         "sites",
@@ -24,7 +24,7 @@ class UserProfileInline(admin.TabularInline):
 
 
 class SiteMembershipInline(admin.TabularInline):
-    model = SiteMembership
+    model = m.SiteMembership
     extra = 0
 
 
@@ -49,13 +49,13 @@ class MyUserAdmin(UserAdmin):
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
         if not hasattr(obj, "user_profile"):
-            UserProfile.objects.create(user=obj)
+            m.UserProfile.objects.create(user=obj)
 
     def sites(self, obj):
         return list(obj.user_profile.sites.all())
 
 
-@admin.register(UserProfile)
+@admin.register(m.UserProfile)
 class MyUserProfileAdmin(admin.ModelAdmin):
     inlines = [SiteMembershipInline]
     list_display = ("user", "user_sites", "language")

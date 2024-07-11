@@ -75,15 +75,24 @@ class SiteInlineForConfiguration(admin.TabularInline):
     model = Site
     extra = 0
 
+    def has_change_permission(self, request, obj):
+        return False
+
 
 class PCGroupInline(admin.TabularInline):
     model = PCGroup
     extra = 0
 
+    def has_change_permission(self, request, obj):
+        return False
+
 
 class PCInlineForConfiguration(admin.TabularInline):
     model = PC
     extra = 0
+
+    def has_change_permission(self, request, obj):
+        return False
 
 
 class ConfigurationAdmin(admin.ModelAdmin):
@@ -113,16 +122,29 @@ class PCInline(admin.TabularInline):
     model = PC.pc_groups.through
     extra = 0
 
+    def has_change_permission(self, request, obj):
+        return False
+
 
 class AssociatedScriptInline(admin.TabularInline):
     model = AssociatedScript
     extra = 0
+
+    def has_change_permission(self, request, obj):
+        return False
+
+    def has_add_permission(self, request, obj):
+        return False
 
 
 class PCGroupAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "site")
     list_filter = ("site",)
     inlines = [PCInline, AssociatedScriptInline]
+
+
+class BatchParameterAdmin(admin.ModelAdmin):
+    readonly_fields = ("input", "batch")
 
 
 class JobInline(admin.TabularInline):
@@ -133,10 +155,14 @@ class JobInline(admin.TabularInline):
     can_delete = False
     show_change_link = True
 
+    def has_add_permission(self, request, obj):
+        return False
+
 
 class BatchParameterInline(admin.TabularInline):
     model = BatchParameter
     extra = 0
+    readonly_fields = ("input",)
 
 
 class BatchAdmin(admin.ModelAdmin):
@@ -144,12 +170,16 @@ class BatchAdmin(admin.ModelAdmin):
     fields = ("site", "name", "script")
     list_filter = ("site",)
     search_fields = ("name", "site__name", "script__name")
+    readonly_fields = ("script",)
     inlines = [JobInline, BatchParameterInline]
 
 
 class InputInline(admin.TabularInline):
     model = Input
     extra = 0
+
+    def has_change_permission(self, request, obj):
+        return False
 
 
 class ScriptAdmin(admin.ModelAdmin):
@@ -219,37 +249,9 @@ class ScriptAdmin(admin.ModelAdmin):
         )
 
 
-class PCInlineForSiteAdmin(admin.TabularInline):
-    model = PC
-    fields = ("name", "uid")
-    readonly_fields = ("name", "uid")
-    extra = 0
-
-    def has_add_permission(self, request, obj):
-        return False
-
-    def has_delete_permission(self, request, obj):
-        return False
-
-
 class FeaturePermissionInlineForCustomerAdmin(admin.TabularInline):
     model = FeaturePermission.customers.through
     extra = 0
-
-
-class CustomerInlineForCountryAdmin(admin.TabularInline):
-    model = Customer
-    fields = ("name", "is_test")
-    extra = 0
-
-    def has_add_permission(self, request, obj):
-        return False
-
-    def has_delete_permission(self, request, obj):
-        return False
-
-    def has_change_permission(self, request, obj):
-        return False
 
 
 class SiteInlineForCustomerAdmin(admin.TabularInline):
@@ -317,6 +319,19 @@ class CustomerAdmin(admin.ModelAdmin):
     feature_permissions.short_description = _("Feature permissions")
     number_of_kioskpc_computers.short_description = _("Number of KioskPC computers")
     number_of_borgerpc_computers.short_description = _("Number of BorgerPC computers")
+
+
+class PCInlineForSiteAdmin(admin.TabularInline):
+    model = PC
+    fields = ("name", "uid")
+    readonly_fields = ("name", "uid")
+    extra = 0
+
+    def has_add_permission(self, request, obj):
+        return False
+
+    def has_delete_permission(self, request, obj):
+        return False
 
 
 class SiteAdmin(admin.ModelAdmin):
@@ -399,7 +414,7 @@ class PCAdmin(admin.ModelAdmin):
         "is_activated",
     )
     search_fields = ("name", "uid")
-    readonly_fields = ("created",)
+    readonly_fields = ("created", "configuration")
 
     def site_link(self, obj):
         link = reverse("admin:system_site_change", args=[obj.site_id])
@@ -437,6 +452,21 @@ class JobAdmin(admin.ModelAdmin):
     list_filter = ("status",)
     search_fields = ("batch__script__name", "user__username", "pc__name")
     readonly_fields = ("created", "started", "finished", "batch", "pc")
+
+
+class CustomerInlineForCountryAdmin(admin.TabularInline):
+    model = Customer
+    fields = ("name", "is_test")
+    extra = 0
+
+    def has_add_permission(self, request, obj):
+        return False
+
+    def has_delete_permission(self, request, obj):
+        return False
+
+    def has_change_permission(self, request, obj):
+        return False
 
 
 class CountryAdmin(admin.ModelAdmin):
@@ -491,6 +521,7 @@ class SecurityEventAdmin(admin.ModelAdmin):
         "status",
         "pc__site",
     )
+    readonly_fields = ("problem", "event_rule_server", "pc")
 
     @admin.display(description="Site", ordering="pc__site")
     def get_site(self, obj):
@@ -500,11 +531,13 @@ class SecurityEventAdmin(admin.ModelAdmin):
 class AssociatedScriptParameterInline(admin.TabularInline):
     model = AssociatedScriptParameter
     extra = 0
+    readonly_fields = ("input",)
 
 
 class AssociatedScriptAdmin(admin.ModelAdmin):
     list_display = ("script", "get_site", "group", "position")
     search_fields = ("script__name",)
+    readonly_fields = ("script", "group", "position")
     inlines = [AssociatedScriptParameterInline]
 
     @admin.display(description="Site", ordering="group__site")
@@ -521,6 +554,7 @@ class AssociatedScriptParameterAdmin(admin.ModelAdmin):
         "get_site",
     )
     search_fields = ("associated_script__script__name",)
+    readonly_fields = ("input", "associated_script")
 
     @admin.display(description="Site", ordering="associated_script__group__site")
     def get_site(self, obj):
@@ -593,6 +627,9 @@ class WakeWeekPlanInline(admin.TabularInline):
     model = WakeWeekPlan.wake_change_events.through
     extra = 0
 
+    def has_change_permission(self, request, obj=None):
+        return False
+
 
 class WakeChangeEventAdmin(admin.ModelAdmin):
     list_display = (
@@ -634,7 +671,7 @@ ar(APIKey, APIKeyAdmin)
 ar(AssociatedScript, AssociatedScriptAdmin)
 ar(AssociatedScriptParameter, AssociatedScriptParameterAdmin)
 ar(Batch, BatchAdmin)
-ar(BatchParameter)
+ar(BatchParameter, BatchParameterAdmin)
 ar(Changelog, ChangelogAdmin)
 ar(ChangelogComment, ChangelogCommentAdmin)
 ar(ChangelogTag, ChangelogTagAdmin)

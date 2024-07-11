@@ -8,34 +8,7 @@ from django.utils.html import format_html_join, escape, mark_safe
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 
-from system.models import (
-    APIKey,
-    AssociatedScript,
-    AssociatedScriptParameter,
-    Batch,
-    BatchParameter,
-    Citizen,
-    Configuration,
-    ConfigurationEntry,
-    Country,
-    Customer,
-    FeaturePermission,
-    ImageVersion,
-    Input,
-    Job,
-    LoginLog,
-    EventRuleServer,
-    Product,
-    PC,
-    PCGroup,
-    Script,
-    ScriptTag,
-    SecurityEvent,
-    SecurityProblem,
-    Site,
-    WakeChangeEvent,
-    WakeWeekPlan,
-)
+import system.models as m
 
 # ACTIONS #
 
@@ -64,8 +37,9 @@ def delete_images(modeladmin, request, queryset):
 
 # INLINES #
 
+
 class AssociatedScriptInline(admin.TabularInline):
-    model = AssociatedScript
+    model = m.AssociatedScript
     extra = 0
 
     def has_change_permission(self, request, obj):
@@ -76,24 +50,24 @@ class AssociatedScriptInline(admin.TabularInline):
 
 
 class AssociatedScriptParameterInline(admin.TabularInline):
-    model = AssociatedScriptParameter
+    model = m.AssociatedScriptParameter
     extra = 0
     readonly_fields = ("input",)
 
 
 class BatchParameterInline(admin.TabularInline):
-    model = BatchParameter
+    model = m.BatchParameter
     extra = 0
     readonly_fields = ("input",)
 
 
 class ConfigurationEntryInline(admin.TabularInline):
-    model = ConfigurationEntry
+    model = m.ConfigurationEntry
     extra = 0
 
 
 class CustomerInlineForCountryAdmin(admin.TabularInline):
-    model = Customer
+    model = m.Customer
     fields = ("name", "is_test")
     extra = 0
 
@@ -108,12 +82,12 @@ class CustomerInlineForCountryAdmin(admin.TabularInline):
 
 
 class FeaturePermissionInlineForCustomerAdmin(admin.TabularInline):
-    model = FeaturePermission.customers.through
+    model = m.FeaturePermission.customers.through
     extra = 0
 
 
 class ImageVersionInline(admin.TabularInline):
-    model = ImageVersion
+    model = m.ImageVersion
     extra = 0
 
     # Just show the image versions, no need to have them editable from here
@@ -125,7 +99,7 @@ class ImageVersionInline(admin.TabularInline):
 
 
 class InputInline(admin.TabularInline):
-    model = Input
+    model = m.Input
     extra = 0
 
     def has_change_permission(self, request, obj):
@@ -135,7 +109,7 @@ class InputInline(admin.TabularInline):
 class JobInline(admin.TabularInline):
     fields = ("id", "pc", "status", "user", "created", "started", "finished")
     readonly_fields = ("id", "pc", "status", "user", "created", "started", "finished")
-    model = Job
+    model = m.Job
     extra = 0
     can_delete = False
     show_change_link = True
@@ -145,7 +119,7 @@ class JobInline(admin.TabularInline):
 
 
 class PCGroupInline(admin.TabularInline):
-    model = PCGroup
+    model = m.PCGroup
     extra = 0
 
     def has_change_permission(self, request, obj):
@@ -153,7 +127,7 @@ class PCGroupInline(admin.TabularInline):
 
 
 class PCInline(admin.TabularInline):
-    model = PC.pc_groups.through
+    model = m.PC.pc_groups.through
     extra = 0
 
     def has_change_permission(self, request, obj):
@@ -161,7 +135,7 @@ class PCInline(admin.TabularInline):
 
 
 class PCInlineForConfiguration(admin.TabularInline):
-    model = PC
+    model = m.PC
     extra = 0
 
     def has_change_permission(self, request, obj):
@@ -169,7 +143,7 @@ class PCInlineForConfiguration(admin.TabularInline):
 
 
 class PCInlineForSiteAdmin(admin.TabularInline):
-    model = PC
+    model = m.PC
     fields = ("name", "uid")
     readonly_fields = ("name", "uid")
     extra = 0
@@ -182,7 +156,7 @@ class PCInlineForSiteAdmin(admin.TabularInline):
 
 
 class SiteInlineForConfiguration(admin.TabularInline):
-    model = Site
+    model = m.Site
     extra = 0
 
     def has_change_permission(self, request, obj):
@@ -190,7 +164,7 @@ class SiteInlineForConfiguration(admin.TabularInline):
 
 
 class SiteInlineForCustomerAdmin(admin.TabularInline):
-    model = Site
+    model = m.Site
     fields = ("name", "uid")
     extra = 0
 
@@ -205,7 +179,7 @@ class SiteInlineForCustomerAdmin(admin.TabularInline):
 
 
 class WakeWeekPlanInline(admin.TabularInline):
-    model = WakeWeekPlan.wake_change_events.through
+    model = m.WakeWeekPlan.wake_change_events.through
     extra = 0
 
     def has_change_permission(self, request, obj=None):
@@ -214,11 +188,13 @@ class WakeWeekPlanInline(admin.TabularInline):
 
 # ADMIN OVERRIDES #
 
-@admin.register(APIKey)
+
+@admin.register(m.APIKey)
 class APIKeyAdmin(admin.ModelAdmin):
     list_display = ("site", "key", "description", "created")
 
-@admin.register(AssociatedScript)
+
+@admin.register(m.AssociatedScript)
 class AssociatedScriptAdmin(admin.ModelAdmin):
     list_display = ("script", "get_site", "group", "position")
     search_fields = ("script__name",)
@@ -230,7 +206,7 @@ class AssociatedScriptAdmin(admin.ModelAdmin):
         return obj.group.site
 
 
-@admin.register(AssociatedScriptParameter)
+@admin.register(m.AssociatedScriptParameter)
 class AssociatedScriptParameterAdmin(admin.ModelAdmin):
     list_display = (
         "associated_script",
@@ -247,7 +223,7 @@ class AssociatedScriptParameterAdmin(admin.ModelAdmin):
         return obj.associated_script.group.site
 
 
-@admin.register(Batch)
+@admin.register(m.Batch)
 class BatchAdmin(admin.ModelAdmin):
     list_display = ("id", "site", "name", "script")
     fields = ("site", "name", "script")
@@ -257,18 +233,18 @@ class BatchAdmin(admin.ModelAdmin):
     inlines = [JobInline, BatchParameterInline]
 
 
-@admin.register(BatchParameter)
+@admin.register(m.BatchParameter)
 class BatchParameterAdmin(admin.ModelAdmin):
     readonly_fields = ("input", "batch")
 
 
-@admin.register(Citizen)
+@admin.register(m.Citizen)
 class CitizenAdmin(admin.ModelAdmin):
     list_display = ("citizen_id", "last_successful_login", "site")
     search_fields = ("citizen_id",)
 
 
-@admin.register(Configuration)
+@admin.register(m.Configuration)
 class ConfigurationAdmin(admin.ModelAdmin):
     def sites(self, obj):
         return list(obj.site_set.all())
@@ -292,7 +268,7 @@ class ConfigurationAdmin(admin.ModelAdmin):
     ]
 
 
-@admin.register(Country)
+@admin.register(m.Country)
 class CountryAdmin(admin.ModelAdmin):
     list_display = (
         "name",
@@ -303,7 +279,7 @@ class CountryAdmin(admin.ModelAdmin):
     inlines = [CustomerInlineForCountryAdmin]
 
 
-@admin.register(Customer)
+@admin.register(m.Customer)
 class CustomerAdmin(admin.ModelAdmin):
     list_filter = ("country",)
     list_display = (
@@ -326,12 +302,12 @@ class CustomerAdmin(admin.ModelAdmin):
         return list(obj.sites.all())
 
     def number_of_computers(self, obj):
-        computers_count = PC.objects.filter(site__customer=obj).count()
+        computers_count = m.PC.objects.filter(site__customer=obj).count()
         return computers_count
 
     def number_of_borgerpc_computers(self, obj):
         borgerpc_computers_count = (
-            PC.objects.filter(site__in=obj.sites.all())
+            m.PC.objects.filter(site__in=obj.sites.all())
             .filter(configuration__entries__value="os2borgerpc")
             .count()
         )
@@ -340,7 +316,7 @@ class CustomerAdmin(admin.ModelAdmin):
 
     def number_of_kioskpc_computers(self, obj):
         kioskpc_computers_count = (
-            PC.objects.filter(site__in=obj.sites.all())
+            m.PC.objects.filter(site__in=obj.sites.all())
             .filter(configuration__entries__value="os2borgerpc kiosk")
             .count()
         )
@@ -356,7 +332,7 @@ class CustomerAdmin(admin.ModelAdmin):
     number_of_borgerpc_computers.short_description = _("Number of BorgerPC computers")
 
 
-@admin.register(EventRuleServer)
+@admin.register(m.EventRuleServer)
 class EventRuleServerAdmin(admin.ModelAdmin):
     list_display = (
         "name",
@@ -368,7 +344,7 @@ class EventRuleServerAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(FeaturePermission)
+@admin.register(m.FeaturePermission)
 class FeaturePermissionAdmin(admin.ModelAdmin):
     def customers_with_access(self, obj):
         return list(obj.customers.all())
@@ -384,13 +360,13 @@ class FeaturePermissionAdmin(admin.ModelAdmin):
     customers_with_access.short_description = _("customers with access")
 
 
-@admin.register(ImageVersion)
+@admin.register(m.ImageVersion)
 class ImageVersionAdmin(admin.ModelAdmin):
     list_display = ("product", "image_version", "os", "release_date")
     actions = [delete_images]
 
 
-@admin.register(Job)
+@admin.register(m.Job)
 class JobAdmin(admin.ModelAdmin):
     list_display = (
         "__str__",
@@ -406,7 +382,7 @@ class JobAdmin(admin.ModelAdmin):
     readonly_fields = ("created", "started", "finished", "batch", "pc")
 
 
-@admin.register(LoginLog)
+@admin.register(m.LoginLog)
 class LoginLogAdmin(admin.ModelAdmin):
     list_display = ("identifier", "date", "login_time", "logout_time")
     list_filter = ("date",)
@@ -419,7 +395,7 @@ class LoginLogAdmin(admin.ModelAdmin):
         return qs.filter(site__in=request.user.user_profile.sites.all())
 
 
-@admin.register(PC)
+@admin.register(m.PC)
 class PCAdmin(admin.ModelAdmin):
     list_display = (
         "name",
@@ -460,18 +436,19 @@ class PCAdmin(admin.ModelAdmin):
         return queryset, may_have_duplicates
 
 
-@admin.register(PCGroup)
+@admin.register(m.PCGroup)
 class PCGroupAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "site")
     list_filter = ("site",)
     inlines = [PCInline, AssociatedScriptInline]
 
 
-@admin.register(Product)
+@admin.register(m.Product)
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ImageVersionInline]
 
-@admin.register(Script)
+
+@admin.register(m.Script)
 class ScriptAdmin(admin.ModelAdmin):
     list_display = (
         "name",
@@ -498,7 +475,7 @@ class ScriptAdmin(admin.ModelAdmin):
     is_global.admin_order_field = "site"
 
     def jobs_per_site(self, obj):
-        sites = Site.objects.filter(batches__script=obj).annotate(
+        sites = m.Site.objects.filter(batches__script=obj).annotate(
             num_jobs=Count("batches__jobs")
         )
 
@@ -512,7 +489,7 @@ class ScriptAdmin(admin.ModelAdmin):
         now = timezone.now()
         a_year_ago = now - timezone.timedelta(days=365)
 
-        sites = Site.objects.filter(
+        sites = m.Site.objects.filter(
             batches__script=obj, batches__jobs__started__gte=a_year_ago
         ).annotate(num_jobs=Count("batches__jobs"))
 
@@ -525,10 +502,10 @@ class ScriptAdmin(admin.ModelAdmin):
     )
 
     def associations_to_groups_per_site(self, obj):
-        sites = Site.objects.all()
+        sites = m.Site.objects.all()
         pairs = []
         for site in sites:
-            count = AssociatedScript.objects.filter(
+            count = m.AssociatedScript.objects.filter(
                 script=obj.id, group__site=site.id
             ).count()
             if count > 0:
@@ -539,12 +516,12 @@ class ScriptAdmin(admin.ModelAdmin):
         )
 
 
-@admin.register(ScriptTag)
+@admin.register(m.ScriptTag)
 class ScriptTagAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(SecurityEvent)
+@admin.register(m.SecurityEvent)
 class SecurityEventAdmin(admin.ModelAdmin):
     list_display = (
         "problem",
@@ -570,12 +547,12 @@ class SecurityEventAdmin(admin.ModelAdmin):
         return obj.pc.site
 
 
-@admin.register(SecurityProblem)
+@admin.register(m.SecurityProblem)
 class SecurityProblemAdmin(admin.ModelAdmin):
     list_display = ("name", "site", "level", "security_script")
 
 
-@admin.register(Site)
+@admin.register(m.Site)
 class SiteAdmin(admin.ModelAdmin):
     list_filter = ("customer",)
     list_display = (
@@ -592,7 +569,7 @@ class SiteAdmin(admin.ModelAdmin):
 
     def number_of_borgerpc_computers(self, obj):
         borgerpc_computers_count = (
-            PC.objects.filter(site=obj)
+            m.PC.objects.filter(site=obj)
             .filter(configuration__entries__value="os2borgerpc")
             .count()
         )
@@ -601,7 +578,7 @@ class SiteAdmin(admin.ModelAdmin):
 
     def number_of_kioskpc_computers(self, obj):
         kioskpc_computers_count = (
-            PC.objects.filter(site=obj)
+            m.PC.objects.filter(site=obj)
             .filter(configuration__entries__value="os2borgerpc kiosk")
             .count()
         )
@@ -614,7 +591,7 @@ class SiteAdmin(admin.ModelAdmin):
     number_of_computers.short_description = _("Number of computers")
 
 
-@admin.register(WakeWeekPlan)
+@admin.register(m.WakeWeekPlan)
 class WakeWeekPlanAdmin(admin.ModelAdmin):
     list_display = (
         "name",
@@ -642,7 +619,7 @@ class WakeWeekPlanAdmin(admin.ModelAdmin):
     search_fields = ("name",)
 
 
-@admin.register(WakeChangeEvent)
+@admin.register(m.WakeChangeEvent)
 class WakeChangeEventAdmin(admin.ModelAdmin):
     list_display = (
         "name",

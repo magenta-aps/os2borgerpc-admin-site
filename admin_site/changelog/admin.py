@@ -1,13 +1,9 @@
 from django.contrib import admin
 
-from changelog.models import (
-    Changelog,
-    ChangelogComment,
-    ChangelogTag,
-)
+import changelog.models as m
 
 
-@admin.register(Changelog)
+@admin.register(m.Changelog)
 class ChangelogAdmin(admin.ModelAdmin):
     list_display = (
         "title",
@@ -19,12 +15,12 @@ class ChangelogAdmin(admin.ModelAdmin):
     filter_horizontal = ("tags",)
 
 
-@admin.register(ChangelogTag)
+@admin.register(m.ChangelogTag)
 class ChangelogTagAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(ChangelogComment)
+@admin.register(m.ChangelogComment)
 class ChangelogCommentAdmin(admin.ModelAdmin):
     list_display = (
         "user",

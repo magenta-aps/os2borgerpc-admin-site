@@ -7,6 +7,8 @@ from account.models import UserProfile, SiteMembership
 
 admin.site.unregister(User)
 
+# INLINES #
+
 
 class UserProfileInline(admin.TabularInline):
     model = UserProfile
@@ -19,6 +21,14 @@ class UserProfileInline(admin.TabularInline):
 
     def sites(self, obj):
         return obj.sites.values_list("name")
+
+
+class SiteMembershipInline(admin.TabularInline):
+    model = SiteMembership
+    extra = 0
+
+
+# ADMIN OVERRIDES #
 
 
 @admin.register(User)
@@ -43,11 +53,6 @@ class MyUserAdmin(UserAdmin):
 
     def sites(self, obj):
         return list(obj.user_profile.sites.all())
-
-
-class SiteMembershipInline(admin.TabularInline):
-    model = SiteMembership
-    extra = 0
 
 
 @admin.register(UserProfile)

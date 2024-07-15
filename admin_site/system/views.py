@@ -2636,6 +2636,13 @@ class UserRedirect(RedirectView, SuperAdminOrThisSiteMixin):
             return reverse("new_user", args=[site.uid])
 
 
+# To be able to link all customers to the users page with a single link
+class UserRedirectSite(RedirectView, LoginRequiredMixin):
+    def get_redirect_url(self, **kwargs):
+        slug = self.request.user.user_profile.sites.first().uid
+        return reverse("users", kwargs={"slug": slug})
+
+
 class UsersMixin(object):
     def add_site_to_context(self, context):
         self.site = get_object_or_404(Site, uid=self.kwargs["slug"])
@@ -3927,6 +3934,13 @@ class ImageVersionRedirect(RedirectView):
             "images-product",
             kwargs={"slug": site.url, "product_id": Product.objects.first().id},
         )
+
+
+# To be able to link all customers to images with a single link
+class ImageVersionRedirectSite(RedirectView, LoginRequiredMixin):
+    def get_redirect_url(self, **kwargs):
+        slug = self.request.user.user_profile.sites.first().uid
+        return reverse("images", kwargs={"slug": slug})
 
 
 class ImageVersionView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):

@@ -12,6 +12,7 @@ from system.views import (
     ConfigurationEntryUpdate,
     DocView,
     ImageVersionRedirect,
+    ImageVersionRedirectSite,
     ImageVersionView,
     JobInfo,
     JobRestarter,
@@ -64,6 +65,7 @@ from system.views import (
     UserDelete,
     UserLink,
     UserRedirect,
+    UserRedirectSite,
     UserUpdate,
 )
 
@@ -334,6 +336,7 @@ urlpatterns = [
     ),
     # Users
     re_path(r"^site/(?P<slug>[^/]+)/users/$", UserRedirect.as_view(), name="users"),
+    re_path(r"^users/$", UserRedirectSite.as_view(), name="users_redirect_site"),
     re_path(
         r"^site/(?P<slug>[^/]+)/users/new/$", UserCreate.as_view(), name="new_user"
     ),
@@ -391,6 +394,11 @@ urlpatterns = [
         r"^site/(?P<slug>[^/]+)/image-versions/$",
         ImageVersionRedirect.as_view(),
         name="images",
+    ),
+    re_path(
+        r"^image-versions/$",
+        ImageVersionRedirectSite.as_view(),
+        name="images-redirect-site",
     ),
     re_path(
         r"^site/(?P<slug>[^/]+)/image-versions/(?P<product_id>[^/]+)$",

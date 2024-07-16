@@ -77,7 +77,7 @@ class ChangelogListView(ListView):
                     pk=context["tag_filter"]
                 )
                 queryset = queryset.filter(tags=context["tag_filter"])
-            except ChangelogTag.DoesNotExist:
+            except (ChangelogTag.DoesNotExist, ValueError):
                 raise Http404(
                     _("There is no news category with the following ID: %s")
                     % context["tag_filter"]

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-30 16:29+0200\n"
+"POT-Creation-Date: 2024-09-03 13:37+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -4478,8 +4478,8 @@ msgstr "Du skal angive mindst en pc eller gruppe"
 
 #: system/views.py
 #, python-format
-msgid "You have no computer with the following ID: %s"
-msgstr "Du har ingen computer med følgende ID: %s"
+msgid "You have no computer with the following UID: %s"
+msgstr "Du har ingen computer med følgende UID: %s"
 
 #: system/views.py
 #, python-format
@@ -4531,7 +4531,7 @@ msgstr "Tænd/sluk tidsplan %s oprettet"
 
 #: system/views.py
 #, python-format
-msgid "You have no Wake Week Plan with the following ID: %s"
+msgid "You have no schedule with the following ID: %s"
 msgstr "Du har ingen tidsplan med følgende ID: %s"
 
 #: system/views.py
@@ -4575,7 +4575,7 @@ msgstr "Tænd/Sluk tidsplan %s slettet"
 
 #: system/views.py
 #, python-format
-msgid "You have no Wake Change Event with the following ID: %s"
+msgid "You have no exception with the following ID: %s"
 msgstr "Du har ingen undtagelse med ID %s"
 
 #: system/views.py
@@ -4601,8 +4601,8 @@ msgstr "Bruger(ne) %s er blevet tilføjet til sitet %s "
 
 #: system/views.py
 #, python-format
-msgid "You have no user with the following ID: %s"
-msgstr "Du har ikke nogen Bruger med følgende ID: %s"
+msgid "You have no user with the following username: %s"
+msgstr "Du har ikke nogen Bruger med følgende brugernavn: %s"
 
 #: system/views.py
 #, python-format
@@ -4654,13 +4654,18 @@ msgstr "Gruppe %s slettet"
 
 #: system/views.py
 #, python-format
-msgid "You have no Security Problem with the following ID: %s"
-msgstr "Du har ikke nogen Sikkerhedsregel med følgende ID: %s"
+msgid "You have no security rule with the following ID: %s"
+msgstr "Du har ikke nogen sikkerhedsregel med følgende ID: %s"
 
 #: system/views.py
 #, python-format
-msgid "You have no Event Rule Server with the following ID: %s"
+msgid "You have no offline rule with the following ID: %s"
 msgstr "Du har ikke nogen offline-regel med følgende ID: %s"
+
+#: system/views.py
+#, python-format
+msgid "No product matches the given ID: %s"
+msgstr "Intet produkt matcher det angivne ID: %s"
 
 #: templates/403.html
 msgid "Permission denied"

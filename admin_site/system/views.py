@@ -1606,7 +1606,7 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
             return PC.objects.get(uid=self.kwargs["pc_uid"], site=site_id)
         except PC.DoesNotExist:
             raise Http404(
-                _("You have no computer with the following ID: %s")
+                _("You have no computer with the following UID: %s")
                 % self.kwargs["pc_uid"]
             )
 
@@ -1756,7 +1756,7 @@ class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):  # {{{
             return PC.objects.get(uid=self.kwargs["pc_uid"], site=site_id)
         except PC.DoesNotExist:
             raise Http404(
-                _("You have no computer with the following ID: %s")
+                _("You have no computer with the following UID: %s")
                 % self.kwargs["pc_uid"]
             )
 
@@ -2063,7 +2063,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
             )
         except (WakeWeekPlan.DoesNotExist, ValueError):
             raise Http404(
-                _("You have no Wake Week Plan with the following ID: %s")
+                _("You have no schedule with the following ID: %s")
                 % self.kwargs["wake_week_plan_id"]
             )
 
@@ -2303,7 +2303,7 @@ class WakePlanDelete(WakePlanBaseMixin, DeleteView):
             )
         except (WakeWeekPlan.DoesNotExist, ValueError):
             raise Http404(
-                _("You have no Wake Week Plan with the following ID: %s")
+                _("You have no schedule with the following ID: %s")
                 % self.kwargs["wake_week_plan_id"]
             )
         if not plan.site.customer.feature_permission.filter(uid="wake_plan"):
@@ -2453,7 +2453,7 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
             )
         except (WakeChangeEvent.DoesNotExist, ValueError):
             raise Http404(
-                _("You have no Wake Change Event with the following ID: %s")
+                _("You have no exception with the following ID: %s")
                 % self.kwargs["wake_change_event_id"]
             )
 
@@ -2572,7 +2572,16 @@ class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):
     template_name = "system/wake_plan/wake_change_events/confirm_delete.html"
 
     def get_object(self, queryset=None):
-        event = WakeChangeEvent.objects.get(id=self.kwargs["wake_change_event_id"])
+        try:
+            site_id = get_object_or_404(Site, uid=self.kwargs["slug"])
+            event = WakeChangeEvent.objects.get(
+                id=self.kwargs["wake_change_event_id"], site=site_id
+            )
+        except (WakeChangeEvent.DoesNotExist, ValueError):
+            raise Http404(
+                _("You have no exception with the following ID: %s")
+                % self.kwargs["wake_change_event_id"]
+            )
         if not event.site.customer.feature_permission.filter(uid="wake_plan"):
             raise PermissionDenied
         return event
@@ -2856,7 +2865,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             )
         except (User.DoesNotExist, SiteMembership.DoesNotExist):
             raise Http404(
-                _("You have no user with the following ID: %s")
+                _("You have no user with the following username: %s")
                 % self.kwargs["username"]
             )
         if (
@@ -2993,7 +3002,7 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
             )
         except (User.DoesNotExist, SiteMembership.DoesNotExist):
             raise Http404(
-                _("You have no user with the following ID: %s")
+                _("You have no user with the following username: %s")
                 % self.kwargs["username"]
             )
         if (
@@ -3520,9 +3529,9 @@ class SecurityProblemUpdate(EventRuleBaseMixin, UpdateView):
             return SecurityProblem.objects.get(
                 id=self.kwargs["id"], site__uid=self.kwargs["slug"]
             )
-        except SecurityProblem.DoesNotExist:
+        except (SecurityProblem.DoesNotExist, ValueError):
             raise Http404(
-                _("You have no Security Problem with the following ID: %s")
+                _("You have no security rule with the following ID: %s")
                 % self.kwargs["id"]
             )
 
@@ -3532,9 +3541,15 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
     model = SecurityProblem
 
     def get_object(self, queryset=None):
-        return SecurityProblem.objects.get(
-            id=self.kwargs["id"], site__uid=self.kwargs["slug"]
-        )
+        try:
+            return SecurityProblem.objects.get(
+                id=self.kwargs["id"], site__uid=self.kwargs["slug"]
+            )
+        except (SecurityProblem.DoesNotExist, ValueError):
+            raise Http404(
+                _("You have no security rule with the following ID: %s")
+                % self.kwargs["id"]
+            )
 
     def get_success_url(self):
         return reverse("event_rules", args=[self.kwargs["slug"]])
@@ -3570,9 +3585,9 @@ class EventRuleServerUpdate(EventRuleBaseMixin, UpdateView):
             return EventRuleServer.objects.get(
                 id=self.kwargs["id"], site__uid=self.kwargs["slug"]
             )
-        except EventRuleServer.DoesNotExist:
+        except (EventRuleServer.DoesNotExist, ValueError):
             raise Http404(
-                _("You have no Event Rule Server with the following ID: %s")
+                _("You have no offline rule with the following ID: %s")
                 % self.kwargs["id"]
             )
 
@@ -3582,9 +3597,15 @@ class EventRuleServerDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
     model = EventRuleServer
 
     def get_object(self, queryset=None):
-        return EventRuleServer.objects.get(
-            id=self.kwargs["id"], site__uid=self.kwargs["slug"]
-        )
+        try:
+            return EventRuleServer.objects.get(
+                id=self.kwargs["id"], site__uid=self.kwargs["slug"]
+            )
+        except (EventRuleServer.DoesNotExist, ValueError):
+            raise Http404(
+                _("You have no offline rule with the following ID: %s")
+                % self.kwargs["id"]
+            )
 
     def get_success_url(self):
         return reverse("event_rules", args=[self.kwargs["slug"]])
@@ -3822,7 +3843,14 @@ class ImageVersionView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
 
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
 
-        selected_product = get_object_or_404(Product, id=self.kwargs.get("product_id"))
+        try:
+            selected_product = get_object_or_404(
+                Product, id=self.kwargs.get("product_id")
+            )
+        except ValueError:
+            raise Http404(
+                _("No product matches the given ID: %s") % self.kwargs["product_id"]
+            )
 
         # Only superusers can see unpublished image versions
         if not self.request.user.is_superuser:

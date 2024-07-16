@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-30 16:29+0200\n"
+"POT-Creation-Date: 2024-09-03 13:37+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -3941,7 +3941,7 @@ msgstr "Jobb per site"
 
 #: system/admin.py
 msgid "Jobs per Site for the last year"
-msgstr " Jobb per Site under det senaste året"
+msgstr "Jobb per Site under det senaste året"
 
 #: system/forms.py system/models.py
 msgid "Password for login API (e.g. Cicero)"
@@ -4467,8 +4467,8 @@ msgstr "Du måste ange minst en dator eller grupp"
 
 #: system/views.py
 #, python-format
-msgid "You have no computer with the following ID: %s"
-msgstr "Du har ingen dator med följande ID: %s"
+msgid "You have no computer with the following UID: %s"
+msgstr "Du har ingen dator med följande UID: %s"
 
 #: system/views.py
 #, python-format
@@ -4522,7 +4522,7 @@ msgstr "Schema för på- och avstängning %s har skapats"
 
 #: system/views.py
 #, python-format
-msgid "You have no Wake Week Plan with the following ID: %s"
+msgid "You have no schedule with the following ID: %s"
 msgstr "Du har ingen tidtabell med följande ID: %s"
 
 #: system/views.py
@@ -4567,7 +4567,7 @@ msgstr "Tänd/släck schema %s borttagen"
 
 #: system/views.py
 #, python-format
-msgid "You have no Wake Change Event with the following ID: %s"
+msgid "You have no exception with the following ID: %s"
 msgstr "Du har inget undantag med ID %s"
 
 #: system/views.py
@@ -4592,8 +4592,8 @@ msgstr "Användarna %s har lagts till på sitet %s"
 
 #: system/views.py
 #, python-format
-msgid "You have no user with the following ID: %s"
-msgstr "Du har ingen användare med följande ID: %s"
+msgid "You have no user with the following username: %s"
+msgstr "Du har ingen användare med följande användarnamn: %s"
 
 #: system/views.py
 #, python-format
@@ -4645,13 +4645,18 @@ msgstr "Grupp %s borttagen"
 
 #: system/views.py
 #, python-format
-msgid "You have no Security Problem with the following ID: %s"
+msgid "You have no security rule with the following ID: %s"
 msgstr "Du har ingen säkerhetsregel med följande ID: %s"
 
 #: system/views.py
 #, python-format
-msgid "You have no Event Rule Server with the following ID: %s"
+msgid "You have no offline rule with the following ID: %s"
 msgstr "Du har ingen offline-regel med följande ID: %s"
+
+#: system/views.py
+#, python-format
+msgid "No product matches the given ID: %s"
+msgstr "Ingen produkt matchar det angivna ID: %s"
 
 #: templates/403.html
 msgid "Permission denied"

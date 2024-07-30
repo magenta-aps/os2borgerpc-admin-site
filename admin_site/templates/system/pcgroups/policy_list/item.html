@@ -1,5 +1,4 @@
 {# Remember that this template must be able to be called both from templates.html and from list.html #}
-
 {% load i18n %}
 
 <tr>
@@ -74,17 +73,17 @@
   </td>
   <td style="min-width: 6.2rem; width: 20%;">
     <p class="mb-0" style="margin-left: -.5rem;">
-      <a class="mb-1 mt-1 btn btn-sm" href="javascript:void(0)" onclick="BibOS.PolicyList.editScript(this, '{{ submit_name }}',
-      {% if params != '#PARAMS#' %}
+     <a class="mb-1 mt-1 btn btn-sm" onclick="scriptEdit(this, {% if params != '#PARAMS#' %}
       [{% for param in params %}
       '{{ param.input.default_value }}',
       {% endfor %}]
       {% else %}
       'None'
-      {% endif %})">
+      {% endif %})"> 
+      
         <span class='material-icons'>edit</span>{% translate "Edit" %}
       </a>
-      <a class="btn btn-sm ps-3" href="javascript:void(0)" onclick="BibOS.PolicyList.removeItem(this, '{{ submit_name }}')">
+      <a class="btn btn-sm ps-3" href="javascript:void(0)" onclick="removeItem(this, '{{ submit_name }}')">
         <span class='material-icons'>delete</span>{% translate "Remove" %}
       </a>
     </p>

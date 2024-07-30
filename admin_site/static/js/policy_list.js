@@ -30,29 +30,7 @@
                   + input.name + ': </strong><span class="policy-script-print-value">'
                   + ((input.type == 'BOOLEAN') ? '<input type="checkbox" class="form-check-input" checked disabled>' : input.default_value)
                   + '</span></div>'
-        }
-        this.getFieldType = function(type) {
-          switch(type) {
-            case 'INT':
-              return 'number'
-            case 'STRING':
-              return 'text'
-            case 'FILE':
-              return 'file'
-            case 'DATE':
-              return 'date'
-            case 'BOOLEAN':
-              return 'checkbox'
-            case 'TIME':
-              return 'time'
-            case 'PASSWORD':
-              return 'password'
-            case 'TEXT_FIELD':
-              return 'textfield'
-            default:
-              return 'text'
-          }
-        }
+        }  
       }
 
     $.extend(PolicyList.prototype, {
@@ -104,79 +82,9 @@
                 $('#' + id + '_new_entries').val(num)
             })
         },
-        removeItem: function(clickElem, id) {
-            var e = $(clickElem).parent()
-            while (e && e.length && !e.is('tr')) {
-                e = e.parent()
-            }
-            if (e)
-                e.remove()
-            this.updateNew(id)
-        },
         addScript: function(id) {
             $('#addpolicyscriptdialog input').removeAttr('disabled')
             $('#addpolicyscriptdialog').modal('show')
-        },
-        editScript: function(clickElem, id, defaultValues) {
-          $("#editpolicyscriptdialog .modal-body").html('') // delete old inputs
-
-          // loop over all input fields in the list view, and render fields for them in the modal
-          var inputWrapper = $(clickElem).parent().parent().prev()
-          var inputFields = $([]) // make an empty jQuery object we can add to later
-          $.each(inputWrapper.find('.policy-script-param'), function(idx, elm) {
-            var t = $(elm)
-            var label = t.next('.policy-script-print').find('.policy-script-print-name')
-            const type = BibOS.PolicyList.getFieldType(t.attr('data-inputtype'))
-            if ( type == "textfield") {
-              var newElement = $('<select/>', {
-                type: type,
-                name: "edit_" + t.attr('name'),
-                id: "edit_" + t.attr('name'),
-                class: "form-control",
-              })
-              /* defaultValues will be 'None' if we come directly from adding a new script.
-               This is because the values are taken from django template variable "params",
-               which will only be #PARAMS# when we come directly from adding a new script */
-              if (defaultValues != 'None') {
-                options = defaultValues[idx].split(",")
-              } else {
-                options = t.attr('default_value').split(",")
-              }
-              for (o of options) {
-                o = o.trim()
-                newElement.append($('<option/>', {
-                   html: o,
-                   value: o,
-                }))
-              }
-            } else {
-              var newElement = $('<input/>', {
-                type: type,
-                name: "edit_" + t.attr('name'),
-                id: "edit_" + t.attr('name'),
-                checked: (type === 'checkbox' && t.val() === 'True'),
-                class: (type !== 'checkbox') ? 'form-control' : 'form-control form-check-input',
-              })
-            }
-            if (type == "file") {
-              /* In principle, it'd be nice (for display purposes) to copy the
-                 FileList from the hidden input into the modal dialog -- but
-                 this confuses Firefox 65 enormously, and when we try to copy
-                 the FileList back again, it gets cleared! */
-//              newElement[0].files = t[0].files
-            } else {
-              if (type == 'checkbox') {
-                newElement[0].checked = (t.val() === 'True') ? true : false
-              }
-              newElement[0].value = t.val()
-            }
-            inputFields = inputFields.add($('<label/>', {
-              for: t.attr('name'),
-              text: label.text()
-            })).add(newElement)
-          })
-          $("#editpolicyscriptdialog .modal-body").append(inputFields)
-          $('#editpolicyscriptdialog').modal('show')
         },
         renderScriptFields: function(pk, scriptPk, submitName) {
           // If we come directly from adding a new script, django template variable "params" will only be #PARAMS#, so we need to render the fields dynamically
@@ -191,73 +99,210 @@
 
           // output the fields
           $('[data-pk="policy-script-' + pk + '"]').last().append(param_fields)
-        },
-        submitEditDialog: function(policy_id) {
-          var wrapper = $("#" + policy_id)
-
-          var modalInputs = $("#editpolicyscriptdialog .modal-body .form-control")
-          /* Check that each of our mandatory inputs has a value (or that its
-             corresponding hidden input field already has a value) */
-          var count = 0
-          modalInputs.each(function(){
-            var t = $(this)
-            var inputField = wrapper.find('input[name="' + t.attr('name').substring(5) + '"]')
-            if (inputField.prop("required") == true) {
-              if (t.attr('type') == 'file') {
-                /* If the hidden input field has a value, then it's fine if
-                   this one doesn't -- we won't overwrite it */
-                if (t[0].files.length == 0 && inputField[0].files.length == 0) {
-                  t.addClass("invalid")
-                  return false
-                }
-              } else {
-                if (t.val().trim().length == 0) {
-                  t.addClass("invalid")
-                  return false
-                }
-              }
-            }
-            t.removeClass("invalid")
-            count += 1
-          })
-          if (count != modalInputs.length)
-            return false
-
-          // loop over inputs inside the modal, and set their corresponding hidden input fields in the group form
-          modalInputs.each(function(){
-            var t = $(this)
-            var inputField = wrapper.find('input[name="' + t.attr('name').substring(5) + '"]')
-            var visibleValueField = inputField.next('.policy-script-print').find('.policy-script-print-value')
-            if (t.attr('type') == 'file') {
-              if (t[0].files.length != 0) {
-                inputField[0].files = t[0].files
-                visibleValueField.text(t[0].files[0].name)
-              }
-            } else if (t.attr('type') == 'checkbox') {
-              inputField.val((this.checked) ? 'True' : 'False')
-              visibleValueField[0].innerHTML = '<input type="checkbox" class="form-check-input" disabled ' + ((this.checked) ? 'checked>' : '>')
-            } else {
-              if (t.attr('type') == 'password') {
-                inputField.val(t.val())
-                visibleValueField.text('•••••')
-
-                //This workaround prevents the browser from prompting to save a password
-                t[0].setAttribute("type", "text")
-                t[0].setAttribute("style", "display: none;")
-                const clonedElement = t[0].cloneNode()
-                t[0].parentElement.appendChild(clonedElement)
-                t[0].remove()
-              } else {
-                inputField.val(t.val())
-                visibleValueField.text(t.val())
-              }
-            }
-          })
-          $('#editpolicyscriptdialog').modal('hide')
-          return false
         }
     })
 
     BibOS.PolicyList = new PolicyList()
     $(function() { BibOS.PolicyList.init() })
 })(BibOS, $)
+
+
+function scriptEdit(clickedElement, defaultValues) {
+  const editModal = $('#editpolicyscriptdialog')
+
+  // the modal body that contains the input fields
+  const modalbody = document.querySelector("#editpolicyscriptdialog .modal-body")
+  modalbody.innerHTML = ''
+
+  // find the td with the input fields from the clicked script
+  const inputWrapper = clickedElement.parentElement.parentElement.previousElementSibling;
+
+  // loop over all input fields, and render them in the modal
+  inputWrapper.querySelectorAll('.policy-script-param').forEach((inputparam, index) => {
+    const paramType = getFieldType(inputparam.getAttribute('data-inputtype'))
+    let newElement
+
+    if (paramType == "textfield") {
+      newElement = document.createElement('select')
+
+      /* defaultValues will be 'None' if we come directly from adding a new script.
+         This is because the values are taken from django template variable "params",
+         which will only be #PARAMS# when we come directly from adding a new script */
+      let options
+      if (defaultValues != 'None') {
+        options = defaultValues[index].split(",")
+      } else {
+        options = inputparam.getAttribute('default_value').split(",")
+      }
+      for (let o of options) {
+        o = o.trim()
+        let optionElement = document.createElement('option')
+        optionElement.innerHTML = o
+        optionElement.value = o
+        newElement.appendChild(optionElement)
+      }
+    } else {
+      newElement = document.createElement('input')
+    } 
+
+    if (paramType == "file") {
+      /* In principle, it'd be nice (for display purposes) to copy the
+         FileList from the hidden input into the modal dialog -- but
+         this confuses Firefox 65 enormously, and when we try to copy
+         the FileList back again, it gets cleared! */
+      newElement.files = inputparam.files
+    } else {
+      if (paramType == 'checkbox') {
+        newElement.checked = (inputparam.value === 'True') ? true : false
+      }
+      newElement.value = inputparam.value
+    }
+
+    // set the commen attributes type, name, id, class
+    newElement.type = paramType
+    newElement.name = "edit_" + inputparam.getAttribute('name')
+    newElement.id = "edit_" + inputparam.getAttribute('name')
+    newElement.className = (paramType !== 'checkbox') ? 'form-control' : 'form-control form-check-input'
+
+    // Create a label element
+    let label = inputparam.nextElementSibling.querySelector('.policy-script-print-name')
+    let labelElement = document.createElement('label')
+    labelElement.setAttribute('for', newElement.id)
+    labelElement.textContent = label.textContent
+
+    modalbody.appendChild(labelElement)
+    modalbody.appendChild(newElement)
+
+  })
+
+  editModal.modal('show')
+}
+
+
+function submitEditDialog(policy_id) {
+  const wrapper = document.getElementById(policy_id)
+  const modalInputs = document.querySelectorAll("#editpolicyscriptdialog .modal-body .form-control");
+
+  /* Check that each of our mandatory inputs has a value (or that its
+     corresponding hidden input field already has a value) */
+  let count = 0
+  modalInputs.forEach((inputElement) => {
+    let inputName = inputElement.getAttribute('name').substring(5)
+    let inputField = wrapper.querySelector('input[name="' + inputName + '"]')
+
+    if (inputField.required == true) {
+      if (inputElement.type == 'file' && inputElement.files.length == 0 && inputField.files.length == 0) {
+        /* If the hidden input field has a value, then it's fine if
+           this one doesn't -- we won't overwrite it */
+          inputElement.classList.add("invalid")
+          return false
+        
+      } else if (inputElement.value.trim().length == 0) {
+          inputElement.classList.add("invalid")
+          return false
+        }
+      } 
+
+      inputElement.classList.remove("invalid")
+      count += 1
+  })
+
+  if (count != modalInputs.length){
+    return false
+  }
+
+  // loop over inputs inside the modal, and set their corresponding hidden input fields in the group form
+  modalInputs.forEach((inputElement) =>{
+    let inputName = inputElement.getAttribute('name').substring(5)
+    let inputField = wrapper.querySelector('input[name="' + inputName + '"]')
+
+    let visibleValueField = null
+    let nextSibling = inputField.nextElementSibling
+
+    while (nextSibling) {
+      if (nextSibling.matches('.policy-script-print')) {
+        visibleValueField = nextSibling.querySelector('.policy-script-print-value')
+        break
+      }
+      nextSibling = nextSibling.nextElementSibling
+    }
+  
+    if (inputElement.getAttribute('type') === 'file') {
+      if (inputElement.files.length !== 0) {
+        inputField.files = inputElement.files
+        visibleValueField.textContent = inputElement.files[0].name
+      }
+    } else if (inputElement.getAttribute('type') === 'checkbox') {
+      inputField.value = inputElement.checked ? 'True' : 'False'
+      visibleValueField.innerHTML = '<input type="checkbox" disabled ' + (inputElement.checked ? 'checked>' : '>')
+    } else if (inputElement.getAttribute('type') === 'password') {
+      inputField.value = inputElement.value
+      visibleValueField.textContent = '•••••'
+    
+      // This workaround prevents the browser from prompting to save a password
+      inputElement.setAttribute("type", "text")
+      inputElement.setAttribute("style", "display: none;")
+      const clonedElement = inputElement.cloneNode()
+      inputElement.parentElement.appendChild(clonedElement)
+      inputElement.remove()
+    } else {
+      inputField.value = inputElement.value
+      visibleValueField.textContent = inputElement.value
+    }
+})
+
+    $('#editpolicyscriptdialog').modal('hide')
+    return false
+}
+
+
+ function getFieldType(type) {
+  const typeMapping = {
+    'INT': 'number',
+    'STRING': 'text',
+    'FILE': 'file',
+    'DATE': 'date',
+    'BOOLEAN': 'checkbox',
+    'TIME': 'time',
+    'PASSWORD': 'password',
+    'TEXT_FIELD': 'textfield'
+  }
+
+  return typeMapping[type] || 'text'
+}
+
+
+function updateNew(id) {
+  let count = 0
+  let inputs = document.querySelectorAll('#' + id + ' input.policy-script-pos')
+
+  inputs.forEach( inputElement => {
+      let parentElement = inputElement.parentElement
+
+      if (inputElement.value.match(/^new_/)) {
+          parentElement.querySelector('input.policy-script-name').setAttribute('name', id + '_new_' + count);
+          let params = parentElement.querySelectorAll('input.policy-script-param')
+          
+          params.forEach((param, index) => {
+              param.setAttribute('name', id + '_new_' + count + '_param_' + index)
+          })
+
+          inputElement.value = 'new_' + count
+          count++
+      }
+
+      document.getElementById(id + '_new_entries').value = count
+  })
+}
+
+
+function removeItem(clickedElem, id) {
+  // Find the closest parent <tr> element
+  const rowElement = clickedElem.closest('tr')
+  
+  if (rowElement) {
+    rowElement.remove()
+  }
+  
+  updateNew(id)
+}

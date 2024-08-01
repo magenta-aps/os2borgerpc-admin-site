@@ -36,9 +36,18 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button onclick="BibOS.ConfigList.submitEditDialog()" class="btn btn-primary">{% translate "Save" %}</button>
-        <button class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
+        <button id="saveButton" onclick="BibOS.ConfigList.submitEditDialog()" class="btn btn-primary">{% translate "Save" %}</button>
+        <button id="cancelButton" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  function preventAutoSubmit(event) {
+    event.preventDefault()
+  }
+  
+  document.getElementById('cancelButton').addEventListener('click', preventAutoSubmit);
+  document.getElementById('saveButton').addEventListener('click', preventAutoSubmit);
+</script>

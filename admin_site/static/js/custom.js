@@ -33,9 +33,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     } catch (e) {
       console.error(e)
     }
-    // Set the cookie to a past date, so it will be deleted
-    document.cookie = 'page-notification=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/'
   }
+  document.cookie = 'page-notification=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 });
 
 

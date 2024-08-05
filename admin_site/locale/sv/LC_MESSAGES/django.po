@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-09 13:41+0200\n"
+"POT-Creation-Date: 2024-08-05 16:29+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -59,7 +59,7 @@ msgstr "skapad"
 msgid "updated"
 msgstr "uppdaterat"
 
-#: changelog/models.py
+#: changelog/models.py system/models.py
 msgid "published (visible)"
 msgstr "publicerad (synlig)"
 
@@ -134,7 +134,7 @@ msgstr "Nyhetskategorier"
 msgid "Comments"
 msgstr "Kommentarer"
 
-#: changelog/templates/list.html system/views.py
+#: changelog/templates/list.html docs/views.py
 #: templates/documentation/om_os2borgerpc_admin.html
 #: templates/documentation/sites_overview/index.html
 #: templates/system/site_status.html templates/system/sites/list.html
@@ -209,6 +209,146 @@ msgstr "Nästa"
 msgid "There is no news category with the following ID: %s"
 msgstr "Det finns ingen nyhetskategori med följande ID: %s"
 
+#: docs/views.py
+msgid "The administration site"
+msgstr "Administrationssidan"
+
+#: docs/views.py templates/documentation/om_os2borgerpc_admin.html
+msgid "About"
+msgstr "Om"
+
+#: docs/views.py templates/documentation/sites_overview/index.html
+msgid "Sites overview"
+msgstr "Sites-översikt"
+
+#: docs/views.py templates/documentation/status/index.html
+#: templates/documentation/wake_plans/edit_settings.html
+#: templates/site_with_navigation.html templates/system/jobs/site_jobs.html
+#: templates/system/pcs/form.html
+#: templates/system/security_events/site_security_events.html
+#: templates/system/site_status.html
+msgid "Status"
+msgstr "Status"
+
+#: docs/views.py templates/documentation/status/index.html
+#: templates/documentation/users/index.html templates/site_with_navigation.html
+#: templates/system/jobs/site_jobs.html
+#: templates/system/pcgroups/confirm_delete.html templates/system/pcs/form.html
+#: templates/system/pcs/site_pcs.html templates/system/sites/list.html
+#: templates/system/wake_plan/confirm_delete.html
+#: templates/system/wake_plan/wake_plan.html
+msgid "Computers"
+msgstr "Datorer"
+
+#: docs/views.py templates/documentation/groups/index.html
+#: templates/documentation/users/index.html templates/site_with_navigation.html
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
+#: templates/system/jobs/site_jobs.html
+#: templates/system/pcgroups/site_groups.html
+#: templates/system/wake_plan/confirm_delete.html
+#: templates/system/wake_plan/wake_plan.html
+msgid "Groups"
+msgstr "Grupper"
+
+#: docs/views.py templates/documentation/wake_plans/index.html
+#: templates/site_with_navigation.html
+msgid "On/Off schedules"
+msgstr "Schema för på- och avstängning"
+
+#: docs/views.py templates/documentation/api.html
+#: templates/site_with_navigation.html templates/system/jobs/site_jobs.html
+#: templates/system/scripts/confirm_delete.html
+msgid "Jobs"
+msgstr "Jobs"
+
+#: docs/views.py templates/documentation/users/index.html
+#: templates/site_with_navigation.html templates/system/scripts/header.html
+msgid "Scripts"
+msgstr "Skript"
+
+#: docs/views.py templates/site_with_navigation.html
+#: templates/system/scripts/header.html
+msgid "Security Scripts"
+msgstr "Skript för säkerhet"
+
+#: docs/views.py templates/documentation/notifications/index.html
+msgid "Notifications and offline rules"
+msgstr "Aviseringar och offline-regler"
+
+#: docs/views.py templates/documentation/users/index.html
+#: templates/site_with_navigation.html templates/system/users/link.html
+#: templates/system/users/update.html
+msgid "Users"
+msgstr "Användare"
+
+#: docs/views.py templates/documentation/api.html
+#: templates/documentation/computers/index.html
+#: templates/documentation/configuration/index.html
+#: templates/documentation/groups/index.html
+#: templates/site_with_navigation.html
+#: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
+#: templates/system/site_settings/site_settings.html
+msgid "Configurations"
+msgstr "Konfigurationer"
+
+#: docs/views.py templates/documentation/changelogs/index.html
+msgid "The News site"
+msgstr "Nyhetssidan"
+
+#: docs/views.py
+msgid "Setting up security surveillance (PDF)"
+msgstr "Skapande av säkerhetsövervakning (PDF)"
+
+#: docs/views.py
+msgid "Installation Guide (PDF)"
+msgstr "Installationsguide (PDF)"
+
+#: docs/views.py
+msgid "Old installation guide (PDF)"
+msgstr "Gammal installationsguide (PDF)"
+
+#: docs/views.py templates/documentation/sites_overview/index.html
+#: templates/system/site_status.html templates/system/sites/list.html
+msgid "OS2borgerPC Kiosk"
+msgstr "Sambruk MedborgarPC Kiosk"
+
+#: docs/views.py
+msgid "Installation Guide"
+msgstr "Installationsguide"
+
+#: docs/views.py
+msgid "Updating Wi-Fi setup"
+msgstr "Uppdaterar Wi-Fi inställningar"
+
+#: docs/views.py
+msgid "Audit"
+msgstr "Revision"
+
+#: docs/views.py
+msgid "FAQ (PDF)"
+msgstr "Vanliga frågor (PDF)"
+
+#: docs/views.py templates/documentation/tech.html
+msgid "Technical Documentation"
+msgstr "Teknisk Dokumentation"
+
+#: docs/views.py
+msgid "OS2borgerPC Image"
+msgstr "Sambruk MedborgarPC Image"
+
+#: docs/views.py
+msgid "OS2borgerPC Admin Site"
+msgstr "Sambruk MedborgarPC Admin Site"
+
+#: docs/views.py
+msgid "OS2borgerPC Kiosk Image"
+msgstr "Sambruk MedborgarPC Kiosk Image"
+
+#: docs/views.py
+msgid "OS2borgerPC Client"
+msgstr "Sambruk MedborgarPC Client"
+
 #: system/admin.py
 msgid ""
 "Remove image file references and delete them from disk (keeps the "
@@ -216,18 +356,6 @@ msgid ""
 msgstr ""
 "Ta bort image-filreferenser och rena dem från disken (behåller ImageVersion "
 "objektet)"
-
-#: system/admin.py templates/system/scripts/search_result.html
-msgid "Global"
-msgstr "Global"
-
-#: system/admin.py
-msgid "Jobs per site"
-msgstr "Jobb per site"
-
-#: system/admin.py
-msgid "Jobs per Site for the last year"
-msgstr " Jobb per Site under det senaste året"
 
 #: system/admin.py
 msgid "Number of computers"
@@ -252,6 +380,18 @@ msgstr "kunder med tillträde"
 #: system/admin.py
 msgid "Site"
 msgstr "Site"
+
+#: system/admin.py templates/system/scripts/search_result.html
+msgid "Global"
+msgstr "Global"
+
+#: system/admin.py
+msgid "Jobs per site"
+msgstr "Jobb per site"
+
+#: system/admin.py
+msgid "Jobs per Site for the last year"
+msgstr " Jobb per Site under det senaste året"
 
 #: system/forms.py system/models.py
 msgid "Password for login API (e.g. Cicero)"
@@ -1021,146 +1161,6 @@ msgstr "Du har ingen säkerhetsregel med följande ID: %s"
 #, python-format
 msgid "You have no Event Rule Server with the following ID: %s"
 msgstr "Du har ingen offline-regel med följande ID: %s"
-
-#: system/views.py
-msgid "The administration site"
-msgstr "Administrationssidan"
-
-#: system/views.py templates/documentation/om_os2borgerpc_admin.html
-msgid "About"
-msgstr "Om"
-
-#: system/views.py templates/documentation/sites_overview/index.html
-msgid "Sites overview"
-msgstr "Sites-översikt"
-
-#: system/views.py templates/documentation/status/index.html
-#: templates/documentation/wake_plans/edit_settings.html
-#: templates/site_with_navigation.html templates/system/jobs/site_jobs.html
-#: templates/system/pcs/form.html
-#: templates/system/security_events/site_security_events.html
-#: templates/system/site_status.html
-msgid "Status"
-msgstr "Status"
-
-#: system/views.py templates/documentation/status/index.html
-#: templates/documentation/users/index.html templates/site_with_navigation.html
-#: templates/system/jobs/site_jobs.html
-#: templates/system/pcgroups/confirm_delete.html templates/system/pcs/form.html
-#: templates/system/pcs/site_pcs.html templates/system/sites/list.html
-#: templates/system/wake_plan/confirm_delete.html
-#: templates/system/wake_plan/wake_plan.html
-msgid "Computers"
-msgstr "Datorer"
-
-#: system/views.py templates/documentation/groups/index.html
-#: templates/documentation/users/index.html templates/site_with_navigation.html
-#: templates/system/event_rules/event_rule_server_confirm_delete.html
-#: templates/system/event_rules/security_problem_confirm_delete.html
-#: templates/system/jobs/site_jobs.html
-#: templates/system/pcgroups/site_groups.html
-#: templates/system/wake_plan/confirm_delete.html
-#: templates/system/wake_plan/wake_plan.html
-msgid "Groups"
-msgstr "Grupper"
-
-#: system/views.py templates/documentation/wake_plans/index.html
-#: templates/site_with_navigation.html
-msgid "On/Off schedules"
-msgstr "Schema för på- och avstängning"
-
-#: system/views.py templates/documentation/api.html
-#: templates/site_with_navigation.html templates/system/jobs/site_jobs.html
-#: templates/system/scripts/confirm_delete.html
-msgid "Jobs"
-msgstr "Jobs"
-
-#: system/views.py templates/documentation/users/index.html
-#: templates/site_with_navigation.html templates/system/scripts/header.html
-msgid "Scripts"
-msgstr "Skript"
-
-#: system/views.py templates/site_with_navigation.html
-#: templates/system/scripts/header.html
-msgid "Security Scripts"
-msgstr "Skript för säkerhet"
-
-#: system/views.py templates/documentation/notifications/index.html
-msgid "Notifications and offline rules"
-msgstr "Aviseringar och offline-regler"
-
-#: system/views.py templates/documentation/users/index.html
-#: templates/site_with_navigation.html templates/system/users/link.html
-#: templates/system/users/update.html
-msgid "Users"
-msgstr "Användare"
-
-#: system/views.py templates/documentation/api.html
-#: templates/documentation/computers/index.html
-#: templates/documentation/configuration/index.html
-#: templates/documentation/groups/index.html
-#: templates/site_with_navigation.html
-#: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
-#: templates/system/site_settings/site_settings.html
-msgid "Configurations"
-msgstr "Konfigurationer"
-
-#: system/views.py templates/documentation/changelogs/index.html
-msgid "The News site"
-msgstr "Nyhetssidan"
-
-#: system/views.py
-msgid "Setting up security surveillance (PDF)"
-msgstr "Skapande av säkerhetsövervakning (PDF)"
-
-#: system/views.py
-msgid "Installation Guide (PDF)"
-msgstr "Installationsguide (PDF)"
-
-#: system/views.py
-msgid "Old installation guide (PDF)"
-msgstr "Gammal installationsguide (PDF)"
-
-#: system/views.py templates/documentation/sites_overview/index.html
-#: templates/system/site_status.html templates/system/sites/list.html
-msgid "OS2borgerPC Kiosk"
-msgstr "Sambruk MedborgarPC Kiosk"
-
-#: system/views.py
-msgid "Installation Guide"
-msgstr "Installationsguide"
-
-#: system/views.py
-msgid "Updating Wi-Fi setup"
-msgstr "Uppdaterar Wi-Fi inställningar"
-
-#: system/views.py
-msgid "Audit"
-msgstr "Revision"
-
-#: system/views.py
-msgid "FAQ (PDF)"
-msgstr "Vanliga frågor (PDF)"
-
-#: system/views.py templates/documentation/tech.html
-msgid "Technical Documentation"
-msgstr "Teknisk Dokumentation"
-
-#: system/views.py
-msgid "OS2borgerPC Image"
-msgstr "Sambruk MedborgarPC Image"
-
-#: system/views.py
-msgid "OS2borgerPC Admin Site"
-msgstr "Sambruk MedborgarPC Admin Site"
-
-#: system/views.py
-msgid "OS2borgerPC Kiosk Image"
-msgstr "Sambruk MedborgarPC Kiosk Image"
-
-#: system/views.py
-msgid "OS2borgerPC Client"
-msgstr "Sambruk MedborgarPC Client"
 
 #: templates/403.html
 msgid "Permission denied"

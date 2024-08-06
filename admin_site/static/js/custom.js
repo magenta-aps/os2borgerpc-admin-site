@@ -1,10 +1,10 @@
 
 // This event displays the notification message in the toast element, when the page is loaded
 document.addEventListener('DOMContentLoaded', (event) => {
-  
-  // First check if there is a page-notification in the cookie with the response from the server  
+
+  // First check if there is a page-notification in the cookie with the response from the server
   let notification = document.cookie.match(/\bpage-notification\s*=\s*([^;]+)/)
-  
+
   if(notification) {
     try {
 
@@ -13,11 +13,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
       // The bootstrap 5 toast html element, located in the notification.html file and must be included in the html to display the toast
       const toastElement = document.getElementById("toast")
       const toastBody = toastElement.firstElementChild.firstElementChild
-      
+
       let toast_color="bg-success"
       // if autoHide is set to true, the toast will disappear automatically, default is 5 seconds
       let autoHide = true
-      
+
       // Reset the toast color if the message type is error
       if (descriptor["type"] == "error") {
         toast_color = "bg-danger"
@@ -33,8 +33,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     } catch (e) {
       console.error(e)
     }
+    document.cookie = 'page-notification=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
-  document.cookie = 'page-notification=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 });
 
 
@@ -449,7 +449,7 @@ $(document).ready(function(){
 });
 
 // This function is used in the picklist.html file, to display the names
-// correctly, if it contains chars like ' or " 
+// correctly, if it contains chars like ' or "
 const parser = new DOMParser()
 function htmlDecode(input) {
   let doc = parser.parseFromString(input, "text/html")

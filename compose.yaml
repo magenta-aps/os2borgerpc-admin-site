@@ -51,7 +51,6 @@ services:
             - 9999:9999
         stdin_open: true
         tty: true
-        container_name: bpc_admin_site_django
         privileged: true
     cron-service:
         image: os2borgerpcadmin
@@ -74,6 +73,5 @@ services:
             POSTGRES_PASSWORD: bpc
         volumes:
             - postgres-data:/var/lib/postgresql/data
-        container_name: bpc_admin_site_db
 volumes:
     postgres-data:

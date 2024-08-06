@@ -22,10 +22,11 @@ alias tmm := translations-make-messages
 alias tcm := translations-compile-messages
 
 # Variables
-django_container := "bpc_admin_site_django"
 compose_django_service := "os2borgerpc-admin"
+# container_name isn't currently set in compose.yaml, so the container name is determined in part by the dir the compose file is in. Determine that dynamically.
+django_container := `basename $PWD` + "-os2borgerpc-admin-1"
 
-db_container := "bpc_admin_site_db"
+db_container := `basename $PWD` + "-db-1"
 compose_db_service := "db"
 db_data_file := "db-data.json"
 db_structure_file := "db-structure.psql"

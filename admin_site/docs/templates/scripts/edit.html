@@ -1,0 +1,34 @@
+{% extends 'index.html' %}
+{% load i18n %}
+
+{% block specific_content %}
+  <h1>{% translate "Editing Scripts" %}</h1>
+  <p>
+    {% translate "Note that only Magenta can edit global scripts." %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    If you wish to edit a Script, you must click on "Scripts" in the left-hand
+    menu and then select the script in the list of scripts shown to the right
+    of the left-hand menu. Note that it may be necessary to swap between the
+    tabs "Local scripts" and "Global scripts" in order to find the script.
+    You can also search through the scripts by selecting the search field
+    "Find ..." and typing a search term. This will cause the list to display
+    all scripts whose names contain the search term.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    When you edit a script you can change its name and description. It is
+    also possible to upload a new version of the script by clicking on the
+    tab "Code" and then selecting a file to upload. Changes do not become
+    permanent until you've clicked on "Save changes" at the bottom of the
+    screen.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% translate "In the last tab, you can" %}
+    <a href="{% url 'doc' 'scripts/parameters' %}">{% translate "adjust the arguments for the script" %}</a>.
+  </p>
+  <p>
+{% endblock %}

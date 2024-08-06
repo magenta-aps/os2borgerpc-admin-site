@@ -1,0 +1,74 @@
+{% extends 'index.html' %}
+{% load i18n %}
+
+{% block specific_content %}
+  <h1>{% translate "Editing Security Scripts" %}</h1>
+  <p>
+    {% translate "Note that only Magenta can edit global security scripts." %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    If you wish to edit a Security Script, you must click on "Security Scripts" in the
+    left-hand menu and then select the security script in the list to the right of
+    the left-hand menu. Note that it may be necessary to swap between the tabs
+    "Local scripts" and "Global scripts" in order to find the script. You can also
+    search through the security scripts by selecting the search field "Find ..." and
+    typing a search term. This will cause the list to display all security scripts
+    whose names contain the search term.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    When you edit a security script you can change its name and description. It is
+    also possible to upload a new version of the script by clicking on the
+    tab "Code" and then selecting a file to upload. Changes do not become
+    permanent until you've clicked on "Save changes" at the bottom of the
+    screen.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% translate "Please note the following regarding security scripts" %}:
+    <br>
+    {% translate "A security script is a script that collects" %} <a href="{% url 'doc' 'security_scripts/securityevents' %}"> {% translate "Events" %}</a>.
+    <br>
+    <br>
+    {% blocktranslate trimmed %}
+    A security script does not have any input parameters, and it must
+    follow a specific format.
+    {% endblocktranslate %}
+    <br>
+    {% blocktranslate trimmed %}
+    The structure of a security script will typically involve reading an
+    amount of data from a log file, searching the data for an event based
+    on one or more keywords and then saving the information in a specific
+    format. A security script can be a shell script or a python script.
+    {% endblocktranslate %}
+    <br>
+    <br>
+    {% blocktranslate trimmed %}
+    The format looks like this: "event timestamp, security rule id, event summary".
+    {% endblocktranslate %}
+    <br>
+  </p>
+  <ul>
+    <li>
+      {% blocktranslate trimmed %}
+      The event timestamp is the time when the event took place.
+      It is usually obtained from the log file.
+      {% endblocktranslate %}
+    </li>
+    <li>
+      {% blocktranslate trimmed %}
+      The security rule id is a number found in the url for editing that specific
+      security rule. Your security script is used by a security rule and it is the
+      id of this rule that you need.
+      {% endblocktranslate %}
+    </li>
+    <li>
+      {% translate "The event summary can be something you define or a part of the collected data." %}
+    </li>
+  </ul>
+  <p>
+    {% translate "Deliver the format as an array to the module csv_writer by calling the method write." %}
+  </p>
+{% endblock %}

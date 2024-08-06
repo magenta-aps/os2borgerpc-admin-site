@@ -1,0 +1,86 @@
+{% extends 'index.html' %}
+{% load i18n %}
+
+{% block specific_content %}
+  <h1>{% translate "Editing schedules: Settings" %}</h1>
+  <p>
+    {% blocktranslate trimmed %}
+    The editing interface for a schedule shows the settings for the schedule on the left side
+    of the screen and a list of exceptions that are used by the schedule on the right side
+    of the screen.
+    {% endblocktranslate %}
+  </p>
+  <h2>{% translate "Status" %}</h2>
+  <p>
+    {% blocktranslate trimmed %}
+    A schedule can be active or inactive. It will only affect the associated
+    groups if it is active.
+    {% endblocktranslate %}
+  </p>
+  <h2>{% translate "Sleep state" %}</h2>
+  <p>
+    {% blocktranslate trimmed %}
+    The chosen sleep state determines the state that the members of the schedule are
+    placed in when they are turned off according to the schedule. In order from least
+    to greatest energy savings, the options are standby, freeze, mem and off. We thus
+    recommend using the sleep state off in order to achieve the greatest energy savings,
+    but not all hardware supports this sleep state. If the sleep state off is used on
+    a computer that does not support it, the computer will not wake automatically.
+    It will still be possible to turn it on manually.
+    {% endblocktranslate %}
+  </p>
+  <h2>{% translate "Settings: Week plan" %}</h2>
+  <p>
+    {% blocktranslate trimmed %}
+    In the week plan, one can choose on and off times for every day of the week, or
+    whether it should be off for the entirety of that particular day. The settings in
+    the week plan normally apply for each of those days of the week, unless there
+    exists an exception for that particular date.
+    {% endblocktranslate %}
+  </p>
+  <h2>{% translate "Settings: Exceptions" %}</h2>
+  <p>
+    {% blocktranslate trimmed %}
+    Below the header "Exceptions: Closed days and altered opening hours", one can
+    add or remove exceptions to the week plan for specific dates or periods.
+    If an exception for a given date exists, the settings for the exception will
+    be used instead of the week plan settings.
+    An exception can be a change in the on and off times or a constant shutdown
+    for a specific date or period.
+    Exceptions are created, deleted and edited in the tab that opens when you click
+    "Create closed days", "Create altered opening hours" or "Edit exceptions". The
+    different buttons redirect to the part of the tab that is related to their name.
+    {% endblocktranslate %}
+  </p>
+  <h3>{% translate "Add exceptions" %}</h3>
+  <p>
+    {% blocktranslate trimmed %}
+    You add exceptions by clicking on "Add exception to schedule". If there are
+    any exceptions that do not yet belong to the schedule, they will be shown in
+    a list. Click on the exception(s) that you wish to add to select them and then
+    click on the check mark beneath the list to add the exception(s) to the schedule.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    If you attempt to add an exception that overlaps with one or more already added
+    exceptions, the chosen exception will be rejected during the update of the
+    schedule when you click "Save changes". Valid exceptions will still be added.
+    If one or more exceptions are rejected, the page will inform you of this along
+    with the reason.
+    {% endblocktranslate %}
+  </p>
+  <h2>{% translate "Remove exceptions" %}</h2>
+  <p>
+    {% blocktranslate trimmed %}
+    In order to remove an exception, you must click on the X to the right of the
+    exception in the list of exceptions.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    Be aware that changes to the settings including the list of exceptions do not become
+    permanent until you have clicked on "Save changes" at the bottom of the screen.
+    {% endblocktranslate %}
+  </p>
+{% endblock %}

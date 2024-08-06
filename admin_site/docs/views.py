@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext_lazy as _
 from django.utils.decorators import method_decorator
 
+
 # Mixin class to require login
 class LoginRequiredMixin(View):
     """Subclass in all views where login is required."""
@@ -20,7 +21,7 @@ class DocView(TemplateView, LoginRequiredMixin):
     docname = "status"
 
     def template_exists(self, subpath):
-        fullpath = os.path.join(settings.DOCUMENTATION_DIR, subpath)
+        fullpath = os.path.join(settings.INSTALL_DIR + "/docs/templates/", subpath)
         return os.path.isfile(fullpath)
 
     def get_context_data(self, **kwargs):  # noqa
@@ -84,7 +85,7 @@ class DocView(TemplateView, LoginRequiredMixin):
             raise Http404
 
         # Try <docname>.html and <docname>/index.html
-        name_templates = ["documentation/{0}.html", "documentation/{0}/index.html"]
+        name_templates = ["{0}.html", "{0}/index.html"]
 
         templatename = None
         for nt in name_templates:
@@ -117,7 +118,7 @@ class DocView(TemplateView, LoginRequiredMixin):
                 break
 
         # Add a submenu if it exists
-        submenu_template = "documentation/" + docnames[0] + "/__submenu__.html"
+        submenu_template = docnames[0] + "/__submenu__.html"
         if self.template_exists(submenu_template):
             context["submenu_template"] = submenu_template
 

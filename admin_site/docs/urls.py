@@ -6,5 +6,5 @@ from .views import (
 
 urlpatterns = [
     re_path(r"^(?P<name>[\d\w\/]+)/", DocView.as_view(), name="doc"),
-    re_path(r"^/", DocView.as_view(), name="doc_root"),
+    re_path(r"^", DocView.as_view(), name="doc_root"),
 ]

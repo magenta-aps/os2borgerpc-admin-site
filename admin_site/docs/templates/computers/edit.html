@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+{% load i18n %}
+
+{% block specific_content %}
+  <h1>{% translate "Computers: Master data and groups" %}</h1>
+  <p>
+    {% blocktranslate trimmed %}
+    When you click on a computer, you will by default be shown the computer's
+    master data and any group affiliations. Here you can change the computer's
+    name and description and activate it if it has not been activated after the
+    installation. You can also add or remove group affiliations. You must click
+    the button "Save changes" before the changes take effect.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    You add groups by clicking on "Add computer to group". If there are any groups
+    that the computer does not yet belong to, they will be shown in a list. Click on
+    the group(s) that you wish to add to select them and then click on the check mark
+    beneath the list to add the computer to the group(s). You remove a group by clicking on the X
+    to the right of the group's name in the list of group affiliations. Remember that
+    any changes are not permanent until you've clicked on "Save changes" at the bottom of the screen.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% translate "Note that group membership can affect the computer's configuration." %}
+  </p>
+{% endblock %}

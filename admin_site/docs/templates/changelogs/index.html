@@ -1,0 +1,54 @@
+{% extends 'index.html' %}
+
+{% load i18n %}
+
+{% block specific_content %}
+    <h1>{% translate "The News site" %}</h1>
+
+    <p>
+        {% translate "The purpose of the news site is to display the content of new updates for OS2borgerPC." %} <br>
+        {% translate "On the site, it is possible to:" %} <br>
+        <ul>
+            <li>{% translate "View a list of posts with a short explanation" %}</li>
+            <li>{% translate "Sort posts based on category" %}</li>
+            <li>{% translate "Search for posts" %}</li>
+            <li>{% translate "Read posts" %}</li>
+            <li>{% translate "Comment on a post with one's admin-site user" %}</li>
+        </ul>
+    </p>
+
+    <hr>
+    <h2>{% translate "List of posts" %}</h2>
+    <p>
+        {% translate "When you enter the news site, you will be presented with a list of posts sorted with the newest posts first." %} <br>
+        {% translate "Each post on the list has a short summary of the content of the update along with the date when the post was made." %}
+    </p>
+    <hr>
+    <h2>{% translate "Sorting posts" %}</h2>
+    <p>
+        {% blocktranslate trimmed %} Each post has one or more categories that the list can be sorted by. This is done by choosing the
+        relevant category among the options presented at the top of the page. {% endblocktranslate %}
+    </p>
+    <hr>
+    <h2>{% translate "Searching for posts" %}</h2>
+    <p>
+        {% translate "The search bar at the top can be used to search through the posts." %}
+    </p>
+    <hr>
+    <h2>{% translate "Detailed view of a post" %}</h2>
+    <p>
+        {% translate "Each post can be expanded to show a more detailed explanation of the update." %} <br>
+        <img height="500px" src="/static/docs/img/changelogs/1.png"><br>
+        <img height="500px" src="/static/docs/img/changelogs/2.png"><br>
+    </p>
+    <hr>
+    <h2>{% translate "Commenting on a post" %}</h2>
+    <p>
+        {% translate "If you are logged in to the admin-site, it is possible to add comments to a post." %} <br>
+        <img src="/static/docs/img/changelogs/3.png"><br>
+        {% translate "When you add a comment, your username will be shown above the comment." %} <br>
+        <img src="/static/docs/img/changelogs/4.png"><br>
+        {% translate "Comments can also be answered by both Magenta's employees and other logged-in users." %} <br>
+        <img src="/static/docs/img/changelogs/5.png"><br>
+    </p>
+{% endblock %}

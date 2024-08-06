@@ -10,7 +10,7 @@ from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
-install_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+INSTALL_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 # Our customized user profile.
 AUTH_PROFILE_MODULE = "account.UserProfile"
@@ -59,7 +59,8 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            os.path.join(install_dir, "templates/"),
+            os.path.join(INSTALL_DIR, "templates/"),
+            # Can this one be deleted?:
             django.__path__[0] + "/forms/templates",
         ],
         "APP_DIRS": True,
@@ -78,7 +79,7 @@ TEMPLATES = [
 ]
 
 
-SOURCE_DIR = os.path.abspath(os.path.join(install_dir, ".."))
+SOURCE_DIR = os.path.abspath(os.path.join(INSTALL_DIR, ".."))
 
 DATABASES = {
     "default": {
@@ -120,7 +121,7 @@ TIME_ZONE = settings["TIME_ZONE"]
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = settings["LANGUAGE_CODE"]
 
-LOCALE_PATHS = [os.path.join(install_dir, "locale")]
+LOCALE_PATHS = [os.path.join(INSTALL_DIR, "locale")]
 
 SITE_ID = 1
 
@@ -159,7 +160,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(install_dir, "static"),
+    os.path.join(INSTALL_DIR, "static"),
     "/frontend",
 )
 
@@ -217,14 +218,12 @@ ROOT_URLCONF = "os2borgerpc_admin.urls"
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = "os2borgerc_admin.wsgi.application"
 
-# Don't forget to use absolute paths, not relative paths.
-DOCUMENTATION_DIR = os.path.join(install_dir, "templates")
-
 
 LOCAL_APPS = (
-    "system",
     "account",
     "changelog",
+    "docs",
+    "system",
 )
 
 THIRD_PARTY_APPS = (

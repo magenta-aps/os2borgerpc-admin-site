@@ -7,11 +7,11 @@ import glob
 from django.core.management.base import BaseCommand
 from django.conf import settings
 from django.core.management import call_command
-from os2borgerpc_admin.settings import install_dir
+from os2borgerpc_admin.settings import INSTALL_DIR
 
 fixtures_dirs = [
-    os.path.join(install_dir, "system/fixtures"),
-    os.path.join(install_dir, "changelog/fixtures"),
+    os.path.join(INSTALL_DIR, "system/fixtures"),
+    os.path.join(INSTALL_DIR, "changelog/fixtures"),
 ]
 
 

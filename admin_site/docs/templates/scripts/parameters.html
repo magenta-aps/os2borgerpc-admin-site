@@ -1,0 +1,98 @@
+{% extends 'index.html' %}
+{% load i18n %}
+{% load custom_tags %}
+
+{% block specific_content %}
+  <h1>{% translate "Editing Script arguments" %}</h1>
+  <p>
+    {% translate "Note that only Magenta can edit the parameters of global scripts." %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    The script arguments make it possible to supply input parameters
+    when a script needs to be run. One can choose between these types
+    of input parameters:
+    {% endblocktranslate %}
+    <ul>
+      <li>
+        <strong>{% translate "String" %}</strong>:
+        {% blocktranslate trimmed %}
+        Makes it possible to supply a text string such as a file path or a title.
+        {% endblocktranslate %}
+      </li>
+      <li>
+        <strong>{% translate "Integer" %}</strong>:
+        {% blocktranslate trimmed %}
+        Makes it possible to supply a positive or negative integer
+        {% endblocktranslate %}
+      </li>
+      <li>
+        <strong>{% translate "Date" %}</strong>:
+        {% translate "Makes it possible to supply a date" %}
+      </li>
+      <li>
+        <strong>{% translate "File" %}</strong>:
+        {% blocktranslate trimmed %}
+        Makes it possible to upload a file that will be passed along when
+        the script is being executed. The script will receive the file parameter
+        as a file path pointing at the file in the local file system.
+        {% endblocktranslate %}
+      </li>
+      <li>
+        <strong>{% translate "Boolean" %}</strong>:
+        {% blocktranslate trimmed %}
+        Makes it possible to supply a true/false value. The script will receive
+        the value as either the string "True" or the string "False".
+        {% endblocktranslate %}
+      </li>
+      <li>
+        <strong>{% translate "Time" %}</strong>:
+        {% translate "Makes it possible to supply a time of day" %}
+      </li>
+      <li>
+        <strong>{% translate "Password" %}</strong>:
+        {% blocktranslate trimmed %}
+        Makes it possible to supply a password string. This type of parameter
+        functions like the regular string parameter except that the chosen
+        password will be hidden in the log output and all other places
+        where the chosen input parameters are displayed.
+        {% endblocktranslate %}
+      </li>
+      <li>
+        <strong>{% translate "Choices" %}</strong>:
+        {% blocktranslate trimmed %}
+        Makes it possible to make a list of predefined choices.
+        This type of parameter is useful when you want to limit the possible values that can be supplied as input. 
+        To make a list of choices, you make a comma separated list of the values in the default value field.
+        The choices will be displayed in the same order as they are written, and
+        if you add a comma at the end or the start of the list, it will be displayed as an empty choice.
+        {% endblocktranslate %}
+      </li>
+    </ul>
+  </p>
+  <p>
+    {% translate "String"|bold as str %}
+    {% translate "Integer"|bold as int %}
+    {% translate "Date"|bold as date %}
+    {% translate "Time"|bold as time %}
+    {% translate "Choices"|bold as choices %}
+    {% blocktranslate trimmed %}
+    In order to add an argument to a script, you must click on the button
+    "Add arguments". This will add a new row to the list of arguments where
+    you must fill out the name and type for the argument. It is also possible
+    to specify a default value for the argument, which will be entered by default
+    when running the script or adding it as an associated script. Only arguments
+    of the types {{str}}, {{int}}, {{date}}, {{choices}} and {{time}} can have default values. Lastly,
+    an argument can be set as required or not. Required parameters must be supplied
+    when running the script whereas non-required parameters can be left blank.
+    Booleans and choices cannot be required. If you wish to remove an argument, you
+    must click on "Remove" to the right in the list.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    You must click on the button "Save changes" at the bottom of the script
+    editing interface before changes to script arguments are made permanent.
+    {% endblocktranslate %}
+  </p>
+{% endblock %}

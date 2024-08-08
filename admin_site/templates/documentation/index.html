@@ -1,6 +1,7 @@
 {% extends 'sitebase.html' %}
 {% load i18n %}
 {% load custom_tags %}
+{% load static %}
 
 <!-- Syntax highlighting -->
 {% block stylesheets %}
@@ -44,9 +45,7 @@ detailpage
   </a>
   {% for link, name in docmenuitems %}
   {% if link in pdf_href %}
-    <a class="nav-link link-light" href="{{ pdf_href|get_item:link }}">
-      {{ name }}
-    </a>
+    <a class="nav-link link-light" href="{% static pdf_href|get_item:link %}"> {{ name }} </a>    
   {% elif link %}
     <a class="nav-link link-light {% if menu_active == link %}active{% endif %}" href="{% url 'doc' link %}">
       {{ name }}

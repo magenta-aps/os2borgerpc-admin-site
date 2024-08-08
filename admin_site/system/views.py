@@ -1815,8 +1815,7 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
 
         # Get the link to the user guide for the chosen language
         context["wake_plan_user_guide"] = (
-            "https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
-            + "/static/docs/Wake_plan_user_guide"
+            "docs/Wake_plan_user_guide"
             + "_"
             + self.request.user.user_profile.language
             + ".pdf"
@@ -3877,19 +3876,14 @@ class DocView(TemplateView, LoginRequiredMixin):
 
         # Get the links to the pdf files for the chosen language
         pdf_href = {
-            "wake_plan_user_guide": "https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
-            + "/static/docs/Wake_plan_user_guide",
-            "os2borgerpc_installation_guide": "https://github.com/OS2borgerPC/image/raw/development/"
-            + "docs/OS2BorgerPC_installation_guide",
-            "os2borgerpc_installation_guide_old": "https://github.com/OS2borgerPC/image/raw/development/"
-            + "docs/OS2BorgerPC_installation_guide_old",
-            "creating_security_problems": "https://raw.githubusercontent.com/OS2borgerPC/admin-site/development/"
-            + "admin_site/static/docs/OS2BorgerPC_security_rules",
-            "audit_doc": "https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
-            + "/static/docs/Audit_doc",
-            "customer_admin_guide": "https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
-            + "/static/docs/customer_admin_guide",
+            "wake_plan_user_guide": "docs/Wake_plan_user_guide",
+            "os2borgerpc_installation_guide": "docs/OS2BorgerPC_installation_guide",
+            "os2borgerpc_installation_guide_old": "docs/OS2BorgerPC_installation_guide_old",
+            "creating_security_problems": "/docs/OS2BorgerPC_security_rules",
+            "audit_doc": "docs/Audit_doc",
+            "customer_admin_guide": "docs/customer_admin_guide",
         }
+
         for key in pdf_href:
             pdf_href[key] += "_" + self.request.user.user_profile.language + ".pdf"
         context["pdf_href"] = pdf_href

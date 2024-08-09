@@ -3833,15 +3833,15 @@ class DocView(TemplateView, LoginRequiredMixin):
                 _("Old installation guide (PDF)"),
             ),
             ("", _("OS2borgerPC Kiosk")),
-            ("os2borgerpc_kiosk_installation_guide", _("Installation Guide")),
+            ("https://os2borgerpc-server-image.readthedocs.io/en/latest/install_setup.html", _("Installation Guide")),
             ("os2borgerpc_kiosk_wifi_guide", _("Updating Wi-Fi setup")),
             ("", _("Audit")),
             ("docs/Audit_doc_" + user_lang + ".pdf", _("FAQ (PDF)")),
             ("", _("Technical Documentation")),
-            ("tech/os2borgerpc-image", _("OS2borgerPC Image")),
-            ("tech/os2borgerpc-admin", _("OS2borgerPC Admin Site")),
-            ("tech/os2borgerpc-server-image", _("OS2borgerPC Kiosk Image")),
-            ("tech/os2borgerpc-client", _("OS2borgerPC Client")),
+            ("https://os2borgerpc-image.readthedocs.io", _("OS2borgerPC Image")),
+            ("https://os2borgerpc-admin.readthedocs.io", _("OS2borgerPC Admin Site")),
+            ("https://os2borgerpc-server-image.readthedocs.io", _("OS2borgerPC Kiosk Image")),
+            ("https://os2borgerpc-client.readthedocs.io", _("OS2borgerPC Client")),
         ]
 
         if "name" in self.kwargs:

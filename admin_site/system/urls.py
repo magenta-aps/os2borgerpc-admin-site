@@ -1,5 +1,6 @@
 from django.urls import re_path
 from django.views.generic import RedirectView
+from django.templatetags.static import static
 
 from django.views.i18n import JavaScriptCatalog
 
@@ -361,8 +362,7 @@ urlpatterns = [
     re_path(
         r"^documentation/os2borgerpc_installation_guide/",
         RedirectView.as_view(
-            url="https://github.com/OS2borgerPC/os2borgerpc-image/raw/development/"
-            + "docs/OS2BorgerPC Installationsguide.pdf"
+            url=static("docs/OS2BorgerPC_installation_guide_da.pdf")
         ),
     ),
     re_path(r"^documentation/(?P<name>[\d\w\/]+)/", DocView.as_view(), name="doc"),

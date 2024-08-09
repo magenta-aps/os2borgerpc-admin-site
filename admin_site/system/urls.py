@@ -361,9 +361,7 @@ urlpatterns = [
     ),
     re_path(
         r"^documentation/os2borgerpc_installation_guide/",
-        RedirectView.as_view(
-            url=static("docs/OS2BorgerPC_installation_guide_da.pdf")
-        ),
+        RedirectView.as_view(url=static("docs/OS2BorgerPC_installation_guide_da.pdf")),
     ),
     re_path(r"^documentation/(?P<name>[\d\w\/]+)/", DocView.as_view(), name="doc"),
     re_path(r"^documentation/", DocView.as_view(), name="doc_root"),

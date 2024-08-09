@@ -1813,14 +1813,6 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
             site=context["site"]
         )
 
-        # Get the link to the user guide for the chosen language
-        context["wake_plan_user_guide"] = (
-            "docs/Wake_plan_user_guide"
-            + "_"
-            + self.request.user.user_profile.language
-            + ".pdf"
-        )
-
         form = context["form"]
         # params = self.request.GET or self.request.POST
 
@@ -3800,39 +3792,6 @@ class SecurityEventsUpdate(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
         return HttpResponse("OK")
 
 
-documentation_menu_items = [
-    ("", _("The administration site")),
-    ("om_os2borgerpc_admin", _("About")),
-    ("sites_overview", _("Sites overview")),
-    ("status", _("Status")),
-    ("computers", _("Computers")),
-    ("groups", _("Groups")),
-    ("wake_plans", _("On/Off schedules")),
-    ("jobs", _("Jobs")),
-    ("scripts", _("Scripts")),
-    ("security_scripts", _("Security Scripts")),
-    ("notifications", _("Notifications and offline rules")),
-    ("users", _("Users")),
-    ("configuration", _("Configurations")),
-    ("changelogs", _("The News site")),
-    ("api", "API"),
-    ("creating_security_problems", _("Setting up security surveillance (PDF)")),
-    ("", _("OS2borgerPC")),
-    ("os2borgerpc_installation_guide", _("Installation Guide (PDF)")),
-    ("os2borgerpc_installation_guide_old", _("Old installation guide (PDF)")),
-    ("", _("OS2borgerPC Kiosk")),
-    ("os2borgerpc_kiosk_installation_guide", _("Installation Guide")),
-    ("os2borgerpc_kiosk_wifi_guide", _("Updating Wi-Fi setup")),
-    ("", _("Audit")),
-    ("audit_doc", _("FAQ (PDF)")),
-    ("", _("Technical Documentation")),
-    ("tech/os2borgerpc-image", _("OS2borgerPC Image")),
-    ("tech/os2borgerpc-admin", _("OS2borgerPC Admin Site")),
-    ("tech/os2borgerpc-server-image", _("OS2borgerPC Kiosk Image")),
-    ("tech/os2borgerpc-client", _("OS2borgerPC Client")),
-]
-
-
 class DocView(TemplateView, LoginRequiredMixin):
     docname = "status"
 
@@ -3841,6 +3800,50 @@ class DocView(TemplateView, LoginRequiredMixin):
         return os.path.isfile(fullpath)
 
     def get_context_data(self, **kwargs):  # noqa
+
+        user_lang = self.request.user.user_profile.language
+
+        documentation_menu_items = [
+            ("", _("The administration site")),
+            ("om_os2borgerpc_admin", _("About")),
+            ("sites_overview", _("Sites overview")),
+            ("status", _("Status")),
+            ("computers", _("Computers")),
+            ("groups", _("Groups")),
+            ("wake_plans", _("On/Off schedules")),
+            ("jobs", _("Jobs")),
+            ("scripts", _("Scripts")),
+            ("security_scripts", _("Security Scripts")),
+            ("notifications", _("Notifications and offline rules")),
+            ("users", _("Users")),
+            ("configuration", _("Configurations")),
+            ("changelogs", _("The News site")),
+            ("api", "API"),
+            (
+                "docs/OS2BorgerPC_security_rules_" + user_lang + ".pdf",
+                _("Setting up security surveillance (PDF)"),
+            ),
+            ("", _("OS2borgerPC")),
+            (
+                "docs/OS2BorgerPC_installation_guide_" + user_lang + ".pdf",
+                _("Installation Guide (PDF)"),
+            ),
+            (
+                "docs/OS2BorgerPC_installation_guide_old_" + user_lang + ".pdf",
+                _("Old installation guide (PDF)"),
+            ),
+            ("", _("OS2borgerPC Kiosk")),
+            ("os2borgerpc_kiosk_installation_guide", _("Installation Guide")),
+            ("os2borgerpc_kiosk_wifi_guide", _("Updating Wi-Fi setup")),
+            ("", _("Audit")),
+            ("docs/Audit_doc_" + user_lang + ".pdf", _("FAQ (PDF)")),
+            ("", _("Technical Documentation")),
+            ("tech/os2borgerpc-image", _("OS2borgerPC Image")),
+            ("tech/os2borgerpc-admin", _("OS2borgerPC Admin Site")),
+            ("tech/os2borgerpc-server-image", _("OS2borgerPC Kiosk Image")),
+            ("tech/os2borgerpc-client", _("OS2borgerPC Client")),
+        ]
+
         if "name" in self.kwargs:
             self.docname = self.kwargs["name"]
         else:
@@ -3873,20 +3876,6 @@ class DocView(TemplateView, LoginRequiredMixin):
         context["site"] = self.request.user.user_profile.sites.first()
 
         context["menu_active"] = docnames[0]
-
-        # Get the links to the pdf files for the chosen language
-        pdf_href = {
-            "wake_plan_user_guide": "docs/Wake_plan_user_guide",
-            "os2borgerpc_installation_guide": "docs/OS2BorgerPC_installation_guide",
-            "os2borgerpc_installation_guide_old": "docs/OS2BorgerPC_installation_guide_old",
-            "creating_security_problems": "/docs/OS2BorgerPC_security_rules",
-            "audit_doc": "docs/Audit_doc",
-            "customer_admin_guide": "docs/customer_admin_guide",
-        }
-
-        for key in pdf_href:
-            pdf_href[key] += "_" + self.request.user.user_profile.language + ".pdf"
-        context["pdf_href"] = pdf_href
 
         # Set heading according to chosen item
         current_heading = None

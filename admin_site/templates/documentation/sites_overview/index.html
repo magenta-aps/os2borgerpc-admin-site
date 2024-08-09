@@ -1,6 +1,7 @@
 {% extends 'documentation/index.html' %}
-{% load custom_tags %}
 {% load i18n %}
+{% load static %}
+{% load custom_tags %}
 
 
 
@@ -19,9 +20,11 @@
             If you want more detailed information about creating, deleting and handling multiple sites,
             we recommend reading our
         {% endblocktranslate %}
-        <a href="{{ pdf_href.customer_admin_guide }}" target="_blank">{% translate "Guide to creating and handling multiple sites" %}</a>.
+        {% with "docs/customer_admin_guide_"|add:request.user.user_profile.language|add:".pdf" as pdf_link %}
+          <a href="{% static pdf_link %}" target="_blank">{% translate "Guide to creating and handling multiple sites" %}</a>.
+        {% endwith %}
     </p>
-    
+
 
 <h2>{% translate "Information about your sites" %}</h2>
 <p>
@@ -60,7 +63,7 @@
             {% blocktranslate trimmed %}
                 The total number of OS2borgerPC computers (not kiosk) on the sites that you have access to
             {% endblocktranslate %}
-        </li>      
+        </li>
         <li>
             <strong>{% translate "OS2borgerPC Kiosk" %}</strong>:
             {% blocktranslate trimmed %}

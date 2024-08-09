@@ -44,19 +44,19 @@ detailpage
     {% translate "Return to admin" %}
   </a>
   {% for link, name in docmenuitems %}
-  {% if link in pdf_href %}
-    <a class="nav-link link-light" href="{% static pdf_href|get_item:link %}"> {{ name }} </a>    
-  {% elif link %}
-    <a class="nav-link link-light {% if menu_active == link %}active{% endif %}" href="{% url 'doc' link %}">
-      {{ name }}
-    </a>
-    {% if menu_active == link and submenu_template %}
-      {% include submenu_template %}
+    {% if ".pdf" in link %}
+      <a class="nav-link link-light" href="{% static link %}" target="_blank"> {{ name }} </a>
+    {% elif link %}
+      <a class="nav-link link-light {% if menu_active == link %}active{% endif %}" href="{% url 'doc' link %}">
+        {{ name }}
+      </a>
+      {% if menu_active == link and submenu_template %}
+        {% include submenu_template %}
+      {% endif %}
+    {% else %}
+      <hr>
+      <h2 class="text-light">{{ name }}</h2>
     {% endif %}
-  {% else %}
-  <hr>
-  <h2 class="text-light">{{ name }}</h2>
-  {% endif %}
   {% endfor %}
 </nav>
 {% endblock %}

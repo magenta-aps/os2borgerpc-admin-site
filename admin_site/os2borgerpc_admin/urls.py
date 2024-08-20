@@ -25,6 +25,7 @@ urlpatterns = [
     ),
     # Include each of our apps' URLs
     re_path(r"^", include("system.urls")),
+    re_path(r"^documentation/", include("docs.urls")),
     # Include changelog URLs
     re_path(r"^changelog/", include("changelog.urls")),
     # Include external apps' URLs

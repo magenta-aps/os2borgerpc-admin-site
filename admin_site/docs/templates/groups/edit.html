@@ -1,0 +1,97 @@
+{% extends 'index.html' %}
+{% load i18n %}
+
+{% block specific_content %}
+  <h1>{% translate "Editing groups: Master data, computers and supervisors" %}</h1>
+  <p>
+    {% blocktranslate trimmed %}
+    When you click on a group, you will by default be shown the group's
+    master data, any computers that belong to the group and any
+    supervisors chosen for the group. Here you can change the group's
+    name and description as well as add or remove computers or
+    supervisors from the group. The changes will not become permanent
+    until you've clicked on the button "Save changes" at the bottom of
+    the screen.
+    {% endblocktranslate %}
+  </p>
+  <h2>{% translate "Add/remove computers" %}</h2>
+  <p>
+    {% blocktranslate trimmed %}
+    A list of computers that belong to the group is shown on the right side
+    of the screen. You can edit the members of the group as described below.
+    {% endblocktranslate %}
+  </p>
+  <h3>{% translate "Add a computer" %}</h3>
+  <p>
+    {% blocktranslate trimmed %}
+    You add computers by clicking on "Add a computer to the group". If there are
+    any computers that do not yet belong to the group, they will be shown in a list.
+    Click on the computer(s) that you wish to add to select them and then click on
+    the check mark beneath the list to add the computer(s) to the group.
+    {% endblocktranslate %}
+  </p>
+  <h3>{% translate "Remove a computer" %}</h3>
+  <p>
+    {% blocktranslate trimmed %}
+    You remove a computer by clicking on the X to the right of the computer's
+    name in the list of computers that belong to the group.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    Remember that changes to the list of computers do not become permanent
+    until you've clicked on "Save changes" at the bottom of the screen.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% translate "Note that group membership can affect the computer's configuration." %}
+  </p>
+  <h2>{% translate "Add/remove supervisors" %}</h2>
+  <p>
+    {% blocktranslate trimmed %}
+    A list of supervisors for the group is shown on the right side
+    of the screen. You can edit the supervisors for the group as described below.
+    {% endblocktranslate %}
+  </p>
+  <h3>{% translate "Add a supervisor" %}</h3>
+  <p>
+    {% blocktranslate trimmed %}
+    You add supervisors by clicking on "Add a supervisor to the group". If there are
+    any users on your site that are not yet supervisors for the group, they will be
+    shown in a list. Click on the user(s) that you wish to make supervisors to select
+    them and then click on the check mark beneath the list to make them supervisors
+    for the group.
+    {% endblocktranslate %}
+  </p>
+  <h3>{% translate "Remove a supervisor" %}</h3>
+  <p>
+    {% blocktranslate trimmed %}
+    You remove a supervisor by clicking on the X to the right of the supervisor's
+    username in the list of supervisors for the group.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    Remember that changes to the list of supervisors do not become permanent
+    until you've clicked on "Save changes" at the bottom of the screen.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    If a group has one or more supervisors, those supervisors will receive any
+    email warnings or notifications related to the computers in the group
+    instead of the recipients set on the relevant security rules or offline rules.
+    {% endblocktranslate %}
+  </p>
+  <h3>{% translate "Notice for users of On/Off schedules" %}</h3>
+  <p>
+    {% blocktranslate trimmed %}
+    A computer can only be associated with a single schedule at a time. If the
+    group is associated with a schedule and you add one or more computers that
+    are associated with a different schedule via a different group, the chosen
+    computers will be rejected as part of the update of the group when you click
+    "Save changes". Valid computers will still be added. If one or more computers
+    are rejected, the webpage will inform you of this as well as the reason.
+    {% endblocktranslate %}
+  </p>
+{% endblock %}

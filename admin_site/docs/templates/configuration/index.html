@@ -1,0 +1,242 @@
+{% extends 'index.html' %}
+{% load i18n %}
+{% load custom_tags %}
+
+{% block specific_content %}
+  <h1>{% translate "Configurations" %}</h1>
+
+  <p class="alert alert-danger">
+    {% translate "Do not delete or edit configurations unless you know what you are doing!" %}
+  </p>
+
+  <p class="alert alert-warning">
+    {% blocktranslate trimmed %}
+    Configurations are functionality aimed primarily at technical troubleshooting, system administrators
+    and script developers and thus most likely not relevant for most people.
+    {% endblocktranslate %}
+  </p>
+
+  <p>
+    {% blocktranslate trimmed %}
+    Configurations are used to exchange information between the admin-site and the registered
+    computers in both directions.
+    {% endblocktranslate %}
+    <br/>
+    {% blocktranslate trimmed %}
+    In other words, it is possible to use the admin-site to specify a value that one or more computers will
+    then receive and, similarly, a computer also sends values to the admin-site.
+    {% endblocktranslate %}
+  </p>
+  <p>{% translate "General examples of possible uses" %}:</p>
+  <ul>
+    <li>{% blocktranslate trimmed %}
+      Among other things, the computer sends information about its hostname, its IP addresses,
+      the current kernel version and the last time it performed automatic updates. {% endblocktranslate %}
+      <br>
+      {% translate "This information can sometimes be relevant for system administrators." %}</li>
+    <li>{% blocktranslate trimmed %}
+      The computer also sends information about whether it is running BorgerPC or BorgerPC Kiosk along with
+      the specific version.
+      {% endblocktranslate %}
+      <br>
+      {% translate "This information can sometimes be relevant during troubleshooting." %}</li>
+    <li>{% blocktranslate trimmed %}
+      As part of the development of a script, one might wish to set the configuration for the script via the admin-site,
+      which allows the configuration to be updated without rerunning the script, and also allows the configuration to
+      vary between groups and computers. {% endblocktranslate %}
+      <br>
+      {% translate "This can sometimes be relevant to know for script developers." %}</li>
+  </ul>
+
+  <p>
+    {% blocktranslate trimmed %}
+    The majority of configurations are controlled by the admin-site rather than the individual computer.
+    This means that if you change a value on an individual computer, it will typically be changed back to the value
+    listed on the admin-site during the next check-in. {% endblocktranslate %}
+  </p>
+
+  <h3>{% translate "Technical information for system administrators" %}</h3>
+
+  <h4>{% translate "Handling configurations" %}</h4>
+
+  <p>
+    {% blocktranslate trimmed %}
+    Click the button "Add configuration" to add a new configuration key/value.
+    {% endblocktranslate %}
+    <br/>
+    {% translate "Edit"|bold as edit %}
+    {% translate "Delete"|bold as delete %}
+    {% blocktranslate trimmed %}
+    In order to edit or delete a value, you must click on {{ edit }} or {{ delete }} to the
+    right of the individual key.
+    {% endblocktranslate %}
+  </p>
+
+  <h4>{% translate "Configurations at different levels" %}</h4>
+
+  <p>{% translate "Configurations exist at three levels" %}:</p>
+
+  <p><strong>1. {% translate "Site configurations" %}</strong></p>
+
+  <p>
+    {% translate "These configuration parameters are applied to all computers that belong to the chosen site." %}
+  </p>
+
+  <p>
+    {% blocktranslate trimmed %}
+    The site configurations can be overwritten via adjusted configuration keys/values
+    on groups and individual computers. {% endblocktranslate %}
+  </p>
+
+  <p><strong>2. {% translate "Group configurations" %}</strong></p>
+
+  <p>
+    {% translate "unless"|italic as unless %}
+    {% blocktranslate trimmed %}
+    Changes to the configurations for a group will affect all computers that belong to
+    that group {{ unless }} that particular configuration key has been specially adjusted
+    for the individual computer.
+    {% endblocktranslate %}
+  </p>
+
+  <p><strong>3. {% translate "Computer configurations" %}</strong></p>
+
+  <p>
+    {% blocktranslate trimmed %}
+    Configurations set at the computer level will always take precedence over site
+    configurations or configurations for groups that the computer belongs to.
+    {% endblocktranslate %}
+  </p>
+
+  <h4>{% translate "The meaning of the built-in configurations" %}</h4>
+
+  <p class="alert alert-info">
+    {% blocktranslate trimmed %}
+    All values without _ in front are controlled by the admin-site while values with _ are controlled
+    by the computer / the client.
+    {% endblocktranslate %}
+    <br/>
+    {% blocktranslate trimmed with version="os2borgerpc_version"|bold %}
+    This means that if one were to change e.g. {{ version }} on the computer, then the value would be overwritten
+    during the next check-in with the admin-site. {% endblocktranslate %}
+  </p>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>{% translate "Name" %}</th>
+        <th>{% translate "Meaning" %}</th>
+        <th>{% translate "Comment" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>_os2borgerpc.client_version</td>
+        <td>{% translate "The version of the OS2borgerPC-client" %}</td>
+        <td>{% translate "The client is the particular software on the computer that communicates with the admin-site" %}</td>
+      </tr>
+      <tr>
+        <td>_os_name</td>
+        <td>{% translate "The name of the operating system" %}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>_os_release</td>
+        <td>{% translate "The version of the operating system" %}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>_ip_addresses</td>
+        <td>{% translate "The IP addresses of the computer" %}</td>
+        <td>{% translate "The list is not sorted" %}</td>
+      </tr>
+      <tr>
+        <td>_kernel_version</td>
+        <td>{% translate "The version of the kernel" %}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>_last_automatic_update_time</td>
+        <td>{% translate "The time when the computer last performed automatic updates" %}</td>
+        <td>{% translate "If the value is empty, the computer failed to determine the time" %}</td>
+      </tr>
+      <tr>
+        <td>admin_url</td>
+        <td>{% translate "The address of the server where the computer checks in" %}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>distribution</td>
+        <td>{% translate "The name of the operating system" %}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>hostname</td>
+        <td>{% translate "The computer's hostname" %}</td>
+        <td>{% translate "Is currently only set during the registration" %}</td>
+      </tr>
+      <tr>
+      <tr>
+        <td>job_timeout</td>
+        <td>{% translate "How long the client waits for a job to finish in seconds" %}</td>
+        <td>{% blocktranslate trimmed %}
+          If job_timeout is exceeded, the process is stopped.
+          This is useful if something is stuck, such as a process futilely waiting for input
+          {% endblocktranslate %}
+        </td>
+      </tr>
+      <tr>
+        <td>os2_product</td>
+        <td>{% translate "Indicates whether the computer is an OS2borgerPC or a OS2borgerPC Kiosk" %}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>os2borgerpc_version</td>
+        <td>{% translate "The version of the OS2borgerPC-image that was installed" %}</td>
+        <td>{% translate "Unless the computer is reinstalled, this number does not change" %}</td>
+      </tr>
+      <tr>
+        <td>site</td>
+        <td>{% translate "The site that the computer belongs to" %}</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>{% translate "Technical information for script developers" %}</h3>
+
+  <h4>{% translate "How information is exchanged" %}</h4>
+
+  <h5>Site <span class='material-icons'>arrow_right_alt</span> {% translate "Computer" %}</h5>
+
+  <p>{% blocktranslate trimmed %}
+      You create a configuration value for a Site, a Group or a computer and it will automatically be transferred
+      to the relevant computer(s) during their next check-in with the admin-site.
+      {% endblocktranslate %}<p>
+
+  <h5>{% translate "Computer" %} <span class='material-icons'>arrow_right_alt</span> Site</h5>
+
+  <p>{% translate "From a terminal on the computer or a script, you can use these programs" %}:</p>
+  <table class="table table-hover">
+    <thead>
+      <tr><th>{% translate "Name" %}</th><th>{% translate "Function" %}</th><th>{% translate "Usage example" %}</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>get_os2borgerpc_config</td>
+        <td>{% translate "Retrieves the value of a configuration value" %}</td>
+        <td>get_os2borgerpc_config site<br/> <br/>
+          {% translate "Retrieves the UID of the site where the computer is registered." %}</td>
+      </tr>
+      <tr>
+        <td>set_os2borgerpc_config</td>
+        <td>{% translate "Sets the value of a configuration value" %}</td>
+        <td>set_os2borgerpc_config {% translate "citizen yes" %}<br/> <br/>
+          {% translate "Creates a new configuration value with the name citizen and the value 'yes'" %}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>{% translate "In practice, the above programs interact with the file" %} /etc/os2borgerpc/os2borgerpc.conf</p>
+
+{% endblock %}

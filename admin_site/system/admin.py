@@ -281,7 +281,7 @@ class CountryAdmin(admin.ModelAdmin):
 
 @admin.register(m.Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    list_filter = ("country",)
+    list_filter = ("country", "is_test")
     list_display = (
         "name",
         "is_test",

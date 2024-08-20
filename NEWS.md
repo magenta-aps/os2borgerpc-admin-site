@@ -1,5 +1,4 @@
-Version 6.0.0, June 18, 2024
-----------------------------
+## Version 6.0.0, June 18, 2024
 
 - Customers can now create their own sites, via an added user type called called "customer admin"
 - Site overview: Add various stats, indicating the number of PCs that are BorgerPC's, Kiosk PC's, activated, online - as well as the number of PCs for each Ubuntu version
@@ -12,23 +11,23 @@ Version 6.0.0, June 18, 2024
 - Add weekly cleanup of old Security events and Citizen objects
 - Prevent server error when attempting to register a PC with an invalid site name
 
-Version 5.28.0, April 18, 2024
-------------------------------
+
+## Version 5.28.0, April 18, 2024
 
 - Fix CVE-2024-1135 (gunicorn) by updating it to 22.0.0
 - Make choices input parameter type work in the policy list
 - Various updates to changelogs (layouting, draft status, remove a few barely used fields)
 
-Version 5.27.0, April 10, 2024
-------------------------------
+
+## Version 5.27.0, April 10, 2024
 
 - Fix bug that prevented jobs related to scripts requiring feature permissions from showing correctly
 - Update to Django version 4.2.11
 - Add new input parameter type: choices, which give a list of choices
 - Make makemessages use the no-obsolete flag
 
-Version 5.26.0, April 08, 2024
-------------------------------
+
+## Version 5.26.0, April 08, 2024
 
 - Implement the first part of a change intended to restrict scripts to
   being run on the products that they were intended for
@@ -49,16 +48,16 @@ Version 5.26.0, April 08, 2024
 - Update requirements
 - Add readthedocs.yaml
 
-Version 5.25.0, March 04, 2024
-------------------------------
+
+## Version 5.25.0, March 04, 2024
 
 - Fix picklists handling displaying html chars (e.g. quotes) correctly
 - Fix leap year bug in backend
 - Hide country and testsite from site settings
 - Delete the old primitive API
 
-Version 5.24.0, February 27, 2024
----------------------------------
+
+## Version 5.24.0, February 27, 2024
 
 - Fix minor bug in sms login integration
 - Add country object related to sites
@@ -66,8 +65,8 @@ Version 5.24.0, February 27, 2024
 - Sort site_list for superusers based on country and test status
 - Make first group creation use the same form as creation of later groups
 
-Version 5.23.0, February 15, 2024
----------------------------------
+
+## Version 5.23.0, February 15, 2024
 
 - Update rpc.py functions to prepare for removing outdated logic later
 - Place .mo files in .gitignore and have the Dockerfile compile them
@@ -83,18 +82,18 @@ Version 5.23.0, February 15, 2024
 - Fix bug causing scripts that require feature permissions to be shown under security scripts
 - Fix bug causing script parameter names with " to be displayed incorrectly
 
-Version 5.22.2, December 6, 2023
---------------------------------
+
+## Version 5.22.2, December 6, 2023
 
 - Allow arbitrary URLs for Easy!Appointments
 
-Version 5.22.1, November 30, 2023
----------------------------------
+
+## Version 5.22.1, November 30, 2023
 
 - Minor adjustments to integration with SMSTeknik and Easy!Appointments
 
-Version 5.22.0, November 28, 2023
----------------------------------
+
+## Version 5.22.0, November 28, 2023
 
 - Add integration with SMSTeknik and Easy!Appointments to support login on OS2borgerPC's via sms verification
   with or without booking via Easy!Appointments required
@@ -103,8 +102,8 @@ Version 5.22.0, November 28, 2023
 - Add sites to the /admin overview of feature permissions
 - Add site name to cicero validation logging
 
-Version 5.21.0, Oktober 23, 2023
---------------------------------
+
+## Version 5.21.0, Oktober 23, 2023
 
 - Add a new Django Ninja API, available at /api/, a page to generate API keys, and related documentation
 - Fix bug: Scripts with new checkbox parameters now get a valid default value in the places where its associated: True
@@ -116,8 +115,8 @@ Version 5.21.0, Oktober 23, 2023
 - Fix bug: Updated configuration values are now reflected immediately in the list,
   instead of having to press "Save changes" first.
 
-Version 5.20.0, September 18, 2023
-----------------------------------
+
+## Version 5.20.0, September 18, 2023
 
 - Expand Security Event / Security Rule system to cover other types of events - in this case specifically an event for when the PC's in
   a group are offline for longer than a specified period of time.
@@ -127,8 +126,8 @@ Version 5.20.0, September 18, 2023
 - Updated the Cicero integration to support preventing simultaneous logins by the same library user and store username/password
   for the Cicero API in the database per site
 
-Version 5.19.0, September 5, 2023
----------------------------------
+
+## Version 5.19.0, September 5, 2023
 
 - Fix wake plan not being sent/removed when adding/removing PC to/from group from PCUpdate
 - Use translations in Site documentation and update documentation
@@ -142,8 +141,8 @@ Version 5.19.0, September 5, 2023
 - Prevent saving a script with an unnamed input, which caused a server error
 - Minor improvements to /admin
 
-Version 5.18.0, July 6, 2023
-----------------------------
+
+## Version 5.18.0, July 6, 2023
 
 - Remove execute permissions from files that don't need it
 - Policy Scripts: Add functionality to optionally rerun policy scripts when their parameters are changed.
@@ -153,21 +152,21 @@ Version 5.18.0, July 6, 2023
 - Minor improvements to /admin
 - Simplify how settings are loaded
 
-Version 5.17.0, June 6, 2023
-----------------------------
+
+## Version 5.17.0, June 6, 2023
 
 - Update Django from 3.2.17 -> 4.2.1
 - Fix bug in wake plan validation
 - Create new users with the same language set as yourself by default
 
-Version 5.16.0, May 30, 2023
-----------------------------
+
+## Version 5.16.0, May 30, 2023
 
 - Add two-factor login for the admin-site
 - Restore old links to installation guide and wake plan user guide
 
-Version 5.15.0, May 25, 2023
-----------------------------
+
+## Version 5.15.0, May 25, 2023
 
 - Improved display of image version in backend
 - Link to different pdf files based on chosen language
@@ -175,13 +174,13 @@ Version 5.15.0, May 25, 2023
 - English error message when attempting to register an already registered machine
 - Translate text set via javascript
 
-Version 5.14.1, May 8, 2023
----------------------------
+
+## Version 5.14.1, May 8, 2023
 
 - Fix bug causing MandatoryParameterMissingError when saving a group with an associated script that uses password input
 
-Version 5.14.0, May 3, 2023
----------------------------
+
+## Version 5.14.0, May 3, 2023
 
 - Escape contents of security event log before outputting it to the page.
 - Fix and change favicons.
@@ -190,8 +189,7 @@ Version 5.14.0, May 3, 2023
 - Remove superusers from the list of people a Security Event can be assigned to.
 
 
-Version 5.13.0, April 18, 2023
-------------------------------
+## Version 5.13.0, April 18, 2023
 
 - Add language variability and allow Danish, English or Swedish.
 - Add default values for script inputs.
@@ -200,21 +198,21 @@ Version 5.13.0, April 18, 2023
 - Switch from custom DB image to default postgres image in docker-compose.yml.
 - Don't redirect to a hidden script when entering scripts subsection.
 
-Version 5.12.0, March 15, 2023
-------------------------------
+
+## Version 5.12.0, March 15, 2023
 
 - Update URLs to installation guides, use more generic names.
 - Remain on selected security rule after saving it.
 - Allow all characters in script names without issues with Associated Scripts.
 - Remove unmaintained gateway documentation.
 
-Version 5.11.0, February 23, 2023
----------------------------------
+
+## Version 5.11.0, February 23, 2023
 
 - Make computers/json API work again.
 
-Version 5.10.3, February 2, 2023
---------------------------------
+
+## Version 5.10.3, February 2, 2023
 
 - Update Django version to latest patch release: 3.2.17.
 - Run most recent black version.
@@ -222,8 +220,8 @@ Version 5.10.3, February 2, 2023
 - Update the documentation.
 - Show OS2BPC client version in the backend for the PC table.
 
-Version 5.10.2, January 12, 2023
---------------------------------
+
+## Version 5.10.2, January 12, 2023
 
 - Give proper errors and error messages when attempting to name a user an existing name, or visiting a
   group by a nonexisting ID.
@@ -232,13 +230,13 @@ Version 5.10.2, January 12, 2023
 - Rewrite some hardcoded danish to english and use translations there instead.
 - Replace magic numbers with readable names when checking for privileges.
 
-Version 5.10.1, December 19, 2022
----------------------------------
+
+## Version 5.10.1, December 19, 2022
 
 - Fix bug where security problems showed up on the groups for other sites on the group page.
 
-Version 5.10.0, December 14, 2022
----------------------------------
+
+## Version 5.10.0, December 14, 2022
 
 - Wake plan: Launch new section to handle startup and shutdown times, including related.
   documentation, guide and test data.
@@ -246,8 +244,8 @@ Version 5.10.0, December 14, 2022
 - Improved backend validation of user permissions when deleting a script.
 - Assorted consistency fixes throughout the site.
 
-Version 5.9.3, November 9, 2022
----------------------------------
+
+## Version 5.9.3, November 9, 2022
 
 - Prevent computers from being re-registered - print an error message if it already exists on the adminsite.
 - Site admins: Fix it so site admins can delete their own scripts and security problems again.
@@ -264,21 +262,20 @@ Version 5.9.3, November 9, 2022
 - /admin improvements.
 
 
-Version 5.9.2, September 26, 2022
----------------------------------
+## Version 5.9.2, September 26, 2022
 
 - Changelog: Redesign the list/overview page somewhat.
 - Jobs list: Handle deleted users so they don't cause server errors.
 - Fix script annull button so it doesn't rather arbitrarily reset things it shouldn't.
 
-Version 5.9.1, September 16, 2022
----------------------------------
+
+## Version 5.9.1, September 16, 2022
 
 - Revert global scripts as default as it didn't quite work as intended yet.
   To be continued!
 
-Version 5.9.0, September 16, 2022
----------------------------------
+
+## Version 5.9.0, September 16, 2022
 
 New in this version:
 
@@ -290,8 +287,8 @@ New in this version:
   optional as it caused a server error.
 - Globals scripts page is now loaded by default instead of local scripts.
 
-Version 5.8.1, August 26, 2022
-------------------------------
+
+## Version 5.8.1, August 26, 2022
 
 New in this version:
 
@@ -300,8 +297,8 @@ New in this version:
   mandatory off, as otherwise the checkbox won't accept not being "checked"
   (it will only have one state).
 
-Version 5.8.0, August 25, 2022
-------------------------------
+
+## Version 5.8.0, August 25, 2022
 
 New in this version:
 
@@ -323,8 +320,8 @@ New in this version:
 - Fix server error when in some cases you both add and delete scripts from
   a policy.
 
-Version 5.7.0, July 12, 2022
-----------------------------
+
+## Version 5.7.0, July 12, 2022
 
 New in this version:
 
@@ -334,8 +331,8 @@ New in this version:
 - Add a batch per site when using the maintenance script maintenance command.
 - Fix to remove redudant filename for policy scripts.
 
-Version 5.6.5, June 28, 2022
-----------------------------
+
+## Version 5.6.5, June 28, 2022
 
 New in this version:
 
@@ -343,8 +340,8 @@ New in this version:
   (for example with or without seconds).
 - Make associated scripts easily editable in Django Admin.
 
-Version 5.6.4, June 21, 2022
-----------------------------
+
+## Version 5.6.4, June 21, 2022
 
 New in this version:
 
@@ -353,8 +350,8 @@ New in this version:
 - Fix Cicero pincode input to allow leading zeroes.
 - Small fixes to Fixtures, Django admin and Job view.
 
-Version 5.6.3, June 8, 2022
----------------------------
+
+## Version 5.6.3, June 8, 2022
 
 New in this version:
 
@@ -363,23 +360,23 @@ New in this version:
 - Move print_db_files management command to the correct place.
 - Remove flake8 from linters.
 
-Version 5.6.2, June 2, 2022
----------------------------
+
+## Version 5.6.2, June 2, 2022
 
 New in this version:
 
 - Make PCGroup uid unique.
 - Make PCGroupAdmin nicer.
 
-Version 5.6.1, June 2, 2022
----------------------------
+
+## Version 5.6.1, June 2, 2022
 
 New in this version:
 
 - Add custom error pages (403, 404, 500).
 
-Version 5.6.0, May 30, 2022
----------------------------
+
+## Version 5.6.0, May 30, 2022
 
 New in this version:
 
@@ -395,8 +392,8 @@ New in this version:
 - Make securityproblem UID globally unique.
 - Remove null from TextFields and CharFields.
 
-Version 5.5.1, May 3, 2022
---------------------------
+
+## Version 5.5.1, May 3, 2022
 
 New in this version:
 
@@ -404,16 +401,16 @@ New in this version:
 - Make date inputtype a date instead of date and time.
 - Send script names to clients running them.
 
-Version 5.4.2, April 12, 2022
------------------------------
+
+## Version 5.4.2, April 12, 2022
 
 New in this version:
 
 - Fix sorting of computer name on Status page.
 - Add totals above picklists in Computere and Grupper.
 
-Version 5.4.1, April 1, 2022
-----------------------------
+
+## Version 5.4.1, April 1, 2022
 
 New in this version:
 
@@ -423,16 +420,16 @@ New in this version:
 - More info on Sites overview.
 - Remove author field.
 
-Version 5.3.1, March 21, 2022
------------------------------
+
+## Version 5.3.1, March 21, 2022
 
 New in this version:
 
 - Make Versions page render correctly.
 - Update Django version.
 
-Version 5.3.0, January 26, 2022
--------------------------------
+
+## Version 5.3.0, January 26, 2022
 
 New in this version:
 
@@ -450,16 +447,14 @@ New in this version:
 - Make AssociatedScriptParameters that are files easily downloadable.
 
 
-Version 5.2.1, January 3, 2022
-------------------------------
+## Version 5.2.1, January 3, 2022
 
 Hotfix:
 
 - Added SERVER_EMAIL in settings to enable crash email.
 
 
-Version 5.2.0, November 25, 2021
---------------------------------
+## Version 5.2.0, November 25, 2021
 
 New in this version:
 
@@ -473,15 +468,15 @@ New in this version:
 - Upgraded to Django 3.2.9 - newer versions of a lot of other packages
   as well.
 
-Version 5.1.1, October 20, 2021
--------------------------------
+
+## Version 5.1.1, October 20, 2021
 
 New in this version:
 
 - Fix bug making it difficult to add policy scripts
 
-Version 5.1.0, October 20, 2021
--------------------------------
+
+## Version 5.1.0, October 20, 2021
 
 New in this version:
 
@@ -495,8 +490,8 @@ New in this version:
   Related: For pcs that aren't activated, don't show the status instead of showing "Offline".
 - /admin/ improments to AssociatedScripts and Configurations
 
-Version 5.0.0, August 8, 2021
------------------------------
+
+## Version 5.0.0, August 8, 2021
 
 New in this version:
 
@@ -516,8 +511,7 @@ New in this version:
 - Update Bootstrap to version 5.
 
 
-Version 4.3.2, June 30, 2021
-----------------------------
+## Version 4.3.2, June 30, 2021
 
 New in this version:
 
@@ -525,8 +519,8 @@ New in this version:
   run a script or have been assigned a security issue.
 - Add reference in README to Read the Docs documentation
 
-Version 4.3.1, June 21, 2021
-----------------------------
+
+## Version 4.3.1, June 21, 2021
 
 New in this version:
 
@@ -535,8 +529,7 @@ New in this version:
 - Avoid crash (HTTP 500) on /sites/ URL when not logged in.
 
 
-Version 4.3.0, May 11, 2021
----------------------------
+## Version 4.3.0, May 11, 2021
 
 New in this version:
 
@@ -548,8 +541,7 @@ New in this version:
 - Improved site information in admin site.
 
 
-Version 4.2.0, April 9, 2021
-----------------------------
+## Version 4.2.0, April 9, 2021
 
 New in this version:
 
@@ -561,8 +553,7 @@ New in this version:
 - Security fix: Django upgraded to version 3.1.8.
 
 
-Version 4.1.6, January 28, 2021
--------------------------------
+## Version 4.1.6, January 28, 2021
 
 New in this version:
 
@@ -571,8 +562,7 @@ New in this version:
 - A number of crashes (HTTP 500) on missing resources fixed (return 404 instead).
 
 
-Version 4.1.5, January 27, 2021
--------------------------------
+## Version 4.1.5, January 27, 2021
 
 New in this version:
 
@@ -580,16 +570,14 @@ New in this version:
   signed-urls.
 
 
-Version 4.1.4, January 25, 2021
--------------------------------
+## Version 4.1.4, January 25, 2021
 
 New in this version:
 
 - Collectstatic is run at build time, not at startup.
 
 
-Version 4.1.3, January 21, 2021
--------------------------------
+## Version 4.1.3, January 21, 2021
 
 New in this version:
 
@@ -598,8 +586,7 @@ New in this version:
 - Standardize handling of static media (CSS, Javascript, etc.).
 
 
-Version 4.1.2, January 19, 2021
--------------------------------
+## Version 4.1.2, January 19, 2021
 
 New in this version:
 
@@ -610,16 +597,14 @@ New in this version:
 - Set 2s timeout for database connections.
 
 
-Version 4.1.1, January 12, 2021
--------------------------------
+## Version 4.1.1, January 12, 2021
 
 New in this version:
 
 - Fixed bug in CI script.
 
 
-Version 4.1.0, January 12, 2021
--------------------------------
+## Version 4.1.0, January 12, 2021
 
 New in this version:
 
@@ -630,8 +615,7 @@ New in this version:
 - Deprecated installation methods removed.
 
 
-Version 4.0.0, December 10, 2020
---------------------------------
+## Version 4.0.0, December 10, 2020
 
 New in this version:
 
@@ -641,8 +625,7 @@ New in this version:
   recovery.
 
 
-Version 3.1.3, October 18, 2019
--------------------------------
+## Version 3.1.3, October 18, 2019
 
 Bugfix release. Fixed in this version:
 
@@ -652,16 +635,14 @@ Bugfix release. Fixed in this version:
 - #31066: Forward slashes in group names are now supported.
 
 
-Version 3.1.2.1, June 27, 2019
-------------------------------
+## Version 3.1.2.1, June 27, 2019
 
 Infrastructural release. Fixed in this version:
 
 - #27325: Deploying new versions should no longer result in migration conflicts
 
 
-Version 3.1.1, March 25, 2019
------------------------------
+## Version 3.1.1, March 25, 2019
 
 Minor bugfix release. Fixed in this version:
 
@@ -670,8 +651,7 @@ Minor bugfix release. Fixed in this version:
 - #27432: Policy script file parameter validation no longer demands that files be re-uploaded
 
 
-Version 3.1.0, February 25, 2019
---------------------------------
+## Version 3.1.0, February 25, 2019
 
 - Support for associating scripts with groups (policies)
 - Logging out of the admin system now works more reliably
@@ -683,30 +663,26 @@ Version 3.1.0, February 25, 2019
   - A bug that could occasionally clear client configuration files has been fixed
 
 
-Version 3.0.1, January 16, 2019
--------------------------------
+## Version 3.0.1, January 16, 2019
 
 - json data exposing existing computers on a given site can now be reached from %domain%/%site_id%/computers/json/
 
 
-Version 3.0.0.3, Juli 02, 2018
-------------------------------
+## Version 3.0.0.3, Juli 02, 2018
 
 Hotfix. New in this version:
 
  - Empty strings should only be used when checking input-fields
 
 
-Version 3.0.0.2, Juni 28, 2018
-------------------------------
+## Version 3.0.0.2, Juni 28, 2018
 
 Hotfix. New in this version:
 
  - Make the input-fields work again in script parameters
 
 
-Version 3.0.0.1, Juni 13, 2018
-------------------------------
+## Version 3.0.0.1, Juni 13, 2018
 
 Hotfix. New in this version:
 
@@ -715,8 +691,7 @@ Hotfix. New in this version:
  - Make bibos_client upgrade and remove netifaces requirement
 
 
-Version 3.0.0, Juni 5, 2018
----------------------------
+## Version 3.0.0, Juni 5, 2018
 
 - Python 3 and Django 1.11 compatible code (admin-site)
 - “Removal” of the upgrade management
@@ -725,22 +700,19 @@ Version 3.0.0, Juni 5, 2018
 - settings.py uses an environment-file to differentiate dev/prod
 - Post install script added for development
 
-Version 2.3.3.1, February 23, 2017
-----------------------------------
+## Version 2.3.3.1, February 23, 2017
 
 Hotfix. New in this version:
 
 - Bumped bibos_client number to 0.3.2
 
 
-Version 2.3.3, February 23, 2017
---------------------------------
+## Version 2.3.3, February 23, 2017
 
 - Ubuntu 16.04 is added as a closed distribution.
 
 
-Version 2.3.2, October 24, 2016
--------------------------------
+## Version 2.3.2, October 24, 2016
 
 - If no network connection, lock for jobmanager is released.
 - Documentation has been added, describing that the system is not
@@ -750,8 +722,7 @@ Version 2.3.2, October 24, 2016
   ændret til dansk.
 
 
-Version 2.3.1, September 22, 2016
----------------------------------
+## Version 2.3.1, September 22, 2016
 
 - Backwards compatibility: If security dir is missing, security is ignored.
 - Migrations committed, WSGI script is fixed.
@@ -761,8 +732,7 @@ Version 2.3.1, September 22, 2016
 - The version number for the bibos_client is bumped to 0.0.3.1.
 
 
-Version 2.3.0, June 30, 2016
-----------------------------
+## Version 2.3.0, June 30, 2016
 
 - Security warnings are added - a whole new subsystem which can generate
   warnings about suspicious activity on the client computers. It is
@@ -777,24 +747,21 @@ Version 2.3.0, June 30, 2016
   supports the security warning subsystem.
 
 
-Version 2.2.5.1,  April 6, 2016
--------------------------------
+## Version 2.2.5.1,  April 6, 2016
 
 Hotfix. New in this version:
 
 - Add LoginRequired mixin to the PC Update view.
 
 
-Version 2.2.5.1,  March 21, 2016
---------------------------------
+## Version 2.2.5.1,  March 21, 2016
 
 Hotfix. New in this version:
 
 - The version number for the bibos_client is bumped to 0.0.2.6.
 
 
-Version 2.2.5,  March 21, 2016
-------------------------------
+## Version 2.2.5,  March 21, 2016
 
 New in this version:
 
@@ -802,8 +769,7 @@ New in this version:
   detect the operating system so the correct distribution will be chosen.
 
 
-Version 2.2.4,  June 13, 2014
------------------------------
+## Version 2.2.4,  June 13, 2014
 
 Rollback of model changes in hotfix 2.2.3.2, retain failed upgrade management.
 
@@ -817,8 +783,7 @@ This version should be considered stable. At the time of writing, we're not
 aware of any serious issues.
 
 
-Version 2.2.3.1,  June 3, 2014
-------------------------------
+## Version 2.2.3.1,  June 3, 2014
 
 Hotfix. New in this version:
 
@@ -828,8 +793,7 @@ Hotfix. New in this version:
   recalculation of these lists against all installed packages.
 
 
-Version 2.2.3,  May 28, 2014
-----------------------------
+## Version 2.2.3,  May 28, 2014
 
 New in this version:
 
@@ -838,8 +802,7 @@ New in this version:
   up next time the job manager runs.
 
 
-Version 2.2.2, February 4, 2014
--------------------------------
+## Version 2.2.2, February 4, 2014
 
 New in this version:
 
@@ -847,8 +810,8 @@ New in this version:
   performance issue to regress (ticket #9611).
 
 
-Version 2.2.1, February 3, 2014
--------------------------------
+## Version 2.2.1, February 3, 2014
+
 New in this version:
 
 - Package lists are only synchronized between client and server if number of
@@ -858,8 +821,8 @@ New in this version:
 - Developer documentation updated and improved.
 
 
-Version 2.2.0, December 27, 2013
---------------------------------
+## Version 2.2.0, December 27, 2013
+
 New in this version:
 
 - Stale locks are avoided by introducing Unix-style file locking instead.
@@ -876,8 +839,7 @@ This is the first "final release" following the critical bug fixes in the 2.1.*
 series, and this version concludes the first phase of the BibOS Admin project.
 
 
-Version 2.1.2, December 23, 2013
---------------------------------
+## Version 2.1.2, December 23, 2013
 
 New in this version:
 
@@ -888,8 +850,7 @@ New in this version:
   computers (ticket #9342).
 
 
-Version 2.1.1.3, December 17, 2013 (hotfix)
--------------------------------------------
+## Version 2.1.1.3, December 17, 2013 (hotfix)
 
 New in this version:
 
@@ -899,8 +860,7 @@ New in this version:
   even if we ask the client to upgrade its package info - also cf. #9634.
 
 
-Version 2.1.1.1, December 4, 2013
----------------------------------
+## Version 2.1.1.1, December 4, 2013
 
 New in this version:
 
@@ -927,8 +887,7 @@ New in this version:
   any group. This is a task for a future version of the system.
 
 
-Version 2.1.1, November 25, 2013
---------------------------------
+## Version 2.1.1, November 25, 2013
 
 New in this version:
 
@@ -939,8 +898,7 @@ New in this version:
 - Update synchronization improved (not fixed).
 
 
-Version 2.1.0, October 11, 2013
--------------------------------
+## Version 2.1.0, October 11, 2013
 
 New in this version:
 
@@ -972,8 +930,7 @@ Executive summary:
 - Status moves from "beta" to "production".
 
 
-Version 2.0.2, July 12, 2013
-----------------------------
+## Version 2.0.2, July 12, 2013
 
 New in this version:
 

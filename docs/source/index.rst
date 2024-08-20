@@ -24,12 +24,3 @@ The below figure shows a typical example of the user interface of the system:
    dev
    readme
    news
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

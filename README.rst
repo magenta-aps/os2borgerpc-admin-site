@@ -27,9 +27,5 @@ official home page:
 
     https://os2.eu/produkt/os2borgerpc
 
-and the offical Github project:
-
-    https://github.com/OS2borgerPC/
-
 All code is made available under Version 3 of the GNU General Public
 License - see the LICENSE file for details.

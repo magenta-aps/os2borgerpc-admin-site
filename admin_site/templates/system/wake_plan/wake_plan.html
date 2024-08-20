@@ -2,6 +2,7 @@
 {% load crispy_forms_tags %}
 {% load i18n %}
 {% load custom_tags %}
+{% load static %}
 
 {% block specific_content %}
 
@@ -20,7 +21,9 @@
         <ul>
           <li>
             {% translate "If you are unfamiliar with the functionality of on/off schedules, we recommend first reading our" %}
-            <a href="{{ wake_plan_user_guide }}" target="_blank">{% translate "User guide to power saving functions in OS2borgerPC" %}</a>.
+            {% with "docs/Wake_plan_user_guide_"|add:request.user.user_profile.language|add:".pdf" as pdf_link %}
+              <a href="{% static pdf_link %}" target="_blank">{% translate "User guide to power saving functions in OS2borgerPC" %}</a>.
+            {% endwith %}
           </li>
           <li>
             {% translate "Groups"|bold as groups %}

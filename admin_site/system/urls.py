@@ -1,5 +1,6 @@
 from django.urls import re_path
 from django.views.generic import RedirectView
+from django.templatetags.static import static
 
 from django.views.i18n import JavaScriptCatalog
 
@@ -360,32 +361,7 @@ urlpatterns = [
     ),
     re_path(
         r"^documentation/os2borgerpc_installation_guide/",
-        RedirectView.as_view(
-            url="https://github.com/OS2borgerPC/os2borgerpc-image/raw/development/"
-            + "docs/OS2BorgerPC Installationsguide.pdf"
-        ),
-    ),
-    re_path(
-        r"^documentation/os2borgerpc_kiosk_installation_guide",
-        RedirectView.as_view(
-            url="https://os2borgerpc-server-image.readthedocs.io/en/latest/install_setup.html"
-        ),
-    ),
-    re_path(
-        r"^documentation/tech/os2borgerpc-image",
-        RedirectView.as_view(url="https://os2borgerpc-image.readthedocs.io"),
-    ),
-    re_path(
-        r"^documentation/tech/os2borgerpc-admin",
-        RedirectView.as_view(url="https://os2borgerpc-admin.readthedocs.io"),
-    ),
-    re_path(
-        r"^documentation/tech/os2borgerpc-server-image",
-        RedirectView.as_view(url="https://os2borgerpc-server-image.readthedocs.io"),
-    ),
-    re_path(
-        r"^documentation/tech/os2borgerpc-client",
-        RedirectView.as_view(url="https://os2borgerpc-client.readthedocs.io"),
+        RedirectView.as_view(url=static("docs/OS2BorgerPC_installation_guide_da.pdf")),
     ),
     re_path(r"^documentation/(?P<name>[\d\w\/]+)/", DocView.as_view(), name="doc"),
     re_path(r"^documentation/", DocView.as_view(), name="doc_root"),

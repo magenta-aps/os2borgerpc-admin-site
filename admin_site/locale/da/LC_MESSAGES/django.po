@@ -5489,8 +5489,8 @@ msgid "Run script"
 msgstr "Kør script"
 
 #: templates/system/scripts/run_step1.html
-msgid "Choose computer or groups"
-msgstr "Vælg computer eller grupper"
+msgid "Select computers and/or groups"
+msgstr "Vælg computere og/eller grupper"
 
 #: templates/system/scripts/run_step1.html
 msgid ""
@@ -5499,26 +5499,6 @@ msgid ""
 msgstr ""
 "Bemærk: Der kan kun køres scripts på computere, der er aktiverede, og på "
 "grupper, der har tilknyttet minimum 1 computer."
-
-#: templates/system/scripts/run_step1.html
-msgid "Choose"
-msgstr "Vælg"
-
-#: templates/system/scripts/run_step1.html
-#, fuzzy
-#| msgid "OS2borgerPC"
-msgid "All OS2borgerPC"
-msgstr "OS2borgerPC"
-
-#: templates/system/scripts/run_step1.html
-#, fuzzy
-#| msgid "OS2borgerPC Kiosk"
-msgid "All OS2borgerPC Kiosk"
-msgstr "OS2borgerPC Kiosk"
-
-#: templates/system/scripts/run_step1.html
-msgid "Choose all Groups"
-msgstr "Vælg alle Grupper"
 
 #: templates/system/scripts/run_step2.html
 msgid "Specify parameters"

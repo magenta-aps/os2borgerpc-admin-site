@@ -4763,7 +4763,7 @@
     "model": "system.product",
     "pk": 1,
     "fields": {
-        "name": "os2borgerpc",
+        "name": "OS2borgerPC",
         "multilang": true
     }
 },
@@ -4771,7 +4771,7 @@
     "model": "system.product",
     "pk": 2,
     "fields": {
-        "name": "os2borgerpc kiosk",
+        "name": "OS2borgerPC Kiosk",
         "multilang": false
     }
 },

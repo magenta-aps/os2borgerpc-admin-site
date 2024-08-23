@@ -5483,8 +5483,8 @@ msgid "Run script"
 msgstr "Kör skript"
 
 #: templates/system/scripts/run_step1.html
-msgid "Choose computer or groups"
-msgstr "Välj datorer eller grupper"
+msgid "Select computers and/or groups"
+msgstr "Välj datorer och/eller grupper"
 
 #: templates/system/scripts/run_step1.html
 msgid ""
@@ -5493,22 +5493,6 @@ msgid ""
 msgstr ""
 "Observera: Skript kan endast köras på datorer som är aktiverade och på "
 "Grupper som har minst 1 dator ansluten.."
-
-#: templates/system/scripts/run_step1.html
-msgid "Choose"
-msgstr "Välj"
-
-#: templates/system/scripts/run_step1.html
-msgid "All OS2borgerPC"
-msgstr "Alla Sambruk MedborgarPC"
-
-#: templates/system/scripts/run_step1.html
-msgid "All OS2borgerPC Kiosk"
-msgstr "Alla Sambruk MedborgarPC Kiosk"
-
-#: templates/system/scripts/run_step1.html
-msgid "Choose all Groups"
-msgstr "Välj alla Grupper"
 
 #: templates/system/scripts/run_step2.html
 msgid "Specify parameters"

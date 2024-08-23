@@ -820,10 +820,6 @@ class PC(models.Model):
     def get_absolute_url(self):
         return reverse("computer", args=(self.site.uid, self.uid))
 
-    def get_product(self):
-        """Return which Product the PC is an installation of."""
-        return self.product.name
-
     def __str__(self):
         return self.name
 

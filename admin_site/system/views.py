@@ -1502,6 +1502,16 @@ class ScriptRun(SiteView):
         context = super(ScriptRun, self).get_context_data(**kwargs)
         context["script"] = get_object_or_404(Script, pk=self.kwargs["script_pk"])
 
+        product_ids = (
+            context["object"]
+            .pcs.all()
+            .values_list("product_id", flat=True)
+            .order_by("id")
+            .distinct()
+        )
+        if len(product_ids) > 1:
+            context["products"] = Product.objects.filter(id__in=product_ids)
+
         action = self.request.POST.get("action", "choose_pcs_and_groups")
         if action == ScriptRun.STEP1:
             self.step1(context)

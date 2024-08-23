@@ -4,7 +4,7 @@
 {% block run_dialog_heading %}
   <h3>
     <span class="text-muted">{% translate "Run script" %}:</span><br>
-    {% translate "Choose computer or groups" %}
+    {% translate "Select computers and/or groups" %}
   </h3>
 {% endblock %}
 
@@ -15,48 +15,48 @@
     <div class="row">
       <div class="col-6">
         <h4>Computere</h4>
-        <ul class="list-unstyled">
-            <div><strong>{% translate "Choose" %}</strong>: </div>
+        <ul class="list-unstyled" id="products">
+          <li>
+            <input id="pick-all" type="checkbox" onclick="toggle_checks(this, 'pcs', 'pc');"/>
+            <label for="pick-all"><strong>{% translate "All" %}</strong></label>
+            <br/>
+          </li>
+          {% for product in products %}
             <li>
-              <input type="checkbox" onclick="toggle_checks(this, 'Kiosk'); toggle_checks(this, 'PC'); uncheckOthers(this);" id="pick-all"/>
-              <label for="pick-all">{% translate "All" %}</label>
+              <input type="checkbox" id="pick-all-{{product.id}}" class="pc-{{product_id}}" onclick="toggle_checks(this, 'pcs', 'pc-{{product.id}}');" />
+              <label for="pick-all-{{product.id}}"><strong>{% translate "All" %} {{product.name}}</strong></label>
               <br/>
             </li>
-            <li>
-              <input type="checkbox" onclick="toggle_checks(this, 'PC'); uncheckOthers(this);" id="pick-all-PC"/>
-              <label for="pick-all-PC">{% translate "All OS2borgerPC" %}</label>
-              <br/>
-            </li>
-            <li class="mb-3">
-              <input type="checkbox" onclick="toggle_checks(this, 'Kiosk'); uncheckOthers(this);" id="pick-all-kiosk"/>
-              <label for="pick-all-kiosk">{% translate "All OS2borgerPC Kiosk" %}</label>
-              <br/>
-            </li>
-            {% for pc in pcs %}
-              {% if pc.is_activated %}
-                <li>
-                    <input type="checkbox"
-                           name = "pcs"
-                           class ="{% if pc.product.name == 'os2borgerpc kiosk' %}Kiosk{% else %}PC{% endif %}"
-                           id="check-pc-{{pc.pk}}"
-                           value="{{pc.pk}}">
-                    <label for="check-pc-{{pc.pk}}">{{pc.name}}</label>
-                 </li>
-              {% endif %}
-            {% endfor %}
+          {% endfor %}
+        </ul>
+        <ul id="pcs" class="list-unstyled">
+          {% for pc in pcs %}
+            {% if pc.is_activated %}
+              <li>
+                <input type="checkbox"
+                       name = "pcs"
+                       class ="pc pc-{{pc.product.id}}"
+                       id="check-pc-{{pc.pk}}"
+                       value="{{pc.pk}}">
+                <label for="check-pc-{{pc.pk}}">{{pc.name}}</label>
+               </li>
+            {% endif %}
+          {% endfor %}
         </ul>
       </div>
       <div class="col-6">
         <h4>Grupper</h4>
         <ul class="list-unstyled">
-            <li class="mb-3">
-              <input type="checkbox" onclick="toggle_checks(this, 'groups')" id="pick-all-groups"/>
-              <label for="pick-all-groups"><strong>{% translate "Choose all Groups" %}</strong></label>
-              <br/>
-            </li>
+          <li class="mb-3">
+            <input type="checkbox" onclick="toggle_checks(this, 'groups', 'group')" id="pick-all-groups"/>
+            <label for="pick-all-groups"><strong>{% translate "All" %}</strong></label>
+            <br/>
+          </li>
+        </ul>
+        <ul id="groups" class="list-unstyled">
           {% for group in groups %}
             <li>
-              <input type="checkbox" name="groups" id="check-group-{{group.pk}}" value="{{group.pk}}">
+              <input class="group" type="checkbox" name="groups" id="check-group-{{group.pk}}" value="{{group.pk}}">
               <label for="check-group-{{group.pk}}">{{group.name}}</label>
             </li>
           {% endfor %}
@@ -66,31 +66,25 @@
 
     <!-- Function for selecting all checkboxes: -->
     <script>
-      function toggle_checks(source, checkboxes_name) {
-        checkboxes = document.getElementsByClassName(checkboxes_name);
-        for(var i=0, n=checkboxes.length;i<n; i++) {
-          checkboxes[i].checked = source.checked;
+      function uncheck_other_products(clicked_product) {
+        checkboxes = clicked_product.parentElement.parentElement.getElementsByTagName("input")
+        for (var i = 0, n = checkboxes.length; i < n; i++) {
+          if (checkboxes[i] != clicked_product) {
+            checkboxes[i].checked = false;
+          }
         }
       }
 
-      // makes sure that only one of the "pick-all" checkboxes can be checked at a time
-      function uncheckOthers(element) {
-        if (element.checked) {
-          if (element.id === 'pick-all-kiosk') {
-            document.getElementById('pick-all-PC').checked = false;
-            document.getElementById('pick-all').checked = false;
-            toggle_checks({checked: false}, 'PC');
+      function toggle_checks(source, checkboxes_container, target_checkboxes_class) {
+        uncheck_other_products(source)
+        checkboxes = document.getElementById(checkboxes_container).getElementsByTagName("input")
+
+        for (var i = 0, n = checkboxes.length; i < n; i++) {
+          if (checkboxes[i].classList.contains(target_checkboxes_class)) {
+            checkboxes[i].checked = source.checked;
           }
-          if (element.id === 'pick-all-PC') {
-            document.getElementById('pick-all-kiosk').checked = false;
-            document.getElementById('pick-all').checked = false;
-            toggle_checks({checked: false}, 'Kiosk');
-          }
-          if (element.id === 'pick-all') {
-            document.getElementById('pick-all-kiosk').checked = false;
-            document.getElementById('pick-all-PC').checked = false;
-            toggle_checks({checked: true}, 'Kiosk');
-            toggle_checks({checked: true}, 'PC');
+          else {
+            checkboxes[i].checked = false;
           }
         }
       }

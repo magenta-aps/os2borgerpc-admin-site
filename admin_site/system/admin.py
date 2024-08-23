@@ -426,12 +426,14 @@ class PCAdmin(admin.ModelAdmin):
         "name",
         "uid",
         "site_link",
+        "product",
         "is_activated",
         "last_seen",
         "created",
         "os2borgerpc_client_version",
     )
     list_filter = (
+        "product",
         "site",
         "is_activated",
     )

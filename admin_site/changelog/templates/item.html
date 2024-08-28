@@ -1,4 +1,5 @@
 {% load i18n %}
+
 <div id="changelogDetails-{{ entry.pk }}" class="modal fade" role="dialog" aria-labelledby="myModalLabel" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" style="width: 70rem; max-width: 90vw; min-width: 10rem;">
         <div class="modal-content">
@@ -19,15 +20,16 @@
                     </p>
                     <p class="meta-tags">
                     {% for tag in entry.get_tags %}
-                    <a class="btn btn-md tag-filter-btn bg-primary text-white me-2" href="?tag={{ tag.pk }}">
+                    <a class="btn btn-md tag-filter-btn bg-primary text-white me-2" href="?tag={{ tag.pk }}&back={{ back_link }}">
                         {{ tag.name }}
                     </a>
                     {% endfor %}
                     </p>
                 </div>
             </div>
-
+            
             <div class="comment-container">
+                <h1>TEST</h1>
                 <h3 class="text-muted">{% translate "Comments" %}</h3>
                     {% include 'comments/form.html' with parent=None %}
 

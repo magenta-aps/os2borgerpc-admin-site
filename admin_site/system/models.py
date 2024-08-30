@@ -408,10 +408,10 @@ class WakeWeekPlan(models.Model):
     # Sleep state choices for the field below - and their translations
     # These are based on what "rtcwake" supports
     SLEEP_STATE_CHOICES = (
-        ("STANDBY", _("sleep_state:Standby")),
-        ("FREEZE", _("sleep_state:Freeze")),
-        ("MEM", _("sleep_state:Mem")),
-        ("OFF", _("sleep_state:Off")),
+        ("STANDBY", "Standby (S1)"),
+        ("FREEZE", "Freeze"),
+        ("MEM", "Mem (S3)"),
+        ("OFF", "Off (S5)"),
     )
 
     default_open = datetime.time(8, 0, 0, 0)

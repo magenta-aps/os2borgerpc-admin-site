@@ -48,6 +48,10 @@
 
     }
 
+    .pc-status-list-link{
+        width: 90%; display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center;
+    }
+
     .item-list-deletable {
         border-radius: .33rem;
         display: block;

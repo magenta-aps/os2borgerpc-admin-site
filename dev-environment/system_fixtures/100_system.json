@@ -4685,6 +4685,113 @@
 },
 {
     "model": "system.pc",
+    "pk": 50,
+    "fields": {
+        "mac": "",
+        "name": "pc50",
+        "uid": "pc50",
+        "description": "",
+        "configuration": 18,
+        "site": 9,
+        "is_activated": true,
+        "created": "2021-01-21T11:16:10.403",
+        "last_seen": "2021-01-28T12:50:03",
+        "location": "beskrivelse 2",
+        "product": 3,
+        "pc_groups": [
+            10,
+            3
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 51,
+    "fields": {
+        "mac": "",
+        "name": "pc51",
+        "uid": "pc51",
+        "description": "",
+        "configuration": 18,
+        "site": 9,
+        "is_activated": true,
+        "created": "2021-01-21T11:16:10.403",
+        "last_seen": "2021-01-28T12:50:03",
+        "location": "beskrivelse 2",
+        "product": 4,
+        "pc_groups": [
+            10,
+            3
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 52,
+    "fields": {
+        "mac": "",
+        "name": "pc52",
+        "uid": "pc52",
+        "description": "",
+        "configuration": 18,
+        "site": 9,
+        "is_activated": true,
+        "created": "2021-01-21T11:16:10.403",
+        "last_seen": "2021-01-28T12:50:03",
+        "location": "beskrivelse 2",
+        "product": 5,
+        "pc_groups": [
+            10,
+            3
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 53,
+    "fields": {
+        "mac": "",
+        "name": "pc53",
+        "uid": "pc53",
+        "description": "",
+        "configuration": 18,
+        "site": 9,
+        "is_activated": true,
+        "created": "2021-01-21T11:16:10.403",
+        "last_seen": "2021-01-28T12:50:03",
+        "location": "beskrivelse 2",
+        "product": 6,
+        "pc_groups": [
+            10,
+            3
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 54,
+    "fields": {
+        "mac": "",
+        "name": "pc54",
+        "uid": "pc54",
+        "description": "",
+        "configuration": 18,
+        "site": 9,
+        "is_activated": true,
+        "created": "2021-01-21T11:16:10.403",
+        "last_seen": "2021-01-28T12:50:03",
+        "location": "beskrivelse 2",
+        "product": 7,
+        "pc_groups": [
+            10,
+            3
+        ]
+    }
+},
+
+
+{
+    "model": "system.pc",
     "pk": 12,
     "fields": {
         "mac": "",
@@ -4872,7 +4979,7 @@
         "created": "2022-01-05T14:43:09.479",
         "last_seen": "2022-01-17T17:20:05",
         "location": "",
-        "product": 1,
+        "product": 2,
         "pc_groups": []
     }
 },
@@ -5156,6 +5263,46 @@
         "name": "OS2borgerPC Kiosk",
         "short_name": "Kiosk",
         "config_name": "os2borgerpc kiosk",
+        "multilang": false
+    }
+},
+{
+    "model": "system.product",
+    "pk": 3,
+    "fields": {
+        "name": "OS2borgerPC Gaming",
+        "multilang": false
+    }
+},
+{
+    "model": "system.product",
+    "pk": 4,
+    "fields": {
+        "name": "OS2borgerPC Tablet",
+        "multilang": false
+    }
+},
+{
+    "model": "system.product",
+    "pk": 5,
+    "fields": {
+        "name": "OS2borgerPC Mobile",
+        "multilang": false
+    }
+},
+{
+    "model": "system.product",
+    "pk": 6,
+    "fields": {
+        "name": "OS2borgerPC CheckIn",
+        "multilang": false
+    }
+},
+{
+    "model": "system.product",
+    "pk": 7,
+    "fields": {
+        "name": "OS2borgerPC Music",
         "multilang": false
     }
 },

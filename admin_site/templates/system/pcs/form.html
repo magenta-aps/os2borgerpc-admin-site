@@ -18,9 +18,11 @@
   {% endif %}
   {% for pc in pc_list %}
     <li class="{% if pc == selected_pc %}active{% endif %}">
-      {% comment %} Add deletion to every row: <a href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="{% translate "Delete computer" %}"></a>{% endcomment %}
-      <a class="item-list-link" id="{{pc.uid}}" href="/site/{{ site.url }}/computers/{{ pc.uid }}">
-        {{ pc.name }}
+      {% comment %} Add deletion to every row: <a href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="{% translate 'Delete computer' %}"></a>{% endcomment %}
+      <a  class="item-list-link pc-status-list-link" id="{{pc.uid}}" href="/site/{{ site.url }}/computers/{{ pc.uid }}">
+        <span>{{ pc.name }}</span>
+       <span class="badge bg-{{ pc.badgeclass }} pc-status-badge-span">{{ pc.product }}</span>
+
       </a>
         {% if not pc.is_activated %}
           <span class="badge bg-danger">{% translate "Not activated" %}</span>
@@ -29,6 +31,8 @@
         <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="{% translate "Delete computer" %}">
           clear
         </a>
+      {% else %}
+      <div class="spacer_non_selected_pc"></div>
       {% endif%}
     </li>
   {% endfor %}
@@ -38,18 +42,18 @@
 {% block specific_content %}
   <div class="container-fluid main sublevelmain">
 
-    <h2 class="divideheader">
-      {% translate "Details about" %} <em>{{ selected_pc.name }}</em>
+    <h2 class="divideheader" id="pc_details_divideheader">
+      <p>{% translate "Details about" %} <em>{{ selected_pc.name }}</em></p><p>{{selected_pc.product}}
     </h2>
 
     {% include 'notification.html' %}
 
     <form name="pc_update_form" id="pc_update_form" action="{% url 'computer' site.uid selected_pc.uid %}" method="post">
       <div class="basic-info">
-        <span class="me-5">
+        <span class="badge bg-secondary text-dark">
           {% translate "Registered" %}: {{ pc.created }}
         </span>
-        <span class="me-5">
+        <span class="badge bg-secondary ms-3 text-dark">
           {% translate "Last check-in" %}:
           {% if selected_pc.last_seen %}
             {{ selected_pc.last_seen|timesince }} {% translate "ago" %}
@@ -57,7 +61,7 @@
             {% translate "Never" %}
           {% endif %}
         </span>
-        <span class="me-5">
+        <span class="badge bg-secondary ms-3 text-dark">
           {% translate "Last event received" %}:
           {% if security_event %}
             {{ security_event.reported_time|timesince }} {% translate "ago" %}

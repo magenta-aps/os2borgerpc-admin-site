@@ -1,75 +1,101 @@
-{% extends "site_with_navigation.html" %}
+{% extends 'site_with_navigation.html' %}
 {% load i18n %}
 
 {% block specific_title %}
-  {% translate "Status" %}
+  {% translate 'Status' %}
 {% endblock %}
 
 {% block specific_content %}
   <div class="container-fluid main sublevelmain" style="overflow-x: auto;">
     <h2 class="divideheader">
-      {% translate "computers" as computers %}
-      {% translate "Total number of" as total_release_before %}
+      {% translate 'computers' as computers %}
+      {% translate 'Total number of' as total_release_before %}
       {% translate "Total number of BorgerPC's" as total_bpc %}
       {% translate "Total number of Kiosk PC's" as total_kiosk %}
-      {{computers|capfirst}}
-      <span class="ms-3 badge bg-secondary text-dark">{% translate "Activated:" %} {{ activated_pcs_count }} / {{ total_pcs_count }}</span>
+      {{ computers|capfirst }}
+      <span class="ms-3 badge bg-secondary text-dark">{% translate 'Activated:' %} {{ activated_pcs_count }} / {{ total_pcs_count }}</span>
       {# Originally this was online / activated, but it turns out a computer that isn't activated can still be online #}
-      <span class="ms-3 badge bg-secondary text-dark">{% translate "Online" %}: {{ online_pcs_count }} / {{ total_pcs_count }}</span>
-      <span class="ms-3 badge bg-secondary text-dark" title="{{total_bpc}}">{% translate "OS2borgerPC" %}: {{borgerpc_count}}</span>
-      <span class="ms-3 badge bg-secondary text-dark" title="{{total_kiosk}}">{% translate "OS2borgerPC Kiosk" %}: {{borgerpc_kiosk_count}}</span>
+      <span class="ms-3 badge bg-secondary text-dark">{% translate 'Online' %}: {{ online_pcs_count }} / {{ total_pcs_count }}</span>
+      <span class="ms-3 badge bg-secondary text-dark" title="{{ total_bpc }}">{% translate 'OS2borgerPC' %}: {{ borgerpc_count }}</span>
+      <span class="ms-3 badge bg-secondary text-dark" title="{{ total_kiosk }}">{% translate 'OS2borgerPC Kiosk' %}: {{ borgerpc_kiosk_count }}</span>
       {% for release, release_count in releases %}
         {% if release_count > 0 %}
-          <span class="ms-3 badge bg-secondary text-dark" title="{{total_release_before}} {{release}} {{computers}}">{{release}}: {{release_count}}</span>
+          <span class="ms-3 badge bg-secondary text-dark" title="{{ total_release_before }} {{ release }} {{ computers }}">{{ release }}: {{ release_count }}</span>
         {% endif %}
       {% endfor %}
     </h2>
     <table class="table caption-top" data-toggle="table" data-classes="table table-bordered" id="site-status-table">
       <thead>
         <tr>
-          <th data-sortable="true">{% translate "Name" %}</th>
-          <th data-sortable="true">{% translate "Activated" %}</th>
-          <th data-sortable="true">{% translate "Description" %}</th>
-          <th data-sortable="true">{% translate "Location" %}</th>
-          <th data-sortable="true">{% translate "Status" %}</th>
-          <th data-sortable="true">{% translate "Latest check-in" %}</th>
-          <th data-sortable="true">{% translate "Latest event received" %}</th>
+          <th data-sortable="true">
+            {% translate 'Name' %}
+          </th>
+          <th data-sortable="true">
+            {% translate 'Product' %}
+          </th>
+          <th data-sortable="true">
+            {% translate 'Activated' %}
+          </th>
+          <th data-sortable="true">
+            {% translate 'Description' %}
+          </th>
+          <th data-sortable="true">
+            {% translate 'Location' %}
+          </th>
+          <th data-sortable="true">
+            {% translate 'Status' %}
+          </th>
+          <th data-sortable="true">
+            {% translate 'Latest check-in' %}
+          </th>
+          <th data-sortable="true">
+            {% translate 'Latest event received' %}
+          </th>
         </tr>
       </thead>
       <tbody>
         {% for pc in ls_pcs %}
           <tr class="click-list--item">
             <td>
-              <span style="display: none;">{{pc.name}}</span> <!-- Used to ensure sorting by pcname rather than uid -->
+              <span style="display: none;">{{ pc.name }}</span> <!-- Used to ensure sorting by pcname rather than uid -->
               <strong><a href="{% url 'computer' slug=site.uid pc_uid=pc.uid %}">{{ pc.name }}</a></strong>
             </td>
+            <td>
+              <span class="badge bg-{{ pc.badgeclass }} site_status_pc_badge">
+                {{ pc.product }}
+              </span>
+            </td>
             {% if pc.is_activated %}
-              <td><span class="badge bg-success">{% translate "Activated" %}</span></td>
+              <td>
+                <span class="badge bg-success">{% translate 'Activated' %}</span>
+              </td>
             {% else %}
-              <td><span class="badge bg-danger">{% translate "Not activated" %}</span></td>
+              <td>
+                <span class="badge bg-danger">{% translate 'Not activated' %}</span>
+              </td>
             {% endif %}
             <td>{{ pc.description }}</td>
             <td>{{ pc.location }}</td>
             <td>
               {% if pc.online %}
-                <span class="badge bg-success">{% translate "Online" %}</span>
+                <span class="badge bg-success">{% translate 'Online' %}</span>
               {% elif pc.is_activated %}
-                <span class="badge bg-danger">{% translate "Offline" %}</span>
+                <span class="badge bg-danger">{% translate 'Offline' %}</span>
               {% endif %}
             </td>
             <td>
               {% if pc.last_seen %}
-                <span style="display: none;">{{pc.last_seen|date:"U"}}</span> <!-- Used to ensure that datetimes are sorted correctly -->
-                {{ pc.last_seen|timesince }} {% translate "ago" %} ({{ pc.last_seen }})
+                <span style="display: none;">{{ pc.last_seen|date:'U' }}</span> <!-- Used to ensure that datetimes are sorted correctly -->
+                {{ pc.last_seen|timesince }} {% translate 'ago' %}({{ pc.last_seen }})
               {% else %}
-                {% translate "Never" %}
+                {% translate 'Never' %}
               {% endif %}
             </td>
             <td>
               {% if pc.security_events.latest_event %}
                 {{ pc.security_events.latest_event.reported_time }}
               {% else %}
-                {% translate "Never" %}
+                {% translate 'Never' %}
               {% endif %}
             </td>
           </tr>

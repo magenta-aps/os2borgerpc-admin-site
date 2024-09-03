@@ -42,6 +42,7 @@ from system.utils import (
     notification_changes_saved,
     online_pcs_count_filter,
     set_notification_cookie,
+    get_badge_class,
 )
 
 from account.models import (
@@ -531,12 +532,15 @@ class SiteDetailView(SiteView):
         context = super(SiteDetailView, self).get_context_data(**kwargs)
         context = site_pcs_stats(context, [kwargs["object"]])
 
-        site_pcs = self.object.pcs.all()
-
-        # Top level list of new PCs etc.
-        context["ls_pcs"] = site_pcs.order_by(
+        site_pcs = self.object.pcs.all().order_by(
             "is_activated", F("last_seen").desc(nulls_last=True)
         )
+
+        for p in site_pcs:
+            p.badgeclass = get_badge_class(p.product.id)
+
+        # Top level list of new PCs etc.
+        context["ls_pcs"] = site_pcs
 
         context["total_pcs_count"] = context["ls_pcs"].count()
         context["activated_pcs_count"] = site_pcs.filter(is_activated=True).count()
@@ -842,6 +846,7 @@ class JobsView(SiteView):
         context = super(JobsView, self).get_context_data(**kwargs)
         site = context["site"]
         context["batches"] = site.batches.exclude(name="")[:100]
+
         context["pcs"] = site.pcs.all()
         context["groups"] = site.groups.all()
         preselected = set(
@@ -1628,7 +1633,12 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         pc = self.object
         params = self.request.GET or self.request.POST
 
-        context["pc_list"] = site.pcs.all()
+        all_pcs = site.pcs.all()
+
+        for p in all_pcs:
+            p.badgeclass = get_badge_class(p.product.id)
+
+        context["pc_list"] = all_pcs
 
         # Group picklist related:
         group_set = site.groups.all()

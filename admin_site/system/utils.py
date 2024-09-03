@@ -433,3 +433,18 @@ def online_pcs_count_filter(pcs):
     """Online PCs are PCs that have checked in recently, as defined by the model function
     This function takes a list of PCs and returns the number of those that are online"""
     return len([pc for pc in pcs if pc.online])
+
+
+def get_badge_class(pID):
+
+    badge_classes = {
+        1: "primary",
+        2: "secondary text-dark",
+        3: "success",
+        4: "danger",
+        5: "info text-dark",
+        6: "light text-dark",
+        0: "dark",
+    }
+
+    return badge_classes.get(pID % 7, "default")

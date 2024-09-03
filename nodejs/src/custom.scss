@@ -93,6 +93,23 @@ li .dropdown-item:active {
   background: $gray-300
 }
 
+.pc-status-badge-span {
+  height: 100%;
+  min-width: 130px
+}
+
+#pc_details_divideheader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.spacer_non_selected_pc {
+  width: 28px;
+  height: 28px;
+}
+.site_status_pc_badge {
+  min-width: 130px
+}
 input[type="checkbox"] {
   cursor: pointer;
 }

@@ -1,6 +1,4 @@
-=======================
-OS2borgerPC: Admin-Site
-=======================
+# OS2borgerPC: Admin-Site
 
 This directory contains the OS2borgerPC Admin system, which is a remote
 administration system for Debian-based GNU/Linux-systems, especially
@@ -17,7 +15,7 @@ libraries have experienced problems with people trying to insert key
 loggers between keyboard and computer).
 
 Read the documentation for this project in docs/ or at
-`Read The Docs <https://os2borgerpc-admin.readthedocs.io/>`_.
+[Read The Docs](https://os2borgerpc-admin.readthedocs.io).
 
 The system was developed by Magenta Aps (https://www.magenta.dk) and is part of the
 OS2borgerPC project.

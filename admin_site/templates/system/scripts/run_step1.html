@@ -23,8 +23,11 @@
           </li>
           {% for product in products %}
             <li>
-              <input type="checkbox" id="pick-all-{{product.id}}" class="pc-{{product_id}}" onclick="toggle_checks(this, 'pcs', 'pc-{{product.id}}');" />
-              <label for="pick-all-{{product.id}}"><strong>{% translate "All" %} {{product.name}}</strong></label>
+              <input type="checkbox" id="pick-all-{{product.id}}" onclick="toggle_checks(this, 'pcs', 'pc-{{product.id}}');" />
+              <!-- TODO: Remove the swedish hack below of translating product.name once the database itself is translated -->
+              <!-- {% translate "BorgerPC" %} -->
+              <!-- {% translate "Kiosk" %} -->
+              <label for="pick-all-{{product.id}}"><strong>{% translate "All" %} {% translate product.short_name %}</strong></label>
               <br/>
             </li>
           {% endfor %}

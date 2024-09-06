@@ -68,17 +68,21 @@ def register_new_computer_v2(mac, name, site, configuration):
     # And load configuration
 
     # Update configuration with os2 product
-    # New image versions set it themselves, old don't so for those
-    # we detect and set it this way
-    if "os2_product" not in configuration:
+    if "os2_product" in configuration:
+        product = configuration["os2_product"]
+    else:
+        # New image versions set it themselves, old don't so for those
+        # we detect and set it this way
         if "os2borgerpc_version" in configuration:
             product = "os2borgerpc"
         else:
             product = "os2borgerpc kiosk"
         configuration.update({"os2_product": product})
-        new_pc.product = Product.objects.get(name=product)
-    else:
-        new_pc.product = Product.objects.get(name=configuration["os2_product"])
+
+    try:
+        new_pc.product = Product.objects.get(config_name=product)
+    except Product.DoesNotExist:
+        pass
 
     # remove mac and uid from the configuration
     # We don't need them saved as both attributes and configuration entries

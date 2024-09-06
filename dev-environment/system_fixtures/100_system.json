@@ -4764,6 +4764,8 @@
     "pk": 1,
     "fields": {
         "name": "OS2borgerPC",
+        "short_name": "BorgerPC",
+        "config_name": "os2borgerpc",
         "multilang": true
     }
 },
@@ -4772,6 +4774,8 @@
     "pk": 2,
     "fields": {
         "name": "OS2borgerPC Kiosk",
+        "short_name": "Kiosk",
+        "config_name": "os2borgerpc kiosk",
         "multilang": false
     }
 },

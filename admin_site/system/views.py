@@ -1506,7 +1506,7 @@ class ScriptRun(SiteView):
             context["object"]
             .pcs.all()
             .values_list("product_id", flat=True)
-            .order_by("id")
+            .order_by("product_id")
             .distinct()
         )
         if len(product_ids) > 1:
@@ -3892,19 +3892,6 @@ class ImageVersionView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
             )  # The hash symbol is the default for the field, indicating no file was uploaded
 
         products = Product.objects.all()
-
-        # Swedish hacks until we do a proper translation of the database
-        # TODO: Please remove this section!
-        if user_language == "sv":
-            selected_product.name = selected_product.name.replace(
-                "OS2borgerPC", "Sambruk MedborgarPC"
-            )
-            for i in versions_accessible_by_user:
-                i.product.name = i.product.name.replace(
-                    "OS2borgerPC", "Sambruk MedborgarPC"
-                )
-            for p in products:
-                p.name = p.name.replace("OS2borgerPC", "Sambruk MedborgarPC")
 
         context["selected_product"] = selected_product
         context["object_list"] = versions_accessible_by_user

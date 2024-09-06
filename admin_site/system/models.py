@@ -707,6 +707,13 @@ class Product(models.Model):
     """A model for Product (e.g. OS2borgerPC or OS2borgerPC Kiosk), related to Image Versions and Scripts."""
 
     name = models.CharField(verbose_name=_("name"), max_length=128)
+    short_name = models.CharField(
+        verbose_name=_("short name"), max_length=20, null=True
+    )
+    # Maps to the name used in the client as os_product
+    config_name = models.CharField(
+        verbose_name=_("config name"), max_length=40, null=True
+    )
     multilang = models.BooleanField(default=False)
 
     class Meta:
@@ -738,7 +745,9 @@ class PC(models.Model):
     location = models.CharField(
         verbose_name=_("location"), max_length=1024, blank=True, default=""
     )
-    product = models.ForeignKey(Product, on_delete=models.PROTECT, blank=True)
+    product = models.ForeignKey(
+        Product, on_delete=models.PROTECT, blank=True, null=True
+    )
 
     @property
     def online(self):

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-03 13:37+0200\n"
+"POT-Creation-Date: 2024-09-10 12:00+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -4250,6 +4250,14 @@ msgid "supervisors"
 msgstr "ansvariga personer"
 
 #: system/models.py
+msgid "short name"
+msgstr "kort namn"
+
+#: system/models.py
+msgid "config name"
+msgstr "konfigurationsnamn"
+
+#: system/models.py
 msgid "MAC"
 msgstr "MAC"
 
@@ -5493,6 +5501,14 @@ msgid ""
 msgstr ""
 "Observera: Skript kan endast köras på datorer som är aktiverade och på "
 "Grupper som har minst 1 dator ansluten.."
+
+#: templates/system/scripts/run_step1.html
+msgid "BorgerPC"
+msgstr "MedborgarPC"
+
+#: templates/system/scripts/run_step1.html
+msgid "Kiosk"
+msgstr "Kiosk"
 
 #: templates/system/scripts/run_step2.html
 msgid "Specify parameters"

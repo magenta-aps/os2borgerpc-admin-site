@@ -11,7 +11,8 @@
       <li class="{% if product.id == selected_product.id %}active{% endif %}">
         <a class="item-list-link" href="/site/{{ site.url }}/image-versions/{{ product.id }}">
           <span clas="d-flex align-items-center">
-            {{ product.name }}
+            <!-- TODO: Remove the swedish hack below of translating product.name once the database itself is translated -->
+          {% translate product.name %}
           </span>
         </a>
       </li>
@@ -23,7 +24,8 @@
   {% if object_list %}
     <!-- First index of 'minor_versions' is the most recent version -->
     {% with object_list|first as first_ver %}
-      <h2 class="divideheader">{% translate "Most recent version of" %} {{ selected_product.name }}</h2>
+      <!-- TODO: Remove the swedish hack below of translating product.name once the database itself is translated -->
+      <h2 class="divideheader">{% translate "Most recent version of" %} {% translate selected_product.name %}</h2>
       <dl>
         <dt>{% translate "Version" %}</dt>
         <dd>{{ first_ver.image_version }}</dd>

@@ -136,5 +136,7 @@ class DocView(TemplateView, LoginRequiredMixin):
                 back_link = referer
         if back_link:
             context["back_link"] = back_link
+        else:
+            context["back_link"] = "/"
 
         return context

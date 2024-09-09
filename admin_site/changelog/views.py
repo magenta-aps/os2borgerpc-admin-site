@@ -94,6 +94,8 @@ class ChangelogListView(ListView):
                 back_link = referer
         if back_link:
             context["back_link"] = back_link
+        else:
+            context["back_link"] = "/"
 
         # Add all comments that belong to the entries on the current page to the
         # context

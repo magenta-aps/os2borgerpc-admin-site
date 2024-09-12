@@ -369,29 +369,6 @@ function calcPaginationRange(pag_data, obj_per_page) {
   return range
 }
 
-/* Feature to warn users with old IE browsers */
-function oldBrowserWarning() {
-  var old_ie_match = /MSIE/g
-  var ie11_win8_match = /Windows NT.+Trident/g
-  var ie11_win10_match = /Windows NT 10.+Trident/g
-  var ua = navigator.userAgent
-  var warn_el = document.querySelector('ie11-browser-warning')
-
-  if (ua.match(ie11_win10_match)) {
-      warn_el.innerHTML = ''
-          + '<p>' + warn_el.dataset.warningText +'</p>'
-          + '<p><a href="microsoft-edge:' + window.location.href + '">' + warn_el.dataset.linkText +'</a></p>'
-  } else if (ua.match(ie11_win8_match) || ua.match(old_ie_match)) {
-      warn_el.innerHTML = '<p>' + warn_el.dataset.warningText + '</p>'
-  } else {
-      warn_el.remove()
-  }
-}
-
-window.addEventListener('load', function() {
-  oldBrowserWarning()
-})
-
 // Function to get the value of a named cookie
 function getCookie(name) {
   const value = `; ${document.cookie}`;

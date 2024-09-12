@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-10 12:00+0200\n"
+"POT-Creation-Date: 2024-09-12 09:53+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -4722,17 +4722,6 @@ msgstr "Der er sket en serverfejl og vi er blevet notificeret om fejlen."
 #: templates/base.html
 msgid "OS2borgerPC Administration"
 msgstr "OS2borgerPC Administration"
-
-#: templates/base.html templates/two_factor/_base.html
-msgid ""
-"It looks like you're using Internet Explorer. It won't work on this website."
-msgstr ""
-"Det ser ud som om, at du benytter Internet Explorer. Det vil ikke fungere på "
-"dette website."
-
-#: templates/base.html templates/two_factor/_base.html
-msgid "Try opening this website in Microsoft Edge"
-msgstr "Prøv at åbne denne side i Microsoft Edge"
 
 #: templates/logout.html
 msgid "You have been logged out"

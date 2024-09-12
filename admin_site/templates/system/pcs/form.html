@@ -20,9 +20,9 @@
     <li class="{% if pc == selected_pc %}active{% endif %}">
       {% comment %} Add deletion to every row: <a href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="{% translate 'Delete computer' %}"></a>{% endcomment %}
       <a  class="item-list-link pc-status-list-link" id="{{pc.uid}}" href="/site/{{ site.url }}/computers/{{ pc.uid }}">
-        <span>{{ pc.name }}</span>
-       <span class="badge bg-{{ pc.badgeclass }} pc-status-badge-span">{{ pc.product }}</span>
-
+        <span>{{ pc.name }}</span>       
+       <span class="badge bg-{{ pc.badgeclass }} pc-status-badge-span">{{ pc.product.short_name }}</span>
+      
       </a>
         {% if not pc.is_activated %}
           <span class="badge bg-danger">{% translate "Not activated" %}</span>

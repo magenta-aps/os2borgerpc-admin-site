@@ -18,7 +18,7 @@
   {% endif %}
   {% for pc in pc_list %}
     <li class="{% if pc == selected_pc %}active{% endif %}">
-      {% comment %} Add deletion to every row: <a href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="{% translate 'Delete computer' %}"></a>{% endcomment %}
+      {% comment %} Add deletion to every row: <a href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="{% translate "Delete computer" %}"></a>{% endcomment %}
       <a class="item-list-link" id="{{pc.uid}}" href="/site/{{ site.url }}/computers/{{ pc.uid }}">
         {{ pc.name }}
       </a>
@@ -26,7 +26,7 @@
           <span class="badge bg-danger">{% translate "Not activated" %}</span>
         {% endif %}
       {% if pc == selected_pc %}
-        <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="{% translate 'Delete computer' %}">
+        <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="{% translate "Delete computer" %}">
           clear
         </a>
       {% endif%}
@@ -46,10 +46,10 @@
 
     <form name="pc_update_form" id="pc_update_form" action="{% url 'computer' site.uid selected_pc.uid %}" method="post">
       <div class="basic-info">
-        <span class="badge bg-secondary text-dark">
+        <span class="me-5">
           {% translate "Registered" %}: {{ pc.created }}
         </span>
-        <span class="badge bg-secondary ms-3 text-dark">
+        <span class="me-5">
           {% translate "Last check-in" %}:
           {% if selected_pc.last_seen %}
             {{ selected_pc.last_seen|timesince }} {% translate "ago" %}
@@ -57,7 +57,7 @@
             {% translate "Never" %}
           {% endif %}
         </span>
-        <span class="badge bg-secondary ms-3 text-dark">
+        <span class="me-5">
           {% translate "Last event received" %}:
           {% if security_event %}
             {{ security_event.reported_time|timesince }} {% translate "ago" %}
@@ -158,7 +158,7 @@
               <td>{{job.created|default:'-'}}</td>
               <td>{{job.started|default:'-'}}</td>
               <td>{{job.finished|default:'-'}}</td>
-              <td><span class="badge {{job.status_label}}">{{job.status_translated}}</span></td>
+              <td><span class="badge bg-{{job.status_label}}">{{job.status_translated}}</span></td>
               <td>
                 {% if job.has_info %}
                   <button type="button" class="btn jobinfobutton p-0" data-pk="{{ job.pk }}" data-bs-toggle="popover" data-bs-content="Loading..." data-bs-html="true" data-bs-placement="left" data-bs-trigger="click" data-bs-animation="true">

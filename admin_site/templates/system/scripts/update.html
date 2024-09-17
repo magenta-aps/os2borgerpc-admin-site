@@ -2,6 +2,7 @@
 {% load i18n %}
 
 {% block subnav %}
+
 <div class="sublevelnav">
   <div class="listutils">
     <button
@@ -105,9 +106,10 @@
       <fieldset class="gray-box mt-0 pt-0" style="border-radius: 0 0 .33rem .33rem;">
         {% comment %}If it's a global script only allow saving if the user is of sufficiently high rank {% endcomment %}
         {% if selected_script.is_global is False or user.is_superuser %}
-          <input type="submit" class="btn btn-primary me-3" value="{% translate 'Save changes' %}">
-        {% endif %}
-        <button type="button" onclick="script_refresh({{script_inputs_json}})" class="btn btn-secondary">{% translate "Cancel" %}</button>
+          <input type="submit" class="btn btn-primary me-3" value="{% translate "Save changes" %}">
+          <button type="button" onclick="script_refresh({{script_inputs_json}})" class="btn btn-secondary">{% translate "Cancel" %}</button>
+          {% endif %}
+       
       </fieldset>
 
     </form>
@@ -153,12 +155,11 @@
             {% include 'system/scripts/form.html' with form=create_form disable_inputs="yes" %}
           </div>
           <div class="modal-footer">
-            <input type="submit" class="btn btn-primary" value="{% translate 'Create' %} {% if is_security %}{% translate 'Security Script' %}{% else %}{% translate 'Script' %}{% endif %}">
+            <input type="submit" class="btn btn-primary" value="{% translate "Create" %} {% if is_security %}{% translate "Security Script" %}{% else %}{% translate "Script" %}{% endif %}">
             <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
           </div>
         </form>
       </div>
     </div>
   </div>
-
 {% endblock %}

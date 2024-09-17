@@ -14,7 +14,9 @@
       <span class="material-icons">add</span>
       {% translate "Add new security rule" %}
     </a>
-    <a class="btn btn-link" href="{% url 'event_rule_server_new' site.uid %}">
+  </div>
+  <div class="listutils">
+  <a class="btn btn-link" href="{% url 'event_rule_server_new' site.uid %}">
       <span class="material-icons">add</span>
       {% translate "Add new offline rule" %}
     </a>
@@ -38,7 +40,7 @@
              {% else %}
                href="{% url 'event_rule_security_problem_delete' site.uid el.id %}"
              {% endif %}
-             title="{% translate 'Delete' %}">
+             title="{% translate "Delete" %}">
             clear
           </a>
           {% endif %}

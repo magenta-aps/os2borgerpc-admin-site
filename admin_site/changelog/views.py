@@ -121,4 +121,4 @@ class ChangelogListView(ListView):
 
         comment.save()
 
-        return redirect("changelogs")
+        return redirect("/changelog?back=" + req["back_link"])

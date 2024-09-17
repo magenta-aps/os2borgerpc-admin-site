@@ -19,11 +19,14 @@
   </ul>
 
   <!-- The content for the three tabs you can choose from above, one after one: -->
-  <div class="tab-content" style="border-radius: .33rem .33rem 0 0;">
+  <div id="script-update-tab-content" class="tab-content" style="border-radius: .33rem .33rem 0 0;">
     <div id="details" class="tab-pane fade show active" role="tabpanel" aria-labelledby="details-tab">
 {% endif %}
 
+{# this form is modified via javascript at the bottom of the file #}
+
       <fieldset>
+        
         {{ form.name|as_crispy_field }}
         {{ form.description|as_crispy_field }}
         {% if not global_script %}
@@ -85,13 +88,13 @@
                   <th>{% translate "Type" %}</th>
                   <th>{% translate "Default value" %}</th>
                   <th>{% translate "Required" %}</th>
-                  <th>{% translate "Delete" %}</th>
+                  <th id="delete_script_parameter_th">{% translate "Delete" %}</th>
                 </tr>
               </thead>
               <tbody id="script-input-container">
                 <tr class="script-input-add">
                   <td colspan="5">
-                    <a class="btn table-config-add" href="javascript:void(0)" onclick="BibOS.ScriptEdit.addInput('#script-inputs', {})" title="{% translate "Add arguments" %}">
+                    <a id="add-arguments" class="btn table-config-add" href="javascript:void(0)" onclick="BibOS.ScriptEdit.addInput('#script-inputs', {})" title="{% translate "Add arguments" %}">
                       <span class="d-flex align-items-center">
                         <span class="material-icons me-1">add</span>
                         {% translate "Add arguments" %}
@@ -109,3 +112,25 @@
     </div>
   </div>
 {% endif %}
+
+{# Makes inputs read only or hidden for global scripts if you are not superuser #}
+{% if selected_script.is_global and not user.is_superuser %}
+  <script>
+
+    let tabContent = document.getElementById("script-update-tab-content");
+
+    tabContent.querySelectorAll('*').forEach(function(element) {
+      element.style.pointerEvents = 'none';
+      element.style.cursor = 'not-allowed';
+    });
+
+    const elementsToHide = document.querySelectorAll(`
+    #div_id_executable_code, 
+    #add-arguments, #delete_script_parameter_th, 
+    .delete_script_parameter
+    `)
+
+    elementsToHide.forEach(e => e.style.display = "none");
+  </script>
+  
+{% endif %} 

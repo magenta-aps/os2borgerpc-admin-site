@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-09 16:25+0100\n"
+"POT-Creation-Date: 2024-09-09 15:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,6 +21,10 @@ msgstr ""
 msgid "No user"
 msgstr "Ingen användare"
 
+#: static/js/jobs_list.js
+msgid "First"
+msgstr "Första"
+
 #: static/js/jobs_list.js static/js/security_events_list.js
 msgid "Previous"
 msgstr "Föregående"
@@ -28,6 +32,10 @@ msgstr "Föregående"
 #: static/js/jobs_list.js static/js/security_events_list.js
 msgid "Next"
 msgstr "Nästa"
+
+#: static/js/jobs_list.js
+msgid "Last"
+msgstr "Sista"
 
 #: static/js/security_events_list.js
 msgid "Note set during handling:"

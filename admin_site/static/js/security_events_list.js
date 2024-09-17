@@ -207,5 +207,12 @@ function updateCounter() {
     handleButton.innerText = gettext("Handle") + " " + ( selectedEvents > 0 ? selectedEvents + " " + gettext("out of") + " " + totalEvents : "") + " " + gettext("events")
 
     // Disables the button when no elements are selected
-    document.getElementById("handle-event-button").disabled = ( selectedEvents == 0 )
+    const handleEventButton = document.getElementById("handle-event-button");
+    handleEventButton.disabled = (selectedEvents === 0);
+    
+    if (handleEventButton.disabled) {
+        handleEventButton.style.visibility = "hidden";
+    } else {
+        handleEventButton.style.visibility = "visible";
+    }    
 }

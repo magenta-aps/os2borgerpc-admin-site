@@ -101,7 +101,7 @@
               <td>
                 {% if image.image_upload %}
                   {% if not selected_product.multilang or user_language == "da" %}
-                    <a class="btn btn-sm btn-secondary" href="{{ image.image_upload.url }}" download>
+                    <a class="btn btn-sm btn-secondary mb-1" href="{{ image.image_upload.url }}" download>
                       <span clas="d-flex align-items-center">
                         <span class="material-icons">
                           cloud_download
@@ -110,7 +110,7 @@
                       </span>
                     </a>
                     {% if image.image_upload_multilang != "" and image.image_upload_multilang != "#" %}
-                      <a class="btn btn-sm btn-secondary ms-3" href="{{ image.image_upload_multilang.url }}" download>
+                      <a class="btn btn-sm btn-secondary mb-1" href="{{ image.image_upload_multilang.url }}" download>
                         <span clas="d-flex align-items-center">
 
                           <span class="material-icons">

@@ -67,10 +67,18 @@
 
         <article class="col-lg-4 form-switch" id="week-plan-container">
 
-          <label class="mb-2">{% translate "Schedule status" %}*</label><br/>
+          <label class="mb-2" for="id_enabled">{% translate "Schedule status" %}*</label><br/>
           <div class="d-table-cell">
-            {{form.enabled}}
-            <label id="id_enabled_label" style="vertical-align: middle;padding-top:0.25rem;">{% if selected_plan.enabled or not selected_plan %}{% translate "Active" %}{% else %}{% translate "Inactive" %}{% endif %}</label>
+              <label for="id_enabled">
+                  {{ form.enabled }}  
+                  <span id="id_enabled_label" style="vertical-align: middle;padding-top:0.25rem;">
+                      {% if selected_plan.enabled or not selected_plan %}
+                          {% translate "Active" %}
+                      {% else %}
+                          {% translate "Inactive" %}
+                      {% endif %}
+                  </span>
+              </label>
           </div>
           <br/>
 
@@ -277,15 +285,14 @@
         </aside>
       </div>
       <fieldset class="mt-3">
-        <input id="submit-button" class="btn btn-primary me-3" type="submit" name="submit" value="{% translate 'Save changes' %}">
-        <input id="cancel-button" class="btn btn-secondary me-3" type="reset" name="cancel" value="{% translate 'Cancel' %}">
+        <input id="submit-button" class="btn btn-primary me-3" type="submit" name="submit" value="{% translate "Save changes" %}">
+        <input id="cancel-button" class="btn btn-secondary me-3" type="reset" name="cancel" value="{% translate "Cancel" %}">
         {# Only show the button to duplicate a plan if you're updating an existing entry - not creating a new one#}
         {% if selected_plan.id %}
           <a class="btn btn-secondary" {% if wake_plan_access %} href="{% url 'wake_plan_duplicate' site.uid selected_plan.id %}" {% endif %}>{% translate "Duplicate schedule" %}</a>
         {% endif %}
       </fieldset>
     </div>
-    <hr>
 
   </form>
 

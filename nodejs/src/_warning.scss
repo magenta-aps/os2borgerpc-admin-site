@@ -16,7 +16,7 @@
 .badge-gentle-warning,
 .badge-label-gentle-warning,
 .severity-label-gentle-warning::before {
-    color: $gray-800;
+    color: $primary;
     background-color: $gentle-warning;
 }
 
@@ -32,4 +32,11 @@
 .severity-label-important::before { 
     color: $white;
     background-color: $danger; 
+}
+
+tbody tr {
+	border-bottom: 0.1px solid #00000024 !important;
+}
+.badge {
+  font-size: 0.9em !important;
 }

@@ -51,9 +51,9 @@ class EventLevels:
     )
 
     LEVEL_TO_LABEL = {
-        CRITICAL: "label-important",
-        HIGH: "label-warning",
-        NORMAL: "label-gentle-warning",
+        CRITICAL: "danger",
+        HIGH: "warning",
+        NORMAL: "yellow",
     }
 
 
@@ -1072,11 +1072,11 @@ class Job(models.Model):
 
     # Is it ideal to hardcode CSS class names in here? Better in template tag?
     STATUS_TO_LABEL = {
-        NEW: "bg-secondary",
-        SUBMITTED: "bg-info",
-        DONE: "bg-success",
-        FAILED: "bg-danger",
-        RESOLVED: "bg-primary",
+        NEW: "secondary",
+        SUBMITTED: "info",
+        DONE: "success",
+        FAILED: "danger",
+        RESOLVED: "primary",
     }
 
     # Fields
@@ -1384,9 +1384,9 @@ class SecurityEvent(models.Model):
     )
 
     STATUS_TO_LABEL = {
-        NEW: "bg-primary",
-        ASSIGNED: "bg-secondary",
-        RESOLVED: "bg-success",
+        NEW: "primary",
+        ASSIGNED: "secondary",
+        RESOLVED: "success",
     }
     problem = models.ForeignKey(
         SecurityProblem, null=True, blank=True, on_delete=models.CASCADE

@@ -53,9 +53,9 @@
                 •••••
               {% elif param.input.value_type == 'BOOLEAN' %}
                 {% if param.string_value == 'True' %}
-                  <input type="checkbox" disabled checked>
+                  <input type="checkbox" class="form-check-input" disabled checked>
                 {% else %}
-                  <input type="checkbox" disabled unchecked>
+                  <input type="checkbox" class="form-check-input" disabled unchecked>
                 {% endif %}
               {% else %}
                 {{ param.string_value }}

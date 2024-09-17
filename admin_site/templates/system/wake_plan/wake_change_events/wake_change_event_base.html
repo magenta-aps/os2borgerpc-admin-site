@@ -36,7 +36,7 @@
             {{event}}
           </a>
           {% if event == selected_event %}
-            <a class="item-list-deletable material-icons" {% if wake_plan_access %} href="{% url 'wake_change_event_delete' site.uid event.id %}" {% endif %} title="{% translate 'Delete exception' %}">
+            <a class="item-list-deletable material-icons" {% if wake_plan_access %} href="{% url 'wake_change_event_delete' site.uid event.id %}" {% endif %} title="{% translate "Delete exception" %}">
               clear
             </a>
           {% endif %}

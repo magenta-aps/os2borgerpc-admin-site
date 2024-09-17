@@ -4410,7 +4410,7 @@ msgstr "hændelsestidspunkt"
 
 #: system/models.py
 msgid "reported"
-msgstr "modtagelsestidspunkt"
+msgstr "modtagelses&shy;tidspunkt"
 
 #: system/models.py
 msgid "assigned user"
@@ -5562,7 +5562,7 @@ msgstr "Ændret"
 # Konsistens ml. navn i sikkerhedsregel og sikkerhedshændelse
 #: templates/system/security_events/site_security_events.html
 msgid "Level"
-msgstr "Alvorlighedsgrad"
+msgstr "Alvorligheds&shy;grad"
 
 #: templates/system/security_events/site_security_events.html
 msgid "Edit Events"
@@ -5582,11 +5582,11 @@ msgstr "Regel"
 
 #: templates/system/security_events/site_security_events.html
 msgid "Incident time"
-msgstr "Hændelsestidspunkt"
+msgstr "Hændelses&shy;tidspunkt"
 
 #: templates/system/security_events/site_security_events.html
 msgid "Time of receipt"
-msgstr "Modtagelsestidspunkt"
+msgstr "Modtagelses&shy;tidspunkt"
 
 #: templates/system/security_events/site_security_events.html
 msgid "Handled by"

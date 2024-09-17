@@ -5556,7 +5556,7 @@ msgstr "Ändrat"
 # Konsistens ml. navn i sikkerhedsregel og sikkerhedshændelse
 #: templates/system/security_events/site_security_events.html
 msgid "Level"
-msgstr "Svårighetsgrad"
+msgstr "Svårighets&shy;grad"
 
 #: templates/system/security_events/site_security_events.html
 msgid "Edit Events"
@@ -5576,11 +5576,11 @@ msgstr "Regel"
 
 #: templates/system/security_events/site_security_events.html
 msgid "Incident time"
-msgstr "Händelsestidpunkt"
+msgstr "Händelses&shy;tidpunkt"
 
 #: templates/system/security_events/site_security_events.html
 msgid "Time of receipt"
-msgstr "Mottagningstidpunkt"
+msgstr "Mottagnings&shy;tidpunkt"
 
 #: templates/system/security_events/site_security_events.html
 msgid "Handled by"

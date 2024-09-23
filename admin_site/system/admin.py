@@ -293,6 +293,47 @@ class ConfigurationAdmin(admin.ModelAdmin):
     ]
 
 
+# Theoretically a configuration entry can be assigned to multiple groups, pcs and sites but in practice it's not the case.
+# Hence, we just handle it like there's a single such relation here.
+@admin.register(m.ConfigurationEntry)
+class ConfigurationEntryAdmin(admin.ModelAdmin):
+    def site(self, obj):
+        return obj.owner_configuration.site_set.first()
+
+    def pcgroup(self, obj):
+        return obj.owner_configuration.pcgroup_set.first()
+
+    def pc(self, obj):
+        return obj.owner_configuration.pc_set.first()
+
+    def site_indirect(self, obj):
+        owner_conf = obj.owner_configuration
+        if owner_conf.site_set.exists():
+            return owner_conf.site_set.first()
+        elif owner_conf.pcgroup_set.exists():
+            return owner_conf.pcgroup_set.first().site
+        elif owner_conf.pc_set.exists():
+            return owner_conf.pc_set.first().site
+
+    list_display = [
+        "id",
+        "key",
+        "value",
+        "owner_configuration",
+        "pc",
+        "pcgroup",
+        "site",
+        "site_indirect",
+    ]
+    search_fields = (
+        "id",
+        "key",
+        "value",
+        "owner_configuration__id",
+    )
+    list_filter = ["key"]
+
+
 @admin.register(m.Country)
 class CountryAdmin(admin.ModelAdmin):
     list_display = (

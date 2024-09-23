@@ -142,6 +142,7 @@ class ConfigurationEntry(models.Model):
 
     class Meta:
         ordering = ["key"]
+        verbose_name_plural = "configuration entries"
 
 
 class Country(models.Model):

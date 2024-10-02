@@ -1,3 +1,28 @@
+## Version 6.1.0, October 2, 2024
+
+- Update Django to version 4.2.15
+- Change most links pointing at files on Github to point at files on the server itself
+- Make cancel buttons for pcs, groups, settings and event rules reload the page in order to reset all unsaved changes
+- Improve the layout on the site overview page for customers with many sites
+- Add option to create "draft" image versions that are only visible to superusers
+- Allow the existence of image version objects with no related image files and add admin action for deleting image files
+- Improve the error handling related to the Quria integration
+- Remove unnecessary permissions in the admin backend in order to improve performance
+- Add configuration entry overview to the admin backend
+- Add global redirect for images and users
+- Modernize the use of imports in admin.py
+- Update the security surveillance guide
+- Prevent server errors related to invalid URL's
+- Make the "back" links from docs and news return the user to the admin-site page they entered from
+- Add option to select all OS2borgerPC or OS2borgerPC Kiosk devices when running scripts
+- Update frontend dependencies to new versions
+- Update the admin-site UX
+- Allow users to update their password while the password is shown
+- Remove ie11 warning and associated bug as ie11 is no longer being supported by Microsoft
+- Change Read the docs to use Markdown
+- Fix possible permission error in the development environment
+- Prevent "TOOMANYREQUESTS" error in the Gitlab-CI
+
 ## Version 6.0.0, June 18, 2024
 
 - Customers can now create their own sites, via an added user type called called "customer admin"

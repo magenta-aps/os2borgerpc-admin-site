@@ -429,7 +429,7 @@ class FeaturePermissionAdmin(admin.ModelAdmin):
 @admin.register(m.ImageVersion)
 class ImageVersionAdmin(admin.ModelAdmin):
     list_display = ("product", "image_version", "os", "release_date")
-    actions = [delete_images]
+    # actions = [delete_images]
 
 
 @admin.register(m.Job)

@@ -5,7 +5,7 @@
 - Make cancel buttons for pcs, groups, settings and event rules reload the page in order to reset all unsaved changes
 - Improve the layout on the site overview page for customers with many sites
 - Add option to create "draft" image versions that are only visible to superusers
-- Allow the existence of image version objects with no related image files and add admin action for deleting image files
+- Allow the existence of image version objects with no related image files
 - Improve the error handling related to the Quria integration
 - Remove unnecessary permissions in the admin backend in order to improve performance
 - Add configuration entry overview to the admin backend
@@ -15,7 +15,6 @@
 - Prevent server errors related to invalid URL's
 - Make the "back" links from docs and news return the user to the admin-site page they entered from
 - Add option to select all OS2borgerPC or OS2borgerPC Kiosk devices when running scripts
-- Update frontend dependencies to new versions
 - Update the admin-site UX
 - Make all global script fields read-only to non-superuser users
 - Allow users to update their password while the password is shown

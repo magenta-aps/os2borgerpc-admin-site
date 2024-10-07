@@ -1,5 +1,6 @@
 from django.urls import re_path
 from django.views.generic import RedirectView
+from django.templatetags.static import static
 
 from django.views.i18n import JavaScriptCatalog
 
@@ -10,8 +11,8 @@ from system.views import (
     APIKeyUpdate,
     ConfigurationEntryCreate,
     ConfigurationEntryUpdate,
-    DocView,
     ImageVersionRedirect,
+    ImageVersionRedirectSite,
     ImageVersionView,
     JobInfo,
     JobRestarter,
@@ -64,6 +65,7 @@ from system.views import (
     UserDelete,
     UserLink,
     UserRedirect,
+    UserRedirectSite,
     UserUpdate,
 )
 
@@ -334,6 +336,7 @@ urlpatterns = [
     ),
     # Users
     re_path(r"^site/(?P<slug>[^/]+)/users/$", UserRedirect.as_view(), name="users"),
+    re_path(r"^users/$", UserRedirectSite.as_view(), name="users_redirect_site"),
     re_path(
         r"^site/(?P<slug>[^/]+)/users/new/$", UserCreate.as_view(), name="new_user"
     ),
@@ -357,48 +360,18 @@ urlpatterns = [
     ),
     re_path(
         r"^documentation/os2borgerpc_installation_guide/",
-        RedirectView.as_view(
-            url="https://github.com/OS2borgerPC/os2borgerpc-image/raw/development/"
-            + "docs/OS2BorgerPC Installationsguide.pdf"
-        ),
+        RedirectView.as_view(url=static("docs/OS2BorgerPC_installation_guide_da.pdf")),
     ),
-    re_path(
-        r"^documentation/os2borgerpc_kiosk_installation_guide",
-        RedirectView.as_view(
-            url="https://os2borgerpc-server-image.readthedocs.io/en/latest/install_setup.html"
-        ),
-    ),
-    re_path(
-        r"^documentation/wake_plan_user_guide/",
-        RedirectView.as_view(
-            url="https://github.com/OS2borgerPC/os2borgerpc-admin-site/raw/development/admin_site"
-            + "/static/docs/Guide_til_brug_af_strømbesparingsfunktioner.pdf"
-        ),
-        name="wake_plan_user_guide",
-    ),
-    re_path(
-        r"^documentation/tech/os2borgerpc-image",
-        RedirectView.as_view(url="https://os2borgerpc-image.readthedocs.io"),
-    ),
-    re_path(
-        r"^documentation/tech/os2borgerpc-admin",
-        RedirectView.as_view(url="https://os2borgerpc-admin.readthedocs.io"),
-    ),
-    re_path(
-        r"^documentation/tech/os2borgerpc-server-image",
-        RedirectView.as_view(url="https://os2borgerpc-server-image.readthedocs.io"),
-    ),
-    re_path(
-        r"^documentation/tech/os2borgerpc-client",
-        RedirectView.as_view(url="https://os2borgerpc-client.readthedocs.io"),
-    ),
-    re_path(r"^documentation/(?P<name>[\d\w\/]+)/", DocView.as_view(), name="doc"),
-    re_path(r"^documentation/", DocView.as_view(), name="doc_root"),
     # Image Versions
     re_path(
         r"^site/(?P<slug>[^/]+)/image-versions/$",
         ImageVersionRedirect.as_view(),
         name="images",
+    ),
+    re_path(
+        r"^image-versions/$",
+        ImageVersionRedirectSite.as_view(),
+        name="images-redirect-site",
     ),
     re_path(
         r"^site/(?P<slug>[^/]+)/image-versions/(?P<product_id>[^/]+)$",

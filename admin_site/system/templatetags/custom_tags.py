@@ -58,6 +58,7 @@ def italic(text):
     return mark_safe("<em>" + text + "</em>")
 
 
+# Used when you have a dictionary and the key is in a variable
 @register.filter
 def get_item(dictionary, key):
     return dictionary.get(key)

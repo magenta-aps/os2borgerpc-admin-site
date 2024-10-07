@@ -1,0 +1,209 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load i18n %}
+{% load custom_tags %}
+
+{% block admin_groups_active %}class="active"{% endblock %}
+
+{% block specific_content %}
+  <h1>{% translate "Power saving functions" %}</h1>
+  <p>
+    {% blocktranslate trimmed %}
+    The power saving functions consist of a suspend script and on/off schedules.
+    These functions can only be accessed by the customers that pay for access.
+    The customers that helped fund the functions automatically have access.
+    Other customers can contact Magenta if they are interested.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    The suspend script is only intended for use on OS2borgerPC while the on/off
+    schedules can be used on both OS2borgerPC and OS2borgerPC Kiosk. The suspend
+    script can be combined with on/off schedules.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    If you are visiting this page for the first time, we recommend first reading our
+    {% endblocktranslate %}
+    {% with "docs/Wake_plan_user_guide_"|add:request.user.user_profile.language|add:".pdf" as pdf_link %}
+      <a href="{% static pdf_link %}" target="_blank">{% translate "User guide to power saving functions in OS2borgerPC" %}</a>.
+    {% endwith %}
+  </p>
+  <h2>{% translate "The suspend script" %}</h2>
+  <p>
+    {% blocktranslate trimmed %}
+    The suspend script can be used to configure computers to automatically suspend
+    after a number of minutes of inactivity. A chosen warning is displayed before
+    the computer is suspended. The script takes five arguments: whether to
+    activate the function, the number of minutes of inactivity before the warning
+    is shown, the number of minutes of inactivity before the computer suspends,
+    the text in the warning and the text on the button in the warning. If the
+    last two text-related inputs are left empty, default texts will be used.
+    The script automatically logs out the user before the computer suspends.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    The suspend script can also suspend the computer when it is inactive on the
+    login screen. However, this requires that script execution at login has been
+    enabled via the script
+    {% endblocktranslate %}
+    <a href="{% url 'script_redirect_id' '1064' %}">Udfases - Slå scriptkørsel ved login til/fra</a>.
+    {% blocktranslate trimmed %}
+    Script execution at login is automatically enabled on image 5.0.0 and newer images.
+    The warning will not be shown on the login screen.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% translate "Be aware that USB surveillance cannot be active while the computer is suspended." %}
+  </p>
+  <h2>{% translate "On/Off schedules" %}</h2>
+  <p>
+    {% blocktranslate trimmed %}
+    An on/off schedule is a tool for planning and administrating on and off
+    times for computers in one or more groups.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% translate "The use of On/Off schedules makes it unnecessary to use the scripts" %}
+    <a href="{% url 'script_redirect_id' '12' %}">System - Luk ned dagligt</a> {% translate "and" %}
+    <a href="{% url 'script_redirect_id' '422' %}">System - Luk ned og vågn op dagligt</a>.
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    When you click on "On/Off schedule" in the left-hand menu, a list of schedules
+    for the chosen site will be shown to the right of the left-hand menu. You
+    can click on a particular schedule in order to edit that schedule.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    The editing interface for the chosen schedule is shown on the right. If no
+    schedules have been created for the chosen site, the interface for creating
+    schedules will be shown instead.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    When you click on a schedule, you will by default be shown the schedule's
+    settings as well as the exceptions and groups that are associated with
+    the schedule. Here you can change the schedule's name, status, sleep state
+    and settings for the general week plan as well as add/remove groups or
+    exceptions from the schedule. Changes do not take effect until you've
+    clicked on the "Save changes"-button at the bottom of the screen.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    If you click on "Create closed days", "Create altered opening hours" or
+    "Edit exceptions", you will be redirected to a new page where you can
+    create new exceptions and edit or delete existing exceptions. The two
+    "Create" buttons take you directly to an interface for that particular
+    type of exception while "Edit exceptions" opens the editing interface
+    for the first exception for the chosen site.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    The different editing options are described more closely here:
+    {% endblocktranslate %}
+    {% include 'wake_plans/__submenu__.html' %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    If you wish to create a new schedule, you must click on "Add new
+    On/Off schedule" above the list of schedules. This opens an interface
+    where you must enter a name for the schedule and have the option of
+    editing the settings and adding exceptions or groups. When you click
+    on "Save changes", you will be redirected to the editing interface for
+    the newly screated schedule where you can continue to edit the settings
+    and add exceptions or groups. If the schedule status is set to "Active",
+    it will also take effect when you click on "Save changes".
+    {% endblocktranslate %}
+  </p>
+  <h2>{% translate "Important information" %}</h2>
+  <p>
+    {% blocktranslate trimmed %}
+    A computer can only receive a new/updated schedule if it is on. If a
+    computer is added to a schedule or its schedule is changed while it
+    is off, it will only begin following the new/updated schedule once it
+    has been on.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    If a computer is manually turned on after its off time or on a day where
+    it is set to be constantly off, it will not turn off automatically until
+    the off time for the next day. If no off time has been set for the next
+    day, it will turn off automatically 24 hours after it was turned on. If
+    the computer is turned off manually, it will turn on according to the
+    schedule.
+    {% endblocktranslate %}
+  </p>
+  <h3>{% translate "UEFI/BIOS settings" %}</h3>
+  <ol>
+    <li>
+      {% blocktranslate trimmed %}
+      If UEFI/BIOS has been set to turn on the computer at a specific time, and
+      the computer belongs to an active On/Off schedule, then the computer
+      will not turn on according to the on times in the schedule, but
+      instead follow the times set in the UEFI/BIOS. It will, however, turn off
+      according to the schedule. If you want the computer to follow the on
+      times set in the schedule then you must enter UEFI/BIOS and disable the
+      UEFI/BIOS control of on times. It is generally not possible to modify
+      UEFI/BIOS from the OS so it cannot be done via scripts.
+      {% endblocktranslate %}
+    </li>
+    <li>
+      {% blocktranslate trimmed %}
+      If the computers temporarily lose power while they are turned off according
+      to the schedule, they will still turn on according to the schedule.
+      (So long as the CMOS battery is still charged.) However, if the computers
+      lose power while they are on, they will not turn on automatically.
+      {% endblocktranslate %}
+
+      {% blocktranslate trimmed %}
+      Some UEFI/BIOS systems include the option to set the computer to return to its last state
+      (or turn on) after a power failure. We recommend turning this option on.
+      {% endblocktranslate %}
+
+      {% blocktranslate trimmed %}
+      The layout may differ depending on the UEFI/BIOS version, but here is an example from a NUC:
+      From the overview you choose "Advanced" and then "Power":
+      {% endblocktranslate %}
+      <img src="{% static 'docs/img/wake_plan/nuc_bios_start_page.jpg' %}" alt="">
+      {% blocktranslate trimmed %}
+      Next, you edit the setting "After Power Failure" and set it to "Last State"
+      (recommended) or "Power On".
+      {% endblocktranslate %}
+      <img src="{% static 'docs/img/wake_plan/nuc_bios_wake_up_power_failure_setting.jpg' %}" alt="">
+    </li>
+  </ol>
+  <h3>{% translate "Frequently asked questions" %}</h3>
+  <h4>{% translate "1. How do I add a single PC to a schedule?" %}</h4>
+  <p>
+    {% blocktranslate trimmed %}
+    On/Off schedules are designed to work with groups, so it is not possible to
+    directly add a single PC to a schedule. You can, however, always create
+    a group that only contains that one PC and then add that group to the
+    schedule.
+    {% endblocktranslate %}
+    </p>
+  <h4>{% translate "2. What happens if the computer experiences a power failure?" %}</h4>
+  <p>{% blocktranslate %}Check the second paragraph under "UEFI/BIOS settings" further up.{% endblocktranslate %}</p>
+  <h4>{% translate "3. The computer turns on and off at the wrong times?" %}</h4>
+  <p>
+    {% blocktranslate trimmed %}
+    This could be due to incorrect time settings on the computer, which could be caused
+    by the computer being unable to perform time synchronization. Ubuntu Linux
+    - and many other operating systems - normally performs time synchronization via the
+    protocol NTP (Network Time Protocol). NTP runs on port 123 via UDP, which we thus
+    suggest allowing in your network configuration. If you do not wish to allow
+    this traffic on all domains, we could develop a script that forces NTP to
+    only check specific URL's.
+    {% endblocktranslate %}
+  </p>
+  <h4>{% translate "4. The computer turns on at the wrong times, but turns off according to schedule?" %}</h4>
+  <p>{% blocktranslate %}This could be due to the UEFI/BIOS settings. Check the first paragraph under "UEFI/BIOS settings" further up.{% endblocktranslate %}</p>
+{% endblock %}

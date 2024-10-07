@@ -322,12 +322,7 @@ class PCForm(forms.ModelForm):
 
     class Meta:
         model = PC
-        exclude = (
-            "configuration",
-            "site",
-            "created",
-            "last_seen",
-        )
+        exclude = ("configuration", "site", "created", "last_seen", "product")
 
 
 class SecurityEventForm(forms.ModelForm):

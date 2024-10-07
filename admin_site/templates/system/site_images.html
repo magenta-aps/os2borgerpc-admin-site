@@ -11,7 +11,8 @@
       <li class="{% if product.id == selected_product.id %}active{% endif %}">
         <a class="item-list-link" href="/site/{{ site.url }}/image-versions/{{ product.id }}">
           <span clas="d-flex align-items-center">
-            {{ product.name }}
+            <!-- TODO: Remove the swedish hack below of translating product.name once the database itself is translated -->
+          {% translate product.name %}
           </span>
         </a>
       </li>
@@ -21,9 +22,10 @@
 {% block specific_content %}
 <div class="container-fluid main sublevelmain">
   {% if object_list %}
-    <!-- First index of 'minor_versions' is the newest version -->
+    <!-- First index of 'minor_versions' is the most recent version -->
     {% with object_list|first as first_ver %}
-      <h2 class="divideheader">{% translate "Newest version of" %} {{ selected_product.name }}</h2>
+      <!-- TODO: Remove the swedish hack below of translating product.name once the database itself is translated -->
+      <h2 class="divideheader">{% translate "Most recent version of" %} {% translate selected_product.name %}</h2>
       <dl>
         <dt>{% translate "Version" %}</dt>
         <dd>{{ first_ver.image_version }}</dd>
@@ -36,30 +38,31 @@
           <pre style="font-family: var(--bs-font-sans-serif)">{{ first_ver.release_notes }}</pre>
         </dd>
       </dl>
-      {% if not selected_product.multilang or user_language == "da" %}
-        <a class="btn btn-md btn-success text-light p-3 fs-5" href="{{ first_ver.image_upload.url }}" download>
-          <span class="material-icons align-middle">
-            cloud_download
-          </span>
-          <!-- The name of the language could be programatically obtained from the user's language setting? -->
-          {% translate "Download standard image" %}
-        </a>
-        {% if first_ver.image_upload_multilang != "#" %}
-        <a class="btn btn-md btn-secondary ms-4" href="{{ first_ver.image_upload_multilang.url }}" download>
-          <span class="material-icons">
-            cloud_download
-          </span>
-          {% translate "Download multi language image" %}
-        </a>
+      {% if first_ver.image_upload %}
+        {% if not selected_product.multilang or user_language == "da" %}
+          <a class="btn btn-md btn-success text-light p-3 fs-5" href="{{ first_ver.image_upload.url }}" download>
+            <span class="material-icons align-middle">
+              cloud_download
+            </span>
+            {% translate "Download standard image" %}
+          </a>
+          {% if first_ver.image_upload_multilang != "" and first_ver.image_upload_multilang != "#" %}
+            <a class="btn btn-md btn-secondary ms-4" href="{{ first_ver.image_upload_multilang.url }}" download>
+              <span class="material-icons">
+                cloud_download
+              </span>
+              {% translate "Download multi language image" %}
+            </a>
+          {% endif %}
+        {% else %} {# Handle multilang images for languages except danish #}
+          {# Views ensure that all images are multilang if the language isn't Danish #}
+          <a class="btn btn-md btn-success text-light p-3 fs-5" href="{{ first_ver.image_upload_multilang.url }}" download>
+            <span class="material-icons">
+              cloud_download
+            </span>
+            {% translate "Download standard image" %}
+          </a>
         {% endif %}
-      {% else %}
-        {# Views ensure that all images are multilang if the language isn't Danish #}
-        <a class="btn btn-md btn-success text-light p-3 fs-5" href="{{ first_ver.image_upload_multilang.url }}" download>
-          <span class="material-icons">
-            cloud_download
-          </span>
-          {% translate "Download standard image" %}
-        </a>
       {% endif %}
     {% endwith %}
   {% else %}
@@ -96,36 +99,39 @@
                 <pre style="font-family: var(--bs-font-sans-serif); white-space: pre-wrap;">{{ image.release_notes }}</pre>
               </td>
               <td>
-                {% if not selected_product.multilang or user_language == "da" %}
-                  <a class="btn btn-sm btn-secondary" href="{{ image.image_upload.url }}" download>
-                    <span clas="d-flex align-items-center">
-                      <span class="material-icons">
-                        cloud_download
+                {% if image.image_upload %}
+                  {% if not selected_product.multilang or user_language == "da" %}
+                    <a class="btn btn-sm btn-secondary mb-1" href="{{ image.image_upload.url }}" download>
+                      <span clas="d-flex align-items-center">
+                        <span class="material-icons">
+                          cloud_download
+                        </span>
+                        {% translate "Download standard image" %}
                       </span>
-                      {% translate "Download standard image" %}
-                    </span>
-                  </a>
-                  {% if image.image_upload_multilang != "#" %}
-                    <a class="btn btn-sm btn-secondary ms-3" href="{{ image.image_upload_multilang.url }}" download>
+                    </a>
+                    {% if image.image_upload_multilang != "" and image.image_upload_multilang != "#" %}
+                      <a class="btn btn-sm btn-secondary mb-1" href="{{ image.image_upload_multilang.url }}" download>
+                        <span clas="d-flex align-items-center">
+
+                          <span class="material-icons">
+                            cloud_download
+                          </span>
+                          {% translate "Download multi language image" %}
+                        </span>
+                      </a>
+                    {% endif %}
+                  {% else %} {# Handle multilang images for languages except danish #}
+                    {# Views ensure that all images are multilang if the language isn't Danish #}
+                    <a class="btn btn-sm btn-secondary" href="{{ image.image_upload_multilang.url }}" download>
                       <span clas="d-flex align-items-center">
 
                         <span class="material-icons">
                           cloud_download
                         </span>
-                        {% translate "Download multi language image" %}
+                        {% translate "Download standard image" %}
                       </span>
                     </a>
                   {% endif %}
-                {% else %}
-                  <a class="btn btn-sm btn-secondary" href="{{ image.image_upload_multilang.url }}" download>
-                    <span clas="d-flex align-items-center">
-
-                      <span class="material-icons">
-                        cloud_download
-                      </span>
-                      {% translate "Download standard image" %}
-                    </span>
-                  </a>
                 {% endif %}
               </td>
             </tr>

@@ -45,7 +45,7 @@
     <form action="" method="post">
       {% csrf_token %}
       {{ form|crispy }}
-      <input class="btn btn-danger" type="submit" value="{% translate 'Confirm deletion' %}">
+      <input class="btn btn-danger" type="submit" value="{% translate "Confirm deletion" %}">
       <a class="btn btn-secondary" href="javascript:history.go(-1)">{% translate "Cancel" %}</a>
     </form>
   </div>

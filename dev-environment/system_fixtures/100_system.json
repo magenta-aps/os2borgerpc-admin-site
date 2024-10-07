@@ -4437,6 +4437,7 @@
         "is_activated": true,
         "created": "2020-11-30T18:15:43.997",
         "last_seen": "2020-12-01T14:15:03",
+        "product": 1,
         "location": "",
         "pc_groups": [
             10,
@@ -4458,6 +4459,7 @@
         "created": "2021-01-11T11:03:36.510",
         "last_seen": "2021-01-11T15:30:04",
         "location": "",
+        "product": 1,
         "pc_groups": []
     }
 },
@@ -4475,6 +4477,7 @@
         "created": "2021-01-21T08:50:37.470",
         "last_seen": "2021-01-21T09:05:02",
         "location": "dette er en placering",
+        "product": 1,
         "pc_groups": [
             10
         ]
@@ -4494,6 +4497,7 @@
         "created": "2021-01-21T11:16:10.403",
         "last_seen": "2021-01-28T12:50:03",
         "location": "beskrivelse 2",
+        "product": 1,
         "pc_groups": [
             10,
             3
@@ -4514,6 +4518,7 @@
         "created": "2021-01-29T12:52:58.793",
         "last_seen": "2021-01-29T14:14:32",
         "location": "",
+        "product": 1,
         "pc_groups": []
     }
 },
@@ -4531,6 +4536,7 @@
         "created": "2021-08-25T10:01:37.352",
         "last_seen": "2021-08-25T15:30:08",
         "location": "",
+        "product": 1,
         "pc_groups": []
     }
 },
@@ -4548,6 +4554,7 @@
         "created": "2021-09-11T13:33:02.398",
         "last_seen": null,
         "location": "",
+        "product": 1,
         "pc_groups": []
     }
 },
@@ -4565,6 +4572,7 @@
         "created": "2021-11-25T15:34:19.791",
         "last_seen": "2021-11-30T10:30:02",
         "location": "",
+        "product": 1,
         "pc_groups": [
             17
         ]
@@ -4583,6 +4591,7 @@
         "is_activated": true,
         "created": "2021-11-29T09:22:59.334",
         "last_seen": "2021-12-01T11:35:04",
+        "product": 1,
         "location": "",
         "pc_groups": [
             9
@@ -4603,6 +4612,7 @@
         "created": "2021-11-29T10:39:13.906",
         "last_seen": "2022-01-18T10:45:11",
         "location": "",
+        "product": 1,
         "pc_groups": [
             17
         ]
@@ -4622,6 +4632,7 @@
         "created": "2021-11-30T12:59:58.700",
         "last_seen": "2022-01-10T09:20:08",
         "location": "",
+        "product": 2,
         "pc_groups": [
             17
         ]
@@ -4641,6 +4652,7 @@
         "created": "2021-11-30T13:03:03.481",
         "last_seen": "2022-01-14T16:55:06",
         "location": "",
+        "product": 1,
         "pc_groups": [
             17,
             9
@@ -4661,6 +4673,7 @@
         "created": "2021-12-02T13:32:08.296",
         "last_seen": "2021-12-02T15:05:05",
         "location": "",
+        "product": 2,
         "pc_groups": [
             9
         ]
@@ -4680,6 +4693,7 @@
         "created": "2022-01-05T14:43:09.479",
         "last_seen": "2022-01-17T17:20:05",
         "location": "",
+        "product": 1,
         "pc_groups": []
     }
 },
@@ -4697,6 +4711,7 @@
         "created": "2022-01-10T11:37:48.592",
         "last_seen": "2022-01-14T15:10:04",
         "location": "beskrivelse 5",
+        "product": 2,
         "pc_groups": [
             17
         ]
@@ -4749,6 +4764,8 @@
     "pk": 1,
     "fields": {
         "name": "OS2borgerPC",
+        "short_name": "BorgerPC",
+        "config_name": "os2borgerpc",
         "multilang": true
     }
 },
@@ -4757,6 +4774,8 @@
     "pk": 2,
     "fields": {
         "name": "OS2borgerPC Kiosk",
+        "short_name": "Kiosk",
+        "config_name": "os2borgerpc kiosk",
         "multilang": false
     }
 },
@@ -10113,7 +10132,7 @@
 },
 {
     "model": "system.imageversion",
-    "pk": 2,
+    "pk": 1,
     "fields": {
         "product": 2,
         "image_version": "1.0.0",
@@ -10126,20 +10145,20 @@
 },
 {
     "model": "system.imageversion",
-    "pk": 3,
+    "pk": 2,
     "fields": {
         "product": 1,
         "image_version": "3.0.0",
         "release_date": "2021-05-12",
         "os": "Ubuntu 20.04",
         "release_notes": "OS2borgerPC 3.0.0 med Ubuntu 20.04.1.",
-        "image_upload": "images/os2borgerpc-3.0.0.iso",
-        "image_upload_multilang": "images/os2borgerpc-3.0.0m.iso"
+        "image_upload": null,
+        "image_upload_multilang": null
     }
 },
 {
     "model": "system.imageversion",
-    "pk": 4,
+    "pk": 3,
     "fields": {
         "product": 1,
         "image_version": "3.1.0",
@@ -10152,6 +10171,19 @@
 },
 {
     "model": "system.imageversion",
+    "pk": 4,
+    "fields": {
+        "product": 1,
+        "image_version": "4.0.0",
+        "release_date": "2021-05-12",
+        "os": "Ubuntu 20.04",
+        "release_notes": "OS2borgerPC 3.1.0 med Ubuntu 20.04.3.",
+        "image_upload": "images/os2borgerpc-4.0.0.iso",
+        "image_upload_multilang": "images/os2borgerpc-4.0.0m.iso"
+    }
+},
+{
+    "model": "system.imageversion",
     "pk": 5,
     "fields": {
         "product": 1,
@@ -10159,8 +10191,8 @@
         "release_date": "2024-04-23",
         "os": "Ubuntu 22.04",
         "release_notes": "MD5sum: f150078e1caf51b1804fa860344c0504\r\nSwedish (multi-language) MD5sum: b14dd4c6704eb4ab674e0fb9bfa3e5e6\r\n\r\nGrundlæggende:\r\n- Opgraderet til Ubuntu Desktop 22.04.3.\r\n\r\nFølgende funktionalitet er blevet indbygget:\r\n- Opdatering af klienten i forbindelse med indledende registrering\r\n- Superuser har adgang til at redigere printerindstillinger\r\n- Deaktivering af Bluetooth\r\n- Slå Wayland fra\r\n- Automatiske opdateringer (sikkerhed)\r\n- Randomiser tjek-in-tidspunkt\r\n- Sæt GRUB-kodeord (bootmanageren) til noget tilfældigt (fremfor det ikke er sat og der er fri adgang)\r\n- Kør scripts på loginskærm (forudsætning for scriptet der aktiverer numlock på loginskærm)\r\n- Fjern popup-beskeder om fremtidige Ubuntu-opgraderinger (ikke opdateringer)\r\n- Firefox: Nedlås indstillinger / policies\r\n- Installer Okular som standard PDF-læser\r\n- Sæt baggrundsbilleder på loginskærm og skrivebord\r\n- Fjern Libreoffice \"Tip of the day\"\r\n- Borger: Aktiver genveje\r\n- Borger: Fjern luk ned, genstart og dvale fra menu\r\n- Borger: Fjern \"Lås\" fra menu\r\n- Borger: Fjern \"Skift bruger\" fra menu\r\n- Borger: Fjern skriveadgang til skrivebordet\r\n- Borger: Fjern adgang til Indstillinger\r\n- Borger: Sæt Borger som forvalgt bruger på loginskærm, fremfor den \r\n   seneste loggede ind er forvalgt, som kan være superuser\r\n- Borger: Fjern Alt-F2 (Kør)\r\n- Vis hjælpeværktøjer i menuen som standard\r\n\r\nIndbygget version af OS2borgerPC-klienten: 2.4.1",
-        "image_upload": "/media/images/os2borgerpc-5.2.0.iso",
-        "image_upload_multilang": "/media/images/os2borgerpc-5.2.0M.iso"
+        "image_upload": "images/os2borgerpc-5.2.0.iso",
+        "image_upload_multilang": "images/os2borgerpc-5.2.0M.iso"
     }
 },
 {

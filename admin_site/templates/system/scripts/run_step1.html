@@ -4,29 +4,45 @@
 {% block run_dialog_heading %}
   <h3>
     <span class="text-muted">{% translate "Run script" %}:</span><br>
-    {% translate "Choose computer or groups" %}
+    {% translate "Select computers and/or groups" %}
   </h3>
 {% endblock %}
 
 {% block run_dialog_content %}
     <p>{% blocktranslate trimmed %}Note: Scripts can only be run on computers that have been activated
         and groups that have at least 1 associated computer.{% endblocktranslate %}</p>
-  
+
     <div class="row">
       <div class="col-6">
         <h4>Computere</h4>
-        <ul class="list-unstyled">
-            <li class="mb-3">
-              <input type="checkbox" onclick="toggle_checks(this, 'pcs')" id="pick-all-pcs"/>
-              <label for="pick-all-pcs"><strong>{% translate "Choose all Computers" %}</strong></label>
+        <ul class="list-unstyled" id="products">
+          <li>
+            <input id="pick-all" type="checkbox" onclick="toggle_checks(this, 'pcs', 'pc');"/>
+            <label for="pick-all"><strong>{% translate "All" %}</strong></label>
+            <br/>
+          </li>
+          {% for product in products %}
+            <li>
+              <input type="checkbox" id="pick-all-{{product.id}}" onclick="toggle_checks(this, 'pcs', 'pc-{{product.id}}');" />
+              <!-- TODO: Remove the swedish hack below of translating product.name once the database itself is translated -->
+              <!-- {% translate "BorgerPC" %} -->
+              <!-- {% translate "Kiosk" %} -->
+              <label for="pick-all-{{product.id}}"><strong>{% translate "All" %} {% translate product.short_name %}</strong></label>
               <br/>
             </li>
-            {% for pc in pcs %}
+          {% endfor %}
+        </ul>
+        <ul id="pcs" class="list-unstyled">
+          {% for pc in pcs %}
             {% if pc.is_activated %}
               <li>
-                <input type="checkbox" name="pcs" id="check-pc-{{pc.pk}}" value="{{pc.pk}}">
+                <input type="checkbox"
+                       name = "pcs"
+                       class ="pc pc-{{pc.product.id}}"
+                       id="check-pc-{{pc.pk}}"
+                       value="{{pc.pk}}">
                 <label for="check-pc-{{pc.pk}}">{{pc.name}}</label>
-              </li>
+               </li>
             {% endif %}
           {% endfor %}
         </ul>
@@ -34,14 +50,16 @@
       <div class="col-6">
         <h4>Grupper</h4>
         <ul class="list-unstyled">
-            <li class="mb-3">
-              <input type="checkbox" onclick="toggle_checks(this, 'groups')" id="pick-all-groups"/>
-              <label for="pick-all-groups"><strong>{% translate "Choose all Groups" %}</strong></label>
-              <br/>
-            </li>
+          <li class="mb-3">
+            <input type="checkbox" onclick="toggle_checks(this, 'groups', 'group')" id="pick-all-groups"/>
+            <label for="pick-all-groups"><strong>{% translate "All" %}</strong></label>
+            <br/>
+          </li>
+        </ul>
+        <ul id="groups" class="list-unstyled">
           {% for group in groups %}
             <li>
-              <input type="checkbox" name="groups" id="check-group-{{group.pk}}" value="{{group.pk}}">
+              <input class="group" type="checkbox" name="groups" id="check-group-{{group.pk}}" value="{{group.pk}}">
               <label for="check-group-{{group.pk}}">{{group.name}}</label>
             </li>
           {% endfor %}
@@ -51,14 +69,30 @@
 
     <!-- Function for selecting all checkboxes: -->
     <script>
-      function toggle_checks(source, checkboxes_name) {
-        checkboxes = document.getElementsByName(checkboxes_name);
-        for(var i=0, n=checkboxes.length;i<n; i++) {
-          checkboxes[i].checked = source.checked;
+      function uncheck_other_products(clicked_product) {
+        checkboxes = clicked_product.parentElement.parentElement.getElementsByTagName("input")
+        for (var i = 0, n = checkboxes.length; i < n; i++) {
+          if (checkboxes[i] != clicked_product) {
+            checkboxes[i].checked = false;
+          }
+        }
+      }
+
+      function toggle_checks(source, checkboxes_container, target_checkboxes_class) {
+        uncheck_other_products(source)
+        checkboxes = document.getElementById(checkboxes_container).getElementsByTagName("input")
+
+        for (var i = 0, n = checkboxes.length; i < n; i++) {
+          if (checkboxes[i].classList.contains(target_checkboxes_class)) {
+            checkboxes[i].checked = source.checked;
+          }
+          else {
+            checkboxes[i].checked = false;
+          }
         }
       }
     </script>
-  
+
 {% endblock %}
 
 {% block run_dialog_footer %}

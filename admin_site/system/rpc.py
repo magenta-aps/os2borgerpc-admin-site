@@ -12,6 +12,7 @@ from django.db.models import Q
 from system.models import PC, Site, Configuration, ConfigurationEntry
 from system.models import Job, SecurityProblem, SecurityEvent
 from system.models import Citizen, LoginLog
+from system.models import Product
 
 from system.utils import (
     get_citizen_login_api_validator,
@@ -67,14 +68,21 @@ def register_new_computer_v2(mac, name, site, configuration):
     # And load configuration
 
     # Update configuration with os2 product
-    # New image versions set it themselves, old don't so for those
-    # we detect and set it this way
-    if "os2_product" not in configuration:
+    if "os2_product" in configuration:
+        product = configuration["os2_product"]
+    else:
+        # New image versions set it themselves, old don't so for those
+        # we detect and set it this way
         if "os2borgerpc_version" in configuration:
             product = "os2borgerpc"
         else:
             product = "os2borgerpc kiosk"
         configuration.update({"os2_product": product})
+
+    try:
+        new_pc.product = Product.objects.get(config_name=product)
+    except Product.DoesNotExist:
+        pass
 
     # remove mac and uid from the configuration
     # We don't need them saved as both attributes and configuration entries

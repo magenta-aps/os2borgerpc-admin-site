@@ -17,7 +17,7 @@
         {% translate "Details about" %} <em>{{ selected.name }}</em>
         {% comment %}
         TODO later?
-        <a class="float-end" href="{% url 'event_rule_server' slug=site.url uid=selected.id %}" title="{% translate 'See all events for this Security Rule' %}"><span class="badge badge-important"><icon class="icon-fire icon-white"></icon></span></a>
+        <a class="float-end" href="{% url 'event_rule_server' slug=site.url uid=selected.id %}" title="{% translate "See all events for this Security Rule" %}"><span class="badge badge-important"><icon class="icon-fire icon-white"></icon></span></a>
         {% endcomment %}
     </h2>
     {% else %}
@@ -99,7 +99,8 @@
 
         <fieldset class="mt-3">
             <button class="btn btn-primary me-3" type="submit">{% translate "Save changes" %}</button>
-            <button class="btn btn-secondary" type="reset">{% translate "Cancel" %}</button>
+            <button class="btn btn-secondary" type="reset" onclick="window.location.reload();">{% translate "Cancel" %}</button>
+
         </fieldset>
 
     </form>

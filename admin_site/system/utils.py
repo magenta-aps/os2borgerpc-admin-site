@@ -90,17 +90,34 @@ def quria_login_validate(site, loaner_number, pincode):
     response = requests.get(loaner_auth_url, headers=headers)
 
     if response.ok:
-        status = response.json()["status"]
-        return status
+        # If the NCIP is invalid in certain ways, such as being
+        # the correct length but otherwise invalid, the API will
+        # return response.ok = True, but response.json() will be None
+        if response.json():
+            status = response.json()["status"]
+            return status
+        else:
+            logger.error(
+                f"{site.name} was unable to authenticate with Quria: Invalid NCIP"
+            )
+            return 0
     else:
-        # Unable to authenticate with system API key - log this.
+        # Unable to authenticate with Quria - log this.
         try:
             message = response.json()["message"]
         except ValueError:
-            message = "Invalid NCIP"
-        logger.error(
-            f"{site.name} was unable to log in with configured API key: {message}"
-        )
+            if response.status_code == 502:
+                # This can happen if the API for Quria fails to respond correctly
+                message = "Received error 502 - Axiells API for Quria most likely has an error"
+            elif response.status_code == 504:
+                # Error 504 is normally related to the NCIP being invalid
+                message = "Received error 504 - NCIP is most likely invalid"
+            else:
+                # Other errors can have various causes
+                message = (
+                    f"Received error {response.status_code} - Exact cause is unknown"
+                )
+        logger.error(f"{site.name} was unable to authenticate with Quria: {message}")
         return 0
 
 

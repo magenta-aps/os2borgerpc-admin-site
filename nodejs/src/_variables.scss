@@ -7,27 +7,31 @@ $gray-300: #d6dadb;
 $gray-400: #cccccc;
 $gray-500: #b1c3c5;
 $gray-600: #808c8f;
-$gray-700: #6B8388;
-$gray-800: #173b42;
+$gray-700: #656F72;
+//$gray-800: #173b42;
 $gray-900: #031a20;
 $black:    #222222;
 
-$blue:    #4C9EF5;
+$blue:    #297E92;
 $indigo:  #4C65F5;
 $purple:  #844CF5;
 $pink:    #F54CC2;
-$red:     #ED5854;
+$red:     #D32F2F;
 $orange:  #F5914D;
-$yellow:  #F0D764;
-$green:   #5BA66E;
+$yellow:  #FBC337;
+$green:   #348338;
 $teal:    #4CF5C8;
 $cyan:    #77C7D9;
+$deep-grayish-blue: #173b42;
 
 $danger: $red;
-$primary: $gray-800;
+$primary: $deep-grayish-blue;
 $secondary: $gray-500;
 $warning: $orange;
 $gentle-warning: $yellow;
+$success: $green;
+$info: $blue;
+
 
 // Sizes
 $spacer: 1rem;
@@ -78,3 +82,4 @@ $modal-header-padding-x: $spacer*1.5;
 $form-check-input-width: 1.25em;
 $form-check-input-border: solid 2px $gray-600;
 //$form-check-input-border-radius: .25em;
+

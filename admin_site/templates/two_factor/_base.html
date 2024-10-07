@@ -55,7 +55,6 @@
 												 url(/static/font/lato/Lato-Light.woff) format('woff'),
 												 url(/static/font/lato/Lato-Light.ttf) format('truetype'),
 												 url(/static/font/lato/Lato-Light.svg#Lato_regularregular) format('svg');
-						font-style:light;
 						font-weight:300;
 						font-display:fallback
 				}
@@ -76,10 +75,8 @@
 						font-family: 'Lato';src:url(/static/font/lato/Lato-Bold.eot);src:url(/static/font/lato/Lato-Bold.eot?#iefix) format('embedded-opentype'),
 												 url(/static/font/lato/Lato-Bold.woff2) format('woff2'),
 												 url(/static/font/lato/Lato-Bold.woff) format('woff'),
-												 url(/static/font/lato/Lato-Bold.ttf) format('truetype'),
-												 url(/static/font/lato/Lato-Bold.svg#Latobold) format('svg');
+												 url(/static/font/lato/Lato-Bold.ttf) format('truetype');
 						font-weight:700;
-						font-style:bold;
 						font-display:fallback
 				}
 
@@ -324,13 +321,6 @@
 
     </section>
   </main>
-
-  {% translate "It looks like you're using Internet Explorer. It won't work on this website." as warning %}
-  {% translate "Try opening this website in Microsoft Edge" as link_text %}
-  <ie11-browser-warning
-    data-warning-text="{{warning}}"
-    data-link-text="{{link_text}}">
-  </ie11-browser-warning>
 
 </body>
 </html>

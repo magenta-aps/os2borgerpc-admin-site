@@ -51,9 +51,9 @@ class EventLevels:
     )
 
     LEVEL_TO_LABEL = {
-        CRITICAL: "label-important",
-        HIGH: "label-warning",
-        NORMAL: "label-gentle-warning",
+        CRITICAL: "danger",
+        HIGH: "warning",
+        NORMAL: "yellow",
     }
 
 
@@ -142,6 +142,7 @@ class ConfigurationEntry(models.Model):
 
     class Meta:
         ordering = ["key"]
+        verbose_name_plural = "configuration entries"
 
 
 class Country(models.Model):
@@ -408,10 +409,10 @@ class WakeWeekPlan(models.Model):
     # Sleep state choices for the field below - and their translations
     # These are based on what "rtcwake" supports
     SLEEP_STATE_CHOICES = (
-        ("STANDBY", _("sleep_state:Standby")),
-        ("FREEZE", _("sleep_state:Freeze")),
-        ("MEM", _("sleep_state:Mem")),
-        ("OFF", _("sleep_state:Off")),
+        ("STANDBY", "Standby (S1)"),
+        ("FREEZE", "Freeze"),
+        ("MEM", "Mem (S3)"),
+        ("OFF", "Off (S5)"),
     )
 
     default_open = datetime.time(8, 0, 0, 0)
@@ -703,6 +704,26 @@ class PCGroup(models.Model):
         ordering = ["name"]
 
 
+class Product(models.Model):
+    """A model for Product (e.g. OS2borgerPC or OS2borgerPC Kiosk), related to Image Versions and Scripts."""
+
+    name = models.CharField(verbose_name=_("name"), max_length=128)
+    short_name = models.CharField(
+        verbose_name=_("short name"), max_length=20, null=True
+    )
+    # Maps to the name used in the client as os_product
+    config_name = models.CharField(
+        verbose_name=_("config name"), max_length=40, null=True
+    )
+    multilang = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
+
+
 class PC(models.Model):
     """This class represents one PC, i.e. one client of the admin system."""
 
@@ -724,6 +745,9 @@ class PC(models.Model):
     last_seen = models.DateTimeField(verbose_name=_("last seen"), null=True, blank=True)
     location = models.CharField(
         verbose_name=_("location"), max_length=1024, blank=True, default=""
+    )
+    product = models.ForeignKey(
+        Product, on_delete=models.PROTECT, blank=True, null=True
     )
 
     @property
@@ -806,10 +830,6 @@ class PC(models.Model):
     def get_absolute_url(self):
         return reverse("computer", args=(self.site.uid, self.uid))
 
-    def product(self):
-        """Return which Product the PC is an installation of."""
-        return self.get_config_value("os2_product")
-
     def __str__(self):
         return self.name
 
@@ -821,19 +841,6 @@ class ScriptTag(models.Model):
     """A tag model for scripts."""
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
-
-    class Meta:
-        ordering = ["name"]
-
-    def __str__(self):
-        return self.name
-
-
-class Product(models.Model):
-    """A model for Product (e.g. OS2borgerPC or OS2borgerPC Kiosk), related to Image Versions and Scripts."""
-
-    name = models.CharField(verbose_name=_("name"), max_length=128)
-    multilang = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["name"]
@@ -1066,11 +1073,11 @@ class Job(models.Model):
 
     # Is it ideal to hardcode CSS class names in here? Better in template tag?
     STATUS_TO_LABEL = {
-        NEW: "bg-secondary",
-        SUBMITTED: "bg-info",
-        DONE: "bg-success",
-        FAILED: "bg-danger",
-        RESOLVED: "bg-primary",
+        NEW: "secondary",
+        SUBMITTED: "info",
+        DONE: "success",
+        FAILED: "danger",
+        RESOLVED: "primary",
     }
 
     # Fields
@@ -1378,9 +1385,9 @@ class SecurityEvent(models.Model):
     )
 
     STATUS_TO_LABEL = {
-        NEW: "bg-primary",
-        ASSIGNED: "bg-secondary",
-        RESOLVED: "bg-success",
+        NEW: "primary",
+        ASSIGNED: "secondary",
+        RESOLVED: "success",
     }
     problem = models.ForeignKey(
         SecurityProblem, null=True, blank=True, on_delete=models.CASCADE
@@ -1430,23 +1437,21 @@ class ImageVersion(models.Model):
         Product,
         verbose_name=_("product"),
         on_delete=models.PROTECT,
-        null=True,  # TODO: Migrate to make this mandatory later
     )
     image_version = models.CharField(max_length=7)
     release_date = models.DateField()
+    published = models.BooleanField(verbose_name=_("published (visible)"), default=True)
     os = models.CharField(verbose_name="OS", max_length=30)
-    release_notes = models.TextField(max_length=1500)
-    image_upload = models.FileField(upload_to="images", default="#")
+    release_notes = models.TextField(max_length=6000)
+    image_upload = models.FileField(
+        upload_to="images", default="#", blank=True, null=True
+    )
     image_upload_multilang = models.FileField(
         upload_to="images", default="#", blank=True, null=True
     )
 
     def __str__(self):
-        # TODO: Delete the second path here once product has been changed to mandatory
-        if self.product and self.product.name:
-            return f"{self.product.name} {self.image_version}"
-        else:
-            return f"{self.image_version}"
+        return f"{self.product.name} {self.image_version}"
 
 
 # Last_successful_login is only updated whenever the citizen user:

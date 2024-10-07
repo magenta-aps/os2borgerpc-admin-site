@@ -1,10 +1,10 @@
 
 // This event displays the notification message in the toast element, when the page is loaded
 document.addEventListener('DOMContentLoaded', (event) => {
-  
-  // First check if there is a page-notification in the cookie with the response from the server  
+
+  // First check if there is a page-notification in the cookie with the response from the server
   let notification = document.cookie.match(/\bpage-notification\s*=\s*([^;]+)/)
-  
+
   if(notification) {
     try {
 
@@ -13,11 +13,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
       // The bootstrap 5 toast html element, located in the notification.html file and must be included in the html to display the toast
       const toastElement = document.getElementById("toast")
       const toastBody = toastElement.firstElementChild.firstElementChild
-      
+
       let toast_color="bg-success"
       // if autoHide is set to true, the toast will disappear automatically, default is 5 seconds
       let autoHide = true
-      
+
       // Reset the toast color if the message type is error
       if (descriptor["type"] == "error") {
         toast_color = "bg-danger"
@@ -33,8 +33,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     } catch (e) {
       console.error(e)
     }
-    // Set the cookie to a past date, so it will be deleted
-    document.cookie = 'page-notification=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/'
+    document.cookie = 'page-notification=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 });
 
@@ -370,29 +369,6 @@ function calcPaginationRange(pag_data, obj_per_page) {
   return range
 }
 
-/* Feature to warn users with old IE browsers */
-function oldBrowserWarning() {
-  var old_ie_match = /MSIE/g
-  var ie11_win8_match = /Windows NT.+Trident/g
-  var ie11_win10_match = /Windows NT 10.+Trident/g
-  var ua = navigator.userAgent
-  var warn_el = document.querySelector('ie11-browser-warning')
-
-  if (ua.match(ie11_win10_match)) {
-      warn_el.innerHTML = ''
-          + '<p>' + warn_el.dataset.warningText +'</p>'
-          + '<p><a href="microsoft-edge:' + window.location.href + '">' + warn_el.dataset.linkText +'</a></p>'
-  } else if (ua.match(ie11_win8_match) || ua.match(old_ie_match)) {
-      warn_el.innerHTML = '<p>' + warn_el.dataset.warningText + '</p>'
-  } else {
-      warn_el.remove()
-  }
-}
-
-window.addEventListener('load', function() {
-  oldBrowserWarning()
-})
-
 // Function to get the value of a named cookie
 function getCookie(name) {
   const value = `; ${document.cookie}`;
@@ -450,7 +426,7 @@ $(document).ready(function(){
 });
 
 // This function is used in the picklist.html file, to display the names
-// correctly, if it contains chars like ' or " 
+// correctly, if it contains chars like ' or "
 const parser = new DOMParser()
 function htmlDecode(input) {
   let doc = parser.parseFromString(input, "text/html")

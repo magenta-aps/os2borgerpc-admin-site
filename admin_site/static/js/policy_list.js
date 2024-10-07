@@ -28,7 +28,7 @@
           }
           return '<div class="policy-script-print"><strong class="policy-script-print-name">'
                   + input.name + ': </strong><span class="policy-script-print-value">'
-                  + ((input.type == 'BOOLEAN') ? '<input type="checkbox" checked disabled>' : input.default_value)
+                  + ((input.type == 'BOOLEAN') ? '<input type="checkbox" class="form-check-input" checked disabled>' : input.default_value)
                   + '</span></div>'
         }
         this.getFieldType = function(type) {
@@ -235,7 +235,7 @@
               }
             } else if (t.attr('type') == 'checkbox') {
               inputField.val((this.checked) ? 'True' : 'False')
-              visibleValueField[0].innerHTML = '<input type="checkbox" disabled ' + ((this.checked) ? 'checked>' : '>')
+              visibleValueField[0].innerHTML = '<input type="checkbox" class="form-check-input" disabled ' + ((this.checked) ? 'checked>' : '>')
             } else {
               if (t.attr('type') == 'password') {
                 inputField.val(t.val())

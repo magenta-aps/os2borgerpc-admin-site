@@ -24,7 +24,6 @@ from django.views.generic.list import BaseListView
 
 from django.db import transaction
 from django.db.models import Q, F
-from django.conf import settings
 
 from django.core.exceptions import PermissionDenied
 
@@ -1503,6 +1502,16 @@ class ScriptRun(SiteView):
         context = super(ScriptRun, self).get_context_data(**kwargs)
         context["script"] = get_object_or_404(Script, pk=self.kwargs["script_pk"])
 
+        product_ids = (
+            context["object"]
+            .pcs.all()
+            .values_list("product_id", flat=True)
+            .order_by("product_id")
+            .distinct()
+        )
+        if len(product_ids) > 1:
+            context["products"] = Product.objects.filter(id__in=product_ids)
+
         action = self.request.POST.get("action", "choose_pcs_and_groups")
         if action == ScriptRun.STEP1:
             self.step1(context)
@@ -1607,7 +1616,7 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
             return PC.objects.get(uid=self.kwargs["pc_uid"], site=site_id)
         except PC.DoesNotExist:
             raise Http404(
-                _("You have no computer with the following ID: %s")
+                _("You have no computer with the following UID: %s")
                 % self.kwargs["pc_uid"]
             )
 
@@ -1757,7 +1766,7 @@ class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):  # {{{
             return PC.objects.get(uid=self.kwargs["pc_uid"], site=site_id)
         except PC.DoesNotExist:
             raise Http404(
-                _("You have no computer with the following ID: %s")
+                _("You have no computer with the following UID: %s")
                 % self.kwargs["pc_uid"]
             )
 
@@ -1811,15 +1820,6 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         context["selected_plan"] = plan
         context["wake_week_plans_list"] = WakeWeekPlan.objects.filter(
             site=context["site"]
-        )
-
-        # Get the link to the user guide for the chosen language
-        context["wake_plan_user_guide"] = (
-            "https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
-            + "/static/docs/Wake_plan_user_guide"
-            + "_"
-            + self.request.user.user_profile.language
-            + ".pdf"
         )
 
         form = context["form"]
@@ -2073,7 +2073,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
             )
         except (WakeWeekPlan.DoesNotExist, ValueError):
             raise Http404(
-                _("You have no Wake Week Plan with the following ID: %s")
+                _("You have no schedule with the following ID: %s")
                 % self.kwargs["wake_week_plan_id"]
             )
 
@@ -2313,7 +2313,7 @@ class WakePlanDelete(WakePlanBaseMixin, DeleteView):
             )
         except (WakeWeekPlan.DoesNotExist, ValueError):
             raise Http404(
-                _("You have no Wake Week Plan with the following ID: %s")
+                _("You have no schedule with the following ID: %s")
                 % self.kwargs["wake_week_plan_id"]
             )
         if not plan.site.customer.feature_permission.filter(uid="wake_plan"):
@@ -2463,7 +2463,7 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
             )
         except (WakeChangeEvent.DoesNotExist, ValueError):
             raise Http404(
-                _("You have no Wake Change Event with the following ID: %s")
+                _("You have no exception with the following ID: %s")
                 % self.kwargs["wake_change_event_id"]
             )
 
@@ -2582,7 +2582,16 @@ class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):
     template_name = "system/wake_plan/wake_change_events/confirm_delete.html"
 
     def get_object(self, queryset=None):
-        event = WakeChangeEvent.objects.get(id=self.kwargs["wake_change_event_id"])
+        try:
+            site_id = get_object_or_404(Site, uid=self.kwargs["slug"])
+            event = WakeChangeEvent.objects.get(
+                id=self.kwargs["wake_change_event_id"], site=site_id
+            )
+        except (WakeChangeEvent.DoesNotExist, ValueError):
+            raise Http404(
+                _("You have no exception with the following ID: %s")
+                % self.kwargs["wake_change_event_id"]
+            )
         if not event.site.customer.feature_permission.filter(uid="wake_plan"):
             raise PermissionDenied
         return event
@@ -2634,6 +2643,13 @@ class UserRedirect(RedirectView, SuperAdminOrThisSiteMixin):
 
         else:
             return reverse("new_user", args=[site.uid])
+
+
+# To be able to link all customers to the users page with a single link
+class UserRedirectSite(RedirectView, LoginRequiredMixin):
+    def get_redirect_url(self, **kwargs):
+        slug = self.request.user.user_profile.sites.first().uid
+        return reverse("users", kwargs={"slug": slug})
 
 
 class UsersMixin(object):
@@ -2859,7 +2875,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             )
         except (User.DoesNotExist, SiteMembership.DoesNotExist):
             raise Http404(
-                _("You have no user with the following ID: %s")
+                _("You have no user with the following username: %s")
                 % self.kwargs["username"]
             )
         if (
@@ -2996,7 +3012,7 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
             )
         except (User.DoesNotExist, SiteMembership.DoesNotExist):
             raise Http404(
-                _("You have no user with the following ID: %s")
+                _("You have no user with the following username: %s")
                 % self.kwargs["username"]
             )
         if (
@@ -3523,9 +3539,9 @@ class SecurityProblemUpdate(EventRuleBaseMixin, UpdateView):
             return SecurityProblem.objects.get(
                 id=self.kwargs["id"], site__uid=self.kwargs["slug"]
             )
-        except SecurityProblem.DoesNotExist:
+        except (SecurityProblem.DoesNotExist, ValueError):
             raise Http404(
-                _("You have no Security Problem with the following ID: %s")
+                _("You have no security rule with the following ID: %s")
                 % self.kwargs["id"]
             )
 
@@ -3535,9 +3551,15 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
     model = SecurityProblem
 
     def get_object(self, queryset=None):
-        return SecurityProblem.objects.get(
-            id=self.kwargs["id"], site__uid=self.kwargs["slug"]
-        )
+        try:
+            return SecurityProblem.objects.get(
+                id=self.kwargs["id"], site__uid=self.kwargs["slug"]
+            )
+        except (SecurityProblem.DoesNotExist, ValueError):
+            raise Http404(
+                _("You have no security rule with the following ID: %s")
+                % self.kwargs["id"]
+            )
 
     def get_success_url(self):
         return reverse("event_rules", args=[self.kwargs["slug"]])
@@ -3573,9 +3595,9 @@ class EventRuleServerUpdate(EventRuleBaseMixin, UpdateView):
             return EventRuleServer.objects.get(
                 id=self.kwargs["id"], site__uid=self.kwargs["slug"]
             )
-        except EventRuleServer.DoesNotExist:
+        except (EventRuleServer.DoesNotExist, ValueError):
             raise Http404(
-                _("You have no Event Rule Server with the following ID: %s")
+                _("You have no offline rule with the following ID: %s")
                 % self.kwargs["id"]
             )
 
@@ -3585,9 +3607,15 @@ class EventRuleServerDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
     model = EventRuleServer
 
     def get_object(self, queryset=None):
-        return EventRuleServer.objects.get(
-            id=self.kwargs["id"], site__uid=self.kwargs["slug"]
-        )
+        try:
+            return EventRuleServer.objects.get(
+                id=self.kwargs["id"], site__uid=self.kwargs["slug"]
+            )
+        except (EventRuleServer.DoesNotExist, ValueError):
+            raise Http404(
+                _("You have no offline rule with the following ID: %s")
+                % self.kwargs["id"]
+            )
 
     def get_success_url(self):
         return reverse("event_rules", args=[self.kwargs["slug"]])
@@ -3794,131 +3822,6 @@ class SecurityEventsUpdate(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
         return HttpResponse("OK")
 
 
-documentation_menu_items = [
-    ("", _("The administration site")),
-    ("om_os2borgerpc_admin", _("About")),
-    ("sites_overview", _("Sites overview")),
-    ("status", _("Status")),
-    ("computers", _("Computers")),
-    ("groups", _("Groups")),
-    ("wake_plans", _("On/Off schedules")),
-    ("jobs", _("Jobs")),
-    ("scripts", _("Scripts")),
-    ("security_scripts", _("Security Scripts")),
-    ("notifications", _("Notifications and offline rules")),
-    ("users", _("Users")),
-    ("configuration", _("Configurations")),
-    ("changelogs", _("The News site")),
-    ("api", "API"),
-    ("creating_security_problems", _("Setting up security surveillance (PDF)")),
-    ("", _("OS2borgerPC")),
-    ("os2borgerpc_installation_guide", _("Installation Guide (PDF)")),
-    ("os2borgerpc_installation_guide_old", _("Old installation guide (PDF)")),
-    ("", _("OS2borgerPC Kiosk")),
-    ("os2borgerpc_kiosk_installation_guide", _("Installation Guide")),
-    ("os2borgerpc_kiosk_wifi_guide", _("Updating Wi-Fi setup")),
-    ("", _("Audit")),
-    ("audit_doc", _("FAQ (PDF)")),
-    ("", _("Technical Documentation")),
-    ("tech/os2borgerpc-image", _("OS2borgerPC Image")),
-    ("tech/os2borgerpc-admin", _("OS2borgerPC Admin Site")),
-    ("tech/os2borgerpc-server-image", _("OS2borgerPC Kiosk Image")),
-    ("tech/os2borgerpc-client", _("OS2borgerPC Client")),
-]
-
-
-class DocView(TemplateView, LoginRequiredMixin):
-    docname = "status"
-
-    def template_exists(self, subpath):
-        fullpath = os.path.join(settings.DOCUMENTATION_DIR, subpath)
-        return os.path.isfile(fullpath)
-
-    def get_context_data(self, **kwargs):  # noqa
-        if "name" in self.kwargs:
-            self.docname = self.kwargs["name"]
-        else:
-            # This will be mapped to documentation/index.html
-            self.docname = "index"
-
-        if self.docname.find("..") != -1:
-            raise Http404
-
-        # Try <docname>.html and <docname>/index.html
-        name_templates = ["documentation/{0}.html", "documentation/{0}/index.html"]
-
-        templatename = None
-        for nt in name_templates:
-            expanded = nt.format(self.docname)
-            if self.template_exists(expanded):
-                templatename = expanded
-                break
-
-        if templatename is None:
-            raise Http404
-        else:
-            self.template_name = templatename
-
-        context = super(DocView, self).get_context_data(**kwargs)
-        context["docmenuitems"] = documentation_menu_items
-        docnames = self.docname.split("/")
-
-        # Returns the first site the user is a member of
-        context["site"] = self.request.user.user_profile.sites.first()
-
-        context["menu_active"] = docnames[0]
-
-        # Get the links to the pdf files for the chosen language
-        pdf_href = {
-            "wake_plan_user_guide": "https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
-            + "/static/docs/Wake_plan_user_guide",
-            "os2borgerpc_installation_guide": "https://github.com/OS2borgerPC/image/raw/development/"
-            + "docs/OS2BorgerPC_installation_guide",
-            "os2borgerpc_installation_guide_old": "https://github.com/OS2borgerPC/image/raw/development/"
-            + "docs/OS2BorgerPC_installation_guide_old",
-            "creating_security_problems": "https://raw.githubusercontent.com/OS2borgerPC/admin-site/development/"
-            + "admin_site/static/docs/OS2BorgerPC_security_rules",
-            "audit_doc": "https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
-            + "/static/docs/Audit_doc",
-            "customer_admin_guide": "https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
-            + "/static/docs/customer_admin_guide",
-        }
-        for key in pdf_href:
-            pdf_href[key] += "_" + self.request.user.user_profile.language + ".pdf"
-        context["pdf_href"] = pdf_href
-
-        # Set heading according to chosen item
-        current_heading = None
-        for link, name in context["docmenuitems"]:
-            if link == "":
-                current_heading = name
-            elif link == docnames[0]:
-                context["docheading"] = current_heading
-                break
-
-        # Add a submenu if it exists
-        submenu_template = "documentation/" + docnames[0] + "/__submenu__.html"
-        if self.template_exists(submenu_template):
-            context["submenu_template"] = submenu_template
-
-        if len(docnames) > 1 and docnames[1]:
-            # Don't allow direct access to submenus
-            if docnames[1] == "__submenu__":
-                raise Http404
-            context["submenu_active"] = docnames[1]
-
-        params = self.request.GET or self.request.POST
-        back_link = params.get("back")
-        if back_link is None:
-            referer = self.request.META.get("HTTP_REFERER")
-            if referer and referer.find("/documentation/") == -1:
-                back_link = referer
-        if back_link:
-            context["back_link"] = back_link
-
-        return context
-
-
 class ImageVersionRedirect(RedirectView):
     def get_redirect_url(self, **kwargs):
         site = get_object_or_404(Site, uid=kwargs["slug"])
@@ -3927,6 +3830,13 @@ class ImageVersionRedirect(RedirectView):
             "images-product",
             kwargs={"slug": site.url, "product_id": Product.objects.first().id},
         )
+
+
+# To be able to link all customers to images with a single link
+class ImageVersionRedirectSite(RedirectView, LoginRequiredMixin):
+    def get_redirect_url(self, **kwargs):
+        slug = self.request.user.user_profile.sites.first().uid
+        return reverse("images", kwargs={"slug": slug})
 
 
 class ImageVersionView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
@@ -3943,44 +3853,45 @@ class ImageVersionView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
 
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
 
-        selected_product = get_object_or_404(Product, id=self.kwargs.get("product_id"))
+        try:
+            selected_product = get_object_or_404(
+                Product, id=self.kwargs.get("product_id")
+            )
+        except ValueError:
+            raise Http404(
+                _("No product matches the given ID: %s") % self.kwargs["product_id"]
+            )
+
+        # Only superusers can see unpublished image versions
+        if not self.request.user.is_superuser:
+            visible_image_versions = ImageVersion.objects.exclude(published=False)
+        else:
+            visible_image_versions = ImageVersion.objects.all()
 
         # If client's last pay date is set, exclude versions where
         # image release date > client's last pay date.
         if not site.customer.paid_for_access_until:
-            versions_accessible_by_user = ImageVersion.objects.filter(
+            versions_accessible_by_user = visible_image_versions.filter(
                 product=selected_product
             ).order_by("-image_version")
         else:
             versions_accessible_by_user = (
-                ImageVersion.objects.exclude(
+                visible_image_versions.exclude(
                     release_date__gt=site.customer.paid_for_access_until
                 )
                 .filter(product=selected_product)
                 .order_by("-image_version")
             )
 
-        # If the product is multilang: Don't show images besides multilang for all languages besides danish
+        # If the Product is multilang and the user language isn't Danish: Hide image versions that don't have a multilang image
         user_language = self.request.user.user_profile.language
         if selected_product.multilang and user_language != "da":
+            # FileFields cannot currently be set to None, but new versions are created with the FileField's "name" attribute set to an empty string.
             versions_accessible_by_user = versions_accessible_by_user.exclude(
                 image_upload_multilang="#"
             )  # The hash symbol is the default for the field, indicating no file was uploaded
 
         products = Product.objects.all()
-
-        # Swedish hacks until we do a proper translation of the database
-        # TODO: Please remove this section!
-        if user_language == "sv":
-            selected_product.name = selected_product.name.replace(
-                "OS2borgerPC", "Sambruk MedborgarPC"
-            )
-            for i in versions_accessible_by_user:
-                i.product.name = i.product.name.replace(
-                    "OS2borgerPC", "Sambruk MedborgarPC"
-                )
-            for p in products:
-                p.name = p.name.replace("OS2borgerPC", "Sambruk MedborgarPC")
 
         context["selected_product"] = selected_product
         context["object_list"] = versions_accessible_by_user

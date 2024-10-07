@@ -5,10 +5,14 @@
 # Default shell and settings used in the recipes
 set shell := ["bash", "-uc"]
 
-# Set user ID and group ID dynamically. These are in turn used in docker compose when mounting volumes.
+# Set user ID and group ID dynamically, which are in turn used in compose.yaml,
+# so the admin-site-container runs as your own user instead of the BPC user
 # This should get us closer to being able to remove "privileged", and make permissions errors (and "just fix-permissions") less relevant
-export UID := `id -u`
-export GID := `id -g`
+# NOTE: If you get a permissions error running the server, you can try commenting these out. Doing so might cause some other issues, though,
+# such as /media and /log being owned by the bpc user (set by Dockerfile) and thus script uploads fail.
+# We've also seen an occasional permissions error related to .po files
+# export DEV_UID := `id -u`
+# export DEV_GID := `id -g`
 
 # Aliases
 alias r := run
@@ -18,10 +22,11 @@ alias tmm := translations-make-messages
 alias tcm := translations-compile-messages
 
 # Variables
-django_container := "bpc_admin_site_django"
 compose_django_service := "os2borgerpc-admin"
+# container_name isn't currently set in compose.yaml, so the container name is determined in part by the dir the compose file is in. Determine that dynamically.
+django_container := `basename $PWD` + "-os2borgerpc-admin-1"
 
-db_container := "bpc_admin_site_db"
+db_container := `basename $PWD` + "-db-1"
 compose_db_service := "db"
 db_data_file := "db-data.json"
 db_structure_file := "db-structure.psql"
@@ -37,7 +42,7 @@ help:
   @just --list
 
 # A helper recipe that ensures that a given docker container is running
-verify-container-running container:
+_verify-container-running container:
   #!/usr/bin/env sh
   # this shebang is to prevent just complaining about whitespace
   # https://github.com/casey/just#indentation
@@ -46,7 +51,7 @@ verify-container-running container:
     exit 1
   fi
 
-bash-django: (verify-container-running django_container)
+bash-django: (_verify-container-running django_container)
   docker exec -i --tty {{django_container}} /bin/bash
 
 # Run bash in a django container without first running migrations - convenient for e.g. makemigrations
@@ -58,11 +63,11 @@ black:
   black admin_site
 
 # Dump the database to a file named {{db_data_file}}
-dump-db-data: (verify-container-running django_container)
+dump-db-data: (_verify-container-running django_container)
   docker exec {{django_container}} django-admin dumpdata > {{db_data_file}}
 
 # Dump the database structure to a file named db-structure.psql
-dump-db-structure: (verify-container-running django_container)
+dump-db-structure: (_verify-container-running django_container)
   docker exec -i --tty {{db_container}} pg_dump -U postgres --schema-only bpc > {{db_structure_file}}
 
 # View the db file contents from a dumped db
@@ -84,12 +89,12 @@ fix-permissions:
   sudo chmod 755 justfile docker/docker-entrypoint.sh scripts/cleanup_old_media_files/cleanup_old_media_files.py admin_site/manage.py
 
 # Run arbitrary manage.py commands. Examples: makemigrations/migrate/showmigrations/shell_plus
-managepy +COMMAND: (verify-container-running django_container)
+managepy +COMMAND: (_verify-container-running django_container)
   docker exec -i --tty {{django_container}} ./manage.py {{COMMAND}}
 
 # Related to: https://docs.djangoproject.com/en/4.2/howto/upgrade-version/
 # Checks for any deprecation warnings in your project
-check-deprecation-warnings: (verify-container-running django_container)
+check-deprecation-warnings: (_verify-container-running django_container)
   docker exec -i --tty {{django_container}} python -Wa manage.py test
 
 # Useful if changing requirements.txt and ...?
@@ -110,29 +115,29 @@ run-debug:
   docker compose up -d
   docker attach {{django_container}}
 
-# Run django's make-messages for translations, including translations for javascript files (djangojs)
 # --no-obsolete removes unused translations, --add-location file is there to make diffs clearer by skipping line
 # numbers, so a change early in views.py doesn't make makemessages update hundreds of line references
 # TODO: makemessages sometimes suddenly makes changes to where it line wraps, making diffs hard to read. Seemingly there's
 # no hard line wrap set, and the only option is to disable line wrap completely which doesn't seem ideal. Hopefully a
 # future Django version provides a solution.
-translations-make-messages: (verify-container-running django_container) fix-permissions
+[doc("Run django's make-messages for translations, including translations for javascript files (djangojs)")]
+translations-make-messages: (_verify-container-running django_container) fix-permissions
   @just managepy makemessages --all --ignore venv --add-location file --no-obsolete
   @just managepy makemessages --all --ignore venv --add-location file --no-obsolete -d djangojs
 
 # Run django's compile-messages (usually after make-messages) for translations
-translations-compile-messages: (verify-container-running django_container)
+translations-compile-messages: (_verify-container-running django_container)
   @just managepy compilemessages --locale da --locale sv
 
 # Replace all the fixtures (test data) with what you currently have in your local adminsite db
-update-test-data: (verify-container-running django_container)
+update-test-data: (_verify-container-running django_container)
   docker compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 auth > dev-environment/system_fixtures/050_auth.json
   docker compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 system > dev-environment/system_fixtures/100_system.json
   docker compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 account > dev-environment/system_fixtures/150_account.json
   docker compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 changelog > dev-environment/changelog_fixtures/100_changelog.json
 
 # Create a graph of the django models to a file named models_graphed.png
-graph-models: (verify-container-running django_container)
+graph-models: (_verify-container-running django_container)
   # Tried using pip install instead but it kept complaining about missing graphviz binaries
   docker exec -it -u 0 {{django_container}} apt-get update
   docker exec -it -u 0 {{django_container}} apt-get install --assume-yes python3-pydotplus # alternately pytnho3-pygraphviz

@@ -72,11 +72,13 @@ li .dropdown-item:active {
   background: $gray-100;
   border: 1px solid $gray-300;
   padding: 10px;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .customer small {
   position: relative;
-  top: -31px;
+  top: -17px;
 }
 
 .sites .container {
@@ -89,4 +91,34 @@ li .dropdown-item:active {
 
 .customer .btn-group:hover {
   background: $gray-300
+}
+
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
+.pagination-btn-muted {
+  opacity: 0.3;
+}
+
+.cursor-none{
+  cursor: no-drop;
+}
+
+.bg-warning {
+  color: $black;
+}
+
+.btn-warning {
+  color: $black;
+}
+
+
+.bg-secondary {
+  color: $gray-900;
+}
+
+.bg-yellow {
+  background-color: $yellow;
+  color: $gray-900;
 }

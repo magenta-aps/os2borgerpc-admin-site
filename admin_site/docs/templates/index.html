@@ -1,0 +1,69 @@
+{% extends 'sitebase.html' %}
+{% load i18n %}
+{% load custom_tags %}
+{% load static %}
+
+<!-- Syntax highlighting -->
+{% block stylesheets %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/foundation.min.css">
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+
+<script type="text/javascript">
+  /* Syntax highlighting */
+  const code_blocks = document.getElementsByClassName("docs-code")
+  for (cb of code_blocks) {
+    hljs.highlightElement(cb)
+  }
+  </script>
+{% endblock %}
+
+{% block header_title %}
+{% if docheading %}
+  {{ docheading }}
+{% else %}
+  {% translate "OS2borgerPC documentation" %}
+{% endif %}
+{% endblock %}
+
+{% block page_type_class %}
+documentationpage
+{% endblock %}
+
+{% block header_class %}
+detailpage
+{% endblock %}
+
+{% block globalnav %}
+<nav id="left-menu" class="nav nav-pills utils-global">
+  <h2 class="text-light">{% translate "Documentation" %}</h2>
+  <a href="{{ back_link }}" class="nav-link link-light d-flex align-items-center">
+    <span class="material-icons" style="margin: 0 .25rem 0 -.25rem; font-size: 1.25rem;">arrow_back</span>
+    {% translate "Return to admin" %}
+  </a>
+  {% for link, name in docmenuitems %}
+    {% if link %}
+      {# References to PDFs #}
+      {% if ".pdf" in link %}
+        <a class="nav-link link-light" href="{% static link %}" target="_blank"> {{ name }} </a>
+      {# References to other websites #}
+      {% elif "http" in link %}
+        <a class="nav-link link-light" href="{{link}}" target="_blank"> {{ name }} </a>
+      {# References to other parts of the admin portal #}
+      {% else %}
+        <a class="nav-link link-light {% if menu_active == link %}active{% endif %}" href="{% url 'doc' link %}">
+        {{ name }}
+        </a>
+      {% endif %}
+      {% if menu_active == link and submenu_template %}
+        {% include submenu_template %}
+      {% endif %}
+    {% else %}
+      <hr>
+      <h2 class="text-light">{{ name }}</h2>
+    {% endif %}
+  {% endfor %}
+</nav>
+{% endblock %}

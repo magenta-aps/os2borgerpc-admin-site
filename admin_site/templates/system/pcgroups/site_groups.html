@@ -31,7 +31,7 @@ active
           {{ group.name }}
         </a>
         {% if group == selected_group %}
-            <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="{% translate 'Delete group' %}">
+            <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="{% translate "Delete group" %}">
               clear
             </a>
         {% endif %}
@@ -103,7 +103,7 @@ active
                 {% translate "Remove a supervisor for the group" as remove_s %}
 
                 <label class="mt-2">{% translate "Supervisors for the group" %}</label>
-                {% translate 'This is used to control who receives the e-mails for Events, ie. Security Events or Offline Events. If one or more Supervisors are set for a given Group, these people will receive the e-mails instead of those set in the Monitoring Rule' as help_text %}
+                {% translate "This is used to control who receives the e-mails for Events, ie. Security Events or Offline Events. If one or more Supervisors are set for a given Group, these people will receive the e-mails instead of those set in the Monitoring Rule" as help_text %}
                 <button type="button" class="material-icons btn align-middle" data-container="body" title='{{help_text}}' data-toggle="popover" data-placement="right">
                   help_outline
                 </button>
@@ -171,8 +171,7 @@ active
 
       <div class="gray-box mt-0 pt-0" style="border-radius: 0 0 .33rem .33rem;">
         <button class="btn btn-primary me-3" type="submit">{% translate "Save changes" %}</button>
-        <button class="btn btn-secondary" type="reset">{% translate "Cancel" %}</button>
-        <!--<button class="btn btn-secondary" onclick="return BibOS.PackageList.cancelEditing()">Annuller</button>-->
+        <button class="btn btn-secondary" type="reset" onclick="window.location.reload();">{% translate "Cancel" %}</button>
       </div>
 
     </form>
@@ -213,8 +212,8 @@ active
                 {{ newform|crispy }}
             </div>
             <div class="modal-footer">
-              <input type="submit" class="btn btn-primary" value="{% translate 'Create group' %}">
-              <input type="reset" class="btn btn-secondary" data-bs-dismiss="modal" value="{% translate 'Cancel' %}">
+              <input type="submit" class="btn btn-primary" value="{% translate "Create group" %}">
+              <input type="reset" class="btn btn-secondary" data-bs-dismiss="modal" value="{% translate "Cancel" %}">
             </div>
           </form>
         </div>

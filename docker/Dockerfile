@@ -69,7 +69,7 @@ RUN curl -fsSLO "$SUPERCRONIC_URL" \
  && ln -s "/usr/local/bin/${SUPERCRONIC}" /usr/local/bin/supercronic
 
 # Copy backend code.
-COPY README.rst .
+COPY README.md .
 COPY LICENSE .
 COPY docker ./docker
 COPY admin_site ./admin_site

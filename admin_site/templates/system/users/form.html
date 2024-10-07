@@ -2,27 +2,21 @@
 {% load i18n %}
 
 {% if form.non_field_errors %}
-  <span class="form-error">
-      {{ form.non_field_errors }}
-  </span>
+  <span class="form-error">{{ form.non_field_errors }}</span>
 {% endif %}
 
 <fieldset>
   {{ form.username|as_crispy_field }}
   {{ form.new_password|as_crispy_field }}
-  
-  <input class="hiddenpasswordfield form-control" type="text" id="{{ form.new_password.id_for_label }}_pwshadow" type="text">
-  
+
+  <input class="hiddenpasswordfield form-control" type="text" id="{{ form.new_password.id_for_label }}_pwshadow" type="text" />
+
   {{ form.password_confirm|as_crispy_field }}
-  
-  <input class="hiddenpasswordfield form-control" type="text" id="{{ form.password_confirm.id_for_label }}_pwshadow" type="text">
+
+  <input class="hiddenpasswordfield form-control" type="text" id="{{ form.password_confirm.id_for_label }}_pwshadow" type="text" />
 
   <div class="form-check" style="margin-bottom: 1rem;">
-    <input 
-      id="{{ form_id|default:'user_form' }}_show_password" 
-      type="checkbox" 
-      class="showpasswordcheckbox form-check-input" 
-      tabindex="100">
+    <input id="{{ form_id|default:'user_form' }}_show_password" type="checkbox" class="showpasswordcheckbox form-check-input" tabindex="100" />
     <label class="form-check-label" for="{{ form_id|default:'user_form' }}_show_password">{% translate "Show Password" %}</label>
   </div>
 
@@ -41,29 +35,32 @@
     </div>
   {% endif %}
 
-    {{ form.email|as_crispy_field }}
-    {{ form.usertype|as_crispy_field }}
-    {{ form.language|as_crispy_field }}
+  {{ form.email|as_crispy_field }}
+  {{ form.usertype|as_crispy_field }}
+  {{ form.language|as_crispy_field }}
 </fieldset>
 <script type="text/javascript">
-  $(function() {
-    var form = $("#{{ form_id|default:'user_form' }}");
-
+  $(function () {
+    var form = $("#{{ form_id|default:'user_form' }}")
+  
     // Hide and readonly the shadow fields
-    form.find('input.hiddenpasswordfield').hide().attr('readonly', 'readonly');
-    form.find('input.passwordinput').on("blur", function() {
-      var t = $(this);
+    form.find('input.hiddenpasswordfield').hide().attr('readonly', 'readonly')
+    form.find('input.passwordinput').on('blur', function () {
+      var t = $(this)
       $('#' + t.attr('id') + '_pwshadow').val(t.val())
     })
-
+  
     // Setup checkbox handler
-    form.find('.showpasswordcheckbox').on('click', function() {
-      if($(this).is(':checked')) {
-        form.find('input.passwordinput').hide();
-        form.find('input.hiddenpasswordfield').show();
+    // Setup checkbox handler
+    form.find('.showpasswordcheckbox').on('click', function () {
+      var passwordField = form.find('input.passwordinput')
+  
+      if ($(this).is(':checked')) {
+        // Change input type to text to show the password
+        passwordField.attr('type', 'text')
       } else {
-        form.find('input.hiddenpasswordfield').hide();
-        form.find('input.passwordinput').show();
+        // Change input type back to password to hide the password
+        passwordField.attr('type', 'password')
       }
     })
   })

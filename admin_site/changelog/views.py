@@ -15,6 +15,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import Http404
 from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
 
 
 # Mixin class to require login - copied from system app
@@ -76,7 +77,7 @@ class ChangelogListView(ListView):
                     pk=context["tag_filter"]
                 )
                 queryset = queryset.filter(tags=context["tag_filter"])
-            except ChangelogTag.DoesNotExist:
+            except (ChangelogTag.DoesNotExist, ValueError):
                 raise Http404(
                     _("There is no news category with the following ID: %s")
                     % context["tag_filter"]
@@ -84,6 +85,17 @@ class ChangelogListView(ListView):
 
         # Paginate the queryset and add it to the context
         context["entries"] = self.get_paginated_queryset(queryset, context["page"])
+
+        params = self.request.GET or self.request.POST
+        back_link = params.get("back")
+        if back_link is None:
+            referer = self.request.META.get("HTTP_REFERER")
+            if referer and referer.find("/changelog/") == -1:
+                back_link = referer
+        if back_link:
+            context["back_link"] = back_link
+        else:
+            context["back_link"] = "/"
 
         # Add all comments that belong to the entries on the current page to the
         # context
@@ -109,4 +121,4 @@ class ChangelogListView(ListView):
 
         comment.save()
 
-        return redirect("changelogs")
+        return redirect("/changelog?back=" + req["back_link"])

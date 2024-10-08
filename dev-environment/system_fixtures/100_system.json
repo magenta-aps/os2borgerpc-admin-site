@@ -4702,8 +4702,8 @@
     "pk": 31,
     "fields": {
         "mac": "",
-        "name": "pc5",
-        "uid": "pc5",
+        "name": "pc50",
+        "uid": "pc50",
         "description": "",
         "configuration": 59,
         "site": 1,
@@ -4717,6 +4717,207 @@
         ]
     }
 },
+{
+    "model": "system.pc",
+    "pk": 32,
+    "fields": {
+        "mac": "",
+        "name": "pc60",
+        "uid": "pc60",
+        "description": "",
+        "configuration": 59,
+        "site": 1,
+        "is_activated": true,
+        "created": "2022-01-10T11:37:48.592",
+        "last_seen": "2022-01-14T15:10:04",
+        "location": "beskrivelse 6",
+        "product": 2,
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 33,
+    "fields": {
+        "mac": "",
+        "name": "pc70",
+        "uid": "pc70",
+        "description": "",
+        "configuration": 59,
+        "site": 1,
+        "is_activated": true,
+        "created": "2022-01-10T11:37:48.592",
+        "last_seen": "2022-01-14T15:10:04",
+        "location": "beskrivelse 7",
+        "product": 2,
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 34,
+    "fields": {
+        "mac": "",
+        "name": "pc80",
+        "uid": "pc80",
+        "description": "",
+        "configuration": 59,
+        "site": 1,
+        "is_activated": true,
+        "created": "2022-01-10T11:37:48.592",
+        "last_seen": "2022-01-14T15:10:04",
+        "location": "beskrivelse 8",
+        "product": 2,
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 35,
+    "fields": {
+        "mac": "",
+        "name": "pc90",
+        "uid": "pc90",
+        "description": "",
+        "configuration": 59,
+        "site": 1,
+        "is_activated": true,
+        "created": "2022-01-10T11:37:48.592",
+        "last_seen": "2022-01-14T15:10:04",
+        "location": "beskrivelse 9",
+        "product": 2,
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 36,
+    "fields": {
+        "mac": "",
+        "name": "pc100",
+        "uid": "pc100",
+        "description": "",
+        "configuration": 59,
+        "site": 1,
+        "is_activated": true,
+        "created": "2022-01-10T11:37:48.592",
+        "last_seen": "2022-01-14T15:10:04",
+        "location": "beskrivelse 10",
+        "product": 2,
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 37,
+    "fields": {
+        "mac": "",
+        "name": "pc110",
+        "uid": "pc110",
+        "description": "",
+        "configuration": 59,
+        "site": 1,
+        "is_activated": true,
+        "created": "2022-01-10T11:37:48.592",
+        "last_seen": "2022-01-14T15:10:04",
+        "location": "beskrivelse 11",
+        "product": 2,
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 38,
+    "fields": {
+        "mac": "",
+        "name": "pc120",
+        "uid": "pc120",
+        "description": "",
+        "configuration": 59,
+        "site": 1,
+        "is_activated": true,
+        "created": "2022-01-10T11:37:48.592",
+        "last_seen": "2022-01-14T15:10:04",
+        "location": "beskrivelse 12",
+        "product": 2,
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 39,
+    "fields": {
+        "mac": "",
+        "name": "pc130",
+        "uid": "pc130",
+        "description": "",
+        "configuration": 59,
+        "site": 1,
+        "is_activated": true,
+        "created": "2022-01-10T11:37:48.592",
+        "last_seen": "2022-01-14T15:10:04",
+        "location": "beskrivelse 13",
+        "product": 2,
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 40,
+    "fields": {
+        "mac": "",
+        "name": "pc140",
+        "uid": "pc140",
+        "description": "",
+        "configuration": 59,
+        "site": 1,
+        "is_activated": true,
+        "created": "2022-01-10T11:37:48.592",
+        "last_seen": "2022-01-14T15:10:04",
+        "location": "beskrivelse 14",
+        "product": 2,
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 41,
+    "fields": {
+        "mac": "",
+        "name": "pc150",
+        "uid": "pc150",
+        "description": "",
+        "configuration": 59,
+        "site": 1,
+        "is_activated": true,
+        "created": "2022-01-10T11:37:48.592",
+        "last_seen": "2022-01-14T15:10:04",
+        "location": "beskrivelse 15",
+        "product": 2,
+        "pc_groups": [
+            17
+        ]
+    }
+},
+
 {
     "model": "system.scripttag",
     "pk": 1,

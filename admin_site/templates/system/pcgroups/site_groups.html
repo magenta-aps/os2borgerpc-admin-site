@@ -24,7 +24,7 @@ active
       {% translate "Add new group" %}
     </button>
   </div>
-  <ul class="item-list">
+  <ul id="group-list" class="item-list">
     {% for group in site.groups.all %}
       <li class="{% if group == selected_group %}active{% endif %}">
         <a class="item-list-link" href="/site/{{ site.url }}/groups/{{ group.url }}/">
@@ -193,6 +193,15 @@ active
           i++
         }
       }
+
+      // Scroll to the active li in the list
+      const scrollableList = document.getElementById('group-list');
+      const activeItem = scrollableList.querySelector('.active');
+
+      if (activeItem) {
+          activeItem.scrollIntoView({block: 'center'});
+      }
+
     </script>
     {% else %}
       <h2 class="divideheader">{% translate "Groups" %}</h2>

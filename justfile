@@ -59,7 +59,7 @@ bash-django-skip-entrypoint:
   docker compose run --rm --entrypoint bash {{compose_django_service}}
 
 # Runs black on the python codebase
-black:
+black: fix-permissions
   black admin_site
 
 # Dump the database to a file named {{db_data_file}}

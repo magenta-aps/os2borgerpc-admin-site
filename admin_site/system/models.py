@@ -410,7 +410,7 @@ class WakeWeekPlan(models.Model):
     # These are based on what "rtcwake" supports
     SLEEP_STATE_CHOICES = (
         ("STANDBY", "Standby (S1)"),
-        ("FREEZE", "Freeze"),
+        ("FREEZE", "Freeze (S2)"),
         ("MEM", "Mem (S3)"),
         ("OFF", "Off (S5)"),
     )

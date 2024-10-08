@@ -21,7 +21,7 @@
       {% comment %} Add deletion to every row: <a href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="{% translate 'Delete computer' %}"></a>{% endcomment %}
       <a  class="item-list-link pc-status-list-link" id="{{pc.uid}}" href="/site/{{ site.url }}/computers/{{ pc.uid }}">
         <span>{{ pc.name }}</span>       
-       <span class="badge bg-{{ pc.badgeclass }} pc-status-badge-span">{{ pc.product.short_name }}</span>
+       <span class="badge bg-{{ pc.badgeclass }}">{{ pc.product.short_name }}</span>
       
       </a>
         {% if not pc.is_activated %}
@@ -43,7 +43,7 @@
   <div class="container-fluid main sublevelmain">
 
     <h2 class="divideheader" id="pc_details_divideheader">
-      <p>{% translate "Details about" %} <em>{{ selected_pc.name }}</em></p><p>{{selected_pc.product}}
+        <div>{% translate "Details about" %} <em>{{ selected_pc.name }}</em></div>{{selected_pc.product.short_name}}
     </h2>
 
     {% include 'notification.html' %}

@@ -101,15 +101,14 @@
 
       <div class="clearfix"></div>
 
-      {% include 'system/scripts/form.html' with show_code_preview=1 global_script=script.is_global %}
+      {% include 'system/scripts/update_form.html' with global_script=script.is_global %}
 
-      <fieldset class="gray-box mt-0 pt-0" style="border-radius: 0 0 .33rem .33rem;">
+       <fieldset class="gray-box mt-0 pt-0" style="border-radius: 0 0 .33rem .33rem;">
         {% comment %}If it's a global script only allow saving if the user is of sufficiently high rank {% endcomment %}
         {% if selected_script.is_global is False or user.is_superuser %}
           <input type="submit" class="btn btn-primary me-3" value="{% translate "Save changes" %}">
           <button type="button" onclick="script_refresh({{script_inputs_json}})" class="btn btn-secondary">{% translate "Cancel" %}</button>
           {% endif %}
-       
       </fieldset>
 
     </form>
@@ -152,7 +151,7 @@
             <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
-            {% include 'system/scripts/form.html' with form=create_form disable_inputs="yes" %}
+            {% include 'system/scripts/create_form_modal.html' with form=create_form %}
           </div>
           <div class="modal-footer">
             <input type="submit" class="btn btn-primary" value="{% translate "Create" %} {% if is_security %}{% translate "Security Script" %}{% else %}{% translate "Script" %}{% endif %}">

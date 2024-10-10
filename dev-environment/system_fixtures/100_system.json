@@ -491,7 +491,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 3
+        "owner_configuration": 3,
+        "read_only": true
     }
 },
 {
@@ -599,7 +600,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 4
+        "owner_configuration": 4,
+        "read_only": true
     }
 },
 {
@@ -653,7 +655,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 9
+        "owner_configuration": 9,
+        "read_only": true
     }
 },
 {
@@ -743,7 +746,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 15
+        "owner_configuration": 15,
+        "read_only": true
     }
 },
 {
@@ -851,7 +855,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 17
+        "owner_configuration": 17,
+        "read_only": true
     }
 },
 {
@@ -959,7 +964,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 18
+        "owner_configuration": 18,
+        "read_only": true
     }
 },
 {
@@ -1067,7 +1073,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 22
+        "owner_configuration": 22,
+        "read_only": true
     }
 },
 {
@@ -1175,7 +1182,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 28
+        "owner_configuration": 28,
+        "read_only": true
     }
 },
 {
@@ -1283,7 +1291,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 29
+        "owner_configuration": 29,
+        "read_only": true
     }
 },
 {
@@ -1382,7 +1391,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 30
+        "owner_configuration": 30,
+        "read_only": true
     }
 },
 {
@@ -1562,7 +1572,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 32
+        "owner_configuration": 32,
+        "read_only": true
     }
 },
 {
@@ -1670,7 +1681,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 34
+        "owner_configuration": 34,
+        "read_only": true
     }
 },
 {
@@ -1814,7 +1826,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 38
+        "owner_configuration": 38,
+        "read_only": true
     }
 },
 {
@@ -1958,7 +1971,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 44
+        "owner_configuration": 44,
+        "read_only": true
     }
 },
 {
@@ -2093,7 +2107,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 45
+        "owner_configuration": 45,
+        "read_only": true
     }
 },
 {
@@ -2255,7 +2270,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 46
+        "owner_configuration": 46,
+        "read_only": true
     }
 },
 {
@@ -2390,7 +2406,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 48
+        "owner_configuration": 48,
+        "read_only": true
     }
 },
 {
@@ -2507,7 +2524,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 49
+        "owner_configuration": 49,
+        "read_only": true
     }
 },
 {
@@ -2651,7 +2669,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 50
+        "owner_configuration": 50,
+        "read_only": true
     }
 },
 {
@@ -2795,7 +2814,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 51
+        "owner_configuration": 51,
+        "read_only": true
     }
 },
 {
@@ -2921,7 +2941,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 55
+        "owner_configuration": 55,
+        "read_only": true
     }
 },
 {
@@ -3047,7 +3068,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 54
+        "owner_configuration": 54,
+        "read_only": true
     }
 },
 {
@@ -3173,7 +3195,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 56
+        "owner_configuration": 56,
+        "read_only": true
     }
 },
 {
@@ -3308,7 +3331,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 57
+        "owner_configuration": 57,
+        "read_only": true
     }
 },
 {
@@ -3416,7 +3440,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 59
+        "owner_configuration": 59,
+        "read_only": true
     }
 },
 {

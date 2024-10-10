@@ -287,6 +287,160 @@
     }
 },
 {
+    "model": "system.configuration",
+    "pk": 74,
+    "fields": {
+        "name": "Group: Gruppe6"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 75,
+    "fields": {
+        "name": "Group: Gruppe7"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 76,
+    "fields": {
+        "name": "Group: Gruppe8"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 77,
+    "fields": {
+        "name": "Group: Gruppe9"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 78,
+    "fields": {
+        "name": "Group: Gruppe10"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 79,
+    "fields": {
+        "name": "Group: Gruppe11"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 80,
+    "fields": {
+        "name": "Group: Gruppe12"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 81,
+    "fields": {
+        "name": "Group: Gruppe13"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 82,
+    "fields": {
+        "name": "Group: Gruppe14"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 83,
+    "fields": {
+        "name": "Group: Gruppe15"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 84,
+    "fields": {
+        "name": "Group: Gruppe16"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 85,
+    "fields": {
+        "name": "Group: Gruppe17"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 86,
+    "fields": {
+        "name": "Group: Gruppe18"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 87,
+    "fields": {
+        "name": "Group: Gruppe19"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 88,
+    "fields": {
+        "name": "Group: Gruppe20"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 89,
+    "fields": {
+        "name": "Group: Gruppe21"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 90,
+    "fields": {
+        "name": "Group: Gruppe22"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 91,
+    "fields": {
+        "name": "Group: Gruppe23"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 92,
+    "fields": {
+        "name": "Group: Gruppe24"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 93,
+    "fields": {
+        "name": "Group: Gruppe25"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 94,
+    "fields": {
+        "name": "Group: Gruppe26"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 95,
+    "fields": {
+        "name": "Group: Gruppe27"
+    }
+},
+{
     "model": "system.configurationentry",
     "pk": 1,
     "fields": {
@@ -4219,8 +4373,8 @@
         "sunday_open": true,
         "site": 1,
         "wake_change_events": [
-            8,
             5,
+            8,
             6,
             7
         ]
@@ -10390,6 +10544,7 @@
         "product": 1,
         "image_version": "5.2.0",
         "release_date": "2024-04-23",
+        "published": true,
         "os": "Ubuntu 22.04",
         "release_notes": "MD5sum: f150078e1caf51b1804fa860344c0504\r\nSwedish (multi-language) MD5sum: b14dd4c6704eb4ab674e0fb9bfa3e5e6\r\n\r\nGrundlæggende:\r\n- Opgraderet til Ubuntu Desktop 22.04.3.\r\n\r\nFølgende funktionalitet er blevet indbygget:\r\n- Opdatering af klienten i forbindelse med indledende registrering\r\n- Superuser har adgang til at redigere printerindstillinger\r\n- Deaktivering af Bluetooth\r\n- Slå Wayland fra\r\n- Automatiske opdateringer (sikkerhed)\r\n- Randomiser tjek-in-tidspunkt\r\n- Sæt GRUB-kodeord (bootmanageren) til noget tilfældigt (fremfor det ikke er sat og der er fri adgang)\r\n- Kør scripts på loginskærm (forudsætning for scriptet der aktiverer numlock på loginskærm)\r\n- Fjern popup-beskeder om fremtidige Ubuntu-opgraderinger (ikke opdateringer)\r\n- Firefox: Nedlås indstillinger / policies\r\n- Installer Okular som standard PDF-læser\r\n- Sæt baggrundsbilleder på loginskærm og skrivebord\r\n- Fjern Libreoffice \"Tip of the day\"\r\n- Borger: Aktiver genveje\r\n- Borger: Fjern luk ned, genstart og dvale fra menu\r\n- Borger: Fjern \"Lås\" fra menu\r\n- Borger: Fjern \"Skift bruger\" fra menu\r\n- Borger: Fjern skriveadgang til skrivebordet\r\n- Borger: Fjern adgang til Indstillinger\r\n- Borger: Sæt Borger som forvalgt bruger på loginskærm, fremfor den \r\n   seneste loggede ind er forvalgt, som kan være superuser\r\n- Borger: Fjern Alt-F2 (Kør)\r\n- Vis hjælpeværktøjer i menuen som standard\r\n\r\nIndbygget version af OS2borgerPC-klienten: 2.4.1",
         "image_upload": "images/os2borgerpc-5.2.0.iso",

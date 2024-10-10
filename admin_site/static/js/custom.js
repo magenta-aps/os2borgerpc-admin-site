@@ -97,7 +97,6 @@ var BibOS
         // Now remove the tab's highlighting
         tab._element.blur()
       }
-
     },
     setupDocumentationBackLinks: function() {
       var ref = document.referrer || ''

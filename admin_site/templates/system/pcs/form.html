@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block subnav %}
-<ul id="pc-list" class="sublevelnav item-list">
+<ul class="sublevelnav item-list">
   {% if not pc_list.all%}
     <li>{% translate "There are no computers" %}</li>
   {% endif %}
@@ -178,14 +178,6 @@
           window.addEventListener('load', function () {
               // Initialize job info buttons on load.
               BibOS.setupJobInfoButtons($(".jobtable"));
-
-              // Scroll to the active li in the list
-              const scrollableList = document.getElementById('pc-list');
-              const activeItem = scrollableList.querySelector('.active');
-
-              if (activeItem) {
-                  activeItem.scrollIntoView({block: 'center'});
-              }
           });
       </script>
     </form>

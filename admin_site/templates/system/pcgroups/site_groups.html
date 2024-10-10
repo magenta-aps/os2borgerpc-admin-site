@@ -44,7 +44,7 @@ active
 {% block specific_content %}
   <div class="container-fluid main sublevelmain">
 
-  {% if site.groups.all %}  
+  {% if site.groups.all %}
     <h2 class="divideheader">{% translate "Details about" %} <em>{{ selected_group.name }}</em></h2>
     {% include 'notification.html' %}
 
@@ -192,14 +192,6 @@ active
           item.value = i
           i++
         }
-      }
-
-      // Scroll to the active li in the list
-      const scrollableList = document.getElementById('group-list');
-      const activeItem = scrollableList.querySelector('.active');
-
-      if (activeItem) {
-          activeItem.scrollIntoView({block: 'center'});
       }
 
     </script>

@@ -4688,8 +4688,8 @@
     "pk": 50,
     "fields": {
         "mac": "",
-        "name": "pc50",
-        "uid": "pc50",
+        "name": "pc5",
+        "uid": "pc5",
         "description": "",
         "configuration": 18,
         "site": 9,
@@ -5271,6 +5271,8 @@
     "pk": 3,
     "fields": {
         "name": "OS2borgerPC Gaming",
+        "short_name": "Gaming",
+        "config_name": "os2borgerpc gaming",
         "multilang": false
     }
 },
@@ -5279,6 +5281,8 @@
     "pk": 4,
     "fields": {
         "name": "OS2borgerPC Tablet",
+        "short_name": "Tablet",
+        "config_name": "os2borgerpc tablet",
         "multilang": false
     }
 },
@@ -5287,6 +5291,8 @@
     "pk": 5,
     "fields": {
         "name": "OS2borgerPC Mobile",
+        "short_name": "Mobile",
+        "config_name": "os2borgerpc mobile",
         "multilang": false
     }
 },
@@ -5295,6 +5301,8 @@
     "pk": 6,
     "fields": {
         "name": "OS2borgerPC CheckIn",
+        "short_name": "CheckIn",
+        "config_name": "os2borgerpc checkin",
         "multilang": false
     }
 },
@@ -5303,6 +5311,8 @@
     "pk": 7,
     "fields": {
         "name": "OS2borgerPC Music",
+        "short_name": "Music",
+        "config_name": "os2borgerpc music",
         "multilang": false
     }
 },

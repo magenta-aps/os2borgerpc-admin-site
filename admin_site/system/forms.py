@@ -124,9 +124,7 @@ class ScriptForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ScriptForm, self).__init__(*args, **kwargs)
         instance = getattr(self, "instance", None)
-        if instance and instance.pk:
-            self.fields["site"].disabled = True
-        else:
+        if not instance or not instance.pk:
             self.fields["maintained_by_magenta"].widget = forms.HiddenInput()
 
         self.fields["tags"].disabled = True
@@ -134,7 +132,14 @@ class ScriptForm(forms.ModelForm):
 
     class Meta:
         model = Script
-        exclude = ["feature_permission", "product"]
+        exclude = [
+            "site",
+            "feature_permission",
+            "product",
+            "is_security_script",
+            "is_hidden",
+            "uid",
+        ]
 
 
 class ConfigurationEntryForm(forms.ModelForm):

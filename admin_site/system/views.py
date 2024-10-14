@@ -1307,6 +1307,8 @@ class ScriptCreate(ScriptMixin, CreateView, SuperAdminOrThisSiteMixin):
             # save the username for the AuditModelMixin.
             form.instance.user_created = self.request.user.username
             self.object = form.save()
+            self.object.site = self.site
+            self.object.save()
             self.script = self.object
             if self.is_security:
                 self.object.is_security_script = True
@@ -1348,9 +1350,6 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         self.create_form = ScriptForm()
         self.create_form.prefix = "create"
         context["create_form"] = self.create_form
-        context["is_hidden"] = self.script.is_hidden
-        if self.script.uid:
-            context["uid"] = self.script.uid
         request_user = self.request.user
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
         context["site_membership"] = (

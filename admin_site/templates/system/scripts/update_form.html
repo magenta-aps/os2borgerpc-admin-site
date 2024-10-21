@@ -23,27 +23,32 @@
 
 {# this form is modified via javascript at the bottom of the file #}
 
-      <fieldset>
-        
-        {{ form.name|as_crispy_field }}
-        {{ form.description|as_crispy_field }}
-
-      </fieldset>
+        {% if selected_script.is_global and not user.is_superuser %}
+          <h3>Beskrivelse</h3>
+          <p>
+            <pre id="global-script-description">{{ selected_script.description }}</pre>
+          </p>
+        {% else %}
+          <fieldset>
+            {{ form.name|as_crispy_field }}
+            {{ form.description|as_crispy_field }}
+          </fieldset>
+        {% endif %}
 
     </div>
     <div id="preview" class="tab-pane fade" role="tabpanel" aria-labelledby="preview-tab">
-    
+
       <fieldset>
         {{ form.executable_code|as_crispy_field }}
-          
+
           <p>{% translate "Code" %}:</p>
           <pre class="mb-0"><code id="script-code" class="bash">{{script_preview |escape}}</code></pre>
 
       </fieldset>
-    
+
     </div>
     <div id="parameters" class="tab-pane fade" role="tabpanel" aria-labelledby="parameters-tab">
-    
+
       {% if is_security %}
         <input type="hidden" name="script-number-of-inputs" class="script-number-of-inputs" value="0">
       {% else %}
@@ -91,12 +96,12 @@
     });
 
     const elementsToHide = document.querySelectorAll(`
-    #div_id_executable_code, 
-    #add-arguments, #delete_script_parameter_th, 
+    #div_id_executable_code,
+    #add-arguments, #delete_script_parameter_th,
     .delete_script_parameter
     `)
 
     elementsToHide.forEach(e => e.style.display = "none");
   </script>
-  
+
 {% endif %}

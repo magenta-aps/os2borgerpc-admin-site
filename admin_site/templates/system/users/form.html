@@ -1,5 +1,6 @@
 {% load crispy_forms_tags %}
 {% load i18n %}
+{% load custom_tags %}
 
 {% if form.non_field_errors %}
   <span class="form-error">{{ form.non_field_errors }}</span>
@@ -7,11 +8,22 @@
 
 <fieldset>
   {{ form.username|as_crispy_field }}
-  {{ form.new_password|as_crispy_field }}
+  {% translate "Fill out if you want to update the current password" as placeholder_text %}
+  {% with "placeholder,"|append:placeholder_text as pt %}
+    {% if selected_user %} {# Ie. is this an edit/update form rather than a create form? #}
+      {{ form.new_password|field_add_attribute:pt|as_crispy_field }}
+    {% else %}
+      {{ form.new_password|as_crispy_field }}
+    {% endif %}
 
-  <input class="hiddenpasswordfield form-control" type="text" id="{{ form.new_password.id_for_label }}_pwshadow" type="text" />
+    <input class="hiddenpasswordfield form-control" type="text" id="{{ form.new_password.id_for_label }}_pwshadow" type="text" />
 
-  {{ form.password_confirm|as_crispy_field }}
+    {% if selected_user %}
+      {{ form.password_confirm|field_add_attribute:pt|as_crispy_field }}
+    {% else %}
+      {{ form.password_confirm|as_crispy_field }}
+    {% endif %}
+  {% endwith %}
 
   <input class="hiddenpasswordfield form-control" type="text" id="{{ form.password_confirm.id_for_label }}_pwshadow" type="text" />
 
@@ -42,19 +54,19 @@
 <script type="text/javascript">
   $(function () {
     var form = $("#{{ form_id|default:'user_form' }}")
-  
+
     // Hide and readonly the shadow fields
     form.find('input.hiddenpasswordfield').hide().attr('readonly', 'readonly')
     form.find('input.passwordinput').on('blur', function () {
       var t = $(this)
       $('#' + t.attr('id') + '_pwshadow').val(t.val())
     })
-  
+
     // Setup checkbox handler
     // Setup checkbox handler
     form.find('.showpasswordcheckbox').on('click', function () {
       var passwordField = form.find('input.passwordinput')
-  
+
       if ($(this).is(':checked')) {
         // Change input type to text to show the password
         passwordField.attr('type', 'text')

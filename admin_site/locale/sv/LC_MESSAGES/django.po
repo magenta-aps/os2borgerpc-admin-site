@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-09 15:54+0200\n"
+"POT-Creation-Date: 2024-10-22 14:12+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -959,7 +959,8 @@ msgstr "Redigera"
 #: docs/templates/configuration/index.html templates/system/configs/item.html
 #: templates/system/event_rules/shared_navigation.html
 #: templates/system/scripts/confirm_delete.html
-#: templates/system/scripts/form.html templates/system/scripts/templates.html
+#: templates/system/scripts/templates.html
+#: templates/system/scripts/update_form.html
 #: templates/system/site_settings/api_keys/partials/list.html
 msgid "Delete"
 msgstr "Ta bort"
@@ -1069,8 +1070,8 @@ msgstr ""
 "ändras via administrationsgränssnittet."
 
 #: docs/templates/configuration/index.html
-#: templates/system/configs/templates.html templates/system/scripts/form.html
-#: templates/system/site_status.html
+#: templates/system/configs/templates.html
+#: templates/system/scripts/update_form.html templates/system/site_status.html
 #: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid "Name"
 msgstr "Namn"
@@ -4423,7 +4424,7 @@ msgstr "rapporterat"
 msgid "assigned user"
 msgstr "hanteras av"
 
-#: system/models.py
+#: system/models.py templates/system/site_status.html
 msgid "product"
 msgstr "produkt"
 
@@ -5224,7 +5225,7 @@ msgid "Position"
 msgstr "Position"
 
 #: templates/system/pcgroups/policy_list/list.html
-#: templates/system/scripts/form.html
+#: templates/system/scripts/update_form.html
 msgid "Arguments"
 msgstr "Inputparametrar"
 
@@ -5249,7 +5250,7 @@ msgid "Delete group"
 msgstr "Ta bort grupp"
 
 #: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
-#: templates/system/scripts/form.html
+#: templates/system/scripts/update_form.html
 msgid "Details"
 msgstr "Detaljer"
 
@@ -5460,26 +5461,6 @@ msgstr "Är du säker på att du vill radera"
 msgid "Create"
 msgstr "Skapa"
 
-#: templates/system/scripts/form.html
-msgid "Code"
-msgstr "Kod"
-
-#: templates/system/scripts/form.html
-msgid "Type"
-msgstr "Typ"
-
-#: templates/system/scripts/form.html
-msgid "Default value"
-msgstr "Standardvärde"
-
-#: templates/system/scripts/form.html
-msgid "Required"
-msgstr "Krävs"
-
-#: templates/system/scripts/form.html
-msgid "Add arguments"
-msgstr "Lägg till parametrar"
-
 #: templates/system/scripts/navigation.html
 msgid "Local scripts"
 msgstr "Lokala skript"
@@ -5574,6 +5555,26 @@ msgstr "Rensa filter"
 #: templates/system/scripts/update.html
 msgid "Modified"
 msgstr "Ändrat"
+
+#: templates/system/scripts/update_form.html
+msgid "Code"
+msgstr "Kod"
+
+#: templates/system/scripts/update_form.html
+msgid "Type"
+msgstr "Typ"
+
+#: templates/system/scripts/update_form.html
+msgid "Default value"
+msgstr "Standardvärde"
+
+#: templates/system/scripts/update_form.html
+msgid "Required"
+msgstr "Krävs"
+
+#: templates/system/scripts/update_form.html
+msgid "Add arguments"
+msgstr "Lägg till parametrar"
 
 # Konsistens ml. navn i sikkerhedsregel og sikkerhedshændelse
 #: templates/system/security_events/site_security_events.html
@@ -5899,6 +5900,10 @@ msgid "Are you sure you want to delete the user"
 msgstr "Är du säker på att du vill ta bort användaren"
 
 #: templates/system/users/form.html
+msgid "Fill out if you want to update the current password"
+msgstr "Utfylles om du vill uppdatera den nuvarande koden"
+
+#: templates/system/users/form.html
 msgid "Show Password"
 msgstr "Visa Password"
 
@@ -5923,8 +5928,8 @@ msgid "Add existing users from your other sites to the site "
 msgstr "Lägg till befintliga användare från dina andra sites till sitet "
 
 #: templates/system/users/update.html
-msgid "Profile:"
-msgstr "Profil:"
+msgid "Edit user"
+msgstr "Redigera använder"
 
 #: templates/system/users/update.html
 msgid "Create new user"
@@ -5937,6 +5942,10 @@ msgid ""
 msgstr ""
 "Site-användare har inte tillgång till att ändra andra användare. Fråga en "
 "Site-administratör eller Magenta för att få hjälp."
+
+#: templates/system/users/update.html
+msgid "Create user"
+msgstr "Skapa användare"
 
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_plan_base.html

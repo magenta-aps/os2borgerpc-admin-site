@@ -58,7 +58,7 @@ li .dropdown-item:active {
   box-shadow: none;
 }
 
-#pc_update_form .basic-info {
+.basic-info {
   font-size: 1.20em;
 }
 
@@ -90,12 +90,12 @@ li .dropdown-item:active {
 }
 
 .customer .btn-group:hover {
-  background: $gray-300
+  background: $gray-300;
 }
 
 .pc-status-badge-span {
   height: 100%;
-  min-width: 130px
+  min-width: 130px;
 }
 
 #pc_details_divideheader {
@@ -136,4 +136,11 @@ input[type="checkbox"] {
 .bg-yellow {
   background-color: $yellow;
   color: $gray-900;
+}
+
+/* Used on the user section sublevelnav */
+.sublevelnav .btn-link.active {
+  background-color: $warning;
+  color: $gray-900!important;
+  margin: 5px;
 }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-22 14:20+0200\n"
+"POT-Creation-Date: 2024-10-22 17:27+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -3047,8 +3047,8 @@ msgstr ""
 "Ändringar träder inte i kraft förrän du har klickat på knappen \"Spara "
 "ändringar\" längst ner på sidan."
 
-#: docs/templates/users/index.html templates/system/users/link.html
-#: templates/system/users/update.html
+#: docs/templates/users/index.html
+#: templates/system/users/shared_navigation.html
 msgid "Add existing users to this site"
 msgstr "Lägg till befintliga användare på den här site"
 
@@ -3135,8 +3135,8 @@ msgstr ""
 "användartyp som ingen av dina användare har behörighet att välja."
 
 #: docs/templates/users/index.html docs/views.py
-#: templates/site_with_navigation.html templates/system/users/link.html
-#: templates/system/users/update.html
+#: templates/site_with_navigation.html
+#: templates/system/users/shared_navigation.html
 msgid "Users"
 msgstr "Användare"
 
@@ -5161,7 +5161,7 @@ msgid "User"
 msgstr "Användare"
 
 #: templates/system/jobs/site_jobs.html templates/system/pcs/form.html
-#: templates/system/scripts/update.html
+#: templates/system/scripts/update.html templates/system/users/update.html
 msgid "Created"
 msgstr "Skapad"
 
@@ -5887,7 +5887,7 @@ msgid "Create site"
 msgstr "Skapa site"
 
 #: templates/system/users/confirm_delete.html
-#: templates/system/users/update.html
+#: templates/system/users/shared_navigation.html
 msgid "Delete user"
 msgstr "Ta bort användare"
 
@@ -5919,10 +5919,6 @@ msgstr "Generera reservkoder"
 msgid "Deactivate two-factor authentication"
 msgstr "Inaktivera tvåstegsverifiering"
 
-#: templates/system/users/link.html templates/system/users/update.html
-msgid "Add new user"
-msgstr "Lägg till en ny användare"
-
 #: templates/system/users/link.html
 msgid "Add existing users from your other sites to the site "
 msgstr "Lägg till befintliga användare från dina andra sites till sitet "
@@ -5931,9 +5927,17 @@ msgstr "Lägg till befintliga användare från dina andra sites till sitet "
 msgid "Add the selected users"
 msgstr "Lägg till de valda användarna"
 
+#: templates/system/users/shared_navigation.html
+msgid "Add new user"
+msgstr "Lägg till en ny användare"
+
 #: templates/system/users/update.html
 msgid "Edit user"
 msgstr "Redigera använder"
+
+#: templates/system/users/update.html
+msgid "Last login"
+msgstr "Senaste inloggningen"
 
 #: templates/system/users/update.html
 msgid "Create new user"

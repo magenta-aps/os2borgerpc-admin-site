@@ -2757,7 +2757,7 @@ class UserLink(FormView, UsersMixin, SuperAdminOrThisSiteMixin):
         users_for_customer_not_on_this_site = User.objects.filter(
             user_profile__pk__in=user_profiles_for_customer_pk
         ).exclude(user_profile__sites=site)
-        form.fields["linked_users"].queryset = users_for_customer_not_on_this_site
+        form.fields["linkable_users"].queryset = users_for_customer_not_on_this_site
 
         return context
 
@@ -2772,7 +2772,7 @@ class UserLink(FormView, UsersMixin, SuperAdminOrThisSiteMixin):
             != SiteMembership.CUSTOMER_ADMIN
         ):
             raise PermissionDenied
-        selected_users = form.cleaned_data["linked_users"]
+        selected_users = form.cleaned_data["linkable_users"]
         selected_user_type = form.cleaned_data["usertype"]
         selected_users_names = []
         # Add the selected users to the site with

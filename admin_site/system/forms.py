@@ -149,7 +149,7 @@ class ConfigurationEntryForm(forms.ModelForm):
 
 
 class UserLinkForm(forms.Form):
-    linked_users = forms.ModelMultipleChoiceField(
+    linkable_users = forms.ModelMultipleChoiceField(
         queryset=User.objects.all(),
         required=False,
         label=_("Select users to be added to this site"),

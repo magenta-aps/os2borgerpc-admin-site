@@ -1,53 +1,14 @@
-{% extends "site_with_navigation.html" %}
+{% extends "system/users/shared_navigation.html" %}
 {% load i18n %}
-
-{% block specific_title %}
-{% translate "Users" %}
-{% endblock %}
-
-{% block subnav %}
-<div class="sublevelnav">
-  {% if site_membership.site_user_type >= site_membership.CUSTOMER_ADMIN or user.is_superuser %}
-    <div class="listutils">
-      <a class="btn btn-link" href="{% url 'link_users' site.uid %}">
-        <span class="material-icons">add</span>
-        {% translate "Add existing users to this site" %}
-      </a>
-    </div>
-  {% endif %}
-  {% if site_membership.site_user_type >= site_membership.SITE_ADMIN or user.is_superuser %}
-    <div class="listutils">
-      <a class="btn btn-link" href="{% url 'new_user' site.uid %}">
-        <span class="material-icons">add</span>
-        {% translate "Add new user" %}
-      </a>
-    </div>
-  {% endif %}
-
-
-  <ul class="item-list">
-    {% for listed_user in user_list %}
-      <li class="{% if listed_user == selected_user %}active{% endif %}">
-        <a class="item-list-link" href="/site/{{ site.url }}/users/{{ listed_user.username }}">
-          {{ listed_user.username }}
-        </a>
-        {% if listed_user == selected_user and not_customer_admin and site_membership.site_user_type >= site_membership.SITE_ADMIN or listed_user == selected_user and user.is_superuser %}
-          {% translate "Delete user" as delete_name %}
-          <a class="item-list-deletable material-icons" href="{% url 'user_delete' site.uid selected_user.username %}" title="{{ delete_name }}">
-            clear
-          </a>
-        {% endif %}
-      </li>
-    {% endfor %}
-  </ul>
-
-</div>
-{% endblock %}
 
 {% block specific_content %}
   <div class="container-fluid main sublevelmain">
       {% if selected_user %}
       <h2 class="divideheader">{% translate "Edit user" %}: <em>{{ selected_user.username }}</em></h2>
+      <div class="basic-info">
+        <span>{% translate "Created" %}: {{ user.date_joined }}</span>
+        <span class="ms-5">{% translate "Last login" %}: {{ user.last_login }}</span>
+      </div>
       {% else %}
       <h2 class="divideheader">{% translate "Create new user" %}</h2>
       {% endif %}
@@ -80,6 +41,5 @@
       </div>
     </div>
   </div>
-
 
 {% endblock %}

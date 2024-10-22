@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-22 14:20+0200\n"
+"POT-Creation-Date: 2024-10-22 17:27+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -3055,8 +3055,8 @@ msgstr ""
 "Ændringer træder ikke i kraft, før man klikker på knappen \"Gem ændringer\" "
 "nederst på siden."
 
-#: docs/templates/users/index.html templates/system/users/link.html
-#: templates/system/users/update.html
+#: docs/templates/users/index.html
+#: templates/system/users/shared_navigation.html
 msgid "Add existing users to this site"
 msgstr "Tilføj eksisterende brugere til dette site"
 
@@ -3142,8 +3142,8 @@ msgstr ""
 "brugertype, som ingen af jeres brugere har rettigheder til at vælge."
 
 #: docs/templates/users/index.html docs/views.py
-#: templates/site_with_navigation.html templates/system/users/link.html
-#: templates/system/users/update.html
+#: templates/site_with_navigation.html
+#: templates/system/users/shared_navigation.html
 msgid "Users"
 msgstr "Brugere"
 
@@ -5168,7 +5168,7 @@ msgid "User"
 msgstr "Bruger"
 
 #: templates/system/jobs/site_jobs.html templates/system/pcs/form.html
-#: templates/system/scripts/update.html
+#: templates/system/scripts/update.html templates/system/users/update.html
 msgid "Created"
 msgstr "Oprettet"
 
@@ -5891,7 +5891,7 @@ msgid "Create site"
 msgstr "Opret site"
 
 #: templates/system/users/confirm_delete.html
-#: templates/system/users/update.html
+#: templates/system/users/shared_navigation.html
 msgid "Delete user"
 msgstr "Slet bruger"
 
@@ -5923,10 +5923,6 @@ msgstr "Generér backupkoder"
 msgid "Deactivate two-factor authentication"
 msgstr "Deaktivér totrinsbekræftelse"
 
-#: templates/system/users/link.html templates/system/users/update.html
-msgid "Add new user"
-msgstr "Tilføj ny bruger"
-
 #: templates/system/users/link.html
 msgid "Add existing users from your other sites to the site "
 msgstr "Tilføj eksisterende brugere fra jeres andre sites til sitet "
@@ -5935,9 +5931,17 @@ msgstr "Tilføj eksisterende brugere fra jeres andre sites til sitet "
 msgid "Add the selected users"
 msgstr "Tilføj de valgte brugere"
 
+#: templates/system/users/shared_navigation.html
+msgid "Add new user"
+msgstr "Tilføj ny bruger"
+
 #: templates/system/users/update.html
 msgid "Edit user"
 msgstr "Redigér bruger"
+
+#: templates/system/users/update.html
+msgid "Last login"
+msgstr "Seneste login"
 
 #: templates/system/users/update.html
 msgid "Create new user"

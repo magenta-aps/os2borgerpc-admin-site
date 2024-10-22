@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-22 14:12+0200\n"
+"POT-Creation-Date: 2024-10-22 14:20+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -1535,7 +1535,7 @@ msgstr "Anteckningar"
 #: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
 #: templates/system/scripts/update.html
 #: templates/system/site_settings/site_settings.html
-#: templates/system/users/link.html templates/system/users/update.html
+#: templates/system/users/update.html
 #: templates/system/wake_plan/wake_change_events/wake_change_event.html
 #: templates/system/wake_plan/wake_plan.html
 msgid "Save changes"
@@ -5926,6 +5926,10 @@ msgstr "Lägg till en ny användare"
 #: templates/system/users/link.html
 msgid "Add existing users from your other sites to the site "
 msgstr "Lägg till befintliga användare från dina andra sites till sitet "
+
+#: templates/system/users/link.html
+msgid "Add the selected users"
+msgstr "Lägg till de valda användarna"
 
 #: templates/system/users/update.html
 msgid "Edit user"

@@ -4815,6 +4815,10 @@ msgid "Welcome"
 msgstr "Velkommen"
 
 #: templates/sitebase.html
+msgid "Edit my user"
+msgstr "Redigér min bruger"
+
+#: templates/sitebase.html
 msgid "Log out"
 msgstr "Log ud"
 

@@ -16,8 +16,8 @@ google-crc32c==1.3.0             # If using Google Cloud
 google-resumable-media==2.3.3    # If using Google Cloud
 googleapis-common-protos==1.56.4 # If using Google Cloud
 gunicorn==22.0.0
-psycopg-binary==3.1.18           # Used in the example docker-compose.yml
-psycopg==3.1.18                  # Used in the example docker-compose.yml
+psycopg-binary==3.1.18           # Postgres support for local development and potentially production
+psycopg==3.1.18                  # Postgres support for local development and potentially production
 python-dateutil==2.8.2           # Required by django-xmlrpc
 requests==2.31.0
 whitenoise==6.6.0                # If you don't have a web server in front to serve static files

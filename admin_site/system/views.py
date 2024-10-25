@@ -53,6 +53,7 @@ from account.models import (
 from system.models import (
     APIKey,
     AssociatedScriptParameter,
+    Configuration,
     ConfigurationEntry,
     Customer,
     ImageVersion,
@@ -2389,10 +2390,9 @@ class WakePlanDuplicate(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
             event.save()
             events.append(event)
 
-        object_to_copy.pk = (
-            None  # Remove its current pk so it gets a new one when saving
-        )
-        object_to_copy.name = f"Kopi af {object_to_copy.name}"
+        # Remove its current pk so it gets a new one when saving
+        object_to_copy.pk = None
+        object_to_copy.name = _("Copy of") + f" {object_to_copy.name}"
         # Now save the copied object to get a new ID, which is also required to bind the duplicated events to it
         object_to_copy.save()
 
@@ -3462,6 +3462,59 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
         response = super(PCGroupDelete, self).delete(form, *args, **kwargs)
         set_notification_cookie(response, _("Group %s deleted") % name)
         return response
+
+
+class PCGroupDuplicate(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
+    model = PCGroup
+
+    def get_redirect_url(self, **kwargs):
+        object_to_copy = PCGroup.objects.get(id=kwargs["group_id"])
+
+        # Before we remove the pk we duplicate all the associated scripts, as they're precisely related through the pk
+        ascs = []
+        for asc in object_to_copy.policy.all().order_by("position"):
+            ascs.append(asc)
+
+        # Remove its current pk so it gets a new one when saving
+        object_to_copy.pk = None
+
+        # Now save the copied object to get a new ID, which is also required to bind the duplicated scripts to it
+        object_to_copy.save()
+
+        object_to_copy.name = _("Copy of") + f" {object_to_copy.name}"
+        object_to_copy.description = ""
+        # Most things we don't want to duplicate:
+        object_to_copy.wake_week_plan = None
+        object_to_copy.configuration = Configuration.objects.create()
+        object_to_copy.supervisors.set([])
+
+        object_to_copy.save()
+
+        new_id = object_to_copy.pk
+
+        ascs_after = []
+        for asc in ascs:
+            # Save a reference to all parameters
+            params = []
+            for p in asc.parameters.all():
+                p.id = None
+                p.save()
+                params.append(p)
+
+            asc.id = None
+            asc.group = object_to_copy
+            # The object needs an ID before we can associate parameters with it
+            asc.save()
+            asc.parameters.set(params)
+            asc.save()
+            ascs_after.append(asc)
+
+        object_to_copy.policy.set(ascs_after)
+
+        return reverse(
+            "group",
+            kwargs={"slug": kwargs["slug"], "group_id": new_id},
+        )
 
 
 class EventRuleRedirect(RedirectView, SuperAdminOrThisSiteMixin):

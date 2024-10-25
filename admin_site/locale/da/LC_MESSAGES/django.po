@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-11 11:21+0100\n"
+"POT-Creation-Date: 2024-11-20 14:38+0100\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -1391,6 +1391,22 @@ msgstr ""
 "blive afvist i forbindelse med opdateringen af gruppen, når du klikker på "
 "\"Gem ændringer.\" Gyldige computere vil stadig blive tilføjet. Hvis en "
 "eller flere computere afvises, vil siden oplyse om dette samt begrundelsen."
+
+#: docs/templates/groups/edit.html
+msgid "Duplicating groups"
+msgstr "Duplikering af grupper"
+
+#: docs/templates/groups/edit.html
+msgid ""
+"You can duplicate the currently selected group by pressing the \"Duplicate "
+"group\" button. What's copied over is the current list of Associated scripts "
+"and their current values. This can be used to easily reuse parts of an "
+"existing setup for a new location."
+msgstr ""
+"Du kan duplikere den nuværende valgte gruppe ved at trykke på knappen "
+"\"Duplikér gruppe.\" Dét, der kopieres over, er den nuværende liste af "
+"tilknyttede scripts og deres nuværende værdier. Dette kan bruges til let "
+"genbrug af en eksisterende opsætning på en ny lokation."
 
 #: docs/templates/groups/index.html docs/templates/users/index.html
 #: docs/views.py templates/site_with_navigation.html
@@ -4600,6 +4616,10 @@ msgid "Wake Week Plan %s deleted"
 msgstr "Tænd/Sluk tidsplan %s slettet"
 
 #: system/views.py
+msgid "Copy of"
+msgstr "Kopi af"
+
+#: system/views.py
 #, python-format
 msgid "You have no exception with the following ID: %s"
 msgstr "Du har ingen undtagelse med ID %s"
@@ -5353,6 +5373,10 @@ msgid ""
 msgstr ""
 "Hvis et script fjernes fra Gruppen, medfører det IKKE, at scriptets effekt "
 "fjernes fra Computerne i Gruppen"
+
+#: templates/system/pcgroups/site_groups.html
+msgid "Duplicate group"
+msgstr "Duplikér gruppe"
 
 #: templates/system/pcgroups/site_groups.html
 msgid "No groups were found"

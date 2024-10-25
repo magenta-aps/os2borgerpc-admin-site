@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-11 11:21+0100\n"
+"POT-Creation-Date: 2024-11-20 14:25+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -1388,6 +1388,22 @@ msgstr ""
 "avvisas vid uppdatering av gruppen när du klickar på \"Spara ändringar\". "
 "Giltiga datorer kommer fortfarande att läggas till. Om en eller flera "
 "datorer avvisas kommer sajten att informera om detta och orsaken."
+
+#: docs/templates/groups/edit.html
+msgid "Duplicating groups"
+msgstr "Duplicera grupper"
+
+#: docs/templates/groups/edit.html
+msgid ""
+"You can duplicate the currently selected group by pressing the \"Duplicate "
+"group\" button. What's copied over is the current list of Associated scripts "
+"and their current values. This can be used to easily reuse parts of an "
+"existing setup for a new location."
+msgstr ""
+"Du kan duplicera den för närvarande valda gruppen genom att trycka på "
+"\"Duplicera grupp\"-knappen. Det som har kopierats över är den aktuella "
+"listan med associerade skript och deras nuvarande värden. Detta kan användas "
+"för att enkelt återanvända delar av en befintlig konfigurera för en ny plats."
 
 #: docs/templates/groups/index.html docs/templates/users/index.html
 #: docs/views.py templates/site_with_navigation.html
@@ -4593,6 +4609,10 @@ msgid "Wake Week Plan %s deleted"
 msgstr "Tänd/släck schema %s borttagen"
 
 #: system/views.py
+msgid "Copy of"
+msgstr "Kopia av"
+
+#: system/views.py
 #, python-format
 msgid "You have no exception with the following ID: %s"
 msgstr "Du har inget undantag med ID %s"
@@ -5348,6 +5368,10 @@ msgid ""
 msgstr ""
 "Att ta bort ett skript från gruppen betyder INTE att skriptets effekt tas "
 "bort från datorerna i gruppen"
+
+#: templates/system/pcgroups/site_groups.html
+msgid "Duplicate group"
+msgstr "Duplicera grupp"
 
 #: templates/system/pcgroups/site_groups.html
 msgid "No groups were found"
@@ -6265,7 +6289,7 @@ msgstr "Ta bort en grupp från tidtabellen"
 
 #: templates/system/wake_plan/wake_plan.html
 msgid "Duplicate schedule"
-msgstr "Duplicera schema"
+msgstr "Duplicera tidtabel"
 
 #: templates/system/wake_plan/wake_plan_base.html
 msgid "On/Off schedule"

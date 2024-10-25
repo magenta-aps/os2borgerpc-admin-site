@@ -4559,7 +4559,7 @@
             "modified": "2022-06-09T14:51:56.704",
             "user_created": "magenta",
             "user_modified": "",
-            "name": "Detekter låst/udløbet bruger",
+            "name": "Detekter låst Borgerkonto",
             "uid": null,
             "description": "f",
             "site": null,
@@ -8661,7 +8661,7 @@
         "model": "system.securityproblem",
         "pk": 6,
         "fields": {
-            "name": "Detekter låst/udløbet bruger",
+            "name": "Detekter låst Borgerkonto",
             "description": "abc",
             "level": "High",
             "site": 1,

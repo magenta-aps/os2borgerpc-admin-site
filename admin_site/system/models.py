@@ -57,13 +57,10 @@ class EventLevels:
     }
 
 
+# Possible future cleanup: Make ConfigurationEntries relate to the PC/Group/Site objects directly and remove Configuration completely.
 class Configuration(models.Model):
     """This class contains/represents the configuration of a Site,
     a PC Group or a PC."""
-
-    # Doesn't need any actual fields, it seems. Should not exist independently
-    # of the classes to which it may be aggregated.
-    name = models.CharField(max_length=255, unique=True)
 
     def update_from_request(self, req_params, submit_name):
         seen_set = set()
@@ -127,7 +124,7 @@ class Configuration(models.Model):
         return result
 
     def __str__(self):
-        return self.name
+        return str(self.pk)
 
 
 class ConfigurationEntry(models.Model):
@@ -307,16 +304,8 @@ class Site(models.Model):
         # 2. Create related configuration object if necessary.
         is_new = self.id is None
 
-        try:
-            conf = self.configuration
-        except Configuration.DoesNotExist:
-            conf = None
-
-        if is_new and conf is None:
-            try:
-                self.configuration = Configuration.objects.get(name=self.uid)
-            except Configuration.DoesNotExist:
-                self.configuration = Configuration.objects.create(name=self.uid)
+        if is_new:
+            self.configuration = Configuration.objects.create()
 
         # Perform save
         super(Site, self).save(*args, **kwargs)
@@ -604,11 +593,8 @@ class PCGroup(models.Model):
         """Customize behaviour when saving a group object."""
         # Before actual save
         is_new = self.id is None
-        if is_new and self.name:
-            related_name = "Group: " + self.name
-            self.configuration, new = Configuration.objects.get_or_create(
-                name=related_name
-            )
+        if is_new:
+            self.configuration = Configuration.objects.create()
         # Perform save
         super(PCGroup, self).save(*args, **kwargs)
 

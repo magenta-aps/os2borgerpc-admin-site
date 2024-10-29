@@ -280,11 +280,8 @@ class ConfigurationAdmin(admin.ModelAdmin):
     def pcs(self, obj):
         return list(obj.pc_set.all())
 
-    list_display = ["id", "name", "pcs", "pcgroups", "sites"]
-    search_fields = (
-        "id",
-        "name",
-    )
+    list_display = ["id", "pcs", "pcgroups", "sites"]
+    search_fields = ("id",)
     inlines = [
         ConfigurationEntryInline,
         SiteInlineForConfiguration,
@@ -633,7 +630,7 @@ class SiteAdmin(admin.ModelAdmin):
     )
     search_fields = ("name",)
     inlines = (PCInlineForSiteAdmin,)
-    readonly_fields = ("created",)
+    readonly_fields = ("configuration", "created")
 
     def number_of_borgerpc_computers(self, obj):
         borgerpc_computers_count = (

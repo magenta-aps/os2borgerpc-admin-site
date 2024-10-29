@@ -51,20 +51,8 @@ def register_new_computer_v2(mac, name, site, configuration):
 
     new_pc.is_activated = False
     new_pc.mac = mac
-    # Create new configuration, populate with data from computer's config.
-    # If a configuration with the same ID is hanging, reuse.
-    config_name = "_".join([site, name, uid])
-    try:
-        my_config = Configuration.objects.get(name=config_name)
-    except Configuration.DoesNotExist:
-        my_config = Configuration()
-        my_config.name = config_name
-    finally:
-        # Delete pre-existing entries
-        entries = ConfigurationEntry.objects.filter(owner_configuration=my_config)
-        for e in entries:
-            e.delete()
-    my_config.save()
+
+    my_config = Configuration.objects.create()
     # And load configuration
 
     # Update configuration with os2 product

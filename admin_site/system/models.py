@@ -204,7 +204,7 @@ class Site(models.Model):
             )
         ],
     )
-    configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
+    configuration = models.OneToOneField(Configuration, on_delete=models.PROTECT)
     customer = models.ForeignKey(
         Customer, related_name="sites", on_delete=models.PROTECT, null=True
     )
@@ -579,7 +579,7 @@ class PCGroup(models.Model):
         verbose_name=_("description"), max_length=1024, blank=True
     )
     site = models.ForeignKey(Site, related_name="groups", on_delete=models.CASCADE)
-    configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
+    configuration = models.OneToOneField(Configuration, on_delete=models.PROTECT)
     wake_week_plan = models.ForeignKey(
         WakeWeekPlan, related_name="groups", on_delete=models.SET_NULL, null=True
     )
@@ -748,7 +748,7 @@ class PC(models.Model):
     description = models.CharField(
         verbose_name=_("description"), max_length=1024, blank=True
     )
-    configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
+    configuration = models.OneToOneField(Configuration, on_delete=models.PROTECT)
     pc_groups = models.ManyToManyField(PCGroup, related_name="pcs", blank=True)
     site = models.ForeignKey(Site, related_name="pcs", on_delete=models.CASCADE)
     is_activated = models.BooleanField(verbose_name=_("activated"), default=False)

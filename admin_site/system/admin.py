@@ -248,16 +248,16 @@ class CitizenAdmin(admin.ModelAdmin):
 
 @admin.register(m.Configuration)
 class ConfigurationAdmin(admin.ModelAdmin):
-    def sites(self, obj):
-        return list(obj.site_set.all())
+    def site(self, obj):
+        return obj.site
 
-    def pcgroups(self, obj):
-        return list(obj.pcgroup_set.all())
+    def pcgroup(self, obj):
+        return obj.pcgroup
 
-    def pcs(self, obj):
-        return list(obj.pc_set.all())
+    def pc(self, obj):
+        return obj.pc
 
-    list_display = ["id", "pcs", "pcgroups", "sites"]
+    list_display = ["id", "pc", "pcgroup", "site"]
     search_fields = ("id",)
     inlines = [
         ConfigurationEntryInline,

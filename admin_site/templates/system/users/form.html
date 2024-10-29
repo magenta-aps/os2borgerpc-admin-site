@@ -16,8 +16,6 @@
       {{ form.new_password|as_crispy_field }}
     {% endif %}
 
-    <input class="hiddenpasswordfield form-control" type="text" id="{{ form.new_password.id_for_label }}_pwshadow" type="text" />
-
     {% if selected_user %}
       {{ form.password_confirm|field_add_attribute:pt|as_crispy_field }}
     {% else %}
@@ -25,11 +23,9 @@
     {% endif %}
   {% endwith %}
 
-  <input class="hiddenpasswordfield form-control" type="text" id="{{ form.password_confirm.id_for_label }}_pwshadow" type="text" />
-
   <div class="form-check" style="margin-bottom: 1rem;">
-    <input id="{{ form_id|default:'user_form' }}_show_password" type="checkbox" class="showpasswordcheckbox form-check-input" tabindex="100" />
-    <label class="form-check-label" for="{{ form_id|default:'user_form' }}_show_password">{% translate "Show Password" %}</label>
+    <input id="update_user_form_show_password" type="checkbox" class="showpasswordcheckbox form-check-input" tabindex="100" />
+    <label class="form-check-label" for="update_user_form_show_password">{% translate "Show Password" %}</label>
   </div>
 
   {% if user == selected_user and not user.totpdevice_set.first %}
@@ -53,16 +49,8 @@
 </fieldset>
 <script type="text/javascript">
   $(function () {
-    var form = $("#{{ form_id|default:'user_form' }}")
+    var form = $("#update_user_form")
 
-    // Hide and readonly the shadow fields
-    form.find('input.hiddenpasswordfield').hide().attr('readonly', 'readonly')
-    form.find('input.passwordinput').on('blur', function () {
-      var t = $(this)
-      $('#' + t.attr('id') + '_pwshadow').val(t.val())
-    })
-
-    // Setup checkbox handler
     // Setup checkbox handler
     form.find('.showpasswordcheckbox').on('click', function () {
       var passwordField = form.find('input.passwordinput')

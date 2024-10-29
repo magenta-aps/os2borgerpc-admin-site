@@ -24,7 +24,7 @@
               class="gray-box">
               {% csrf_token %}
 
-              {% include 'system/users/form.html' with form_id='update_user_form' %}
+              {% include 'system/users/form.html' %}
               {% if selected_user %}
                 {% translate "Save changes" as submit_name %}
               {% else %}

@@ -240,7 +240,7 @@ class AssociatedScriptParameterAdmin(admin.ModelAdmin):
         "file_value",
         "get_site",
     )
-    search_fields = ("associated_script__script__name",)
+    search_fields = ("associated_script__script__name", "input__name")
     readonly_fields = ("input", "associated_script")
 
     @admin.display(description="Site", ordering="associated_script__group__site")

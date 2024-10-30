@@ -1,3 +1,12 @@
+## Version 6.2.0, Octoboer 30, 2024
+
+- Fix scroll issue on global scripts
+- Redesign UI for global scripts to make it clearer when it's not a form
+- Make the page scroll to the currently selected entry on all pages with sub menues
+- Make most of the configurations we set read only as there's little reason to edit them and it might cause problems
+- Indicate more clearly on the admin portal when something is a BorgerPC, Kiosk (or something else)
+- UX: Make it more apparent whether one is editing or creating a user
+
 ## Version 6.1.0, October 2, 2024
 
 - Update Django to version 4.2.15

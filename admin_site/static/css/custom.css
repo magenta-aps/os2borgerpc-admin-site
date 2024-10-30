@@ -97,7 +97,7 @@ li.selected {background-color: var(--bs-gray);}
 
 /* picklist */
 .pick-list-available {
-  max-height: 400px; 
+  max-height: 400px;
   background-color: var(--bs-white);
   padding-bottom: 0px;
   overflow: auto;
@@ -120,7 +120,7 @@ li.selected {background-color: var(--bs-gray);}
 
 .translate-toast {
   right: 10%;
-} 
+}
 
 
 

@@ -1,0 +1,15 @@
+{% load crispy_forms_tags %}
+
+{% load i18n %}
+
+      <fieldset>
+        {{ form.name|as_crispy_field }}
+        {{ form.description|as_crispy_field }}
+
+      </fieldset>
+
+      <fieldset class="mt-3">
+        {{ form.executable_code|as_crispy_field }}
+      </fieldset>
+
+        <input type="hidden" name="script-number-of-inputs" class="script-number-of-inputs" value="0">

@@ -21,7 +21,9 @@ urlpatterns = [
     re_path(r"^xmlrpc/$", handle_xmlrpc, name="xmlrpc"),
     re_path(r"^admin-xml/$", handle_xmlrpc),
     re_path(
-        "accounts/logout/", auth_views.LogoutView.as_view(template_name="logout.html")
+        "accounts/logout/",
+        auth_views.LogoutView.as_view(template_name="logout.html"),
+        name="logout",
     ),
     # Include each of our apps' URLs
     re_path(r"^", include("system.urls")),

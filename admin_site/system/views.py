@@ -42,6 +42,7 @@ from system.utils import (
     notification_changes_saved,
     online_pcs_count_filter,
     set_notification_cookie,
+    get_badge_class,
 )
 
 from account.models import (
@@ -531,12 +532,15 @@ class SiteDetailView(SiteView):
         context = super(SiteDetailView, self).get_context_data(**kwargs)
         context = site_pcs_stats(context, [kwargs["object"]])
 
-        site_pcs = self.object.pcs.all()
-
-        # Top level list of new PCs etc.
-        context["ls_pcs"] = site_pcs.order_by(
+        site_pcs = self.object.pcs.all().order_by(
             "is_activated", F("last_seen").desc(nulls_last=True)
         )
+
+        for p in site_pcs:
+            p.badgeclass = get_badge_class(p.product.id)
+
+        # Top level list of new PCs etc.
+        context["ls_pcs"] = site_pcs
 
         context["total_pcs_count"] = context["ls_pcs"].count()
         context["activated_pcs_count"] = site_pcs.filter(is_activated=True).count()
@@ -842,6 +846,7 @@ class JobsView(SiteView):
         context = super(JobsView, self).get_context_data(**kwargs)
         site = context["site"]
         context["batches"] = site.batches.exclude(name="")[:100]
+
         context["pcs"] = site.pcs.all()
         context["groups"] = site.groups.all()
         preselected = set(
@@ -1127,7 +1132,8 @@ class ScriptMixin(object):
         global_scripts = scripts.filter(site=None)
         context["global_scripts"] = global_scripts
 
-        context["supported_products"] = self.script.products.all()
+        if self.script:
+            context["supported_products"] = self.script.products.all()
 
         # Create a tag->scripts dict for tags that has local scripts.
         local_tag_scripts_dict = {
@@ -1302,6 +1308,8 @@ class ScriptCreate(ScriptMixin, CreateView, SuperAdminOrThisSiteMixin):
             # save the username for the AuditModelMixin.
             form.instance.user_created = self.request.user.username
             self.object = form.save()
+            self.object.site = self.site
+            self.object.save()
             self.script = self.object
             if self.is_security:
                 self.object.is_security_script = True
@@ -1343,9 +1351,6 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         self.create_form = ScriptForm()
         self.create_form.prefix = "create"
         context["create_form"] = self.create_form
-        context["is_hidden"] = self.script.is_hidden
-        if self.script.uid:
-            context["uid"] = self.script.uid
         request_user = self.request.user
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
         context["site_membership"] = (
@@ -1628,7 +1633,12 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         pc = self.object
         params = self.request.GET or self.request.POST
 
-        context["pc_list"] = site.pcs.all()
+        all_pcs = site.pcs.all()
+
+        for p in all_pcs:
+            p.badgeclass = get_badge_class(p.product.id)
+
+        context["pc_list"] = all_pcs
 
         # Group picklist related:
         group_set = site.groups.all()
@@ -1729,6 +1739,12 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         with transaction.atomic():
             pc.configuration.update_from_request(self.request.POST, "pc_config")
             response = super(PCUpdate, self).form_valid(form)
+
+            # Keep the name and hostname configuration in sync
+            hostname_config = pc.configuration.entries.filter(key="hostname").first()
+            if hostname_config and pc.name.lower() != hostname_config.value:
+                hostname_config.value = pc.name.lower()
+                hostname_config.save()
 
             # If this PC has joined any groups that have policies attached
             # to them, then run their scripts (first making sure that this
@@ -2742,7 +2758,7 @@ class UserLink(FormView, UsersMixin, SuperAdminOrThisSiteMixin):
         users_for_customer_not_on_this_site = User.objects.filter(
             user_profile__pk__in=user_profiles_for_customer_pk
         ).exclude(user_profile__sites=site)
-        form.fields["linked_users"].queryset = users_for_customer_not_on_this_site
+        form.fields["linkable_users"].queryset = users_for_customer_not_on_this_site
 
         return context
 
@@ -2757,7 +2773,7 @@ class UserLink(FormView, UsersMixin, SuperAdminOrThisSiteMixin):
             != SiteMembership.CUSTOMER_ADMIN
         ):
             raise PermissionDenied
-        selected_users = form.cleaned_data["linked_users"]
+        selected_users = form.cleaned_data["linkable_users"]
         selected_user_type = form.cleaned_data["usertype"]
         selected_users_names = []
         # Add the selected users to the site with

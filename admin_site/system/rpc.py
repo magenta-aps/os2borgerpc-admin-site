@@ -93,7 +93,14 @@ def register_new_computer_v2(mac, name, site, configuration):
         pass
 
     for k, v in list(configuration.items()):
-        entry = ConfigurationEntry(key=k, value=v, owner_configuration=my_config)
+        # List of our configurations that should not be read_only
+        if k in ["job_timeout"]:
+            read_only = False
+        else:
+            read_only = True
+        entry = ConfigurationEntry(
+            key=k, value=v, read_only=read_only, owner_configuration=my_config
+        )
         entry.save()
     # Set and save PmC
     new_pc.configuration = my_config
@@ -204,7 +211,7 @@ def get_instructions(pc_uid):
     return instructions
 
 
-def push_config_keys(pc_uid, config_dict):
+def push_config_keys(pc_uid, config_dict, read_only=False):
     try:
         pc = PC.objects.get(uid=pc_uid)
     except PC.DoesNotExist:
@@ -236,7 +243,7 @@ def push_config_keys(pc_uid, config_dict):
             if key in pc_config:
                 pc.configuration.remove_entry(key)
         else:
-            pc.configuration.update_entry(key, value)
+            pc.configuration.update_entry(key, value, read_only)
 
     return True
 

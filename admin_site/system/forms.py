@@ -72,7 +72,6 @@ class SiteForm(forms.ModelForm):
 
 
 class SiteCreateForm(forms.ModelForm):
-
     class Meta:
         model = Site
         fields = ("name", "uid")
@@ -125,9 +124,7 @@ class ScriptForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ScriptForm, self).__init__(*args, **kwargs)
         instance = getattr(self, "instance", None)
-        if instance and instance.pk:
-            self.fields["site"].disabled = True
-        else:
+        if not instance or not instance.pk:
             self.fields["maintained_by_magenta"].widget = forms.HiddenInput()
 
         self.fields["tags"].disabled = True
@@ -135,17 +132,24 @@ class ScriptForm(forms.ModelForm):
 
     class Meta:
         model = Script
-        exclude = ["feature_permission", "product"]
+        exclude = [
+            "site",
+            "feature_permission",
+            "product",
+            "is_security_script",
+            "is_hidden",
+            "uid",
+        ]
 
 
 class ConfigurationEntryForm(forms.ModelForm):
     class Meta:
         model = ConfigurationEntry
-        exclude = ["owner_configuration"]
+        exclude = ["owner_configuration", "read_only"]
 
 
 class UserLinkForm(forms.Form):
-    linked_users = forms.ModelMultipleChoiceField(
+    linkable_users = forms.ModelMultipleChoiceField(
         queryset=User.objects.all(),
         required=False,
         label=_("Select users to be added to this site"),
@@ -323,6 +327,9 @@ class PCForm(forms.ModelForm):
     class Meta:
         model = PC
         exclude = ("configuration", "site", "created", "last_seen", "product")
+        widgets = {
+            "name": forms.widgets.TextInput(attrs={"pattern": "[\-a-z0-9A-Z]{1,63}"}),
+        }
 
 
 class SecurityEventForm(forms.ModelForm):

@@ -287,6 +287,160 @@
     }
 },
 {
+    "model": "system.configuration",
+    "pk": 74,
+    "fields": {
+        "name": "Group: Gruppe6"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 75,
+    "fields": {
+        "name": "Group: Gruppe7"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 76,
+    "fields": {
+        "name": "Group: Gruppe8"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 77,
+    "fields": {
+        "name": "Group: Gruppe9"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 78,
+    "fields": {
+        "name": "Group: Gruppe10"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 79,
+    "fields": {
+        "name": "Group: Gruppe11"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 80,
+    "fields": {
+        "name": "Group: Gruppe12"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 81,
+    "fields": {
+        "name": "Group: Gruppe13"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 82,
+    "fields": {
+        "name": "Group: Gruppe14"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 83,
+    "fields": {
+        "name": "Group: Gruppe15"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 84,
+    "fields": {
+        "name": "Group: Gruppe16"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 85,
+    "fields": {
+        "name": "Group: Gruppe17"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 86,
+    "fields": {
+        "name": "Group: Gruppe18"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 87,
+    "fields": {
+        "name": "Group: Gruppe19"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 88,
+    "fields": {
+        "name": "Group: Gruppe20"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 89,
+    "fields": {
+        "name": "Group: Gruppe21"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 90,
+    "fields": {
+        "name": "Group: Gruppe22"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 91,
+    "fields": {
+        "name": "Group: Gruppe23"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 92,
+    "fields": {
+        "name": "Group: Gruppe24"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 93,
+    "fields": {
+        "name": "Group: Gruppe25"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 94,
+    "fields": {
+        "name": "Group: Gruppe26"
+    }
+},
+{
+    "model": "system.configuration",
+    "pk": 95,
+    "fields": {
+        "name": "Group: Gruppe27"
+    }
+},
+{
     "model": "system.configurationentry",
     "pk": 1,
     "fields": {
@@ -337,7 +491,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 3
+        "owner_configuration": 3,
+        "read_only": true
     }
 },
 {
@@ -445,7 +600,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 4
+        "owner_configuration": 4,
+        "read_only": true
     }
 },
 {
@@ -499,7 +655,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 9
+        "owner_configuration": 9,
+        "read_only": true
     }
 },
 {
@@ -589,7 +746,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 15
+        "owner_configuration": 15,
+        "read_only": true
     }
 },
 {
@@ -697,7 +855,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 17
+        "owner_configuration": 17,
+        "read_only": true
     }
 },
 {
@@ -805,7 +964,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 18
+        "owner_configuration": 18,
+        "read_only": true
     }
 },
 {
@@ -913,7 +1073,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 22
+        "owner_configuration": 22,
+        "read_only": true
     }
 },
 {
@@ -1021,7 +1182,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 28
+        "owner_configuration": 28,
+        "read_only": true
     }
 },
 {
@@ -1129,7 +1291,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 29
+        "owner_configuration": 29,
+        "read_only": true
     }
 },
 {
@@ -1228,7 +1391,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 30
+        "owner_configuration": 30,
+        "read_only": true
     }
 },
 {
@@ -1408,7 +1572,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 32
+        "owner_configuration": 32,
+        "read_only": true
     }
 },
 {
@@ -1516,7 +1681,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 34
+        "owner_configuration": 34,
+        "read_only": true
     }
 },
 {
@@ -1660,7 +1826,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 38
+        "owner_configuration": 38,
+        "read_only": true
     }
 },
 {
@@ -1804,7 +1971,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 44
+        "owner_configuration": 44,
+        "read_only": true
     }
 },
 {
@@ -1939,7 +2107,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 45
+        "owner_configuration": 45,
+        "read_only": true
     }
 },
 {
@@ -2101,7 +2270,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 46
+        "owner_configuration": 46,
+        "read_only": true
     }
 },
 {
@@ -2236,7 +2406,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 48
+        "owner_configuration": 48,
+        "read_only": true
     }
 },
 {
@@ -2353,7 +2524,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 49
+        "owner_configuration": 49,
+        "read_only": true
     }
 },
 {
@@ -2497,7 +2669,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 50
+        "owner_configuration": 50,
+        "read_only": true
     }
 },
 {
@@ -2641,7 +2814,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 51
+        "owner_configuration": 51,
+        "read_only": true
     }
 },
 {
@@ -2767,7 +2941,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 55
+        "owner_configuration": 55,
+        "read_only": true
     }
 },
 {
@@ -2893,7 +3068,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 54
+        "owner_configuration": 54,
+        "read_only": true
     }
 },
 {
@@ -3019,7 +3195,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 56
+        "owner_configuration": 56,
+        "read_only": true
     }
 },
 {
@@ -3154,7 +3331,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 57
+        "owner_configuration": 57,
+        "read_only": true
     }
 },
 {
@@ -3262,7 +3440,8 @@
     "fields": {
         "key": "admin_url",
         "value": "5",
-        "owner_configuration": 59
+        "owner_configuration": 59,
+        "read_only": true
     }
 },
 {
@@ -4219,8 +4398,8 @@
         "sunday_open": true,
         "site": 1,
         "wake_change_events": [
-            8,
             5,
+            8,
             6,
             7
         ]
@@ -4506,6 +4685,113 @@
 },
 {
     "model": "system.pc",
+    "pk": 50,
+    "fields": {
+        "mac": "",
+        "name": "pc5",
+        "uid": "pc5",
+        "description": "",
+        "configuration": 18,
+        "site": 9,
+        "is_activated": true,
+        "created": "2021-01-21T11:16:10.403",
+        "last_seen": "2021-01-28T12:50:03",
+        "location": "beskrivelse 2",
+        "product": 3,
+        "pc_groups": [
+            10,
+            3
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 51,
+    "fields": {
+        "mac": "",
+        "name": "pc51",
+        "uid": "pc51",
+        "description": "",
+        "configuration": 18,
+        "site": 9,
+        "is_activated": true,
+        "created": "2021-01-21T11:16:10.403",
+        "last_seen": "2021-01-28T12:50:03",
+        "location": "beskrivelse 2",
+        "product": 4,
+        "pc_groups": [
+            10,
+            3
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 52,
+    "fields": {
+        "mac": "",
+        "name": "pc52",
+        "uid": "pc52",
+        "description": "",
+        "configuration": 18,
+        "site": 9,
+        "is_activated": true,
+        "created": "2021-01-21T11:16:10.403",
+        "last_seen": "2021-01-28T12:50:03",
+        "location": "beskrivelse 2",
+        "product": 5,
+        "pc_groups": [
+            10,
+            3
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 53,
+    "fields": {
+        "mac": "",
+        "name": "pc53",
+        "uid": "pc53",
+        "description": "",
+        "configuration": 18,
+        "site": 9,
+        "is_activated": true,
+        "created": "2021-01-21T11:16:10.403",
+        "last_seen": "2021-01-28T12:50:03",
+        "location": "beskrivelse 2",
+        "product": 6,
+        "pc_groups": [
+            10,
+            3
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 54,
+    "fields": {
+        "mac": "",
+        "name": "pc54",
+        "uid": "pc54",
+        "description": "",
+        "configuration": 18,
+        "site": 9,
+        "is_activated": true,
+        "created": "2021-01-21T11:16:10.403",
+        "last_seen": "2021-01-28T12:50:03",
+        "location": "beskrivelse 2",
+        "product": 7,
+        "pc_groups": [
+            10,
+            3
+        ]
+    }
+},
+
+
+{
+    "model": "system.pc",
     "pk": 12,
     "fields": {
         "mac": "",
@@ -4693,7 +4979,7 @@
         "created": "2022-01-05T14:43:09.479",
         "last_seen": "2022-01-17T17:20:05",
         "location": "",
-        "product": 1,
+        "product": 2,
         "pc_groups": []
     }
 },
@@ -4702,8 +4988,8 @@
     "pk": 31,
     "fields": {
         "mac": "",
-        "name": "pc5",
-        "uid": "pc5",
+        "name": "pc50",
+        "uid": "pc50",
         "description": "",
         "configuration": 59,
         "site": 1,
@@ -4717,6 +5003,207 @@
         ]
     }
 },
+{
+    "model": "system.pc",
+    "pk": 32,
+    "fields": {
+        "mac": "",
+        "name": "pc60",
+        "uid": "pc60",
+        "description": "",
+        "configuration": 59,
+        "site": 1,
+        "is_activated": true,
+        "created": "2022-01-10T11:37:48.592",
+        "last_seen": "2022-01-14T15:10:04",
+        "location": "beskrivelse 6",
+        "product": 2,
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 33,
+    "fields": {
+        "mac": "",
+        "name": "pc70",
+        "uid": "pc70",
+        "description": "",
+        "configuration": 59,
+        "site": 1,
+        "is_activated": true,
+        "created": "2022-01-10T11:37:48.592",
+        "last_seen": "2022-01-14T15:10:04",
+        "location": "beskrivelse 7",
+        "product": 2,
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 34,
+    "fields": {
+        "mac": "",
+        "name": "pc80",
+        "uid": "pc80",
+        "description": "",
+        "configuration": 59,
+        "site": 1,
+        "is_activated": true,
+        "created": "2022-01-10T11:37:48.592",
+        "last_seen": "2022-01-14T15:10:04",
+        "location": "beskrivelse 8",
+        "product": 2,
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 35,
+    "fields": {
+        "mac": "",
+        "name": "pc90",
+        "uid": "pc90",
+        "description": "",
+        "configuration": 59,
+        "site": 1,
+        "is_activated": true,
+        "created": "2022-01-10T11:37:48.592",
+        "last_seen": "2022-01-14T15:10:04",
+        "location": "beskrivelse 9",
+        "product": 2,
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 36,
+    "fields": {
+        "mac": "",
+        "name": "pc100",
+        "uid": "pc100",
+        "description": "",
+        "configuration": 59,
+        "site": 1,
+        "is_activated": true,
+        "created": "2022-01-10T11:37:48.592",
+        "last_seen": "2022-01-14T15:10:04",
+        "location": "beskrivelse 10",
+        "product": 2,
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 37,
+    "fields": {
+        "mac": "",
+        "name": "pc110",
+        "uid": "pc110",
+        "description": "",
+        "configuration": 59,
+        "site": 1,
+        "is_activated": true,
+        "created": "2022-01-10T11:37:48.592",
+        "last_seen": "2022-01-14T15:10:04",
+        "location": "beskrivelse 11",
+        "product": 2,
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 38,
+    "fields": {
+        "mac": "",
+        "name": "pc120",
+        "uid": "pc120",
+        "description": "",
+        "configuration": 59,
+        "site": 1,
+        "is_activated": true,
+        "created": "2022-01-10T11:37:48.592",
+        "last_seen": "2022-01-14T15:10:04",
+        "location": "beskrivelse 12",
+        "product": 2,
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 39,
+    "fields": {
+        "mac": "",
+        "name": "pc130",
+        "uid": "pc130",
+        "description": "",
+        "configuration": 59,
+        "site": 1,
+        "is_activated": true,
+        "created": "2022-01-10T11:37:48.592",
+        "last_seen": "2022-01-14T15:10:04",
+        "location": "beskrivelse 13",
+        "product": 2,
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 40,
+    "fields": {
+        "mac": "",
+        "name": "pc140",
+        "uid": "pc140",
+        "description": "",
+        "configuration": 59,
+        "site": 1,
+        "is_activated": true,
+        "created": "2022-01-10T11:37:48.592",
+        "last_seen": "2022-01-14T15:10:04",
+        "location": "beskrivelse 14",
+        "product": 2,
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 41,
+    "fields": {
+        "mac": "",
+        "name": "pc150",
+        "uid": "pc150",
+        "description": "",
+        "configuration": 59,
+        "site": 1,
+        "is_activated": true,
+        "created": "2022-01-10T11:37:48.592",
+        "last_seen": "2022-01-14T15:10:04",
+        "location": "beskrivelse 15",
+        "product": 2,
+        "pc_groups": [
+            17
+        ]
+    }
+},
+
 {
     "model": "system.scripttag",
     "pk": 1,
@@ -4776,6 +5263,56 @@
         "name": "OS2borgerPC Kiosk",
         "short_name": "Kiosk",
         "config_name": "os2borgerpc kiosk",
+        "multilang": false
+    }
+},
+{
+    "model": "system.product",
+    "pk": 3,
+    "fields": {
+        "name": "OS2borgerPC Gaming",
+        "short_name": "Gaming",
+        "config_name": "os2borgerpc gaming",
+        "multilang": false
+    }
+},
+{
+    "model": "system.product",
+    "pk": 4,
+    "fields": {
+        "name": "OS2borgerPC Tablet",
+        "short_name": "Tablet",
+        "config_name": "os2borgerpc tablet",
+        "multilang": false
+    }
+},
+{
+    "model": "system.product",
+    "pk": 5,
+    "fields": {
+        "name": "OS2borgerPC Mobile",
+        "short_name": "Mobile",
+        "config_name": "os2borgerpc mobile",
+        "multilang": false
+    }
+},
+{
+    "model": "system.product",
+    "pk": 6,
+    "fields": {
+        "name": "OS2borgerPC CheckIn",
+        "short_name": "CheckIn",
+        "config_name": "os2borgerpc checkin",
+        "multilang": false
+    }
+},
+{
+    "model": "system.product",
+    "pk": 7,
+    "fields": {
+        "name": "OS2borgerPC Music",
+        "short_name": "Music",
+        "config_name": "os2borgerpc music",
         "multilang": false
     }
 },
@@ -10189,6 +10726,7 @@
         "product": 1,
         "image_version": "5.2.0",
         "release_date": "2024-04-23",
+        "published": true,
         "os": "Ubuntu 22.04",
         "release_notes": "MD5sum: f150078e1caf51b1804fa860344c0504\r\nSwedish (multi-language) MD5sum: b14dd4c6704eb4ab674e0fb9bfa3e5e6\r\n\r\nGrundlæggende:\r\n- Opgraderet til Ubuntu Desktop 22.04.3.\r\n\r\nFølgende funktionalitet er blevet indbygget:\r\n- Opdatering af klienten i forbindelse med indledende registrering\r\n- Superuser har adgang til at redigere printerindstillinger\r\n- Deaktivering af Bluetooth\r\n- Slå Wayland fra\r\n- Automatiske opdateringer (sikkerhed)\r\n- Randomiser tjek-in-tidspunkt\r\n- Sæt GRUB-kodeord (bootmanageren) til noget tilfældigt (fremfor det ikke er sat og der er fri adgang)\r\n- Kør scripts på loginskærm (forudsætning for scriptet der aktiverer numlock på loginskærm)\r\n- Fjern popup-beskeder om fremtidige Ubuntu-opgraderinger (ikke opdateringer)\r\n- Firefox: Nedlås indstillinger / policies\r\n- Installer Okular som standard PDF-læser\r\n- Sæt baggrundsbilleder på loginskærm og skrivebord\r\n- Fjern Libreoffice \"Tip of the day\"\r\n- Borger: Aktiver genveje\r\n- Borger: Fjern luk ned, genstart og dvale fra menu\r\n- Borger: Fjern \"Lås\" fra menu\r\n- Borger: Fjern \"Skift bruger\" fra menu\r\n- Borger: Fjern skriveadgang til skrivebordet\r\n- Borger: Fjern adgang til Indstillinger\r\n- Borger: Sæt Borger som forvalgt bruger på loginskærm, fremfor den \r\n   seneste loggede ind er forvalgt, som kan være superuser\r\n- Borger: Fjern Alt-F2 (Kør)\r\n- Vis hjælpeværktøjer i menuen som standard\r\n\r\nIndbygget version af OS2borgerPC-klienten: 2.4.1",
         "image_upload": "images/os2borgerpc-5.2.0.iso",

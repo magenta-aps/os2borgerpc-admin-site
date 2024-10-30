@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-12 09:53+0200\n"
+"POT-Creation-Date: 2024-10-22 17:27+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -964,7 +964,8 @@ msgstr "Redigér"
 #: docs/templates/configuration/index.html templates/system/configs/item.html
 #: templates/system/event_rules/shared_navigation.html
 #: templates/system/scripts/confirm_delete.html
-#: templates/system/scripts/form.html templates/system/scripts/templates.html
+#: templates/system/scripts/templates.html
+#: templates/system/scripts/update_form.html
 #: templates/system/site_settings/api_keys/partials/list.html
 msgid "Delete"
 msgstr "Slet"
@@ -973,10 +974,18 @@ msgstr "Slet"
 #, python-format
 msgid ""
 "In order to edit or delete a value, you must click on %(edit)s or %(delete)s "
-"to the right of the individual key."
+"to the right of the individual key. Note that most of the built-in "
+"configurations that are created automatically by the OS2borgerPC system "
+"cannot be edited or deleted via the admin interface. This is meant to "
+"prevent users from accidentally deleting relevant information or making "
+"changes that negatively impact their computers."
 msgstr ""
 "For at rette eller slette en værdi, skal du klikke på %(edit)s eller "
-"%(delete)s ud for den enkelte nøgle."
+"%(delete)s ud for den enkelte nøgle. Bemærk at størstedelen af de indbyggede "
+"konfigurationer, som automatisk oprettes af OS2borgerPC-systemet, ikke kan "
+"redigeres eller slettes via admininistrationsinterfacet. Dette har til "
+"formål at forhindre at anvendere ved en fejl kommer til at slette relevant "
+"information eller lave ændringer, som negativt påvirker deres computere."
 
 #: docs/templates/configuration/index.html
 msgid "Configurations at different levels"
@@ -1045,23 +1054,29 @@ msgstr "Betydningen af de indbyggede konfigurationer"
 #: docs/templates/configuration/index.html
 msgid ""
 "All values without _ in front are controlled by the admin-site while values "
-"with _ are controlled by the computer / the client."
+"with _ are controlled by the computer / the client. Values with _ in front "
+"can thus not be changed via the admin interface."
 msgstr ""
 "Alle værdier uden _ foran bestemmes af adminsitet, mens værdier med _ "
-"bestemmes af computeren / klienten."
+"bestemmes af computeren / klienten. Værdier med _ foran kan således ikke "
+"ændres via administrationsinterfacet."
 
 #: docs/templates/configuration/index.html
 #, python-format
 msgid ""
 "This means that if one were to change e.g. %(version)s on the computer, then "
-"the value would be overwritten during the next check-in with the admin-site."
+"the value would be overwritten during the next check-in with the admin-site. "
+"Note that \"job_timeout\" is the only built-in configuration that can be "
+"changed via the admin interface."
 msgstr ""
 "Det vil i praksis sige, at hvis man eks. ændrer %(version)s på computeren, "
-"så vil den blive overskrevet efter næste tjek-ind med adminsitet."
+"så vil den blive overskrevet efter næste tjek-ind med adminsitet. Bemærk at "
+"\"job_timeout\" er den eneste indbyggede konfiguration, som kan ændres via "
+"administrationsinterfacet."
 
 #: docs/templates/configuration/index.html
-#: templates/system/configs/templates.html templates/system/scripts/form.html
-#: templates/system/site_status.html
+#: templates/system/configs/templates.html
+#: templates/system/scripts/update_form.html templates/system/site_status.html
 #: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid "Name"
 msgstr "Navn"
@@ -1155,10 +1170,6 @@ msgid "Unless the computer is reinstalled, this number does not change"
 msgstr "Medmindre computeren geninstalleres, vil dette tal ikke ændre sig"
 
 #: docs/templates/configuration/index.html
-msgid "The site that the computer belongs to"
-msgstr "Hvilket site computeren er tilknyttet"
-
-#: docs/templates/configuration/index.html
 msgid "Technical information for script developers"
 msgstr "Teknisk information til scriptudviklere"
 
@@ -1201,8 +1212,8 @@ msgid "Retrieves the value of a configuration value"
 msgstr "Henter værdien af en konfigurationværdi"
 
 #: docs/templates/configuration/index.html
-msgid "Retrieves the UID of the site where the computer is registered."
-msgstr "Får fat i UID'et på det site, som computeren er tilknyttet."
+msgid "Retrieves the address of the server where the computer is registered."
+msgstr "Får fat i adressen på den server, hvor computeren er registreret."
 
 #: docs/templates/configuration/index.html
 msgid "Sets the value of a configuration value"
@@ -1530,7 +1541,7 @@ msgstr "Bemærkninger"
 #: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
 #: templates/system/scripts/update.html
 #: templates/system/site_settings/site_settings.html
-#: templates/system/users/link.html templates/system/users/update.html
+#: templates/system/users/update.html
 #: templates/system/wake_plan/wake_change_events/wake_change_event.html
 #: templates/system/wake_plan/wake_plan.html
 msgid "Save changes"
@@ -3044,8 +3055,8 @@ msgstr ""
 "Ændringer træder ikke i kraft, før man klikker på knappen \"Gem ændringer\" "
 "nederst på siden."
 
-#: docs/templates/users/index.html templates/system/users/link.html
-#: templates/system/users/update.html
+#: docs/templates/users/index.html
+#: templates/system/users/shared_navigation.html
 msgid "Add existing users to this site"
 msgstr "Tilføj eksisterende brugere til dette site"
 
@@ -3131,8 +3142,8 @@ msgstr ""
 "brugertype, som ingen af jeres brugere har rettigheder til at vælge."
 
 #: docs/templates/users/index.html docs/views.py
-#: templates/site_with_navigation.html templates/system/users/link.html
-#: templates/system/users/update.html
+#: templates/site_with_navigation.html
+#: templates/system/users/shared_navigation.html
 msgid "Users"
 msgstr "Brugere"
 
@@ -4273,6 +4284,13 @@ msgid "MAC"
 msgstr "MAC"
 
 #: system/models.py
+msgid ""
+"Valid characters are a-z, A-Z, 0-9 and hyphen (-). The length must be 1-63 "
+"characters"
+msgstr ""
+"Gyldige tegn er a-z, A-Z, 0-9 og bindestreg (-). Længden skal være 1-63 tegn"
+
+#: system/models.py
 msgid "last seen"
 msgstr "seneste tjek-ind"
 
@@ -4416,7 +4434,7 @@ msgstr "modtagelses&shy;tidspunkt"
 msgid "assigned user"
 msgstr "håndteres af"
 
-#: system/models.py
+#: system/models.py templates/system/site_status.html
 msgid "product"
 msgstr "produkt"
 
@@ -4800,6 +4818,10 @@ msgstr "Velkommen"
 msgid "Log out"
 msgstr "Log ud"
 
+#: templates/system/configs/item.html
+msgid "This configuration cannot be changed here"
+msgstr "Denne konfiguration kan ikke ændres her"
+
 #: templates/system/configs/list.html
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "Key"
@@ -5146,7 +5168,7 @@ msgid "User"
 msgstr "Bruger"
 
 #: templates/system/jobs/site_jobs.html templates/system/pcs/form.html
-#: templates/system/scripts/update.html
+#: templates/system/scripts/update.html templates/system/users/update.html
 msgid "Created"
 msgstr "Oprettet"
 
@@ -5210,7 +5232,7 @@ msgid "Position"
 msgstr "Position"
 
 #: templates/system/pcgroups/policy_list/list.html
-#: templates/system/scripts/form.html
+#: templates/system/scripts/update_form.html
 msgid "Arguments"
 msgstr "Inputparametre"
 
@@ -5235,7 +5257,7 @@ msgid "Delete group"
 msgstr "Slet gruppe"
 
 #: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
-#: templates/system/scripts/form.html
+#: templates/system/scripts/update_form.html
 msgid "Details"
 msgstr "Detaljer"
 
@@ -5444,26 +5466,6 @@ msgstr "Er du sikker på, at du ønsker at slette"
 msgid "Create"
 msgstr "Opret"
 
-#: templates/system/scripts/form.html
-msgid "Code"
-msgstr "Kode"
-
-#: templates/system/scripts/form.html
-msgid "Type"
-msgstr "Type"
-
-#: templates/system/scripts/form.html
-msgid "Default value"
-msgstr "Standardværdi"
-
-#: templates/system/scripts/form.html
-msgid "Required"
-msgstr "Påkrævet"
-
-#: templates/system/scripts/form.html
-msgid "Add arguments"
-msgstr "Tilføj parametre"
-
 #: templates/system/scripts/navigation.html
 msgid "Local scripts"
 msgstr "Lokale scripts"
@@ -5558,6 +5560,26 @@ msgstr "Ryd filter"
 #: templates/system/scripts/update.html
 msgid "Modified"
 msgstr "Ændret"
+
+#: templates/system/scripts/update_form.html
+msgid "Code"
+msgstr "Kode"
+
+#: templates/system/scripts/update_form.html
+msgid "Type"
+msgstr "Type"
+
+#: templates/system/scripts/update_form.html
+msgid "Default value"
+msgstr "Standardværdi"
+
+#: templates/system/scripts/update_form.html
+msgid "Required"
+msgstr "Påkrævet"
+
+#: templates/system/scripts/update_form.html
+msgid "Add arguments"
+msgstr "Tilføj parametre"
 
 # Konsistens ml. navn i sikkerhedsregel og sikkerhedshændelse
 #: templates/system/security_events/site_security_events.html
@@ -5869,7 +5891,7 @@ msgid "Create site"
 msgstr "Opret site"
 
 #: templates/system/users/confirm_delete.html
-#: templates/system/users/update.html
+#: templates/system/users/shared_navigation.html
 msgid "Delete user"
 msgstr "Slet bruger"
 
@@ -5880,6 +5902,10 @@ msgstr "Er du sikker på, at du vil fjerne denne bruger fra sitet "
 #: templates/system/users/confirm_delete.html
 msgid "Are you sure you want to delete the user"
 msgstr "Er du sikker på, at du vil slette brugeren"
+
+#: templates/system/users/form.html
+msgid "Fill out if you want to update the current password"
+msgstr "Udfyldes hvis du ønsker at opdatere det nuværende kodeord"
 
 #: templates/system/users/form.html
 msgid "Show Password"
@@ -5897,17 +5923,25 @@ msgstr "Generér backupkoder"
 msgid "Deactivate two-factor authentication"
 msgstr "Deaktivér totrinsbekræftelse"
 
-#: templates/system/users/link.html templates/system/users/update.html
-msgid "Add new user"
-msgstr "Tilføj ny bruger"
-
 #: templates/system/users/link.html
 msgid "Add existing users from your other sites to the site "
 msgstr "Tilføj eksisterende brugere fra jeres andre sites til sitet "
 
+#: templates/system/users/link.html
+msgid "Add the selected users"
+msgstr "Tilføj de valgte brugere"
+
+#: templates/system/users/shared_navigation.html
+msgid "Add new user"
+msgstr "Tilføj ny bruger"
+
 #: templates/system/users/update.html
-msgid "Profile:"
-msgstr "Profil:"
+msgid "Edit user"
+msgstr "Redigér bruger"
+
+#: templates/system/users/update.html
+msgid "Last login"
+msgstr "Seneste login"
 
 #: templates/system/users/update.html
 msgid "Create new user"
@@ -5920,6 +5954,10 @@ msgid ""
 msgstr ""
 "Site-brugere har ikke adgang til at ændre andre brugere. Bed en site-admin "
 "eller Magenta om hjælp."
+
+#: templates/system/users/update.html
+msgid "Create user"
+msgstr "Opret bruger"
 
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_plan_base.html

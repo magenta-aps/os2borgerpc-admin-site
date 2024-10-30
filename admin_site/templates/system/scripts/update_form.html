@@ -2,7 +2,6 @@
 
 {% load i18n %}
 
-{% if disable_inputs != "yes" %}
   <!-- The three tabs on the page: -->
   <ul class="nav nav-tabs mt-2" role="tablist">
     <li class="nav-item" role="presentation">
@@ -21,61 +20,38 @@
   <!-- The content for the three tabs you can choose from above, one after one: -->
   <div id="script-update-tab-content" class="tab-content" style="border-radius: .33rem .33rem 0 0;">
     <div id="details" class="tab-pane fade show active" role="tabpanel" aria-labelledby="details-tab">
-{% endif %}
 
 {# this form is modified via javascript at the bottom of the file #}
 
-      <fieldset>
-        
-        {{ form.name|as_crispy_field }}
-        {{ form.description|as_crispy_field }}
-        {% if not global_script %}
-          {{ form.maintained_by_magenta|as_crispy_field }}
+        {% if selected_script.is_global and not user.is_superuser %}
+          <div class="p-5 bg-white">
+            <h3>Beskrivelse</h3>
+            <p>
+              <pre id="global-script-description">{{ selected_script.description }}</pre>
+            </p>
+          </div>
+        {% else %}
+          <fieldset>
+            {{ form.name|as_crispy_field }}
+            {{ form.description|as_crispy_field }}
+          </fieldset>
         {% endif %}
 
-          <input
-            type="hidden"
-            id="id_{% if form.prefix %}{{ form.prefix }}-{% endif %}site"
-            name="{% if form.prefix %}{{ form.prefix }}-{% endif %}site"
-            value="{{ site.id }}">
-          <input
-            id="id_is_security_script"
-            name="is_security_script"
-            value="{{ is_security }}"
-            type="hidden">
-          <input
-            id="id_is_hidden"
-            name="is_hidden"
-            value="{{ is_hidden }}"
-            type="hidden">
-          <input
-            id="id_uid"
-            name="uid"
-            value="{{ uid }}"
-            type="hidden">
-      </fieldset>
-
-{% if disable_inputs != "yes" %}
     </div>
     <div id="preview" class="tab-pane fade" role="tabpanel" aria-labelledby="preview-tab">
-{% endif %}
 
-      <fieldset {% if disable_inputs == "yes" %}class="mt-3"{% endif %}>
+      <fieldset>
         {{ form.executable_code|as_crispy_field }}
 
-        {% if show_code_preview %}
           <p>{% translate "Code" %}:</p>
           <pre class="mb-0"><code id="script-code" class="bash">{{script_preview |escape}}</code></pre>
-        {% endif %}
 
       </fieldset>
 
-{% if disable_inputs != "yes" %}
     </div>
     <div id="parameters" class="tab-pane fade" role="tabpanel" aria-labelledby="parameters-tab">
-{% endif %}
 
-      {% if disable_inputs or is_security %}
+      {% if is_security %}
         <input type="hidden" name="script-number-of-inputs" class="script-number-of-inputs" value="0">
       {% else %}
         <fieldset id="script-inputs">
@@ -107,11 +83,8 @@
           </div>
         </fieldset>
       {% endif %}
-
-{% if disable_inputs != "yes" %}
     </div>
   </div>
-{% endif %}
 
 {# Makes inputs read only or hidden for global scripts if you are not superuser #}
 {% if selected_script.is_global and not user.is_superuser %}
@@ -125,12 +98,12 @@
     });
 
     const elementsToHide = document.querySelectorAll(`
-    #div_id_executable_code, 
-    #add-arguments, #delete_script_parameter_th, 
+    #div_id_executable_code,
+    #add-arguments, #delete_script_parameter_th,
     .delete_script_parameter
     `)
 
     elementsToHide.forEach(e => e.style.display = "none");
   </script>
-  
-{% endif %} 
+
+{% endif %}

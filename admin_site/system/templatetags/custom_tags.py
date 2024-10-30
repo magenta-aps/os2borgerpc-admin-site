@@ -5,10 +5,25 @@ import os
 register = template.Library()
 
 
+# NOTE: Currently this returns a widget rather than a form, so it can't be passed to e.g. as_crispy_field which expects a form
+# add_attribute below solves this issue
 @register.filter
 def add_class(field, class_name):
     """Add CSS classes to tags, e.g. django generated forms."""
     return field.as_widget(attrs={"class": " ".join((field.css_classes(), class_name))})
+
+
+@register.filter
+def field_add_attribute(field, args):
+    """Modify a form with any custom field and value and return the modified form."""
+    attribute_name, attribute_value = args.split(",")
+    field.field.widget.attrs[attribute_name] = attribute_value
+    return field
+
+
+@register.filter
+def append(input, value_to_append):
+    return input + value_to_append
 
 
 @register.simple_tag

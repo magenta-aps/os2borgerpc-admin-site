@@ -24,10 +24,12 @@
 {# this form is modified via javascript at the bottom of the file #}
 
         {% if selected_script.is_global and not user.is_superuser %}
-          <h3>Beskrivelse</h3>
-          <p>
-            <pre id="global-script-description">{{ selected_script.description }}</pre>
-          </p>
+          <div class="p-5 bg-white">
+            <h3>Beskrivelse</h3>
+            <p>
+              <pre id="global-script-description">{{ selected_script.description }}</pre>
+            </p>
+          </div>
         {% else %}
           <fieldset>
             {{ form.name|as_crispy_field }}

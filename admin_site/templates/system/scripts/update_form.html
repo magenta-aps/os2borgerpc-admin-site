@@ -26,9 +26,7 @@
         {% if selected_script.is_global and not user.is_superuser %}
           <div class="p-5 bg-white">
             <h3>Beskrivelse</h3>
-            <p>
-              <pre id="global-script-description">{{ selected_script.description }}</pre>
-            </p>
+            <pre id="global-script-description">{{ selected_script.description }}</pre>
           </div>
         {% else %}
           <fieldset>
@@ -90,9 +88,9 @@
 {% if selected_script.is_global and not user.is_superuser %}
   <script>
 
-    let tabContent = document.getElementById("script-update-tab-content");
+    let parametersTab = document.getElementById("parameters");
 
-    tabContent.querySelectorAll('*').forEach(function(element) {
+    parametersTab.querySelectorAll('*').forEach(function(element) {
       element.style.pointerEvents = 'none';
       element.style.cursor = 'not-allowed';
     });

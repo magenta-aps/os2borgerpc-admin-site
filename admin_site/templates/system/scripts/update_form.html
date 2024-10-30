@@ -26,7 +26,7 @@
         {% if selected_script.is_global and not user.is_superuser %}
           <div class="p-5 bg-white">
             <h3>Beskrivelse</h3>
-            <pre id="global-script-description">{{ selected_script.description }}</pre>
+            <pre id="global-script-description">{{ selected_script.description|safe }}</pre>
           </div>
         {% else %}
           <fieldset>

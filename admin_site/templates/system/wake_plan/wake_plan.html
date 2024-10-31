@@ -85,7 +85,7 @@
           {{form.name|as_crispy_field}}
 
           {{form.sleep_state|as_crispy_field}}
-          {% translate 'Some sleep states save more power than others, but some hardware does not support the most power saving states. We recommend starting with "Off" (which saves the most power), and if that does not work then try them in the order: mem, freeze, standby' as help_text %}
+          {% translate 'Some sleep states save more power than others, but some hardware does not support the most power saving states. We recommend starting with "Off" (which saves the most power), and if that does not work then try them in the order: mem, freeze' as help_text %}
           <button type="button" class="material-icons btn d-table-cell align-middle" data-container="body" title='{{help_text}}' data-toggle="popover" data-placement="right">
             help_outline
           </button>

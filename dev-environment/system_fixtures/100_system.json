@@ -2352,7 +2352,7 @@
         "fields": {
             "name": "Første sal",
             "enabled": false,
-            "sleep_state": "STANDBY",
+            "sleep_state": "OFF",
             "monday_on": "08:00:00",
             "monday_off": "20:00:00",
             "monday_open": true,
@@ -2597,7 +2597,7 @@
         "fields": {
             "name": "Æblehaven",
             "enabled": true,
-            "sleep_state": "STANDBY",
+            "sleep_state": "OFF",
             "monday_on": "01:00:00",
             "monday_off": "23:00:00",
             "monday_open": true,

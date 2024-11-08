@@ -1640,6 +1640,14 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
         context["pc_list"] = all_pcs
 
+        product_ids = (
+            all_pcs.values_list("product_id", flat=True)
+            .order_by("product_id")
+            .distinct()
+        )
+        if len(product_ids) > 1:
+            context["multiple_products"] = True
+
         # Group picklist related:
         group_set = site.groups.all()
         selected_group_ids = form["pc_groups"].value()

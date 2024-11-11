@@ -51,6 +51,7 @@ from system.views import (
     EventRuleServerCreate,
     EventRuleServerDelete,
     EventRuleServerUpdate,
+    SiteDashboardView,
     SiteDetailView,
     SiteList,
     SiteCreate,
@@ -188,7 +189,8 @@ urlpatterns = [
         SiteDelete.as_view(),
         name="site_delete",
     ),
-    re_path(r"^site/(?P<slug>[^/]+)/$", SiteDetailView.as_view(), name="site"),
+    re_path(r"^site/(?P<slug>[^/]+)/$", SiteDashboardView.as_view(), name="dashboard"),
+    re_path(r"^site/(?P<slug>[^/]+)/status/$", SiteDetailView.as_view(), name="site"),
     # Site Settings
     re_path(
         r"^site/(?P<slug>[^/]+)/settings/$", SiteSettings.as_view(), name="settings"

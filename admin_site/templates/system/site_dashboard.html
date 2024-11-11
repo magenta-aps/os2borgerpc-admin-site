@@ -1,0 +1,14 @@
+{% extends 'site_with_navigation.html' %}
+{% load i18n %}
+
+{% block specific_title %}
+  {% translate 'Dashboard' %}
+{% endblock %}
+
+{% block specific_content %}
+<div class="container-fluid main sublevelmain" style="overflow-x: auto;">
+    <h2 class="divideheader">
+        {% translate "Overview" %}
+    </h2>
+</div>
+{% endblock %}

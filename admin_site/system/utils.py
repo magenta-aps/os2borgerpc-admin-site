@@ -6,7 +6,7 @@ import re
 import requests
 import traceback
 from urllib.parse import quote
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from importlib import import_module
 
@@ -500,6 +500,12 @@ def online_pcs_count_filter(pcs):
     """Online PCs are PCs that have checked in recently, as defined by the model function
     This function takes a list of PCs and returns the number of those that are online"""
     return len([pc for pc in pcs if pc.online])
+
+
+def x_minutes_ago(x):
+    """Helper function that returns a datetime object corresponding to
+    the time x minutes ago"""
+    return datetime.now() - timedelta(minutes=x)
 
 
 def get_badge_class(pID):

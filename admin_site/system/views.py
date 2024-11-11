@@ -43,12 +43,15 @@ from system.utils import (
     online_pcs_count_filter,
     set_notification_cookie,
     get_badge_class,
+    x_minutes_ago,
 )
 
 from account.models import (
     UserProfile,
     SiteMembership,
 )
+
+from changelog.models import Changelog
 
 from system.models import (
     APIKey,
@@ -299,7 +302,7 @@ class AdminIndex(RedirectView, LoginRequiredMixin):
         # If user only has one site, redirect to that.
         if profile.sites.count() == 1:
             site = profile.sites.first()
-            return reverse("site", kwargs={"slug": site.url})
+            return reverse("dashboard", kwargs={"slug": site.url})
         # In all other cases we can redirect to list of sites.
         return reverse("sites")
 
@@ -522,6 +525,24 @@ class SiteView(DetailView, SuperAdminOrThisSiteMixin):
 
         return context
 
+class SiteDashboardView(SiteView):
+
+    template_name = "system/site_dashboard.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(SiteDashboardView, self).get_context_data(**kwargs)
+
+        context["latest_events"] = SecurityEvent.objects.priority_events_for_site(self.object).order_by("-occurred_time")[:5]
+
+        context["latest_failed_jobs"] = Job.objects.filter(batch__site=self.object, status="FAILED").order_by(F("finished").desc(nulls_last=True))[:5]
+
+        context["latest_news"] = Changelog.objects.filter(published=True).order_by("-created")[:5]
+
+        context["latest_scripts"] = Script.objects.filter(site=None).order_by("-created")[:5]
+
+        context["latest_offline_pcs"] = self.object.pcs.filter(is_activated=True, last_seen__lt=x_minutes_ago(15)).order_by(F("last_seen").desc(nulls_last=True))[:5]
+
+        return context
 
 class SiteDetailView(SiteView):
     """Class for showing the overview that is displayed when entering a site"""

@@ -10,5 +10,135 @@
     <h2 class="divideheader">
         {% translate "Overview" %}
     </h2>
+    <div class="row gx-5">
+    <fieldset class="col-12 col-lg-6">
+        <table class="table table-light mt-3" id="events-table">
+            <thead>
+                <tr>
+                    <th>
+                        {% translate "Latest non-handled events" %}
+                    </th>
+                    <th style="text-align: right">
+                        <a href="{% url 'security_events' slug=site.uid %}" >{% translate "See all" %}</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in latest_events %}
+                    <tr class="click-list--item">
+                        <td>
+                            <strong>{% if event.problem %}{{ event.problem.name }}{% else %}{{ event.event_rule_server.name }}{% endif %} - {{ event.pc.name }}</strong>
+                        </td>
+                        <td style="text-align:right">
+                            {{ event.occurred_time }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <table class="table table-light mt-4" id="jobs-table">
+            <thead>
+                <tr>
+                    <th>
+                        {% translate "Latest failed jobs" %}
+                    </th>
+                    <th style="text-align:right">
+                        <a href="{% url 'jobs' slug=site.uid %}" >{% translate "See all" %}</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in latest_failed_jobs %}
+                    <tr class="click-list--item">
+                        <td>
+                            <strong>{{ job.batch.script.name }} - {{ job.pc.name }}</strong>
+                        </td>
+                        <td style="text-align:right">
+                            {{ job.finished }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <table class="table table-light mt-4" id="news-table">
+            <thead>
+                <tr>
+                    <th>
+                        {% translate "Latest news" %}
+                    </th>
+                    <th style="text-align:right">
+                        <a href="{% url 'changelogs' %}" >{% translate "See all" %}</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for changelog in latest_news %}
+                    <tr class="click-list--item">
+                        <td>
+                            <strong>{{ changelog.title }}</strong>
+                        </td>
+                        <td style="text-align:right">
+                            {{ changelog.created }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </fieldset>
+    <fieldset class="col-12 col-lg-6">
+        <table class="table table-light mt-3" id="pc-table">
+            <thead>
+                <tr>
+                    <th>
+                        {% translate "Computers that have not checked in for more than 15 minutes" %}
+                    </th>
+                    <th style="text-align:right">
+                        <a href="{% url 'computers' slug=site.uid %}" >{% translate "See all" %}</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pc in latest_offline_pcs %}
+                    <tr class="click-list--item">
+                        <td>
+                            <strong>{{ pc.name }}</strong>
+                        </td>
+                        <td>
+                            {{ pc.last_seen|timesince }} {% translate 'ago' %} ({{ pc.last_seen }})
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <table class="table table-light mt-4" id="script-table">
+            <thead>
+                <tr>
+                    <th>
+                        {% translate "Newest global scripts" %}
+                    </th>
+                    <th style="text-align:right">
+                        <a href="{% url 'scripts' slug=site.uid %}" >{% translate "See all" %}</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for script in latest_scripts %}
+                    <tr class="click-list--item">
+                        <td>
+                            {% if script.is_security_script %}
+                            <a href="{% url 'security_script' site.uid script.pk %}">
+                            {% else %}
+                            <a href="{% url 'script' site.uid script.pk %}">
+                            {% endif %}
+                            <strong>{{ script.name }}</strong>
+                            </a>
+                        </td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </fieldset>
+    </div>
 </div>
 {% endblock %}

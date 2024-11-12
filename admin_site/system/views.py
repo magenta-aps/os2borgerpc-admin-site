@@ -538,7 +538,12 @@ class SiteDashboardView(SiteView):
 
         context["latest_news"] = Changelog.objects.filter(published=True).order_by("-created")[:5]
 
-        context["latest_scripts"] = Script.objects.filter(site=None).order_by("-created")[:5]
+        scripts = Script.objects.filter(site=None, is_hidden=False)
+
+        for fp in context["site"].customer.feature_permission.all():
+            scripts = scripts | fp.scripts.all()
+
+        context["latest_scripts"] = scripts.order_by("-created")[:5]
 
         context["latest_offline_pcs"] = self.object.pcs.filter(is_activated=True, last_seen__lt=x_minutes_ago(15)).order_by(F("last_seen").desc(nulls_last=True))[:5]
 

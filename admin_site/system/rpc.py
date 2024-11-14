@@ -15,10 +15,11 @@ from system.models import Citizen, LoginLog
 from system.models import Product
 
 from system.utils import (
-    get_citizen_login_api_validator,
+    cicero_validate,
     easy_appointments_booking_validate,
-    send_password_sms,
+    get_citizen_login_api_validator,
     quria_login_validate,
+    send_password_sms,
 )
 
 logger = logging.getLogger(__name__)
@@ -379,6 +380,16 @@ def general_citizen_login(pc_uid, integration, value_dict):
         elif status == 1:  # Patron exists but is blocked
             return int(time_allowed), "blocked", log_id
         else:  # Invalid loaner number or pincode
+            return int(time_allowed), citizen_hash, log_id
+    elif integration == "cicero":
+        loaner_number = value_dict["citizen_identifier"]
+        pincode = value_dict["pincode"]
+        citizen_id = cicero_validate(loaner_number, pincode, site, pc)
+        if citizen_id == "too_young":
+            return int(time_allowed), "too_young", log_id
+        elif citizen_id:
+            citizen_hash = hashlib.sha512(str(loaner_number).encode()).hexdigest()
+        else:
             return int(time_allowed), citizen_hash, log_id
 
     # Determine if a custom login_duration and/or quarantine_duration is being used

@@ -329,7 +329,7 @@ def send_password_sms(phone_number, message, site):
         return False
 
 
-def cicero_validate(loaner_number, pincode, site):
+def cicero_validate(loaner_number, pincode, site, pc=None):
     """Do the actual validation against the Cicero service.
 
     If successful, this function will return the Cicero Patron ID, otherwise it
@@ -384,6 +384,49 @@ def cicero_validate(loaner_number, pincode, site):
             return 0
         # Loaner has been successfully authenticated.
         patron_id = result["patron"]["patronId"]
+        if pc:  # Logic related to age limits
+            # If the age_limit config is missing or invalid, we default to not using
+            # age_limit and granting access
+            age_limit = pc.configuration.entries.filter(key="cicero_age_limit").first()
+            if age_limit:  # If the config exists
+                try:
+                    age_limit = int(age_limit.value)
+                except ValueError:  # If the config has been changed to something NaN
+                    return patron_id
+                patron_birthday = result["patron"]["birthday"]
+                # If the patron has a birthday listed and age_limit is non-zero
+                if patron_birthday and age_limit:
+                    now = datetime.now()
+                    no_age_limit_start = pc.configuration.entries.filter(
+                        key="cicero_no_age_limit_start"
+                    ).first()
+                    no_age_limit_end = pc.configuration.entries.filter(
+                        key="cicero_no_age_limit_end"
+                    ).first()
+                    # If the configuration of the period without age limit is missing or invalid,
+                    # we default to checking the age limit
+                    if no_age_limit_start and no_age_limit_end:  # If the configs exist
+                        try:
+                            no_age_limit_start = datetime.strptime(
+                                no_age_limit_start.value, "%H:%M"
+                            ).time()
+                            no_age_limit_end = datetime.strptime(
+                                no_age_limit_end.value, "%H:%M"
+                            ).time()
+                            # Setting both configs equal to each other is equivalent to always
+                            # using age limit
+                            if no_age_limit_start < now.time() < no_age_limit_end:
+                                return patron_id
+                        # If either of the configs has been changed to something not a time
+                        except ValueError:
+                            pass
+                    # This is not entirely correct due to leap years, but the difference is
+                    # at most a few days
+                    age = (
+                        now - datetime.strptime(patron_birthday, "%Y-%m-%d")
+                    ).days / 365
+                    if age < age_limit:
+                        patron_id = "too_young"
         return patron_id
 
 
@@ -394,11 +437,11 @@ def always_validate_citizen(loaner_number, pincode, site):
         pincode = int(pincode)
     except ValueError:
         logger.warning(f"{site.name}: Pincode must be a number.")
-        return 0
+        return 0, ""
     if not site.agency_id:
         logger.error(f"{site.name}: Agency ID / ISIL MUST be specified.")
-        return 0
-    return loaner_number
+        return 0, ""
+    return loaner_number, ""
 
 
 def get_notification_string(python_list, conjunction="og"):
@@ -436,7 +479,6 @@ def online_pcs_count_filter(pcs):
 
 
 def get_badge_class(pID):
-
     badge_classes = {
         1: "primary",
         2: "secondary text-dark",

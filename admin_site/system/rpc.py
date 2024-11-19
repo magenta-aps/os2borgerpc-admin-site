@@ -81,11 +81,20 @@ def register_new_computer_v2(mac, name, site, configuration):
         pass
 
     for k, v in list(configuration.items()):
-        # List of our configurations that should not be read_only
-        if k in ["job_timeout"]:
-            read_only = False
-        else:
+        # List of our configurations that should be read_only
+        if k in [
+            "admin_url",
+            "hostname",
+            "os2_product",
+            "os2borgerpc_version",
+            "pc_cpus",
+            "pc_manufacturer",
+            "pc_model",
+            "pc_ram",
+        ]:
             read_only = True
+        else:
+            read_only = False
         entry = ConfigurationEntry(
             key=k, value=v, read_only=read_only, owner_configuration=my_config
         )

@@ -1,3 +1,15 @@
+## Version 6.3.0, November 20, 2024
+
+- Add functionality to duplicate groups
+- Update cicero integration to use general_citizen_login and add support for age differentiation of citizens
+- Add link to update one's own user to the user menu
+- Minor changes to the UI of script update and restore the link to download global scripts
+- Remove the name attribute from Configurations
+- Minor updates to docs pdfs
+- Remove standby option from wake plans as rtcwake no longer supports it
+- Hide product on PC list if all computers are the same product
+- Don't assume all scripts are written in bash so e.g. python is properly highlighted
+
 ## Version 6.2.0, October 30, 2024
 
 - Fix scroll issue on global scripts

@@ -952,7 +952,7 @@ class Batch(models.Model):
         ordering = ["-id"]
 
     # TODO: The name should probably be generated automatically from ID and
-    # script and date, etc.
+    # script and date, etc. Or just write a more useful __str__ or similar
     name = models.CharField(verbose_name=_("name"), max_length=255)
     script = models.ForeignKey(Script, on_delete=models.CASCADE)
     site = models.ForeignKey(Site, related_name="batches", on_delete=models.CASCADE)
@@ -1438,6 +1438,8 @@ class ImageVersion(models.Model):
     published = models.BooleanField(verbose_name=_("published (visible)"), default=True)
     os = models.CharField(verbose_name="OS", max_length=30)
     release_notes = models.TextField(max_length=6000)
+    # NOTE: These FileFields are created with a name set to "#". When an image is removed it's set to an empty string instead, to distinguish whether fx. a multilang image was just never added
+    # or if it was removed. (It's still listed if it was removed.) Ideally None would be used for one of these, but FileFields don't handle None correctly.
     image_upload = models.FileField(
         upload_to="images", default="#", blank=True, null=True
     )

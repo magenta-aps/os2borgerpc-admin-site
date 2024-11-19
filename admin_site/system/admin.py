@@ -1,5 +1,4 @@
 from hashlib import md5
-import os
 
 from django.contrib import admin
 from django.db.models import Count
@@ -11,29 +10,6 @@ from django.urls import reverse
 import system.models as m
 
 # ACTIONS #
-
-
-# Note FileFields are created with a name set to "#" - this sets them to empty strings, so we can distinguish the two scenarios.
-# Ie. to exclude images which never had a multilang image ("#") from those that did (""). Ideally None would be used for one of these, but FileFields doesn't handle None correctly.
-@admin.action(
-    description=_(
-        "Remove image file references and delete them from disk (keeps the ImageVersion object)"
-    )
-)
-def delete_images(modeladmin, request, queryset):
-    for image_version in queryset:
-        if image_version.image_upload:
-            try:
-                os.remove(image_version.image_upload.path)
-            except FileNotFoundError:
-                pass
-        if image_version.image_upload_multilang:
-            try:
-                os.remove(image_version.image_upload_multilang.path)
-            except FileNotFoundError:
-                pass
-    queryset.update(image_upload=None, image_upload_multilang=None)
-
 
 # INLINES #
 
@@ -426,7 +402,6 @@ class FeaturePermissionAdmin(admin.ModelAdmin):
 @admin.register(m.ImageVersion)
 class ImageVersionAdmin(admin.ModelAdmin):
     list_display = ("product", "image_version", "os", "release_date")
-    # actions = [delete_images]
 
 
 @admin.register(m.Job)

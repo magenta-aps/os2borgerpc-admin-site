@@ -1343,6 +1343,9 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         if self.script is not None and self.script.executable_code is not None:
             try:
                 display_code = self.script.executable_code.read().decode("utf-8")
+                context["script_file_type"] = self.script.executable_code.path.split(
+                    "."
+                )[-1]
             except UnicodeDecodeError:
                 display_code = "<Kan ikke vise koden - binære data.>"
             except FileNotFoundError:

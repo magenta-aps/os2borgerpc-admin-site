@@ -13,6 +13,16 @@
       <h2 class="divideheader">{% translate "Create new user" %}</h2>
       {% endif %}
       {% include 'notification.html' %}
+      {% if customer_using_sso %}
+      <div class="alert alert-info mt-3">
+        <p><strong>{% translate "Note" %}</strong></p>
+        <ul>
+          <li>
+            {% translate "Since you're using SSO, most of the user management is locked here because it's managed by your IdP." %}
+          </li>
+        </ul>
+      </div>
+      {% endif %}
       <div>
         {% if site_membership.site_user_type < site_membership.SITE_ADMIN and not user.is_superuser and not user == selected_user %}
             <p> {% translate "Site users are not authorized to edit other users. Ask a site admin or Magenta for help." %}</p>
@@ -24,7 +34,11 @@
               class="gray-box">
               {% csrf_token %}
 
-              {% include 'system/users/form.html' %}
+              {% if not customer_using_sso %}
+                {% include 'system/users/form.html' %}
+              {% else %}
+                {% include 'system/users/form_sso.html' %}
+              {% endif %}
               {% if selected_user %}
                 {% translate "Save changes" as submit_name %}
               {% else %}

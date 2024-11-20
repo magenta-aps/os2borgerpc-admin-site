@@ -171,6 +171,10 @@ class Customer(models.Model):
     )
     is_test = models.BooleanField(verbose_name=_("Is a test customer"), default=False)
 
+    using_sso = models.BooleanField(
+        verbose_name=_("Enable to require SSO"), default=False
+    )
+
     def __str__(self):
         return self.name
 

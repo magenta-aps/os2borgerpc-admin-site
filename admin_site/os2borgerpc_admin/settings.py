@@ -200,6 +200,7 @@ MIDDLEWARE = (
     "django_otp.middleware.OTPMiddleware",
     "os2borgerpc_admin.middlewares.user_locale_middleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "mozilla_django_oidc.middleware.SessionRefresh",
 )
 
 # Email settings
@@ -236,6 +237,7 @@ THIRD_PARTY_APPS = (
     "django_otp.plugins.otp_static",
     "django_otp.plugins.otp_totp",
     "two_factor",
+    "mozilla_django_oidc",
 )
 
 DJANGO_APPS = (
@@ -333,3 +335,20 @@ MARKDOWNX_IMAGE_MAX_SIZE = {"size": (800, 800), "quality": 90}
 MARKDOWNX_MEDIA_PATH = datetime.now().strftime("changelog-images/%Y/%m/%d")
 
 FORM_RENDERER = "django.forms.renderers.DjangoDivFormRenderer"
+
+LOGIN_REDIRECT_URL = "/"
+
+# SSO
+OIDC_RP_CLIENT_ID = settings.get("OIDC_RP_CLIENT_ID")
+OIDC_RP_CLIENT_SECRET = settings.get("OIDC_RP_CLIENT_SECRET")
+OIDC_OP_AUTHORIZATION_ENDPOINT = settings.get("OIDC_OP_AUTHORIZATION_ENDPOINT")
+OIDC_OP_TOKEN_ENDPOINT = settings.get("OIDC_OP_TOKEN_ENDPOINT")
+OIDC_OP_USER_ENDPOINT = settings.get("OIDC_OP_USER_ENDPOINT")
+OIDC_RP_SIGN_ALGO = settings.get("OIDC_RP_SIGN_ALGO")
+OIDC_OP_JWKS_ENDPOINT = settings.get("OIDC_OP_JWKS_ENDPOINT")
+AUTHENTICATION_BACKENDS = [
+    "account.auth.MyOIDCAB",
+    "django.contrib.auth.backends.ModelBackend",
+]
+OIDC_USE_PKCE = settings.get("OIDC_USE_PKCE")
+OIDC_CUSTOMER = settings.get("OIDC_CUSTOMER")

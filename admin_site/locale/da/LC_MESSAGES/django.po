@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-06 14:31+0100\n"
+"POT-Creation-Date: 2025-02-10 13:38+0100\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -744,6 +744,7 @@ msgstr ""
 #: templates/system/scripts/confirm_delete.html
 #: templates/system/site_two_factor_pc.html
 #: templates/system/sites/confirm_delete.html
+#: templates/system/users/update.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_change_events/confirm_delete.html
 #: templates/system/wake_plan/wake_plan.html
@@ -3031,7 +3032,7 @@ msgstr ""
 
 #: docs/templates/users/index.html
 msgid "Email address"
-msgstr "E-mail-adresse"
+msgstr "E-mailadresse"
 
 #: docs/templates/users/index.html
 msgid "Here you can enter the user's email address. It is optional."
@@ -4101,6 +4102,10 @@ msgstr "Betalt for adgang indtil denne dato"
 #: system/models.py
 msgid "Is a test customer"
 msgstr "Er en test kunde"
+
+#: system/models.py
+msgid "Enable to require SSO"
+msgstr "Aktiver for at kræve SSO"
 
 #: system/models.py
 msgid "UID"
@@ -6041,6 +6046,18 @@ msgstr "Generér backupkoder"
 msgid "Deactivate two-factor authentication"
 msgstr "Deaktivér totrinsbekræftelse"
 
+#: templates/system/users/form_sso.html
+msgid "username"
+msgstr "Brugernavn"
+
+#: templates/system/users/form_sso.html
+msgid "email address"
+msgstr "E-mail-adresse"
+
+#: templates/system/users/form_sso.html
+msgid "usertype"
+msgstr "Brugertype"
+
 #: templates/system/users/link.html
 msgid "Add existing users from your other sites to the site "
 msgstr "Tilføj eksisterende brugere fra jeres andre sites til sitet "
@@ -6064,6 +6081,14 @@ msgstr "Seneste login"
 #: templates/system/users/update.html
 msgid "Create new user"
 msgstr "Tilføj ny bruger"
+
+#: templates/system/users/update.html
+msgid ""
+"Since you're using SSO, most of the user management is locked here because "
+"it's managed by your IdP."
+msgstr ""
+"Siden du bruger SSO er størstedelen af brugerstyringen herinde låst, da det "
+"i stedet håndteres af din IdP"
 
 #: templates/system/users/update.html
 msgid ""
@@ -6401,11 +6426,11 @@ msgstr "OS2borgerPC Administration Login"
 
 #: templates/two_factor/_base.html
 msgid ""
-"OS2borgerPC is an open source product. You can download the source code and "
-"documentation here:"
+"OS2borgerPC is an open source product. You can find documentation and a link "
+"to the source code here:"
 msgstr ""
-"OS2borgerPC er en open source løsning. Du kan hente kildekoden og "
-"dokumentationen her:"
+"OS2borgerPC er en open source løsning. Du kan finde dokumentation og et link "
+"til kildekoden dokumentationen her:"
 
 #: templates/two_factor/_base.html
 msgid "Check updates for OS2borgerPC"
@@ -6488,6 +6513,14 @@ msgstr "Som en sidste udvej, kan du bruge en"
 #: templates/two_factor/core/login.html
 msgid "backup token"
 msgstr "backupkode"
+
+#: templates/two_factor/core/login.html
+msgid "SSO login failed. Click here to try again"
+msgstr "SSO-login fejlede. Klik her for at prøve igen"
+
+#: templates/two_factor/core/login.html
+msgid "SSO login"
+msgstr "SSO-login"
 
 #: templates/two_factor/core/setup.html
 #: templates/two_factor/core/setup_complete.html

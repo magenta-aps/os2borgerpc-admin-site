@@ -1,0 +1,20 @@
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load custom_tags %}
+
+{% if form.non_field_errors %}
+  <span class="form-error">{{ form.non_field_errors }}</span>
+{% endif %}
+
+<fieldset>
+  <p><strong>{% trans "username" as username %}{{ username|capfirst }}</strong></p>
+  <p>{{ selected_user.username }}</p>
+
+  <p><strong>{% trans "email address" as email %}{{ email|capfirst }}</strong></p>
+  <p>{{ selected_user.email }}</p>
+
+  <p><strong>{% trans "usertype" as type %}{{ type|capfirst }}</strong></p>
+  <p>{{ selected_user_site_membership.get_site_user_type_display }}</p>
+
+  {{ form.language|as_crispy_field }}
+</fieldset>

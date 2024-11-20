@@ -1,4 +1,4 @@
-## Version 6.3.0, November 20, 2024
+## Version 6.3.1, November 20, 2024
 
 - Add functionality to duplicate groups
 - Update cicero integration to use general_citizen_login and add support for age differentiation of citizens

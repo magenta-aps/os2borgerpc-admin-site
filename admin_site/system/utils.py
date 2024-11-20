@@ -437,11 +437,11 @@ def always_validate_citizen(loaner_number, pincode, site):
         pincode = int(pincode)
     except ValueError:
         logger.warning(f"{site.name}: Pincode must be a number.")
-        return 0, ""
+        return 0
     if not site.agency_id:
         logger.error(f"{site.name}: Agency ID / ISIL MUST be specified.")
-        return 0, ""
-    return loaner_number, ""
+        return 0
+    return loaner_number
 
 
 def get_notification_string(python_list, conjunction="og"):

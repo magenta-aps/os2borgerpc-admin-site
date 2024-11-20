@@ -14,16 +14,23 @@ import argparse
 parser = argparse.ArgumentParser()
 # Overwriting what dry-run is saved as to have a properly named variable
 # action and default are set so --dry-run is enough, without needing true/false
-parser.add_argument('--dry-run', dest='dry_run',
-                    help="Only print unreferenced files, don't delete them.",
-                    action='store_true',
-                    default=False)
-parser.add_argument('CONTAINER',
-                    help="The container name/ID, wherein django is running.")
-parser.add_argument('HOST_PATH_TO_MEDIA_FILES',
-                    help="The directory to the media files on the host.")
-parser.add_argument('CONTAINER_PATH_TO_DJANGO',
-                    help="The path to the django project within the container")
+parser.add_argument(
+    "--dry-run",
+    dest="dry_run",
+    help="Only print unreferenced files, don't delete them.",
+    action="store_true",
+    default=False,
+)
+parser.add_argument(
+    "CONTAINER", help="The container name/ID, wherein django is running."
+)
+parser.add_argument(
+    "HOST_PATH_TO_MEDIA_FILES", help="The directory to the media files on the host."
+)
+parser.add_argument(
+    "CONTAINER_PATH_TO_DJANGO",
+    help="The path to the django project within the container",
+)
 args = parser.parse_args()
 if args.dry_run:
     DRY_RUN = True
@@ -44,11 +51,14 @@ logging.basicConfig()
 
 # Convert bytes to a UTF-8 string to a list to a set
 # Convert between the path inside the container to the path outside
-referenced = set(subprocess.check_output(
-    f"docker exec -it {args.CONTAINER} ./manage.py print_db_files", shell=True)
-    .decode('utf-8')
+referenced = set(
+    subprocess.check_output(
+        f"docker exec -it {args.CONTAINER} ./manage.py print_db_files", shell=True
+    )
+    .decode("utf-8")
     .replace(args.CONTAINER_PATH_TO_DJANGO, args.HOST_PATH_TO_MEDIA_FILES)
-    .splitlines())
+    .splitlines()
+)
 
 log.debug("Files in DB:")
 log.debug(referenced)

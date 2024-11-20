@@ -90,6 +90,7 @@ from system.forms import (
     SiteForm,
     SiteCreateForm,
     UserForm,
+    UserFormSSO,
     UserLinkForm,
     WakeChangeEventForm,
     WakePlanForm,
@@ -2841,8 +2842,10 @@ class UsersMixin(object):
             loginusertype = site_membership.site_user_type
         else:
             loginusertype = 0
-
-        context["form"].setup_usertype_choices(loginusertype, request_user.is_superuser)
+        if not context["site"].customer.using_sso:
+            context["form"].setup_usertype_choices(
+                loginusertype, request_user.is_superuser
+            )
 
         context["site_membership"] = site_membership
         return context
@@ -3009,14 +3012,26 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
 
 class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
     model = User
-    form_class = UserForm
     template_name = "system/users/update.html"
+
+    # SSO user form is a lot simpler and only has a single field in the form, so conditionally set which form is used based on whether sso is set
+    def get_form(self, form_class=None):
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+
+        if site.customer.using_sso:
+            form_class = UserFormSSO
+        else:
+            form_class = UserForm
+
+        return super().get_form(form_class)
 
     def get_object(self, queryset=None):
         try:
             self.selected_user = User.objects.get(username=self.kwargs["username"])
-            site_membership = self.selected_user.user_profile.sitemembership_set.get(
-                site__uid=self.kwargs["slug"]
+            selected_user_site_membership = (
+                self.selected_user.user_profile.sitemembership_set.get(
+                    site__uid=self.kwargs["slug"]
+                )
             )
         except (User.DoesNotExist, SiteMembership.DoesNotExist):
             raise Http404(
@@ -3024,7 +3039,8 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
                 % self.kwargs["username"]
             )
         if (
-            site_membership.site_user_type == SiteMembership.CUSTOMER_ADMIN
+            selected_user_site_membership.site_user_type
+            == SiteMembership.CUSTOMER_ADMIN
             and not self.request.user.is_superuser
             and not self.request.user.user_profile.sitemembership_set.filter(
                 site_user_type=SiteMembership.CUSTOMER_ADMIN
@@ -3040,7 +3056,13 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         context = super().get_context_data(**kwargs)
         self.add_membership_to_context(context)
 
+        context["customer_using_sso"] = context["site"].customer.using_sso
+
         context["selected_user"] = User.objects.get(username=self.kwargs["username"])
+
+        context["selected_user_site_membership"] = context[
+            "selected_user"
+        ].user_profile.sitemembership_set.get(site=context["site"])
 
         if context["selected_user"].user_profile.sitemembership_set.filter(
             site_user_type=SiteMembership.CUSTOMER_ADMIN
@@ -3075,46 +3097,47 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             site_membership = user_profile.sitemembership_set.get(
                 site=site, user_profile=user_profile
             )
+            if site.customer.using_sso:
+                requested_user_type = site_membership.site_user_type
+            else:
+                requested_user_type = int(form.cleaned_data["usertype"])
+
             # If a user was made a customer admin, ensure that they have access
             # to all sites for this customer
             if (
-                site_membership.site_user_type != int(form.cleaned_data["usertype"])
-                and int(form.cleaned_data["usertype"]) == SiteMembership.CUSTOMER_ADMIN
+                site_membership.site_user_type != requested_user_type
+                and requested_user_type == SiteMembership.CUSTOMER_ADMIN
             ):
                 for customer_site in site.customer.sites.all():
                     try:
                         customer_site_membership = user_profile.sitemembership_set.get(
                             site=customer_site
                         )
-                        customer_site_membership.site_user_type = form.cleaned_data[
-                            "usertype"
-                        ]
+                        customer_site_membership.site_user_type = requested_user_type
                         customer_site_membership.save()
                     except SiteMembership.DoesNotExist:
                         SiteMembership.objects.create(
                             user_profile=user_profile,
                             site=customer_site,
-                            site_user_type=form.cleaned_data["usertype"],
+                            site_user_type=requested_user_type,
                         )
             # If a customer admin was changed to a less privileged user type,
             # update all their site memberships to reflect this
             elif (
-                site_membership.site_user_type != int(form.cleaned_data["usertype"])
+                site_membership.site_user_type != requested_user_type
                 and site_membership.site_user_type == SiteMembership.CUSTOMER_ADMIN
             ):
                 for customer_site_membership in user_profile.sitemembership_set.filter(
                     site__customer=site.customer
                 ):
-                    customer_site_membership.site_user_type = form.cleaned_data[
-                        "usertype"
-                    ]
+                    customer_site_membership.site_user_type = requested_user_type
                     customer_site_membership.save()
             else:
-                site_membership.site_user_type = form.cleaned_data["usertype"]
+                site_membership.site_user_type = requested_user_type
                 site_membership.save()
             if (
                 not self.selected_user.is_superuser
-                and int(form.cleaned_data["usertype"]) >= site_membership.SITE_ADMIN
+                and requested_user_type >= site_membership.SITE_ADMIN
             ):
                 self.object.user_permissions.set(
                     Permission.objects.filter(name="Can view login log")
@@ -3122,7 +3145,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
                 self.object.is_staff = True
             elif (
                 not self.selected_user.is_superuser
-                and int(form.cleaned_data["usertype"]) < site_membership.SITE_ADMIN
+                and requested_user_type < site_membership.SITE_ADMIN
             ):
                 self.object.is_staff = False
             user_profile.language = form.cleaned_data["language"]

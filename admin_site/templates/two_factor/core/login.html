@@ -14,6 +14,7 @@
       enter one of these backup tokens to login to your account.{% endblocktrans %}</p>
   {% endif %}
 
+  {% if not sso_error %}
   <form action="" method="post">{% csrf_token %}
     {{ wizard.management_form|crispy }}
     {{ wizard.form.as_table }}
@@ -31,4 +32,8 @@
                 class="btn-link">{% trans "backup token" %}.</button></p>
     {% endif %}
   </form>
+  {% else %}
+    <p>{% trans "SSO login failed. Click here to try again" %}:</p>
+    <a href="{% url 'oidc_authentication_init' %}">{% trans "SSO login" %}</a>
+  {% endif %}
 {% endblock %}

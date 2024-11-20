@@ -397,25 +397,29 @@ def cicero_validate(loaner_number, pincode, site, pc=None):
                 # If the patron has a birthday listed and age_limit is non-zero
                 if patron_birthday and age_limit:
                     now = datetime.now()
-                    no_age_limit_start = pc.configuration.entries.filter(
-                        key="cicero_no_age_limit_start"
+                    no_age_limit_start_time = pc.configuration.entries.filter(
+                        key="cicero_no_age_limit_start_time"
                     ).first()
-                    no_age_limit_end = pc.configuration.entries.filter(
-                        key="cicero_no_age_limit_end"
+                    no_age_limit_end_time = pc.configuration.entries.filter(
+                        key="cicero_no_age_limit_end_time"
                     ).first()
                     # If the configuration of the period without age limit is missing or invalid,
                     # we default to checking the age limit
-                    if no_age_limit_start and no_age_limit_end:  # If the configs exist
+                    if no_age_limit_start_time and no_age_limit_end_time:
                         try:
-                            no_age_limit_start = datetime.strptime(
-                                no_age_limit_start.value, "%H:%M"
+                            no_age_limit_start_time = datetime.strptime(
+                                no_age_limit_start_time.value, "%H:%M"
                             ).time()
-                            no_age_limit_end = datetime.strptime(
-                                no_age_limit_end.value, "%H:%M"
+                            no_age_limit_end_time = datetime.strptime(
+                                no_age_limit_end_time.value, "%H:%M"
                             ).time()
                             # Setting both configs equal to each other is equivalent to always
                             # using age limit
-                            if no_age_limit_start < now.time() < no_age_limit_end:
+                            if (
+                                no_age_limit_start_time
+                                < now.time()
+                                < no_age_limit_end_time
+                            ):
                                 return patron_id
                         # If either of the configs has been changed to something not a time
                         except ValueError:

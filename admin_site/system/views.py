@@ -1343,7 +1343,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         if self.script is not None and self.script.executable_code is not None:
             try:
                 display_code = self.script.executable_code.read().decode("utf-8")
-                context["script_file_type"] = self.script.executable_code.path.split(
+                context["script_file_type"] = self.script.executable_code.url.split(
                     "."
                 )[-1]
             except UnicodeDecodeError:

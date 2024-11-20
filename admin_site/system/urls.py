@@ -21,6 +21,7 @@ from system.views import (
     PCDelete,
     PCGroupCreate,
     PCGroupDelete,
+    PCGroupDuplicate,
     PCGroupRedirect,
     PCGroupUpdate,
     PCUpdate,
@@ -233,6 +234,11 @@ urlpatterns = [
         PCGroupDelete.as_view(),
         name="group_delete",
     ),
+    re_path(
+        r"^site/(?P<slug>[^/]+)/groups/(?P<group_id>[^/]+)/duplicate/$",
+        PCGroupDuplicate.as_view(),
+        name="group_duplicate",
+    ),
     # Wake Plans
     re_path(
         r"^site/(?P<slug>[^/]+)/wake_plans/$",
@@ -256,7 +262,7 @@ urlpatterns = [
         name="wake_plan_delete",
     ),
     re_path(
-        r"^site/(?P<slug>[^/]+)/wake_plan/(?P<wake_week_plan_id>[^/]+)/copy/$",
+        r"^site/(?P<slug>[^/]+)/wake_plan/(?P<wake_week_plan_id>[^/]+)/duplicate/$",
         WakePlanDuplicate.as_view(),
         name="wake_plan_duplicate",
     ),

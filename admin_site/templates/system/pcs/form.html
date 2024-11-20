@@ -1,4 +1,5 @@
 {% extends "site_with_navigation.html" %}
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% load i18n %}
@@ -8,7 +9,7 @@
 {% endblock %}
 
 {% block javascripts %}
-  <script type="text/javascript" src="/static/js/configlist.js"></script>
+  <script type="text/javascript" src="{% static 'js/configlist.js' %}"></script>
 {% endblock %}
 
 {% block subnav %}
@@ -18,17 +19,21 @@
   {% endif %}
   {% for pc in pc_list %}
     <li class="{% if pc == selected_pc %}active{% endif %}">
-      {% comment %} Add deletion to every row: <a href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="{% translate 'Delete computer' %}"></a>{% endcomment %}
-      <a  class="item-list-link pc-status-list-link" id="{{pc.uid}}" href="/site/{{ site.url }}/computers/{{ pc.uid }}">
-        <span>{{ pc.name }}</span>
-       <span class="badge bg-{{ pc.badgeclass }}">{{ pc.product.short_name }}</span>
-
+      <a class="item-list-link pc-status-list-link" id="{{pc.uid}}" href="{% url "computer" site.url pc.uid %}">
+          {% if pc.is_activated %}
+            <span>{{ pc.name }}</span>
+            <span class="badge bg-{{ pc.badgeclass }} ms-5">{% if multiple_products %}{{ pc.product.short_name }}{% endif %}</span>
+          {% else %}
+            <span>
+              {{ pc.name }}
+              <br>
+              <span class="badge bg-{{ pc.badgeclass }}">{% if multiple_products %}{{ pc.product.short_name }}{% endif %}</span>
+              <span class="badge bg-danger">{% translate "Not activated" %}</span>
+            </span>
+          {% endif %}
       </a>
-        {% if not pc.is_activated %}
-          <span class="badge bg-danger">{% translate "Not activated" %}</span>
-        {% endif %}
       {% if pc == selected_pc %}
-        <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="{% translate "Delete computer" %}">
+      <a class="item-list-deletable material-icons" href="{% url "computer_delete" site.url pc.uid %}" title="{% translate "Delete computer" %}">
           clear
         </a>
       {% else %}

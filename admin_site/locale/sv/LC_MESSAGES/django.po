@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-22 17:27+0200\n"
+"POT-Creation-Date: 2024-11-20 14:25+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -1388,6 +1388,22 @@ msgstr ""
 "avvisas vid uppdatering av gruppen när du klickar på \"Spara ändringar\". "
 "Giltiga datorer kommer fortfarande att läggas till. Om en eller flera "
 "datorer avvisas kommer sajten att informera om detta och orsaken."
+
+#: docs/templates/groups/edit.html
+msgid "Duplicating groups"
+msgstr "Duplicera grupper"
+
+#: docs/templates/groups/edit.html
+msgid ""
+"You can duplicate the currently selected group by pressing the \"Duplicate "
+"group\" button. What's copied over is the current list of Associated scripts "
+"and their current values. This can be used to easily reuse parts of an "
+"existing setup for a new location."
+msgstr ""
+"Du kan duplicera den för närvarande valda gruppen genom att trycka på "
+"\"Duplicera grupp\"-knappen. Det som har kopierats över är den aktuella "
+"listan med associerade skript och deras nuvarande värden. Detta kan användas "
+"för att enkelt återanvända delar av en befintlig konfigurera för en ny plats."
 
 #: docs/templates/groups/index.html docs/templates/users/index.html
 #: docs/views.py templates/site_with_navigation.html
@@ -4593,6 +4609,10 @@ msgid "Wake Week Plan %s deleted"
 msgstr "Tänd/släck schema %s borttagen"
 
 #: system/views.py
+msgid "Copy of"
+msgstr "Kopia av"
+
+#: system/views.py
 #, python-format
 msgid "You have no exception with the following ID: %s"
 msgstr "Du har inget undantag med ID %s"
@@ -4806,6 +4826,10 @@ msgstr "Läs dokumentation..."
 #: templates/sitebase.html
 msgid "Welcome"
 msgstr "Välkommen"
+
+#: templates/sitebase.html
+msgid "Edit my user"
+msgstr "Redigera min användara"
 
 #: templates/sitebase.html
 msgid "Log out"
@@ -5346,6 +5370,10 @@ msgstr ""
 "bort från datorerna i gruppen"
 
 #: templates/system/pcgroups/site_groups.html
+msgid "Duplicate group"
+msgstr "Duplicera grupp"
+
+#: templates/system/pcgroups/site_groups.html
 msgid "No groups were found"
 msgstr "Inga grupper hittades"
 
@@ -5561,6 +5589,10 @@ msgid "Code"
 msgstr "Kod"
 
 #: templates/system/scripts/update_form.html
+msgid "Download the script"
+msgstr "Ladda ner skriptet"
+
+#: templates/system/scripts/update_form.html
 msgid "Type"
 msgstr "Typ"
 
@@ -5631,11 +5663,11 @@ msgstr "Udgivelsesnoter"
 
 #: templates/system/site_images.html
 msgid "Download standard image"
-msgstr "Download standard image"
+msgstr "Ladda ner standard image"
 
 #: templates/system/site_images.html
 msgid "Download multi language image"
-msgstr "Download flerspråkig image"
+msgstr "Ladda ner flerspråkig image"
 
 #: templates/system/site_images.html
 msgid "No images were found"
@@ -5647,7 +5679,7 @@ msgstr "Tidigare versioner"
 
 #: templates/system/site_images.html
 msgid "Download"
-msgstr "Download"
+msgstr "Ladda ner"
 
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "API Keys for"
@@ -6152,12 +6184,12 @@ msgid ""
 "Some sleep states save more power than others, but some hardware does not "
 "support the most power saving states. We recommend starting with "
 "\"Off\" (which saves the most power), and if that does not work then try "
-"them in the order: mem, freeze, standby"
+"them in the order: mem, freeze"
 msgstr ""
 "Vissa vilolägen är mer energieffektiva än andra, men vissa datorer har inte "
 "stöd för de mest energisparande lägena. Vi föreslår att du börjar med "
 "\"Off\" (den mest energibesparande), och om det inte fungerar försöker du "
-"med dem i ordningen: mem, freeze, standby"
+"med dem i ordningen: mem, freeze"
 
 #: templates/system/wake_plan/wake_plan.html
 msgid "Week plan"
@@ -6257,7 +6289,7 @@ msgstr "Ta bort en grupp från tidtabellen"
 
 #: templates/system/wake_plan/wake_plan.html
 msgid "Duplicate schedule"
-msgstr "Duplicera schema"
+msgstr "Duplicera tidtabel"
 
 #: templates/system/wake_plan/wake_plan_base.html
 msgid "On/Off schedule"

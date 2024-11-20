@@ -57,13 +57,10 @@ class EventLevels:
     }
 
 
+# Possible future cleanup: Make ConfigurationEntries relate to the PC/Group/Site objects directly and remove Configuration completely.
 class Configuration(models.Model):
     """This class contains/represents the configuration of a Site,
     a PC Group or a PC."""
-
-    # Doesn't need any actual fields, it seems. Should not exist independently
-    # of the classes to which it may be aggregated.
-    name = models.CharField(max_length=255, unique=True)
 
     def update_from_request(self, req_params, submit_name):
         seen_set = set()
@@ -127,7 +124,7 @@ class Configuration(models.Model):
         return result
 
     def __str__(self):
-        return self.name
+        return str(self.pk)
 
 
 class ConfigurationEntry(models.Model):
@@ -307,16 +304,8 @@ class Site(models.Model):
         # 2. Create related configuration object if necessary.
         is_new = self.id is None
 
-        try:
-            conf = self.configuration
-        except Configuration.DoesNotExist:
-            conf = None
-
-        if is_new and conf is None:
-            try:
-                self.configuration = Configuration.objects.get(name=self.uid)
-            except Configuration.DoesNotExist:
-                self.configuration = Configuration.objects.create(name=self.uid)
+        if is_new:
+            self.configuration = Configuration.objects.create()
 
         # Perform save
         super(Site, self).save(*args, **kwargs)
@@ -413,7 +402,6 @@ class WakeWeekPlan(models.Model):
     # Sleep state choices for the field below - and their translations
     # These are based on what "rtcwake" supports
     SLEEP_STATE_CHOICES = (
-        ("STANDBY", "Standby (S1)"),
         ("FREEZE", "Freeze (S2)"),
         ("MEM", "Mem (S3)"),
         ("OFF", "Off (S5)"),
@@ -428,7 +416,7 @@ class WakeWeekPlan(models.Model):
         verbose_name=_("sleep state"),
         max_length=10,
         choices=SLEEP_STATE_CHOICES,
-        default=SLEEP_STATE_CHOICES[3][0],
+        default=SLEEP_STATE_CHOICES[2][0],
     )
     monday_on = models.TimeField(
         verbose_name=_("monday on"), null=True, blank=True, default=default_open
@@ -604,11 +592,8 @@ class PCGroup(models.Model):
         """Customize behaviour when saving a group object."""
         # Before actual save
         is_new = self.id is None
-        if is_new and self.name:
-            related_name = "Group: " + self.name
-            self.configuration, new = Configuration.objects.get_or_create(
-                name=related_name
-            )
+        if is_new:
+            self.configuration = Configuration.objects.create()
         # Perform save
         super(PCGroup, self).save(*args, **kwargs)
 
@@ -967,7 +952,7 @@ class Batch(models.Model):
         ordering = ["-id"]
 
     # TODO: The name should probably be generated automatically from ID and
-    # script and date, etc.
+    # script and date, etc. Or just write a more useful __str__ or similar
     name = models.CharField(verbose_name=_("name"), max_length=255)
     script = models.ForeignKey(Script, on_delete=models.CASCADE)
     site = models.ForeignKey(Site, related_name="batches", on_delete=models.CASCADE)
@@ -1453,6 +1438,8 @@ class ImageVersion(models.Model):
     published = models.BooleanField(verbose_name=_("published (visible)"), default=True)
     os = models.CharField(verbose_name="OS", max_length=30)
     release_notes = models.TextField(max_length=6000)
+    # NOTE: These FileFields are created with a name set to "#". When an image is removed it's set to an empty string instead, to distinguish whether fx. a multilang image was just never added
+    # or if it was removed. (It's still listed if it was removed.) Ideally None would be used for one of these, but FileFields don't handle None correctly.
     image_upload = models.FileField(
         upload_to="images", default="#", blank=True, null=True
     )

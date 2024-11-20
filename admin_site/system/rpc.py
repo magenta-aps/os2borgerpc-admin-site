@@ -15,10 +15,11 @@ from system.models import Citizen, LoginLog
 from system.models import Product
 
 from system.utils import (
-    get_citizen_login_api_validator,
+    cicero_validate,
     easy_appointments_booking_validate,
-    send_password_sms,
+    get_citizen_login_api_validator,
     quria_login_validate,
+    send_password_sms,
 )
 
 logger = logging.getLogger(__name__)
@@ -51,20 +52,8 @@ def register_new_computer_v2(mac, name, site, configuration):
 
     new_pc.is_activated = False
     new_pc.mac = mac
-    # Create new configuration, populate with data from computer's config.
-    # If a configuration with the same ID is hanging, reuse.
-    config_name = "_".join([site, name, uid])
-    try:
-        my_config = Configuration.objects.get(name=config_name)
-    except Configuration.DoesNotExist:
-        my_config = Configuration()
-        my_config.name = config_name
-    finally:
-        # Delete pre-existing entries
-        entries = ConfigurationEntry.objects.filter(owner_configuration=my_config)
-        for e in entries:
-            e.delete()
-    my_config.save()
+
+    my_config = Configuration.objects.create()
     # And load configuration
 
     # Update configuration with os2 product
@@ -93,11 +82,20 @@ def register_new_computer_v2(mac, name, site, configuration):
         pass
 
     for k, v in list(configuration.items()):
-        # List of our configurations that should not be read_only
-        if k in ["job_timeout"]:
-            read_only = False
-        else:
+        # List of our configurations that should be read_only
+        if k in [
+            "admin_url",
+            "hostname",
+            "os2_product",
+            "os2borgerpc_version",
+            "pc_cpus",
+            "pc_manufacturer",
+            "pc_model",
+            "pc_ram",
+        ]:
             read_only = True
+        else:
+            read_only = False
         entry = ConfigurationEntry(
             key=k, value=v, read_only=read_only, owner_configuration=my_config
         )
@@ -382,6 +380,16 @@ def general_citizen_login(pc_uid, integration, value_dict):
         elif status == 1:  # Patron exists but is blocked
             return int(time_allowed), "blocked", log_id
         else:  # Invalid loaner number or pincode
+            return int(time_allowed), citizen_hash, log_id
+    elif integration == "cicero":
+        loaner_number = value_dict["citizen_identifier"]
+        pincode = value_dict["pincode"]
+        citizen_id = cicero_validate(loaner_number, pincode, site, pc)
+        if citizen_id == "too_young":
+            return int(time_allowed), "too_young", log_id
+        elif citizen_id:
+            citizen_hash = hashlib.sha512(str(loaner_number).encode()).hexdigest()
+        else:
             return int(time_allowed), citizen_hash, log_id
 
     # Determine if a custom login_duration and/or quarantine_duration is being used

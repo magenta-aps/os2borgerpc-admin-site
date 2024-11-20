@@ -26,9 +26,7 @@
         {% if selected_script.is_global and not user.is_superuser %}
           <div class="p-5 bg-white">
             <h3>Beskrivelse</h3>
-            <p>
-              <pre id="global-script-description">{{ selected_script.description }}</pre>
-            </p>
+            <pre id="global-script-description">{{ selected_script.description }}</pre>
           </div>
         {% else %}
           <fieldset>
@@ -43,9 +41,17 @@
       <fieldset>
         {{ form.executable_code|as_crispy_field }}
 
-          <p>{% translate "Code" %}:</p>
-          <pre class="mb-0"><code id="script-code" class="bash">{{script_preview |escape}}</code></pre>
+        {% if selected_script.is_global and not user.is_superuser %}
+        <a class="btn btn-sm btn-secondary p-2 mb-3" href="{{selected_script.executable_code.url}}" download>
+            <span class="material-icons align-middle">
+              cloud_download
+            </span>
+          {% translate "Download the script" %}
+          </a>
+        {% endif %}
 
+        <p>{% translate "Code" %}:</p>
+        <pre class="mb-0"><code id="script-code" {% if script_file_type == "sh" %}class="bash"{% endif %}>{{ script_preview |escape }}</code></pre>
       </fieldset>
 
     </div>
@@ -90,9 +96,9 @@
 {% if selected_script.is_global and not user.is_superuser %}
   <script>
 
-    let tabContent = document.getElementById("script-update-tab-content");
+    let parametersTab = document.getElementById("parameters");
 
-    tabContent.querySelectorAll('*').forEach(function(element) {
+    parametersTab.querySelectorAll('*').forEach(function(element) {
       element.style.pointerEvents = 'none';
       element.style.cursor = 'not-allowed';
     });

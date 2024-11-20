@@ -53,6 +53,7 @@ from account.models import (
 from system.models import (
     APIKey,
     AssociatedScriptParameter,
+    Configuration,
     ConfigurationEntry,
     Customer,
     ImageVersion,
@@ -1342,6 +1343,9 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         if self.script is not None and self.script.executable_code is not None:
             try:
                 display_code = self.script.executable_code.read().decode("utf-8")
+                context["script_file_type"] = self.script.executable_code.path.split(
+                    "."
+                )[-1]
             except UnicodeDecodeError:
                 display_code = "<Kan ikke vise koden - binære data.>"
             except FileNotFoundError:
@@ -1639,6 +1643,14 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
             p.badgeclass = get_badge_class(p.product.id)
 
         context["pc_list"] = all_pcs
+
+        product_ids = (
+            all_pcs.values_list("product_id", flat=True)
+            .order_by("product_id")
+            .distinct()
+        )
+        if len(product_ids) > 1:
+            context["multiple_products"] = True
 
         # Group picklist related:
         group_set = site.groups.all()
@@ -2381,10 +2393,9 @@ class WakePlanDuplicate(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
             event.save()
             events.append(event)
 
-        object_to_copy.pk = (
-            None  # Remove its current pk so it gets a new one when saving
-        )
-        object_to_copy.name = f"Kopi af {object_to_copy.name}"
+        # Remove its current pk so it gets a new one when saving
+        object_to_copy.pk = None
+        object_to_copy.name = _("Copy of") + f" {object_to_copy.name}"
         # Now save the copied object to get a new ID, which is also required to bind the duplicated events to it
         object_to_copy.save()
 
@@ -3456,6 +3467,59 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
         return response
 
 
+class PCGroupDuplicate(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
+    model = PCGroup
+
+    def get_redirect_url(self, **kwargs):
+        object_to_copy = PCGroup.objects.get(id=kwargs["group_id"])
+
+        # Before we remove the pk we duplicate all the associated scripts, as they're precisely related through the pk
+        ascs = []
+        for asc in object_to_copy.policy.all().order_by("position"):
+            ascs.append(asc)
+
+        # Remove its current pk so it gets a new one when saving
+        object_to_copy.pk = None
+
+        # Now save the copied object to get a new ID, which is also required to bind the duplicated scripts to it
+        object_to_copy.save()
+
+        object_to_copy.name = _("Copy of") + f" {object_to_copy.name}"
+        object_to_copy.description = ""
+        # Most things we don't want to duplicate:
+        object_to_copy.wake_week_plan = None
+        object_to_copy.configuration = Configuration.objects.create()
+        object_to_copy.supervisors.set([])
+
+        object_to_copy.save()
+
+        new_id = object_to_copy.pk
+
+        ascs_after = []
+        for asc in ascs:
+            # Save a reference to all parameters
+            params = []
+            for p in asc.parameters.all():
+                p.id = None
+                p.save()
+                params.append(p)
+
+            asc.id = None
+            asc.group = object_to_copy
+            # The object needs an ID before we can associate parameters with it
+            asc.save()
+            asc.parameters.set(params)
+            asc.save()
+            ascs_after.append(asc)
+
+        object_to_copy.policy.set(ascs_after)
+
+        return reverse(
+            "group",
+            kwargs={"slug": kwargs["slug"], "group_id": new_id},
+        )
+
+
 class EventRuleRedirect(RedirectView, SuperAdminOrThisSiteMixin):
     def get_redirect_url(self, **kwargs):
         site = get_object_or_404(Site, uid=kwargs["slug"])
@@ -3902,10 +3966,9 @@ class ImageVersionView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
         # If the Product is multilang and the user language isn't Danish: Hide image versions that don't have a multilang image
         user_language = self.request.user.user_profile.language
         if selected_product.multilang and user_language != "da":
-            # FileFields cannot currently be set to None, but new versions are created with the FileField's "name" attribute set to an empty string.
             versions_accessible_by_user = versions_accessible_by_user.exclude(
                 image_upload_multilang="#"
-            )  # The hash symbol is the default for the field, indicating no file was uploaded
+            )  # The hash symbol is the default for the field (its "name" attribute), indicating no file was uploaded
 
         products = Product.objects.all()
 

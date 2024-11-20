@@ -58,7 +58,7 @@ def get_fields(obj):
 
 # Useful for investigating what's in the {{context}}
 @register.filter
-def get_all_attrs(value):
+def get_attrs(value):
     return dir(value)
 
 

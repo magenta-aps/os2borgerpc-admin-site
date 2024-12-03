@@ -397,32 +397,52 @@ def cicero_validate(loaner_number, pincode, site, pc=None):
                 # If the patron has a birthday listed and age_limit is non-zero
                 if patron_birthday and age_limit:
                     now = datetime.now()
-                    no_age_limit_start_time = pc.configuration.entries.filter(
-                        key="cicero_no_age_limit_start_time"
+                    no_age_limit_start_times = pc.configuration.entries.filter(
+                        key="cicero_no_age_limit_start_times"
                     ).first()
-                    no_age_limit_end_time = pc.configuration.entries.filter(
-                        key="cicero_no_age_limit_end_time"
+                    no_age_limit_end_times = pc.configuration.entries.filter(
+                        key="cicero_no_age_limit_end_times"
                     ).first()
                     # If the configuration of the period without age limit is missing or invalid,
                     # we default to checking the age limit
-                    if no_age_limit_start_time and no_age_limit_end_time:
+                    if no_age_limit_start_times and no_age_limit_end_times:
+                        no_age_limit_start_times = no_age_limit_start_times.value.split(
+                            ","
+                        )
+                        no_age_limit_end_times = no_age_limit_end_times.value.split(",")
                         try:
-                            no_age_limit_start_time = datetime.strptime(
-                                no_age_limit_start_time.value, "%H:%M"
+                            no_age_limit_start_time_today = no_age_limit_start_times[
+                                now.weekday()
+                            ].strip()
+                            no_age_limit_end_time_today = no_age_limit_end_times[
+                                now.weekday()
+                            ].strip()
+                            # Handle both times like "7:30" and times like "8"
+                            if ":" in no_age_limit_start_time_today:
+                                start_time_format = "%H:%M"
+                            else:
+                                start_time_format = "%H"
+                            if ":" in no_age_limit_end_time_today:
+                                end_time_format = "%H:%M"
+                            else:
+                                end_time_format = "%H"
+                            no_age_limit_start_time_today = datetime.strptime(
+                                no_age_limit_start_time_today, start_time_format
                             ).time()
-                            no_age_limit_end_time = datetime.strptime(
-                                no_age_limit_end_time.value, "%H:%M"
+                            no_age_limit_end_time_today = datetime.strptime(
+                                no_age_limit_end_time_today, end_time_format
                             ).time()
-                            # Setting both configs equal to each other is equivalent to always
-                            # using age limit
+                            # Setting both values for a day equal to each other is equivalent to always
+                            # using age limit on that day
                             if (
-                                no_age_limit_start_time
+                                no_age_limit_start_time_today
                                 < now.time()
-                                < no_age_limit_end_time
+                                < no_age_limit_end_time_today
                             ):
                                 return patron_id
-                        # If either of the configs has been changed to something not a time
-                        except ValueError:
+                        # If either of the values for today has been changed to something not a time
+                        # or is missing
+                        except (IndexError, ValueError):
                             pass
                     # This is not entirely correct due to leap years, but the difference is
                     # at most a few days

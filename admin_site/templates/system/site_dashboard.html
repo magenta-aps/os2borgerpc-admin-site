@@ -1,5 +1,6 @@
 {% extends 'site_with_navigation.html' %}
 {% load i18n %}
+{% load custom_tags %}
 
 {% block specific_title %}
   {% translate 'Dashboard' %}
@@ -93,7 +94,7 @@
                         {% translate "Computers that have not checked in for more than 15 minutes" %}
                     </th>
                     <th style="text-align:right">
-                        <a href="{% url 'computers' slug=site.uid %}" >{% translate "See all" %}</a>
+                        <a href="{% url 'site' slug=site.uid %}" >{% translate "See status overview" %}</a>
                     </th>
                 </tr>
             </thead>
@@ -101,7 +102,9 @@
                 {% for pc in latest_offline_pcs %}
                     <tr class="click-list--item">
                         <td>
+                            <a href="{% url 'computer' site.uid pc.uid %}">
                             <strong>{{ pc.name }}</strong>
+                            </a>
                         </td>
                         <td>
                             {{ pc.last_seen|timesince }} {% translate 'ago' %} ({{ pc.last_seen }})
@@ -117,7 +120,7 @@
                         {% translate "Newest global scripts" %}
                     </th>
                     <th style="text-align:right">
-                        <a href="{% url 'scripts' slug=site.uid %}" >{% translate "See all" %}</a>
+                        <a href="{% url 'scripts' slug=site.uid %}" >{% translate "See all scripts" %}</a>
                     </th>
                 </tr>
             </thead>
@@ -134,6 +137,34 @@
                             </a>
                         </td>
                         <td></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <table class="table table-light mt-4" id="updates-table">
+            <thead>
+                <tr>
+                    <th>
+                        {% translate "Active computers that have not run all updates for more than 30 days" %}
+                        {% translate "Computers are considered active if they are activated and have checked in within the last 28 days" as help_text %}
+                        <button type="button" class="material-icons btn align-middle" data-container="body" title='{{help_text}}' data-toggle="popover" data-placement="right">
+                            help_outline
+                        </button>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in oldest_full_updates %}
+                    <tr class="click-list--item">
+                        <td>
+                            <a href="{% url 'computer' site.uid entry.owner_configuration.pc_set.first.uid %}">
+                            <strong>{{ entry.owner_configuration.pc_set.first.name }}</strong>
+                            </a>
+                        </td>
+                        <td>
+                            {{ entry.value|timesince_string }} {% translate 'since all updates were last run' %}
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>

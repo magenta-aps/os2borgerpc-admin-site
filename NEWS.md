@@ -1,3 +1,8 @@
+## Version 6.3.2, December 5, 2024
+
+- Update the Cicero age limit functionality
+- Minor correction to docs pdfs
+
 ## Version 6.3.1, November 20, 2024
 
 - Add functionality to duplicate groups

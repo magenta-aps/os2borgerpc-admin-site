@@ -38,12 +38,13 @@ from django_otp.plugins.otp_static.models import StaticToken
 from django.forms import Form
 
 from system.utils import (
+    get_badge_class,
     get_notification_string,
     notification_changes_saved,
     online_pcs_count_filter,
     set_notification_cookie,
-    get_badge_class,
     x_minutes_ago,
+    x_days_ago,
 )
 
 from account.models import (
@@ -525,18 +526,24 @@ class SiteView(DetailView, SuperAdminOrThisSiteMixin):
 
         return context
 
-class SiteDashboardView(SiteView):
 
+class SiteDashboardView(SiteView):
     template_name = "system/site_dashboard.html"
 
     def get_context_data(self, **kwargs):
         context = super(SiteDashboardView, self).get_context_data(**kwargs)
 
-        context["latest_events"] = SecurityEvent.objects.priority_events_for_site(self.object).order_by("-occurred_time")[:5]
+        context["latest_events"] = SecurityEvent.objects.priority_events_for_site(
+            self.object
+        ).order_by("-occurred_time")[:5]
 
-        context["latest_failed_jobs"] = Job.objects.filter(batch__site=self.object, status="FAILED").order_by(F("finished").desc(nulls_last=True))[:5]
+        context["latest_failed_jobs"] = Job.objects.filter(
+            batch__site=self.object, status="FAILED"
+        ).order_by(F("finished").desc(nulls_last=True))[:5]
 
-        context["latest_news"] = Changelog.objects.filter(published=True).order_by("-created")[:5]
+        context["latest_news"] = Changelog.objects.filter(published=True).order_by(
+            "-created"
+        )[:5]
 
         scripts = Script.objects.filter(site=None, is_hidden=False)
 
@@ -545,9 +552,20 @@ class SiteDashboardView(SiteView):
 
         context["latest_scripts"] = scripts.order_by("-created")[:5]
 
-        context["latest_offline_pcs"] = self.object.pcs.filter(is_activated=True, last_seen__lt=x_minutes_ago(15)).order_by(F("last_seen").desc(nulls_last=True))[:5]
+        context["latest_offline_pcs"] = self.object.pcs.filter(
+            is_activated=True, last_seen__lt=x_minutes_ago(15)
+        ).order_by(F("last_seen").desc(nulls_last=True))[:5]
+
+        context["oldest_full_updates"] = ConfigurationEntry.objects.filter(
+            key="_last_full_update_time",
+            owner_configuration__pc__site=self.object,
+            owner_configuration__pc__is_activated=True,
+            owner_configuration__pc__last_seen__gt=x_days_ago(28, datetime_object=True),
+            value__lt=x_days_ago(30),
+        ).order_by("value")[:5]
 
         return context
+
 
 class SiteDetailView(SiteView):
     """Class for showing the overview that is displayed when entering a site"""

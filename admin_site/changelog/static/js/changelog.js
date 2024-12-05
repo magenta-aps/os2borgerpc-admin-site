@@ -10,7 +10,7 @@ function toggleCommentForm(pk) {
     replyForm = document.getElementById("reply-form-" + pk)
     toggleButton = document.getElementById("reply-toggle-button-" + pk)
 
-    replyForm.style.display = replyForm.style.display == "none" ? "block" : "none" 
+    replyForm.style.display = replyForm.style.display == "none" ? "block" : "none"
     toggleButton.style.display = replyForm.style.display == "none" ? "block" : "none"
 }
 

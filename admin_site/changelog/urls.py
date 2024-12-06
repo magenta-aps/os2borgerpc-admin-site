@@ -1,13 +1,18 @@
-from django.urls import re_path
+from django.urls import path
 
 from changelog.views import (
     ChangelogListView,
 )
 
 urlpatterns = [
-    re_path(
-        r"^$",
+    path(
+        "",
         ChangelogListView.as_view(),
         name="changelogs",
+    ),
+    path(
+        "<int:id>/",
+        ChangelogListView.as_view(),
+        name="changelog",
     ),
 ]

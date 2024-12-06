@@ -1,10 +1,17 @@
 // Run highlight js on all code tags
-$(window).on("load", function() {
+document.addEventListener('DOMContentLoaded', (event) => {
     for (const code of document.getElementsByTagName("code")) {
         hljs.highlightElement(code)
     }
-})
 
+    path = window.location.pathname
+    regex = /.*\/(\d+)\/$/
+    id = path.match(regex)[1]
+    if (id) {
+        changelogModalId = "changelogDetails-" + id
+        new bootstrap.Modal(document.getElementById(changelogModalId)).show()
+    }
+})
 
 function toggleCommentForm(pk) {
     replyForm = document.getElementById("reply-form-" + pk)

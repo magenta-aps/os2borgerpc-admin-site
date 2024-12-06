@@ -86,6 +86,12 @@ class ChangelogListView(ListView):
         # Paginate the queryset and add it to the context
         context["entries"] = self.get_paginated_queryset(queryset, context["page"])
 
+        # If opening the link to a specific changelog add it to the template if it's not already on the page
+        if "id" in self.kwargs:
+            specific_changelog = get_object_or_404(Changelog, pk=self.kwargs["id"])
+            if specific_changelog not in context["entries"]:
+                context["specific_changelog"] = specific_changelog
+
         params = self.request.GET or self.request.POST
         back_link = params.get("back")
         if back_link is None:

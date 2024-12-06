@@ -1,6 +1,7 @@
 {% extends "sitebase.html" %}
 
 {% load i18n %}
+{% load static %}
 
 {% block header_title %}
 {% translate "OS2borgerPC" %}: {% translate "News" %}
@@ -13,7 +14,7 @@
 
 {% block head_javascripts %}
     <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
-    <script type="text/javascript" src="/static/js/changelog_list.js"></script>
+    <script type="text/javascript" src="{% static "js/changelog.js" %}"></script>
 {% endblock %}
 
 
@@ -121,6 +122,10 @@
                     </footer>
                 </div>
             </div>
+
+            {% if specific_changelog %}
+              {% include "item.html" with entry=specific_changelog %}
+            {% endif %}
 
             {% include "item.html" with entry=entry %}
         {% endfor %}

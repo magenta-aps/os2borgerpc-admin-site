@@ -894,14 +894,22 @@ class JobsView(SiteView):
 
         context["pcs"] = site.pcs.all()
         context["groups"] = site.groups.all()
-        preselected = set(
-            [
-                Job.NEW,
-                Job.SUBMITTED,
-                Job.FAILED,
-                Job.DONE,
-            ]
-        )
+        job_status = self.request.GET.get("job_status", "")
+        if job_status:
+            preselected = set(
+                [
+                    job_status,
+                ]
+            )
+        else:
+            preselected = set(
+                [
+                    Job.NEW,
+                    Job.SUBMITTED,
+                    Job.FAILED,
+                    Job.DONE,
+                ]
+            )
         context["status_choices"] = [
             {
                 "name": name,

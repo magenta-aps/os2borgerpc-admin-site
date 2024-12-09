@@ -31,12 +31,6 @@ detailpage
       {% translate "Dashboard" %}
     </a>
 
-    {% set_css_class_active request.resolver_match.url_name "site" as current_url_site %}
-    <a href="{% url 'site' slug=site.url %}" class="nav-link link-light {{ current_url_site }}">
-      <span class="material-icons">visibility</span>
-      {% translate "Status" %}
-    </a>
-
     {% set_css_class_active request.resolver_match.url_name "changelogs" as current_url_changelogs %}
     <a href="{% url 'changelogs' %}" class="nav-link link-light {{ current_url_changelogs }}">
       <span class="material-icons">tips_and_updates</span>
@@ -70,10 +64,20 @@ detailpage
     <hr>
     <h2 class="text-light">{% translate "Organizing" %}</h2>
 
+    {% set_css_class_active request.resolver_match.url_name "site" as current_url_site %}
     {% set_css_class_active request.resolver_match.url_name "computer" as current_url_computers %}
-    <a class="nav-link link-light {{ current_url_computers  }}" href="{% url 'computers' slug=site.url %}">
+    <a class="nav-link link-light {{ current_url_site  }} {{ current_url_computers }}" href="{% url 'site' slug=site.url %}">
       <span class="material-icons">computer</span> {% translate "Computers" %}
     </a>
+    {% if request.resolver_match.url_name in "site computer_delete" %}
+    <ul class="actionsubnav">
+      <li class="{{ current_url_computers }}">
+        <a href="{% url 'computers' slug=site.url %}">
+          <span class="material-icons">subdirectory_arrow_right</span> {% translate "Editing" %}
+        </a>
+      </li>
+    </ul>
+    {% endif %}
 
     {% set_css_class_active request.resolver_match.url_name "group" as current_url_groups %}
     <a class="nav-link link-light {{current_url_groups}}" href="{% url 'groups' slug=site.url %}">

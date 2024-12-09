@@ -44,7 +44,7 @@
                         {% translate "Latest failed jobs" %}
                     </th>
                     <th style="text-align:right">
-                        <a href="{% url 'jobs' slug=site.uid %}" >{% translate "See all" %}</a>
+                        <a href="{% url 'jobs' slug=site.uid %}?job_status=FAILED" >{% translate "See all" %}</a>
                     </th>
                 </tr>
             </thead>
@@ -76,7 +76,9 @@
                 {% for changelog in latest_news %}
                     <tr class="click-list--item">
                         <td>
+                            <a href="{% url 'changelogs' %}{{ changelog.id }}/">
                             <strong>{{ changelog.title }}</strong>
+                            </a>
                         </td>
                         <td style="text-align:right">
                             {{ changelog.created }}

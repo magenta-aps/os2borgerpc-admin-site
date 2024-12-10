@@ -40,7 +40,7 @@
             <div class="row">
               <div class="col-3">
                 <div id="filter-search">
-                    <form action="">
+                    <form action="{% url 'changelogs' %}">
                         <div class="input-group">
                             <span class="input-group-text bg-white">
                                 <span class="material-icons">search</span>
@@ -59,7 +59,7 @@
                         <div id="changelog-search-tag-selectors">
                             <a class="btn btn-md tag-filter-btn bg-primary text-white me-2 mb-2" href="{% url 'changelogs' %}?&back={{ back_link }}" id="Alle">{% translate "All" %}</a>
                             {% for tag in tag_choices %}
-                                <a class="btn btn-md tag-filter-btn bg-primary text-white me-2 mb-2" id="{{ tag.pk }}" href="?{% if page %}page={{ page }}&{% endif %}tag={{ tag.pk }}&back={{ back_link }}">{{ tag.name }}</a>
+                                <a class="btn btn-md tag-filter-btn bg-primary text-white me-2 mb-2" id="{{ tag.pk }}" href="{% url 'changelogs' %}?{% if page %}page={{ page }}&{% endif %}tag={{ tag.pk }}&back={{ back_link }}">{{ tag.name }}</a>
                             {% endfor %}
                         </div>
                     </form>
@@ -137,7 +137,8 @@
         <ul class="pagination justify-content-center">
             {% if entries.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ entries.previous_page_number }}{% if tag_filter.pk %}&tag={{ tag_filter.pk }}{% endif%}&back={{ back_link }}">{% translate "Previous" %}</a>
+                    {# The href URL uses the full changelogs URL prefixed as otherwise when viewing /changelog/<someID>/ and changing pages it will retain that ID and open the modal for that changelog entry #}
+                    <a class="page-link" href="{% url "changelogs" %}?page={{ entries.previous_page_number }}{% if tag_filter.pk %}&tag={{ tag_filter.pk }}{% endif%}&back={{ back_link }}">{% translate "Previous" %}</a>
                 </li>
             {% else %}
                 <li class="page-item disabled">
@@ -147,7 +148,7 @@
 
             {% if entries.number|add:'-4' > 1 %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ entries.number|add:'-5' }}{% if tag_filter.pk %}&tag={{ tag_filter.pk }}{% endif%}&back={{ back_link }}">&hellip;</a>
+                <a class="page-link" href="{% url "changelogs" %}?page={{ entries.number|add:'-5' }}{% if tag_filter.pk %}&tag={{ tag_filter.pk }}{% endif%}&back={{ back_link }}">&hellip;</a>
                 </li>
             {% endif %}
 
@@ -164,14 +165,14 @@
                     </li>
                 {% elif i > entries.number|add:'-5' and i < entries.number|add:'5' %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ i }}{% if tag_filter.pk %}&tag={{ tag_filter.pk }}{% endif%}&back={{ back_link }}">{{ i }}</a>
+                        <a class="page-link" href="{% url "changelogs" %}?page={{ i }}{% if tag_filter.pk %}&tag={{ tag_filter.pk }}{% endif%}&back={{ back_link }}">{{ i }}</a>
                     </li>
                 {% endif %}
             {% endfor %}
 
             {% if entries.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ entries.next_page_number }}{% if tag_filter.pk %}&tag={{ tag_filter.pk }}{% endif%}&back={{ back_link }}">{% translate "Next" %}</a>
+                    <a class="page-link" href="{% url "changelogs" %}?page={{ entries.next_page_number }}{% if tag_filter.pk %}&tag={{ tag_filter.pk }}{% endif%}&back={{ back_link }}">{% translate "Next" %}</a>
                 </li>
             {% else %}
                 <li class="page-item disabled">

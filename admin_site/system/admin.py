@@ -480,6 +480,7 @@ class PCAdmin(admin.ModelAdmin):
 class PCGroupAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "site")
     list_filter = ("site",)
+    search_fields = ("id", "name")
     inlines = [PCInline, AssociatedScriptInline]
 
 

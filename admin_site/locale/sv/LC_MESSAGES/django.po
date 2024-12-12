@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-20 14:25+0100\n"
+"POT-Creation-Date: 2024-12-12 13:54+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -2897,8 +2897,7 @@ msgstr ""
 
 #: docs/templates/status/index.html
 #: docs/templates/wake_plans/edit_settings.html docs/views.py
-#: templates/site_with_navigation.html templates/system/jobs/site_jobs.html
-#: templates/system/pcs/form.html
+#: templates/system/jobs/site_jobs.html templates/system/pcs/form.html
 #: templates/system/security_events/site_security_events.html
 #: templates/system/site_status.html
 msgid "Status"
@@ -2967,7 +2966,7 @@ msgstr ""
 "användare på det valda site visas en dialogruta för att skapa användare i "
 "stället."
 
-#: docs/templates/users/index.html
+#: docs/templates/users/index.html templates/site_with_navigation.html
 msgid "Editing"
 msgstr "Redigering"
 
@@ -3927,14 +3926,6 @@ msgid "OS2borgerPC Client"
 msgstr "Sambruk MedborgarPC Client"
 
 #: system/admin.py
-msgid ""
-"Remove image file references and delete them from disk (keeps the "
-"ImageVersion object)"
-msgstr ""
-"Ta bort image-filreferenser och rena dem från disken (behåller ImageVersion "
-"objektet)"
-
-#: system/admin.py
 msgid "Number of computers"
 msgstr "Antal datorer"
 
@@ -4762,6 +4753,10 @@ msgstr "Du är nu utloggad"
 msgid "Click here to log in again"
 msgstr "Klicka här för att logga in igen"
 
+#: templates/site_with_navigation.html templates/system/site_dashboard.html
+msgid "Dashboard"
+msgstr "Dashboard"
+
 #: templates/site_with_navigation.html
 msgid "Monitoring"
 msgstr "Övervakning"
@@ -5416,7 +5411,8 @@ msgstr "Registrerad"
 msgid "Last check-in"
 msgstr "Senaste incheckning"
 
-#: templates/system/pcs/form.html templates/system/site_status.html
+#: templates/system/pcs/form.html templates/system/site_dashboard.html
+#: templates/system/site_status.html
 msgid "ago"
 msgstr "sedan"
 
@@ -5640,6 +5636,58 @@ msgstr "Mottagnings&shy;tidpunkt"
 #: templates/system/security_events/site_security_events.html
 msgid "Handled by"
 msgstr "Hanteras av"
+
+#: templates/system/site_dashboard.html
+msgid "Overview"
+msgstr "Översikt"
+
+#: templates/system/site_dashboard.html
+msgid "Latest non-handled events"
+msgstr "Senaste obehandlade incidenter"
+
+#: templates/system/site_dashboard.html
+msgid "See all"
+msgstr "Se alla"
+
+#: templates/system/site_dashboard.html
+msgid "Latest failed jobs"
+msgstr "Senaste misslyckade jobb"
+
+#: templates/system/site_dashboard.html
+msgid "Latest news"
+msgstr "Senaste nyheterna"
+
+#: templates/system/site_dashboard.html
+msgid "Computers that have not checked in for more than 15 minutes"
+msgstr "Datorer som inte har checkats in på mer än 15 minuter"
+
+#: templates/system/site_dashboard.html
+msgid "See status overview"
+msgstr "Se statusöversikt"
+
+#: templates/system/site_dashboard.html
+msgid "Newest global scripts"
+msgstr "Senaste globala skript"
+
+#: templates/system/site_dashboard.html
+msgid "See all scripts"
+msgstr "Se alle skript"
+
+#: templates/system/site_dashboard.html
+msgid "Active computers that have not run all updates for more than 30 days"
+msgstr "Aktiva datorer som inte har kört alla uppdateringar på mer än 30 dagar"
+
+#: templates/system/site_dashboard.html
+msgid ""
+"Computers are considered active if they are activated and have checked in "
+"within the last 28 days"
+msgstr ""
+"Datorer anses vara aktiva om de har aktiverats och checkats in inom de "
+"senaste 28 dagarna"
+
+#: templates/system/site_dashboard.html
+msgid "since all updates were last run"
+msgstr "sedan alla uppdateringar senast kördes"
 
 #: templates/system/site_images.html
 msgid "Most recent version of"

@@ -86,7 +86,8 @@
             <td>
               {% if pc.last_seen %}
                 <span style="display: none;">{{ pc.last_seen|date:'U' }}</span> <!-- Used to ensure that datetimes are sorted correctly -->
-                {{ pc.last_seen|timesince }} {% translate 'ago' %}({{ pc.last_seen }})
+                {{ pc.last_seen|timesince }} {% translate 'ago' %}<br/>
+                {{ pc.last_seen }}
               {% else %}
                 {% translate 'Never' %}
               {% endif %}

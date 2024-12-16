@@ -1,5 +1,7 @@
 from django import template
 from django.utils.safestring import mark_safe
+from django.utils.timesince import timesince
+from datetime import datetime
 import os
 
 register = template.Library()
@@ -71,6 +73,11 @@ def bold(text):
 def italic(text):
     text = str(text)
     return mark_safe("<em>" + text + "</em>")
+
+
+@register.filter
+def timesince_string(text, string_format="%Y-%m-%d %H:%M"):
+    return timesince(datetime.strptime(text, string_format))
 
 
 # Used when you have a dictionary and the key is in a variable

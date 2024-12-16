@@ -1,0 +1,217 @@
+{% extends 'site_with_navigation.html' %}
+{% load i18n %}
+{% load custom_tags %}
+
+{% block specific_title %}
+  {% translate 'Dashboard' %}
+{% endblock %}
+
+{% block specific_content %}
+<div class="container-fluid main sublevelmain" style="overflow-x: auto;">
+    <div class="row gx-5">
+    <fieldset class="col-12 col-lg-6">
+        <table class="table table-light mt-3" id="events-table">
+            <thead>
+                <tr>
+                    <th>
+                        {% translate "Latest unhandled events" %}
+                    </th>
+                    <th class="text-end">
+                        <a href="{% url 'security_events' slug=site.uid %}" >{% translate "See all" %}</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in latest_events %}
+                    <tr class="click-list--item">
+                        <td>
+                            <strong>{% if event.problem %}{{ event.problem.name }}{% else %}{{ event.event_rule_server.name }}{% endif %} - {{ event.pc.name }}</strong>
+                        </td>
+                        <td class="text-end">
+                            {{ event.occurred_time }}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr class="click-list--item">
+                        <td>
+                            {% translate "Nothing to show" %}
+                        </td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <table class="table table-light mt-4" id="jobs-table">
+            <thead>
+                <tr>
+                    <th>
+                        {% translate "Latest failed jobs" %}
+                    </th>
+                    <th class="text-end">
+                        <a href="{% url 'jobs' slug=site.uid %}?job_status=FAILED" >{% translate "See all" %}</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in latest_failed_jobs %}
+                    <tr class="click-list--item">
+                        <td>
+                            <strong>{{ job.batch.script.name }} - {{ job.pc.name }}</strong>
+                        </td>
+                        <td class="text-end">
+                            {{ job.finished }}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr class="click-list--item">
+                        <td>
+                            {% translate "Nothing to show" %}
+                        </td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <table class="table table-light mt-4" id="news-table">
+            <thead>
+                <tr>
+                    <th>
+                        {% translate "Latest news" %}
+                    </th>
+                    <th class="text-end">
+                        <a href="{% url 'changelogs' %}" >{% translate "See all" %}</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for changelog in latest_news %}
+                    <tr class="click-list--item">
+                        <td>
+                            <a href="{% url 'changelogs' %}{{ changelog.id }}/">
+                            <strong>{{ changelog.title }}</strong>
+                            </a>
+                        </td>
+                        <td class="text-end">
+                            {{ changelog.created }}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr class="click-list--item">
+                        <td>
+                            {% translate "Nothing to show" %}
+                        </td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </fieldset>
+    <fieldset class="col-12 col-lg-6">
+        <table class="table table-light mt-3" id="pc-table">
+            <thead>
+                <tr>
+                    <th>
+                        {% translate "Computers that haven't checked in in 15 minutes" %}
+                    </th>
+                    <th class="text-end">
+                        <a href="{% url 'site' slug=site.uid %}" >{% translate "See status overview" %}</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pc in latest_offline_pcs %}
+                    <tr class="click-list--item">
+                        <td class="align-middle">
+                            <a href="{% url 'computer' site.uid pc.uid %}">
+                            <strong>{{ pc.name }}</strong>
+                            </a>
+                        </td>
+                        <td class="text-end">
+                            {{ pc.last_seen|timesince }} {% translate 'ago' %}<br/>
+                            {{ pc.last_seen }}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr class="click-list--item">
+                        <td>
+                            {% translate "Nothing to show" %}
+                        </td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <table class="table table-light mt-4" id="script-table">
+            <thead>
+                <tr>
+                    <th>
+                        {% translate "Newest global scripts" %}
+                    </th>
+                    <th class="text-end">
+                        <a href="{% url 'scripts' slug=site.uid %}" >{% translate "See all scripts" %}</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for script in latest_scripts %}
+                    <tr class="click-list--item">
+                        <td>
+                            {% if script.is_security_script %}
+                            <a href="{% url 'security_script' site.uid script.pk %}">
+                            {% else %}
+                            <a href="{% url 'script' site.uid script.pk %}">
+                            {% endif %}
+                            <strong>{{ script.name }}</strong>
+                            </a>
+                        </td>
+                        <td></td>
+                    </tr>
+                {% empty %}
+                    <tr class="click-list--item">
+                        <td>
+                            {% translate "Nothing to show" %}
+                        </td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <table class="table table-light mt-4" id="updates-table">
+            <thead>
+                <tr>
+                    <th>
+                        {% translate "Active computers that have not run all updates for more than 30 days" %}
+                        {% translate "Computers are considered active if they are activated and have checked in within the last 28 days" as help_text %}
+                        <button type="button" class="material-icons btn align-middle" data-container="body" title='{{help_text}}' data-toggle="popover" data-placement="right">
+                            help_outline
+                        </button>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in oldest_full_updates %}
+                    <tr class="click-list--item">
+                        <td>
+                            <a href="{% url 'computer' site.uid entry.owner_configuration.pc_set.first.uid %}">
+                            <strong>{{ entry.owner_configuration.pc_set.first.name }}</strong>
+                            </a>
+                        </td>
+                        <td class="text-end">
+                            {{ entry.value|timesince_string }} {% translate 'since all updates were last run' %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr class="click-list--item">
+                        <td>
+                            {% translate "Nothing to show" %}
+                        </td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </fieldset>
+    </div>
+</div>
+{% endblock %}

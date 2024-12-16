@@ -38,17 +38,21 @@ from django_otp.plugins.otp_static.models import StaticToken
 from django.forms import Form
 
 from system.utils import (
+    get_badge_class,
     get_notification_string,
     notification_changes_saved,
     online_pcs_count_filter,
     set_notification_cookie,
-    get_badge_class,
+    x_minutes_ago,
+    x_days_ago,
 )
 
 from account.models import (
     UserProfile,
     SiteMembership,
 )
+
+from changelog.models import Changelog
 
 from system.models import (
     APIKey,
@@ -299,7 +303,7 @@ class AdminIndex(RedirectView, LoginRequiredMixin):
         # If user only has one site, redirect to that.
         if profile.sites.count() == 1:
             site = profile.sites.first()
-            return reverse("site", kwargs={"slug": site.url})
+            return reverse("dashboard", kwargs={"slug": site.url})
         # In all other cases we can redirect to list of sites.
         return reverse("sites")
 
@@ -519,6 +523,48 @@ class SiteView(DetailView, SuperAdminOrThisSiteMixin):
         # Add information about outstanding security events.
         no_of_sec_events = SecurityEvent.objects.priority_events_for_site(site).count()
         context["sec_events"] = no_of_sec_events
+
+        return context
+
+
+class SiteDashboardView(SiteView):
+    template_name = "system/site_dashboard.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(SiteDashboardView, self).get_context_data(**kwargs)
+
+        ITEMS_PER_SECTION = 5
+
+        context["latest_events"] = SecurityEvent.objects.priority_events_for_site(
+            self.object
+        ).order_by("-occurred_time")[:ITEMS_PER_SECTION]
+
+        context["latest_failed_jobs"] = Job.objects.filter(
+            batch__site=self.object, status="FAILED"
+        ).order_by(F("finished").desc(nulls_last=True))[:ITEMS_PER_SECTION]
+
+        context["latest_news"] = Changelog.objects.filter(published=True).order_by(
+            "-created"
+        )[:ITEMS_PER_SECTION]
+
+        scripts = Script.objects.filter(site=None, is_hidden=False)
+
+        for fp in context["site"].customer.feature_permission.all():
+            scripts = scripts | fp.scripts.all()
+
+        context["latest_scripts"] = scripts.order_by("-created")[:ITEMS_PER_SECTION]
+
+        context["latest_offline_pcs"] = self.object.pcs.filter(
+            is_activated=True, last_seen__lt=x_minutes_ago(15)
+        ).order_by(F("last_seen").desc(nulls_last=True))[:ITEMS_PER_SECTION]
+
+        context["oldest_full_updates"] = ConfigurationEntry.objects.filter(
+            key="_last_full_update_time",
+            owner_configuration__pc__site=self.object,
+            owner_configuration__pc__is_activated=True,
+            owner_configuration__pc__last_seen__gt=x_days_ago(28, datetime_object=True),
+            value__lt=x_days_ago(30),
+        ).order_by("value")[:ITEMS_PER_SECTION]
 
         return context
 
@@ -850,14 +896,22 @@ class JobsView(SiteView):
 
         context["pcs"] = site.pcs.all()
         context["groups"] = site.groups.all()
-        preselected = set(
-            [
-                Job.NEW,
-                Job.SUBMITTED,
-                Job.FAILED,
-                Job.DONE,
-            ]
-        )
+        job_status = self.request.GET.get("job_status", "")
+        if job_status:
+            preselected = set(
+                [
+                    job_status,
+                ]
+            )
+        else:
+            preselected = set(
+                [
+                    Job.NEW,
+                    Job.SUBMITTED,
+                    Job.FAILED,
+                    Job.DONE,
+                ]
+            )
         context["status_choices"] = [
             {
                 "name": name,

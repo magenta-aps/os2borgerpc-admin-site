@@ -100,7 +100,9 @@ class Configuration(models.Model):
         try:
             e = self.entries.get(key=key)
             e.value = value
-            e.read_only = read_only
+            # We don't want to change from read-only to not read-only
+            if read_only:
+                e.read_only = read_only
         except ConfigurationEntry.DoesNotExist:
             e = ConfigurationEntry(
                 owner_configuration=self, key=key, value=value, read_only=read_only

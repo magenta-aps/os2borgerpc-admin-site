@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-20 14:38+0100\n"
+"POT-Creation-Date: 2024-12-16 13:55+0100\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -2906,8 +2906,7 @@ msgstr ""
 
 #: docs/templates/status/index.html
 #: docs/templates/wake_plans/edit_settings.html docs/views.py
-#: templates/site_with_navigation.html templates/system/jobs/site_jobs.html
-#: templates/system/pcs/form.html
+#: templates/system/jobs/site_jobs.html templates/system/pcs/form.html
 #: templates/system/security_events/site_security_events.html
 #: templates/system/site_status.html
 msgid "Status"
@@ -2975,7 +2974,7 @@ msgstr ""
 "brugere på det valgte site, vil interfacet til oprettelse af brugere blive "
 "vist i stedet."
 
-#: docs/templates/users/index.html
+#: docs/templates/users/index.html templates/site_with_navigation.html
 msgid "Editing"
 msgstr "Redigering"
 
@@ -3939,14 +3938,6 @@ msgid "OS2borgerPC Client"
 msgstr "OS2borgerPC Client"
 
 #: system/admin.py
-msgid ""
-"Remove image file references and delete them from disk (keeps the "
-"ImageVersion object)"
-msgstr ""
-"Fjern image-fil referencer og slet dem fra disken (beholder ImageVersion-"
-"objektet)"
-
-#: system/admin.py
 msgid "Number of computers"
 msgstr "Antal computere"
 
@@ -4769,6 +4760,10 @@ msgstr "Du er nu logget ud"
 msgid "Click here to log in again"
 msgstr "Klik her for at logge ind igen"
 
+#: templates/site_with_navigation.html templates/system/site_dashboard.html
+msgid "Dashboard"
+msgstr "Dashboard"
+
 #: templates/site_with_navigation.html
 msgid "Monitoring"
 msgstr "Overvågning"
@@ -5421,7 +5416,8 @@ msgstr "Registreret"
 msgid "Last check-in"
 msgstr "Seneste tjek-ind"
 
-#: templates/system/pcs/form.html templates/system/site_status.html
+#: templates/system/pcs/form.html templates/system/site_dashboard.html
+#: templates/system/site_status.html
 msgid "ago"
 msgstr "siden"
 
@@ -5645,6 +5641,59 @@ msgstr "Modtagelses&shy;tidspunkt"
 #: templates/system/security_events/site_security_events.html
 msgid "Handled by"
 msgstr "Håndteres af"
+
+#: templates/system/site_dashboard.html
+msgid "Latest unhandled events"
+msgstr "Seneste ikke-håndterede hændelser"
+
+#: templates/system/site_dashboard.html
+msgid "See all"
+msgstr "Se alle"
+
+#: templates/system/site_dashboard.html
+msgid "Nothing to show"
+msgstr "Intet at vise"
+
+#: templates/system/site_dashboard.html
+msgid "Latest failed jobs"
+msgstr "Seneste fejlede jobs"
+
+#: templates/system/site_dashboard.html
+msgid "Latest news"
+msgstr "Seneste nyheder"
+
+#: templates/system/site_dashboard.html
+msgid "Computers that haven't checked in in 15 minutes"
+msgstr "Computere som ikke er tjekket ind i 15 minutter"
+
+#: templates/system/site_dashboard.html
+msgid "See status overview"
+msgstr "Se status-oversigten"
+
+#: templates/system/site_dashboard.html
+msgid "Newest global scripts"
+msgstr "Nyeste globale scripts"
+
+#: templates/system/site_dashboard.html
+msgid "See all scripts"
+msgstr "Se alle scripts"
+
+#: templates/system/site_dashboard.html
+msgid "Active computers that have not run all updates for more than 30 days"
+msgstr ""
+"Aktive computere som ikke har kørt alle opdateringer i mere end 30 dage"
+
+#: templates/system/site_dashboard.html
+msgid ""
+"Computers are considered active if they are activated and have checked in "
+"within the last 28 days"
+msgstr ""
+"Computere betragtes som aktive, hvis de er aktiverede og er tjekket ind "
+"inden for de sidste 28 dage"
+
+#: templates/system/site_dashboard.html
+msgid "since all updates were last run"
+msgstr "siden alle opdateringer sidst blev kørt"
 
 #: templates/system/site_images.html
 msgid "Most recent version of"

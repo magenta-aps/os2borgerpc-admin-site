@@ -6,8 +6,8 @@
       {% if selected_user %}
       <h2 class="divideheader">{% translate "Edit user" %}: <em>{{ selected_user.username }}</em></h2>
       <div class="basic-info">
-        <span>{% translate "Created" %}: {{ user.date_joined }}</span>
-        <span class="ms-5">{% translate "Last login" %}: {{ user.last_login }}</span>
+        <span>{% translate "Created" %}: {{ selected_user.date_joined }}</span>
+        <span class="ms-5">{% translate "Last login" %}: {{ selected_user.last_login }}</span>
       </div>
       {% else %}
       <h2 class="divideheader">{% translate "Create new user" %}</h2>

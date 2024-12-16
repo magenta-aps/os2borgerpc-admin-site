@@ -8,18 +8,15 @@
 
 {% block specific_content %}
 <div class="container-fluid main sublevelmain" style="overflow-x: auto;">
-    <h2 class="divideheader">
-        {% translate "Overview" %}
-    </h2>
     <div class="row gx-5">
     <fieldset class="col-12 col-lg-6">
         <table class="table table-light mt-3" id="events-table">
             <thead>
                 <tr>
                     <th>
-                        {% translate "Latest non-handled events" %}
+                        {% translate "Latest unhandled events" %}
                     </th>
-                    <th style="text-align: right">
+                    <th class="text-end">
                         <a href="{% url 'security_events' slug=site.uid %}" >{% translate "See all" %}</a>
                     </th>
                 </tr>
@@ -30,7 +27,7 @@
                         <td>
                             <strong>{% if event.problem %}{{ event.problem.name }}{% else %}{{ event.event_rule_server.name }}{% endif %} - {{ event.pc.name }}</strong>
                         </td>
-                        <td style="text-align:right">
+                        <td class="text-end">
                             {{ event.occurred_time }}
                         </td>
                     </tr>
@@ -43,7 +40,7 @@
                     <th>
                         {% translate "Latest failed jobs" %}
                     </th>
-                    <th style="text-align:right">
+                    <th class="text-end">
                         <a href="{% url 'jobs' slug=site.uid %}?job_status=FAILED" >{% translate "See all" %}</a>
                     </th>
                 </tr>
@@ -54,7 +51,7 @@
                         <td>
                             <strong>{{ job.batch.script.name }} - {{ job.pc.name }}</strong>
                         </td>
-                        <td style="text-align:right">
+                        <td class="text-end">
                             {{ job.finished }}
                         </td>
                     </tr>
@@ -67,7 +64,7 @@
                     <th>
                         {% translate "Latest news" %}
                     </th>
-                    <th style="text-align:right">
+                    <th class="text-end">
                         <a href="{% url 'changelogs' %}" >{% translate "See all" %}</a>
                     </th>
                 </tr>
@@ -80,7 +77,7 @@
                             <strong>{{ changelog.title }}</strong>
                             </a>
                         </td>
-                        <td style="text-align:right">
+                        <td class="text-end">
                             {{ changelog.created }}
                         </td>
                     </tr>
@@ -93,9 +90,9 @@
             <thead>
                 <tr>
                     <th>
-                        {% translate "Computers that have not checked in for more than 15 minutes" %}
+                        {% translate "Computers that haven't checked in in 15 minutes" %}
                     </th>
-                    <th style="text-align:right">
+                    <th class="text-end">
                         <a href="{% url 'site' slug=site.uid %}" >{% translate "See status overview" %}</a>
                     </th>
                 </tr>
@@ -103,13 +100,14 @@
             <tbody>
                 {% for pc in latest_offline_pcs %}
                     <tr class="click-list--item">
-                        <td>
+                        <td class="align-middle">
                             <a href="{% url 'computer' site.uid pc.uid %}">
                             <strong>{{ pc.name }}</strong>
                             </a>
                         </td>
-                        <td>
-                            {{ pc.last_seen|timesince }} {% translate 'ago' %} ({{ pc.last_seen }})
+                        <td class="text-end">
+                            {{ pc.last_seen|timesince }} {% translate 'ago' %}<br/>
+                            {{ pc.last_seen }}
                         </td>
                     </tr>
                 {% endfor %}
@@ -121,7 +119,7 @@
                     <th>
                         {% translate "Newest global scripts" %}
                     </th>
-                    <th style="text-align:right">
+                    <th class="text-end">
                         <a href="{% url 'scripts' slug=site.uid %}" >{% translate "See all scripts" %}</a>
                     </th>
                 </tr>
@@ -164,7 +162,7 @@
                             <strong>{{ entry.owner_configuration.pc_set.first.name }}</strong>
                             </a>
                         </td>
-                        <td>
+                        <td class="text-end">
                             {{ entry.value|timesince_string }} {% translate 'since all updates were last run' %}
                         </td>
                     </tr>

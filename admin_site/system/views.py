@@ -533,28 +533,30 @@ class SiteDashboardView(SiteView):
     def get_context_data(self, **kwargs):
         context = super(SiteDashboardView, self).get_context_data(**kwargs)
 
+        ITEMS_PER_SECTION = 5
+
         context["latest_events"] = SecurityEvent.objects.priority_events_for_site(
             self.object
-        ).order_by("-occurred_time")[:5]
+        ).order_by("-occurred_time")[:ITEMS_PER_SECTION]
 
         context["latest_failed_jobs"] = Job.objects.filter(
             batch__site=self.object, status="FAILED"
-        ).order_by(F("finished").desc(nulls_last=True))[:5]
+        ).order_by(F("finished").desc(nulls_last=True))[:ITEMS_PER_SECTION]
 
         context["latest_news"] = Changelog.objects.filter(published=True).order_by(
             "-created"
-        )[:5]
+        )[:ITEMS_PER_SECTION]
 
         scripts = Script.objects.filter(site=None, is_hidden=False)
 
         for fp in context["site"].customer.feature_permission.all():
             scripts = scripts | fp.scripts.all()
 
-        context["latest_scripts"] = scripts.order_by("-created")[:5]
+        context["latest_scripts"] = scripts.order_by("-created")[:ITEMS_PER_SECTION]
 
         context["latest_offline_pcs"] = self.object.pcs.filter(
             is_activated=True, last_seen__lt=x_minutes_ago(15)
-        ).order_by(F("last_seen").desc(nulls_last=True))[:5]
+        ).order_by(F("last_seen").desc(nulls_last=True))[:ITEMS_PER_SECTION]
 
         context["oldest_full_updates"] = ConfigurationEntry.objects.filter(
             key="_last_full_update_time",
@@ -562,7 +564,7 @@ class SiteDashboardView(SiteView):
             owner_configuration__pc__is_activated=True,
             owner_configuration__pc__last_seen__gt=x_days_ago(28, datetime_object=True),
             value__lt=x_days_ago(30),
-        ).order_by("value")[:5]
+        ).order_by("value")[:ITEMS_PER_SECTION]
 
         return context
 

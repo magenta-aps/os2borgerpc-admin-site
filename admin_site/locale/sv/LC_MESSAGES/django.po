@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-16 13:35+0100\n"
+"POT-Creation-Date: 2024-12-16 13:55+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -5644,6 +5644,10 @@ msgstr "Senaste obehandlade incidenter"
 #: templates/system/site_dashboard.html
 msgid "See all"
 msgstr "Se alla"
+
+#: templates/system/site_dashboard.html
+msgid "Nothing to show"
+msgstr "Inget att visa"
 
 #: templates/system/site_dashboard.html
 msgid "Latest failed jobs"

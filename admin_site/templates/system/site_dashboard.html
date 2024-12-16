@@ -31,6 +31,13 @@
                             {{ event.occurred_time }}
                         </td>
                     </tr>
+                {% empty %}
+                    <tr class="click-list--item">
+                        <td>
+                            {% translate "Nothing to show" %}
+                        </td>
+                        <td></td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
@@ -54,6 +61,13 @@
                         <td class="text-end">
                             {{ job.finished }}
                         </td>
+                    </tr>
+                {% empty %}
+                    <tr class="click-list--item">
+                        <td>
+                            {% translate "Nothing to show" %}
+                        </td>
+                        <td></td>
                     </tr>
                 {% endfor %}
             </tbody>
@@ -80,6 +94,13 @@
                         <td class="text-end">
                             {{ changelog.created }}
                         </td>
+                    </tr>
+                {% empty %}
+                    <tr class="click-list--item">
+                        <td>
+                            {% translate "Nothing to show" %}
+                        </td>
+                        <td></td>
                     </tr>
                 {% endfor %}
             </tbody>
@@ -110,6 +131,13 @@
                             {{ pc.last_seen }}
                         </td>
                     </tr>
+                {% empty %}
+                    <tr class="click-list--item">
+                        <td>
+                            {% translate "Nothing to show" %}
+                        </td>
+                        <td></td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
@@ -135,6 +163,13 @@
                             {% endif %}
                             <strong>{{ script.name }}</strong>
                             </a>
+                        </td>
+                        <td></td>
+                    </tr>
+                {% empty %}
+                    <tr class="click-list--item">
+                        <td>
+                            {% translate "Nothing to show" %}
                         </td>
                         <td></td>
                     </tr>
@@ -165,6 +200,13 @@
                         <td class="text-end">
                             {{ entry.value|timesince_string }} {% translate 'since all updates were last run' %}
                         </td>
+                    </tr>
+                {% empty %}
+                    <tr class="click-list--item">
+                        <td>
+                            {% translate "Nothing to show" %}
+                        </td>
+                        <td></td>
                     </tr>
                 {% endfor %}
             </tbody>

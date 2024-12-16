@@ -18,13 +18,15 @@ from system.views import (
     JobRestarter,
     JobSearch,
     JobsView,
-    PCDelete,
     PCGroupCreate,
     PCGroupDelete,
     PCGroupDuplicate,
     PCGroupRedirect,
     PCGroupUpdate,
+    PCsOverview,
+    PCUpdateRedirect,
     PCUpdate,
+    PCDelete,
     WakePlanCreate,
     WakePlanDuplicate,
     WakePlanDelete,
@@ -34,7 +36,6 @@ from system.views import (
     WakeChangeEventDelete,
     WakeChangeEventRedirect,
     WakeChangeEventUpdate,
-    PCsView,
     ScriptCreate,
     ScriptDelete,
     ScriptRedirect,
@@ -52,7 +53,6 @@ from system.views import (
     EventRuleServerDelete,
     EventRuleServerUpdate,
     SiteDashboardView,
-    SiteDetailView,
     SiteList,
     SiteCreate,
     site_uid_available_check,
@@ -190,7 +190,6 @@ urlpatterns = [
         name="site_delete",
     ),
     re_path(r"^site/(?P<slug>[^/]+)/$", SiteDashboardView.as_view(), name="dashboard"),
-    re_path(r"^site/(?P<slug>[^/]+)/status/$", SiteDetailView.as_view(), name="site"),
     # Site Settings
     re_path(
         r"^site/(?P<slug>[^/]+)/settings/$", SiteSettings.as_view(), name="settings"
@@ -206,7 +205,16 @@ urlpatterns = [
         name="edit_configuration",
     ),
     # Computers
-    re_path(r"^site/(?P<slug>[^/]+)/computers/$", PCsView.as_view(), name="computers"),
+    re_path(
+        r"^site/(?P<slug>[^/]+)/status/$",
+        PCsOverview.as_view(),
+        name="computers_overview",
+    ),
+    re_path(
+        r"^site/(?P<slug>[^/]+)/computers/$",
+        PCUpdateRedirect.as_view(),
+        name="computers",
+    ),
     re_path(
         r"^site/(?P<slug>[^/]+)/computers/(?P<pc_uid>[^/]+)/$",
         PCUpdate.as_view(),

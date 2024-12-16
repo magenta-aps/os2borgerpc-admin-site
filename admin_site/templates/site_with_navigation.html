@@ -64,14 +64,14 @@ detailpage
     <hr>
     <h2 class="text-light">{% translate "Organizing" %}</h2>
 
-    {% set_css_class_active request.resolver_match.url_name "site" as current_url_site %}
-    {% set_css_class_active request.resolver_match.url_name "computer" as current_url_computers %}
-    <a class="nav-link link-light {{ current_url_site }} {{ current_url_computers }}" href="{% url 'site' slug=site.url %}">
+    {% set_css_class_active request.resolver_match.url_name "computers_overview" as current_url_computers_overview %}
+    {% set_css_class_active request.resolver_match.url_name "computer" as current_url_computer %}
+    <a class="nav-link link-light {{ current_url_computers_overview }} {{ current_url_computer }}" href="{% url 'computers_overview' slug=site.url %}">
       <span class="material-icons">computer</span> {% translate "Computers" %}
     </a>
-    {% if request.resolver_match.url_name in "site computer_delete" %}
+    {% if request.resolver_match.url_name in "computers_overview computer computer_delete" %}
     <ul class="actionsubnav">
-      <li class="{{ current_url_computers }}">
+      <li class="{% if not current_url_computers_overview %}{{ current_url_computer }}{% endif %}">
         <a href="{% url 'computers' slug=site.url %}">
           <span class="material-icons">subdirectory_arrow_right</span> {% translate "Editing" %}
         </a>

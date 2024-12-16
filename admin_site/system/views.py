@@ -569,33 +569,6 @@ class SiteDashboardView(SiteView):
         return context
 
 
-class SiteDetailView(SiteView):
-    """Class for showing the overview that is displayed when entering a site"""
-
-    template_name = "system/site_status.html"
-
-    # For hver pc skal vi hente seneste security event.
-    def get_context_data(self, **kwargs):
-        context = super(SiteDetailView, self).get_context_data(**kwargs)
-        context = site_pcs_stats(context, [kwargs["object"]])
-
-        site_pcs = self.object.pcs.all().order_by(
-            "is_activated", F("last_seen").desc(nulls_last=True)
-        )
-
-        for p in site_pcs:
-            p.badgeclass = get_badge_class(p.product.id)
-
-        # Top level list of new PCs etc.
-        context["ls_pcs"] = site_pcs
-
-        context["total_pcs_count"] = context["ls_pcs"].count()
-        context["activated_pcs_count"] = site_pcs.filter(is_activated=True).count()
-        context["online_pcs_count"] = online_pcs_count_filter(site_pcs)
-
-        return context
-
-
 class SiteSettings(UpdateView, SiteView):
     form_class = SiteForm
     template_name = "system/site_settings/site_settings.html"
@@ -1631,11 +1604,38 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
         return response
 
 
-class PCsView(SelectionMixin, SiteView):
-    """If a site ha no computers it shows a page indicating that.
+class PCsOverview(SiteView):
+    """Class for showing the pcs overview"""
+
+    template_name = "system/pcs/pcs.html"
+
+    # For hver pc skal vi hente seneste security event.
+    def get_context_data(self, **kwargs):
+        context = super(PCsOverview, self).get_context_data(**kwargs)
+        context = site_pcs_stats(context, [kwargs["object"]])
+
+        site_pcs = self.object.pcs.all().order_by(
+            "is_activated", F("last_seen").desc(nulls_last=True)
+        )
+
+        for p in site_pcs:
+            p.badgeclass = get_badge_class(p.product.id)
+
+        # Top level list of new PCs etc.
+        context["ls_pcs"] = site_pcs
+
+        context["total_pcs_count"] = context["ls_pcs"].count()
+        context["activated_pcs_count"] = site_pcs.filter(is_activated=True).count()
+        context["online_pcs_count"] = online_pcs_count_filter(site_pcs)
+
+        return context
+
+
+class PCUpdateRedirect(SelectionMixin, SiteView):
+    """If a site has no computers it shows a page indicating that.
     If the site has at least one computer it redirects to that."""
 
-    template_name = "system/pcs/site_pcs.html"
+    template_name = "system/pcs/no_pcs.html"
     selection_class = PC
 
     def get_list(self):
@@ -1653,11 +1653,11 @@ class PCsView(SelectionMixin, SiteView):
                 )
             )
         else:
-            return super(PCsView, self).render_to_response(context)
+            return super(PCUpdateRedirect, self).render_to_response(context)
 
 
 class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
-    template_name = "system/pcs/form.html"
+    template_name = "system/pcs/update.html"
     form_class = PCForm
     slug_field = "uid"
 

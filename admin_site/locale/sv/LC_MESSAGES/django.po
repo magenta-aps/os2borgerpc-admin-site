@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-12 13:54+0100\n"
+"POT-Creation-Date: 2024-12-16 13:35+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -5638,11 +5638,7 @@ msgid "Handled by"
 msgstr "Hanteras av"
 
 #: templates/system/site_dashboard.html
-msgid "Overview"
-msgstr "Översikt"
-
-#: templates/system/site_dashboard.html
-msgid "Latest non-handled events"
+msgid "Latest unhandled events"
 msgstr "Senaste obehandlade incidenter"
 
 #: templates/system/site_dashboard.html
@@ -5658,8 +5654,8 @@ msgid "Latest news"
 msgstr "Senaste nyheterna"
 
 #: templates/system/site_dashboard.html
-msgid "Computers that have not checked in for more than 15 minutes"
-msgstr "Datorer som inte har checkats in på mer än 15 minuter"
+msgid "Computers that haven't checked in in 15 minutes"
+msgstr "Datorer som inte har checkats in på 15 minuter"
 
 #: templates/system/site_dashboard.html
 msgid "See status overview"

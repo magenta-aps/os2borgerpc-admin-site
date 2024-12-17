@@ -25,10 +25,10 @@ detailpage
       <hr>
     {% endif %}
 
-    {% set_css_class_active request.resolver_match.url_name "site" as current_url_site %}
-    <a href="{% url 'site' slug=site.url %}" class="nav-link link-light {{ current_url_site }}">
+    {% set_css_class_active request.resolver_match.url_name "dashboard" as current_url_dashboard %}
+    <a href="{% url 'dashboard' slug=site.url %}" class="nav-link link-light {{ current_url_dashboard }}">
       <span class="material-icons">visibility</span>
-      {% translate "Status" %}
+      {% translate "Dashboard" %}
     </a>
 
     {% set_css_class_active request.resolver_match.url_name "changelogs" as current_url_changelogs %}
@@ -41,7 +41,7 @@ detailpage
     <h2 class="text-light">{% translate "Monitoring" %}</h2>
 
     {% set_css_class_active request.resolver_match.url_name "security_event" as current_url_security_events %}
-    <a class="nav-link link-light {{ current_url_security_events  }}" href="{% url 'security_events' slug=site.url %}">
+    <a class="nav-link link-light {{ current_url_security_events }}" href="{% url 'security_events' slug=site.url %}">
       <span class="material-icons">whatshot</span>
       {% translate "Events" %}
       {% if sec_events > 0 %}
@@ -56,7 +56,7 @@ detailpage
     </a>
 
     {% set_css_class_active request.resolver_match.url_name "security_script" as current_url_security_scripts %}
-    <a class="nav-link link-light {{ current_url_security_scripts  }}" href="{% url 'security_scripts' slug=site.url %}">
+    <a class="nav-link link-light {{ current_url_security_scripts }}" href="{% url 'security_scripts' slug=site.url %}">
       <span class="material-icons">code</span>
       {% translate "Security Scripts" %}
     </a>
@@ -64,13 +64,23 @@ detailpage
     <hr>
     <h2 class="text-light">{% translate "Organizing" %}</h2>
 
-    {% set_css_class_active request.resolver_match.url_name "computer" as current_url_computers %}
-    <a class="nav-link link-light {{ current_url_computers  }}" href="{% url 'computers' slug=site.url %}">
+    {% set_css_class_active request.resolver_match.url_name "computers_overview" as current_url_computers_overview %}
+    {% set_css_class_active request.resolver_match.url_name "computer" as current_url_computer %}
+    <a class="nav-link link-light {{ current_url_computers_overview }} {{ current_url_computer }}" href="{% url 'computers_overview' slug=site.url %}">
       <span class="material-icons">computer</span> {% translate "Computers" %}
     </a>
+    {% if request.resolver_match.url_name in "computers_overview computer computer_delete" %}
+    <ul class="actionsubnav">
+      <li class="{% if not current_url_computers_overview %}{{ current_url_computer }}{% endif %}">
+        <a href="{% url 'computers' slug=site.url %}">
+          <span class="material-icons">subdirectory_arrow_right</span> {% translate "Editing" %}
+        </a>
+      </li>
+    </ul>
+    {% endif %}
 
     {% set_css_class_active request.resolver_match.url_name "group" as current_url_groups %}
-    <a class="nav-link link-light {{current_url_groups}}" href="{% url 'groups' slug=site.url %}">
+    <a class="nav-link link-light {{ current_url_groups }}" href="{% url 'groups' slug=site.url %}">
       <span class="material-icons">queue</span> {% translate "Groups" %}
     </a>
 
@@ -79,18 +89,18 @@ detailpage
     {% if not current_url_site_settings %}
       {% set_css_class_active request.resolver_match.url_name "api_keys" as current_url_site_settings %}
     {% endif %}
-    <a class="nav-link link-light {{ current_url_site_settings  }}" href="{% url 'settings' slug=site.url %}">
+    <a class="nav-link link-light {{ current_url_site_settings }}" href="{% url 'settings' slug=site.url %}">
       <span class="material-icons">settings</span> {% translate "Site settings" %}
     </a>
 
     {% set_css_class_active request.resolver_match.url_name "two_factor" as current_url_two_factor %}
-    <a class="nav-link link-light {{ current_url_two_factor  }}" href="{% url 'two_factor' slug=site.url %}">
+    <a class="nav-link link-light {{ current_url_two_factor }}" href="{% url 'two_factor' slug=site.url %}">
       <span class="material-icons">pin</span>
       {% translate "2FA on Computers" %}
     </a>
 
     {% set_css_class_active request.resolver_match.url_name "wake_plan" as current_url_wake_plans %}
-    <a class="nav-link link-light {{current_url_wake_plans}}" href="{% url 'wake_plans' slug=site.url %}">
+    <a class="nav-link link-light {{ current_url_wake_plans }}" href="{% url 'wake_plans' slug=site.url %}">
       <span class="material-icons">bolt</span> {% translate "On/Off schedules" %}
     </a>
 

@@ -38,17 +38,21 @@ from django_otp.plugins.otp_static.models import StaticToken
 from django.forms import Form
 
 from system.utils import (
+    get_badge_class,
     get_notification_string,
     notification_changes_saved,
     online_pcs_count_filter,
     set_notification_cookie,
-    get_badge_class,
+    x_minutes_ago,
+    x_days_ago,
 )
 
 from account.models import (
     UserProfile,
     SiteMembership,
 )
+
+from changelog.models import Changelog
 
 from system.models import (
     APIKey,
@@ -299,7 +303,7 @@ class AdminIndex(RedirectView, LoginRequiredMixin):
         # If user only has one site, redirect to that.
         if profile.sites.count() == 1:
             site = profile.sites.first()
-            return reverse("site", kwargs={"slug": site.url})
+            return reverse("dashboard", kwargs={"slug": site.url})
         # In all other cases we can redirect to list of sites.
         return reverse("sites")
 
@@ -523,29 +527,44 @@ class SiteView(DetailView, SuperAdminOrThisSiteMixin):
         return context
 
 
-class SiteDetailView(SiteView):
-    """Class for showing the overview that is displayed when entering a site"""
+class SiteDashboardView(SiteView):
+    template_name = "system/site_dashboard.html"
 
-    template_name = "system/site_status.html"
-
-    # For hver pc skal vi hente seneste security event.
     def get_context_data(self, **kwargs):
-        context = super(SiteDetailView, self).get_context_data(**kwargs)
-        context = site_pcs_stats(context, [kwargs["object"]])
+        context = super(SiteDashboardView, self).get_context_data(**kwargs)
 
-        site_pcs = self.object.pcs.all().order_by(
-            "is_activated", F("last_seen").desc(nulls_last=True)
-        )
+        ITEMS_PER_SECTION = 5
 
-        for p in site_pcs:
-            p.badgeclass = get_badge_class(p.product.id)
+        context["latest_events"] = SecurityEvent.objects.priority_events_for_site(
+            self.object
+        ).order_by("-occurred_time")[:ITEMS_PER_SECTION]
 
-        # Top level list of new PCs etc.
-        context["ls_pcs"] = site_pcs
+        context["latest_failed_jobs"] = Job.objects.filter(
+            batch__site=self.object, status="FAILED"
+        ).order_by(F("finished").desc(nulls_last=True))[:ITEMS_PER_SECTION]
 
-        context["total_pcs_count"] = context["ls_pcs"].count()
-        context["activated_pcs_count"] = site_pcs.filter(is_activated=True).count()
-        context["online_pcs_count"] = online_pcs_count_filter(site_pcs)
+        context["latest_news"] = Changelog.objects.filter(published=True).order_by(
+            "-created"
+        )[:ITEMS_PER_SECTION]
+
+        scripts = Script.objects.filter(site=None, is_hidden=False)
+
+        for fp in context["site"].customer.feature_permission.all():
+            scripts = scripts | fp.scripts.all()
+
+        context["latest_scripts"] = scripts.order_by("-created")[:ITEMS_PER_SECTION]
+
+        context["latest_offline_pcs"] = self.object.pcs.filter(
+            is_activated=True, last_seen__lt=x_minutes_ago(15)
+        ).order_by(F("last_seen").desc(nulls_last=True))[:ITEMS_PER_SECTION]
+
+        context["oldest_full_updates"] = ConfigurationEntry.objects.filter(
+            key="_last_full_update_time",
+            owner_configuration__pc__site=self.object,
+            owner_configuration__pc__is_activated=True,
+            owner_configuration__pc__last_seen__gt=x_days_ago(28, datetime_object=True),
+            value__lt=x_days_ago(30),
+        ).order_by("value")[:ITEMS_PER_SECTION]
 
         return context
 
@@ -850,14 +869,22 @@ class JobsView(SiteView):
 
         context["pcs"] = site.pcs.all()
         context["groups"] = site.groups.all()
-        preselected = set(
-            [
-                Job.NEW,
-                Job.SUBMITTED,
-                Job.FAILED,
-                Job.DONE,
-            ]
-        )
+        job_status = self.request.GET.get("job_status", "")
+        if job_status:
+            preselected = set(
+                [
+                    job_status,
+                ]
+            )
+        else:
+            preselected = set(
+                [
+                    Job.NEW,
+                    Job.SUBMITTED,
+                    Job.FAILED,
+                    Job.DONE,
+                ]
+            )
         context["status_choices"] = [
             {
                 "name": name,
@@ -1577,11 +1604,38 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
         return response
 
 
-class PCsView(SelectionMixin, SiteView):
-    """If a site ha no computers it shows a page indicating that.
+class PCsOverview(SiteView):
+    """Class for showing the pcs overview"""
+
+    template_name = "system/pcs/pcs.html"
+
+    # For hver pc skal vi hente seneste security event.
+    def get_context_data(self, **kwargs):
+        context = super(PCsOverview, self).get_context_data(**kwargs)
+        context = site_pcs_stats(context, [kwargs["object"]])
+
+        site_pcs = self.object.pcs.all().order_by(
+            "is_activated", F("last_seen").desc(nulls_last=True)
+        )
+
+        for p in site_pcs:
+            p.badgeclass = get_badge_class(p.product.id)
+
+        # Top level list of new PCs etc.
+        context["ls_pcs"] = site_pcs
+
+        context["total_pcs_count"] = context["ls_pcs"].count()
+        context["activated_pcs_count"] = site_pcs.filter(is_activated=True).count()
+        context["online_pcs_count"] = online_pcs_count_filter(site_pcs)
+
+        return context
+
+
+class PCUpdateRedirect(SelectionMixin, SiteView):
+    """If a site has no computers it shows a page indicating that.
     If the site has at least one computer it redirects to that."""
 
-    template_name = "system/pcs/site_pcs.html"
+    template_name = "system/pcs/no_pcs.html"
     selection_class = PC
 
     def get_list(self):
@@ -1599,11 +1653,11 @@ class PCsView(SelectionMixin, SiteView):
                 )
             )
         else:
-            return super(PCsView, self).render_to_response(context)
+            return super(PCUpdateRedirect, self).render_to_response(context)
 
 
 class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
-    template_name = "system/pcs/form.html"
+    template_name = "system/pcs/update.html"
     form_class = PCForm
     slug_field = "uid"
 

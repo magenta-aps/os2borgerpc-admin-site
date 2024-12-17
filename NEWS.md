@@ -1,3 +1,12 @@
+## Version 6.4.0, December 17, 2024
+
+- Add dashboard and move status under computers
+- Add support for direct links to specific changelogs
+- Add support for links to job list with only one specific status shown initially
+- Fix display of joined and last login dates on user overview
+- Remove unnecessary divide headers for status, site settings and api keys
+- Allow searching groups by name or id in backend
+
 ## Version 6.3.2, December 5, 2024
 
 - Update the Cicero age limit functionality

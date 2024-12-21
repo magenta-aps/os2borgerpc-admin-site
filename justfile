@@ -78,6 +78,9 @@ fix-permissions:
   sudo fd --hidden --type directory -x chmod 777
   sudo fd --hidden --type file -x chmod 666
   sudo chmod 755 . justfile docker/docker-entrypoint.sh scripts/cleanup_old_media_files/cleanup_old_media_files.py admin_site/manage.py
+  # compilemessages is run by the container user resulting in permissions on the .mo files that don't allow write access for the host user sometimes resulting in an error
+  # The .mo files are also in gitignore which fd respects by default so it doesn't fix the permissions on them in the command above, so we handle them explicitly here
+  sudo fd --extension mo --no-ignore-vcs --type file -x chmod 666
 
 # Run arbitrary manage.py commands. Examples: makemigrations/migrate/showmigrations/shell_plus
 managepy +COMMAND: (_verify-container-running django_container)

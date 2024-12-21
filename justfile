@@ -5,15 +5,6 @@
 # Default shell and settings used in the recipes
 set shell := ["bash", "-uc"]
 
-# Set user ID and group ID dynamically, which are in turn used in compose.yaml,
-# so the admin-site-container runs as your own user instead of the BPC user
-# This should get us closer to being able to remove "privileged", and make permissions errors (and "just fix-permissions") less relevant
-# NOTE: If you get a permissions error running the server, you can try commenting these out. Doing so might cause some other issues, though,
-# such as /media and /log being owned by the bpc user (set by Dockerfile) and thus script uploads fail.
-# We've also seen an occasional permissions error related to .po files
-# export DEV_UID := `id -u`
-# export DEV_GID := `id -g`
-
 # Aliases
 alias r := run
 alias rd := run-debug
@@ -86,7 +77,7 @@ fix-permissions:
   fi
   sudo fd --hidden --type directory -x chmod 777
   sudo fd --hidden --type file -x chmod 666
-  sudo chmod 755 justfile docker/docker-entrypoint.sh scripts/cleanup_old_media_files/cleanup_old_media_files.py admin_site/manage.py
+  sudo chmod 755 . justfile docker/docker-entrypoint.sh scripts/cleanup_old_media_files/cleanup_old_media_files.py admin_site/manage.py
 
 # Run arbitrary manage.py commands. Examples: makemigrations/migrate/showmigrations/shell_plus
 managepy +COMMAND: (_verify-container-running django_container)

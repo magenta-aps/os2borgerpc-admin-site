@@ -43,6 +43,7 @@
     {% blocktranslate trimmed %}
     Below the header "Exceptions: Closed days and altered opening hours", one can
     add or remove exceptions to the week plan for specific dates or periods.
+    An on/off schedule can only have a single exception to the week plan for a given date.
     If an exception for a given date exists, the settings for the exception will
     be used instead of the week plan settings.
     An exception can be a change in the on and off times or a constant shutdown
@@ -63,10 +64,10 @@
   </p>
   <p>
     {% blocktranslate trimmed %}
-    If you attempt to add an exception that overlaps with one or more already added
-    exceptions, the chosen exception will be rejected during the update of the
-    schedule when you click "Save changes". Valid exceptions will still be added.
-    If one or more exceptions are rejected, the page will inform you of this along
+    If you attempt to add an exception where the date(s) overlap with a date used by
+    an already added exception, the chosen exception will be rejected during
+    the update of the schedule when you click "Save changes". Valid exceptions will still
+    be added. If one or more exceptions are rejected, the page will inform you of this along
     with the reason.
     {% endblocktranslate %}
   </p>

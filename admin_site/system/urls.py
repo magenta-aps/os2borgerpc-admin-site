@@ -17,6 +17,7 @@ from system.views import (
     JobInfo,
     JobRestarter,
     JobSearch,
+    JobsUpdate,
     JobsView,
     PCGroupCreate,
     PCGroupDelete,
@@ -190,6 +191,9 @@ urlpatterns = [
         name="site_delete",
     ),
     re_path(r"^site/(?P<slug>[^/]+)/$", SiteDashboardView.as_view(), name="dashboard"),
+    re_path(
+        r"^site/(?P<slug>[^/]+)/jobs/update/$", JobsUpdate.as_view(), name="jobs_update"
+    ),
     # Site Settings
     re_path(
         r"^site/(?P<slug>[^/]+)/settings/$", SiteSettings.as_view(), name="settings"

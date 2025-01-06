@@ -548,7 +548,7 @@ class SiteDashboardView(SiteView):
                     ].customer.feature_permission.all()
                 )
             )
-            .filter(batch__site=self.object, status="FAILED")
+            .filter(batch__site=self.object, status="FAILED", dashboard_hidden=False)
             .order_by(F("finished").desc(nulls_last=True))[:ITEMS_PER_SECTION]
         )
 
@@ -576,6 +576,27 @@ class SiteDashboardView(SiteView):
         ).order_by("value")[:ITEMS_PER_SECTION]
 
         return context
+
+
+class JobsUpdate(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
+    http_method_names = ["post"]
+    model = Job
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        params = self.request.POST
+        ids = params.getlist("ids")
+        queryset = queryset.filter(id__in=ids, batch__site=site)
+
+        return queryset
+
+    def post(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+
+        queryset.update(dashboard_hidden=True)
+
+        return HttpResponse("OK")
 
 
 class SiteSettings(UpdateView, SiteView):

@@ -1916,13 +1916,13 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         # template picklist requires the form pk, name, url (u)id.
         available_wake_change_events = all_wake_change_events_set.exclude(
             pk__in=selected_wake_change_event_ids
-        ).order_by("-date_start", "name")
+        ).order_by("date_start", "name")
         context["available_wake_change_events"] = [
             (a.pk, a, a.pk) for a in available_wake_change_events
         ]
         selected_wake_change_events = all_wake_change_events_set.filter(
             pk__in=selected_wake_change_event_ids
-        ).order_by("-date_start", "name")
+        ).order_by("date_start", "name")
         context["selected_wake_change_events"] = [
             (s.pk, s, s.pk) for s in selected_wake_change_events
         ]

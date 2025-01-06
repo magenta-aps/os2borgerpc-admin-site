@@ -1046,6 +1046,7 @@ class Job(models.Model):
     DONE = "DONE"
     FAILED = "FAILED"
     RESOLVED = "RESOLVED"
+    HANDLED = "HANDLED"
 
     STATUS_TRANSLATIONS = {
         # Translators: Related to job status
@@ -1091,6 +1092,9 @@ class Job(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     batch = models.ForeignKey(Batch, related_name="jobs", on_delete=models.CASCADE)
     pc = models.ForeignKey(PC, related_name="jobs", on_delete=models.CASCADE)
+    dashboard_hidden = models.BooleanField(
+        verbose_name=_("hidden on dashboard"), default=False
+    )
 
     def __str__(self):
         return "_".join(map(str, [self.batch, self.id]))

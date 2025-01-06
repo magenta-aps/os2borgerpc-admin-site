@@ -253,7 +253,10 @@
             }
 
             function renderPickList() {
-                options.sort((a, b) => a.name.localeCompare(b.name))
+                // We don't want the wake change events to be sorted by name
+                if ('{{ target_section }}' !== 'wake_change_event') {
+                    options.sort((a, b) => a.name.localeCompare(b.name))
+                }
 
                 renderAvailableList(list_el, options)
                 renderSelectedList(list_el, options)

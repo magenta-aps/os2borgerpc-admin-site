@@ -17,7 +17,6 @@ from system.views import (
     JobInfo,
     JobRestarter,
     JobSearch,
-    JobsUpdate,
     JobsView,
     PCGroupCreate,
     PCGroupDelete,
@@ -53,6 +52,7 @@ from system.views import (
     EventRuleServerCreate,
     EventRuleServerDelete,
     EventRuleServerUpdate,
+    SiteDashboardJobListUpdate,
     SiteDashboardView,
     SiteList,
     SiteCreate,
@@ -192,7 +192,9 @@ urlpatterns = [
     ),
     re_path(r"^site/(?P<slug>[^/]+)/$", SiteDashboardView.as_view(), name="dashboard"),
     re_path(
-        r"^site/(?P<slug>[^/]+)/jobs/update/$", JobsUpdate.as_view(), name="jobs_update"
+        r"^site/(?P<slug>[^/]+)/dashboard/update/$",
+        SiteDashboardJobListUpdate.as_view(),
+        name="dashboard_jobs",
     ),
     # Site Settings
     re_path(

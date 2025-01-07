@@ -578,25 +578,40 @@ class SiteDashboardView(SiteView):
         return context
 
 
-class JobsUpdate(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
-    http_method_names = ["post"]
-    model = Job
+class SiteDashboardJobListUpdate(UpdateView, SiteView):
+    template_name = "system/dashboard_job_list.html"
+    fields = "__all__"
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
+    def get_context_data(self, **kwargs):
+        context = {}
+
+        ITEMS_PER_SECTION = 5
+
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        params = self.request.POST
-        ids = params.getlist("ids")
-        queryset = queryset.filter(id__in=ids, batch__site=site)
+        context["site"] = site
 
-        return queryset
+        context["latest_failed_jobs"] = Job.objects.filter(
+            batch__site=site, status="FAILED", dashboard_hidden=False
+        ).order_by(F("finished").desc(nulls_last=True))[:ITEMS_PER_SECTION]
+
+        return context
 
     def post(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
+        target_jobs = request.POST["target_jobs"]
 
-        queryset.update(dashboard_hidden=True)
+        if target_jobs == "all":
+            context = self.get_context_data(**kwargs)
+            ids = context["latest_failed_jobs"].values_list("pk", flat=True)
+        else:
+            ids = [target_jobs]
 
-        return HttpResponse("OK")
+        Job.objects.filter(id__in=ids).update(dashboard_hidden=True)
+
+        return render(
+            request,
+            "system/dashboard_job_list.html",
+            self.get_context_data(),
+        )
 
 
 class SiteSettings(UpdateView, SiteView):

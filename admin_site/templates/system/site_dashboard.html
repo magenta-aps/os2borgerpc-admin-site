@@ -42,36 +42,7 @@
             </tbody>
         </table>
         <table class="table table-light mt-4" id="jobs-table">
-            <thead>
-                <tr>
-                    <th>
-                        {% translate "Latest failed jobs" %} {% if latest_failed_jobs %}<a href="javascript:void(0)" onclick="hideJobs('all')">{% translate "Hide shown jobs" %}</a>{% endif %}
-                    </th>
-                    <th class="text-end">
-                        <a href="{% url 'jobs' slug=site.uid %}?job_status=FAILED" >{% translate "See all" %}</a>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for job in latest_failed_jobs %}
-                    <tr class="click-list--item">
-                        <td>
-                            <strong>{{ job.batch.script.name }} - {{ job.pc.name }}</strong>
-                            <a href="javascript:void(0)" onclick="hideJobs('{{ job.pk }}')">{% translate "Hide" %}</a>
-                        </td>
-                        <td class="text-end">
-                            {{ job.finished }}
-                        </td>
-                    </tr>
-                {% empty %}
-                    <tr class="click-list--item">
-                        <td>
-                            {% translate "Nothing to show" %}
-                        </td>
-                        <td></td>
-                    </tr>
-                {% endfor %}
-            </tbody>
+            {% include "system/dashboard_job_list.html" %}
         </table>
         <table class="table table-light mt-4" id="news-table">
             <thead>
@@ -216,24 +187,4 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    function hideJobs(target) {
-        job_ids = []
-        if (target === 'all') {
-        {% for job in latest_failed_jobs %}
-            job_ids.push('{{ job.pk }}')
-        {% endfor %}
-        } else {
-        job_ids.push(target)
-        }
-        $.post({
-                type: "POST",
-                url: "{% url 'jobs_update' site.uid %}",
-                data: $.param({'ids': job_ids}, true),
-                success: function() {
-                    location.reload()
-                }
-            })
-    }
-</script>
 {% endblock %}

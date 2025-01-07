@@ -1,0 +1,45 @@
+{% load i18n %}
+<thead>
+    <tr>
+        <th>
+            <form method="post">
+                {% csrf_token %}
+                {% translate "Latest failed jobs" %}
+                {% if latest_failed_jobs %}
+                <input type="hidden" name="target_jobs" value="all">
+                <button class="btn btn-primary" type="submit" hx-post="{% url 'dashboard_jobs' slug=site.uid %}" hx-target="#jobs-table" hx-confirm="{% translate 'Are you sure you want to hide the shown failed jobs?' %}">
+                    {% translate "Hide shown jobs" %}
+                </button>
+                {% endif %}
+            </form>
+        </th>
+        <th class="text-end">
+            <a href="{% url 'jobs' slug=site.uid %}?job_status=FAILED" >{% translate "See all" %}</a>
+        </th>
+    </tr>
+</thead>
+<tbody>
+    {% for job in latest_failed_jobs %}
+        <tr class="click-list--item">
+            <td>
+                <form method="post">
+                    <strong>{{ job.batch.script.name }} - {{ job.pc.name }}</strong>
+                    <input type="hidden" name="target_jobs" value="{{ job.pk }}">
+                    <button class="btn btn-secondary" type="submit" hx-post="{% url 'dashboard_jobs' slug=site.uid %}" hx-target="#jobs-table" hx-confirm="{% translate 'Are you sure you want to hide this failed job?:' %} {{ job.batch.script.name }} - {{ job.pc.name }}">
+                        {% translate 'Hide' %}
+                    </button>
+                </form>
+            </td>
+            <td class="text-end">
+                {{ job.finished }}
+            </td>
+        </tr>
+    {% empty %}
+        <tr class="click-list--item">
+            <td>
+                {% translate "Nothing to show" %}
+            </td>
+            <td></td>
+        </tr>
+    {% endfor %}
+</tbody>

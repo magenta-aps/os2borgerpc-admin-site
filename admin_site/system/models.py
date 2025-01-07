@@ -310,7 +310,7 @@ class Site(models.Model):
             self.configuration = Configuration.objects.create()
 
         # Perform save
-        super(Site, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
         # After save
         pass
@@ -597,7 +597,7 @@ class PCGroup(models.Model):
         if is_new:
             self.configuration = Configuration.objects.create()
         # Perform save
-        super(PCGroup, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
         # After save
         pass

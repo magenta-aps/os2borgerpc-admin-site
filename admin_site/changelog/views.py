@@ -24,7 +24,7 @@ class LoginRequiredMixin(View):
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)
 
 
 class ChangelogListView(ListView):
@@ -53,7 +53,7 @@ class ChangelogListView(ListView):
         return page_obj
 
     def get_context_data(self, **kwargs):
-        context = super(ChangelogListView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
         context["tag_choices"] = ChangelogTag.objects.values("name", "pk")
 

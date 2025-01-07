@@ -14,7 +14,7 @@ class LoginRequiredMixin(View):
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)
 
 
 class DocView(TemplateView, LoginRequiredMixin):
@@ -25,7 +25,6 @@ class DocView(TemplateView, LoginRequiredMixin):
         return os.path.isfile(fullpath)
 
     def get_context_data(self, **kwargs):  # noqa
-
         user_lang = self.request.user.user_profile.language
 
         documentation_menu_items = [
@@ -99,7 +98,7 @@ class DocView(TemplateView, LoginRequiredMixin):
         else:
             self.template_name = templatename
 
-        context = super(DocView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context["docmenuitems"] = documentation_menu_items
         docnames = self.docname.split("/")
 

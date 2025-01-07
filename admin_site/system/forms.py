@@ -53,7 +53,7 @@ class SiteForm(forms.ModelForm):
     )
 
     def __init__(self, *args, **kwargs):
-        super(SiteForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         instance = getattr(self, "instance", None)
         if instance and instance.pk:
             self.fields["uid"].widget.attrs["readonly"] = True
@@ -122,7 +122,7 @@ class PCGroupForm(forms.ModelForm):
 
 class ScriptForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(ScriptForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         instance = getattr(self, "instance", None)
         if not instance or not instance.pk:
             self.fields["maintained_by_magenta"].widget = forms.HiddenInput()
@@ -221,7 +221,7 @@ class UserForm(forms.ModelForm):
             language = kwargs.pop("language", None)
             if language is not None:
                 initial["language"] = language
-        super(UserForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def set_usertype_limited_choices(self, choice_type):
         self.fields["usertype"].choices = [
@@ -260,7 +260,7 @@ class UserForm(forms.ModelForm):
         return cleaned_data
 
     def save(self, commit=True):
-        user = super(UserForm, self).save(commit=False)
+        user = super().save(commit=False)
         if self.cleaned_data["new_password"]:
             user.set_password(self.cleaned_data["new_password"])
         if commit:
@@ -271,7 +271,7 @@ class UserForm(forms.ModelForm):
 class ParameterForm(forms.Form):
     def __init__(self, *args, **kwargs):
         script = kwargs.pop("script")
-        super(ParameterForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         for i, inp in enumerate(script.ordered_inputs):
             name = "parameter_%s" % i
@@ -304,7 +304,7 @@ class ParameterForm(forms.Form):
                             "onfocus": "this.removeAttribute('readonly')",
                             "class": "password-input",
                         }
-                    )
+                    ),
                 )
             elif inp.value_type == Input.CHOICE:
                 CHOICES = [
@@ -318,7 +318,7 @@ class ParameterForm(forms.Form):
 
 class PCForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(PCForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         instance = getattr(self, "instance", None)
         if instance and instance.pk:
             self.fields["uid"].disabled = True
@@ -340,7 +340,7 @@ class SecurityEventForm(forms.ModelForm):
 
 class EventRuleServerForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(EventRuleServerForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     class Meta:
         model = EventRuleServer

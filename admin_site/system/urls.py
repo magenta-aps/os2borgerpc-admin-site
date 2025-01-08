@@ -191,11 +191,6 @@ urlpatterns = [
         name="site_delete",
     ),
     re_path(r"^site/(?P<slug>[^/]+)/$", SiteDashboardView.as_view(), name="dashboard"),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/dashboard/update/$",
-        SiteDashboardJobListUpdate.as_view(),
-        name="dashboard_jobs",
-    ),
     # Site Settings
     re_path(
         r"^site/(?P<slug>[^/]+)/settings/$", SiteSettings.as_view(), name="settings"
@@ -425,6 +420,11 @@ htmx_urlpatterns = [
         r"^site/(?P<slug>[^/]+)/api-key/(?P<pk>\d+)/delete/$",
         APIKeyDelete.as_view(),
         name="api_key_delete",
+    ),
+    re_path(
+        r"^site/(?P<slug>[^/]+)/dashboard/update/$",
+        SiteDashboardJobListUpdate.as_view(),
+        name="dashboard_jobs",
     ),
     re_path(
         r"^sites/new-validate$",

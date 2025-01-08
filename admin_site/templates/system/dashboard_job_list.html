@@ -4,11 +4,12 @@
         <th>
             <form method="post">
                 {% csrf_token %}
-                {% translate "Latest failed jobs" %}
+                <span class="me-2">{% translate "Latest failed jobs" %}</span>
                 {% if latest_failed_jobs %}
+                {% translate 'Hiding a failed job means that it will no longer be shown on the dashboard. Are you sure you want to hide all the shown failed jobs?' as all_confirm_text %}
                 <input type="hidden" name="target_jobs" value="all">
-                <button class="btn btn-primary" type="submit" hx-post="{% url 'dashboard_jobs' slug=site.uid %}" hx-target="#jobs-table" hx-confirm="{% translate 'Are you sure you want to hide the shown failed jobs?' %}">
-                    {% translate "Hide shown jobs" %}
+                <button class="btn btn-danger" type="submit" hx-post="{% url 'dashboard_jobs' slug=site.uid %}" hx-target="#jobs-table" hx-confirm="{{ all_confirm_text}}">
+                    {% translate "Hide all shown jobs" %}
                 </button>
                 {% endif %}
             </form>
@@ -20,13 +21,14 @@
 </thead>
 <tbody>
     {% for job in latest_failed_jobs %}
-        <tr class="click-list--item">
+        <tr class="dashboard-job-list-item">
             <td>
                 <form method="post">
                     <strong>{{ job.batch.script.name }} - {{ job.pc.name }}</strong>
                     <input type="hidden" name="target_jobs" value="{{ job.pk }}">
-                    <button class="btn btn-secondary" type="submit" hx-post="{% url 'dashboard_jobs' slug=site.uid %}" hx-target="#jobs-table" hx-confirm="{% translate 'Are you sure you want to hide this failed job?:' %} {{ job.batch.script.name }} - {{ job.pc.name }}">
-                        {% translate 'Hide' %}
+                    {% translate 'Hiding a failed job means that it will no longer be shown on the dashboard. Are you sure you want to hide this failed job?:' as single_confirm_text %}
+                    <button class="list-item-hide material-icons" title="{% translate 'Hide this failed job' %}" type="submit" hx-post="{% url 'dashboard_jobs' slug=site.uid %}" hx-target="#jobs-table" hx-confirm="{{ single_confirm_text }} {{ job.batch.script.name }} - {{ job.pc.name }}">
+                        clear
                     </button>
                 </form>
             </td>

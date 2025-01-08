@@ -1046,7 +1046,6 @@ class Job(models.Model):
     DONE = "DONE"
     FAILED = "FAILED"
     RESOLVED = "RESOLVED"
-    HANDLED = "HANDLED"
 
     STATUS_TRANSLATIONS = {
         # Translators: Related to job status

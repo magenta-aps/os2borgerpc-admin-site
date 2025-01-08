@@ -578,9 +578,7 @@ class SiteDashboardView(SiteView):
         return context
 
 
-class SiteDashboardJobListUpdate(UpdateView, SiteView):
-    template_name = "system/dashboard_job_list.html"
-    fields = "__all__"
+class SiteDashboardJobListUpdate(SuperAdminOrThisSiteMixin):
 
     def get_context_data(self, **kwargs):
         context = {}
@@ -590,22 +588,32 @@ class SiteDashboardJobListUpdate(UpdateView, SiteView):
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
         context["site"] = site
 
-        context["latest_failed_jobs"] = Job.objects.filter(
-            batch__site=site, status="FAILED", dashboard_hidden=False
-        ).order_by(F("finished").desc(nulls_last=True))[:ITEMS_PER_SECTION]
+        context["latest_failed_jobs"] = (
+            Job.objects.filter(
+                Q(batch__script__is_hidden=False)
+                | Q(
+                    batch__script__feature_permission__in=site.customer.feature_permission.all()
+                )
+            )
+            .filter(batch__site=site, status="FAILED", dashboard_hidden=False)
+            .order_by(F("finished").desc(nulls_last=True))[:ITEMS_PER_SECTION]
+        )
 
         return context
 
     def post(self, request, *args, **kwargs):
         target_jobs = request.POST["target_jobs"]
 
+        context = self.get_context_data(**kwargs)
+
         if target_jobs == "all":
-            context = self.get_context_data(**kwargs)
             ids = context["latest_failed_jobs"].values_list("pk", flat=True)
         else:
             ids = [target_jobs]
 
-        Job.objects.filter(id__in=ids).update(dashboard_hidden=True)
+        Job.objects.filter(batch__site=context["site"], id__in=ids).update(
+            dashboard_hidden=True
+        )
 
         return render(
             request,

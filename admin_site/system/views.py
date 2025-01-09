@@ -179,7 +179,7 @@ class LoginRequiredMixin(View):
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)
 
 
 class SuperAdminOnlyMixin(LoginRequiredMixin):
@@ -190,7 +190,7 @@ class SuperAdminOnlyMixin(LoginRequiredMixin):
     @method_decorator(login_required)
     @method_decorator(check_function)
     def dispatch(self, *args, **kwargs):
-        return super(SuperAdminOnlyMixin, self).dispatch(*args, **kwargs)
+        return super().dispatch(*args, **kwargs)
 
 
 class SuperAdminOrThisSiteMixin(LoginRequiredMixin):
@@ -209,7 +209,7 @@ class SuperAdminOrThisSiteMixin(LoginRequiredMixin):
             lambda u: (u.is_superuser) or (site and site in u.user_profile.sites.all()),
             login_url="/",
         )
-        wrapped_super = check_function(super(SuperAdminOrThisSiteMixin, self).dispatch)
+        wrapped_super = check_function(super().dispatch)
         return wrapped_super(*args, **kwargs)
 
 
@@ -232,7 +232,7 @@ class SelectionMixin(View):
 
     def get_context_data(self, **kwargs):
         # First, call superclass
-        context = super(SelectionMixin, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         # Then get selected object, if any
         if self.lookup_field in self.kwargs:
             lookup_val = self.kwargs[self.lookup_field]
@@ -280,7 +280,7 @@ class SiteMixin(View):
     """Mixin class to extract site UID from URL"""
 
     def get_context_data(self, **kwargs):
-        context = super(SiteMixin, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
         context["site"] = site
         # Add information about outstanding security events.
@@ -336,7 +336,7 @@ class SiteList(ListView, LoginRequiredMixin):
         return qs
 
     def get_context_data(self, **kwargs):
-        context = super(SiteList, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context = site_pcs_stats(context, self.get_queryset())
         total_pcs = PC.objects.filter(site__in=self.get_queryset())
         context["total_pcs_count"] = len(total_pcs)
@@ -394,7 +394,7 @@ class SiteCreate(CreateView, LoginRequiredMixin):
             )
             self.object.customer = customer
 
-            response = super(SiteCreate, self).form_valid(form)
+            response = super().form_valid(form)
 
             # Ensure that all customer admins for the customer have access to the new Site
             customer_admins_for_customer = list(
@@ -477,7 +477,7 @@ class SiteDelete(DeleteView, SuperAdminOrThisSiteMixin):
         return self.selected_site
 
     def get_context_data(self, **kwargs):
-        context = super(SiteDelete, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context["selected_site"] = self.selected_site
 
         return context
@@ -504,7 +504,7 @@ class SiteDelete(DeleteView, SuperAdminOrThisSiteMixin):
             if len(user.user_profile.sitemembership_set.all()) == 1:
                 user.delete()
         site_name = self.selected_site.name
-        response = super(SiteDelete, self).delete(form, *args, **kwargs)
+        response = super().delete(form, *args, **kwargs)
         set_notification_cookie(response, _("Site %s deleted") % site_name)
 
         return response
@@ -518,7 +518,7 @@ class SiteView(DetailView, SuperAdminOrThisSiteMixin):
     slug_field = "uid"
 
     def get_context_data(self, **kwargs):
-        context = super(SiteView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         site = self.get_object()
         # Add information about outstanding security events.
         no_of_sec_events = SecurityEvent.objects.priority_events_for_site(site).count()
@@ -531,7 +531,7 @@ class SiteDashboardView(SiteView):
     template_name = "system/site_dashboard.html"
 
     def get_context_data(self, **kwargs):
-        context = super(SiteDashboardView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
         ITEMS_PER_SECTION = 5
 
@@ -575,7 +575,7 @@ class SiteSettings(UpdateView, SiteView):
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
-        context = super(SiteSettings, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context["site_configs"] = self.object.configuration.entries.all()
 
         return context
@@ -596,7 +596,7 @@ class SiteSettings(UpdateView, SiteView):
 
         self.object.configuration.update_from_request(self.request.POST, "site_configs")
 
-        response = super(SiteSettings, self).form_valid(form)
+        response = super().form_valid(form)
 
         set_notification_cookie(
             response, _("Settings for %s updated") % self.kwargs["slug"]
@@ -615,7 +615,7 @@ class APIKeyUpdate(UpdateView, SiteView, DeletionMixin):
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
-        context = super(APIKeyUpdate, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
         context["api_keys"] = self.object.apikeys.all()
 
@@ -638,7 +638,7 @@ class APIKeyCreate(CreateView, SuperAdminOrThisSiteMixin):
     # TODO: Consider making a common class they inherit from, to not duplicate get_context_data (and maybe other view functions)
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
-        context = super(APIKeyCreate, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
         context["api_keys"] = APIKey.objects.filter(site=site)
@@ -652,7 +652,7 @@ class APIKeyCreate(CreateView, SuperAdminOrThisSiteMixin):
         response = self.get(request, *args, **kwargs)
 
         # Handle saving of data
-        super(APIKeyCreate, self).post(request, *args, **kwargs)
+        super().post(request, *args, **kwargs)
 
         # Generate an API Key
         KEY_LENGTH = 75
@@ -863,7 +863,7 @@ class JobsView(SiteView):
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
-        context = super(JobsView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         site = context["site"]
         context["batches"] = site.batches.exclude(name="")[:100]
 
@@ -1072,7 +1072,7 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
         return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
-        context = super(JobRestarter, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context["site"] = self.site
         context["selected_job"] = self.object
         return context
@@ -1103,10 +1103,10 @@ class JobInfo(DetailView, SuperAdminOrThisSiteMixin):
 
     def get(self, request, *args, **kwargs):
         self.site = get_object_or_404(Site, uid=kwargs["slug"])
-        return super(JobInfo, self).get(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(JobInfo, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         if self.site != self.object.batch.site:
             raise Http404
         context["site"] = self.site
@@ -1137,15 +1137,15 @@ class ScriptMixin(object):
 
     def get(self, request, *args, **kwargs):
         self.setup_script_editing(**kwargs)
-        return super(ScriptMixin, self).get(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         self.setup_script_editing(**kwargs)
-        return super(ScriptMixin, self).post(request, *args, **kwargs)
+        return super().post(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         # Get context from super class
-        context = super(ScriptMixin, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context["site"] = self.site
         context["script_tags"] = ScriptTag.objects.all()
 
@@ -1320,14 +1320,14 @@ class ScriptCreate(ScriptMixin, CreateView, SuperAdminOrThisSiteMixin):
     form_class = ScriptForm
 
     def get_context_data(self, **kwargs):
-        context = super(ScriptCreate, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context["type_choices"] = Input.VALUE_CHOICES
         return context
 
     def get_form(self, form_class=None):
         if form_class is None:
             form_class = self.get_form_class()
-        form = super(ScriptCreate, self).get_form(form_class)
+        form = super().get_form(form_class)
         form.prefix = "create"
         return form
 
@@ -1351,7 +1351,7 @@ class ScriptCreate(ScriptMixin, CreateView, SuperAdminOrThisSiteMixin):
         if transfer_inputs:
             self.validate_script_inputs()
 
-        return super(ScriptCreate, self).form_invalid(form)
+        return super().form_invalid(form)
 
     def get_success_url(self):
         if self.is_security:
@@ -1366,7 +1366,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
     def get_context_data(self, **kwargs):
         # Get context from super class
-        context = super(ScriptUpdate, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         if self.script is not None and self.script.executable_code is not None:
             try:
                 display_code = self.script.executable_code.read().decode("utf-8")
@@ -1407,7 +1407,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             form.instance.user_modified = self.request.user.username
             self.save_script_inputs()
             self.create_associated_script_parameters()
-            response = super(ScriptUpdate, self).form_valid(form)
+            response = super().form_valid(form)
             set_notification_cookie(response, _("Script %s updated") % self.script.name)
 
             return response
@@ -1418,7 +1418,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         if transfer_inputs:
             self.validate_script_inputs()
 
-        return super(ScriptUpdate, self).form_invalid(form)
+        return super().form_invalid(form)
 
     def get_success_url(self):
         if self.is_security:
@@ -1460,7 +1460,7 @@ class ScriptRun(SiteView):
     STEP3 = "run_script"
 
     def post(self, request, *args, **kwargs):
-        return super(ScriptRun, self).get(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
     def fetch_pcs_from_request(self):
         # Transfer chosen groups and PCs as PC pks
@@ -1535,7 +1535,7 @@ class ScriptRun(SiteView):
             )
 
     def get_context_data(self, **kwargs):
-        context = super(ScriptRun, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context["script"] = get_object_or_404(Script, pk=self.kwargs["script_pk"])
 
         product_ids = (
@@ -1595,7 +1595,7 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
         # We create a list as the next command would change it
         scripts_pcgroups = list(PCGroup.objects.filter(policy__script=script))
 
-        response = super(ScriptDelete, self).delete(form, *args, **kwargs)
+        response = super().delete(form, *args, **kwargs)
 
         # For each of those groups update the script positions to avoid gaps
         for spcg in scripts_pcgroups:
@@ -1653,7 +1653,7 @@ class PCUpdateRedirect(SelectionMixin, SiteView):
                 )
             )
         else:
-            return super(PCUpdateRedirect, self).render_to_response(context)
+            return super().render_to_response(context)
 
 
 class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
@@ -1684,7 +1684,7 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
             )
 
     def get_context_data(self, **kwargs):
-        context = super(PCUpdate, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
         site = context["site"]
         form = context["form"]
@@ -1804,7 +1804,7 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
         with transaction.atomic():
             pc.configuration.update_from_request(self.request.POST, "pc_config")
-            response = super(PCUpdate, self).form_valid(form)
+            response = super().form_valid(form)
 
             # Keep the name and hostname configuration in sync
             hostname_config = pc.configuration.entries.filter(key="hostname").first()
@@ -1873,7 +1873,7 @@ class WakePlanRedirect(RedirectView):
 class WakePlanBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
     # What's in common between both Create, Update and Delete
     def get_context_data(self, **kwargs):
-        context = super(WakePlanBaseMixin, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
         context["site"] = get_object_or_404(Site, uid=self.kwargs["slug"])
         plan = self.object
@@ -1894,7 +1894,7 @@ class WakePlanBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
 class WakePlanExtendedMixin(WakePlanBaseMixin):
     # What's in common between both Create and Update - but not Delete
     def get_context_data(self, **kwargs):
-        context = super(WakePlanExtendedMixin, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
         # These are shared between BaseMixin and ExtendedMixin - ideally they could just be inherited here
         context["site"] = get_object_or_404(Site, uid=self.kwargs["slug"])
@@ -2067,7 +2067,7 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
         self.object = form.save(commit=False)
         self.object.site = site
 
-        response = super(WakePlanCreate, self).form_valid(form)
+        response = super().form_valid(form)
 
         # Verify and add the selected groups
         # Also add the selected exceptions (no verification needed)
@@ -2189,7 +2189,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
         events_pre = set(self.object.wake_change_events.all())
 
         with transaction.atomic():
-            response = super(WakePlanUpdate, self).form_valid(form)
+            response = super().form_valid(form)
 
             (
                 pcs_in_verified_groups,
@@ -2327,7 +2327,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
             return response
 
     def form_invalid(self, form):
-        return super(WakePlanUpdate, self).form_invalid(form)
+        return super().form_invalid(form)
 
     def check_settings_updates(self, plan_pre, events_pre):
         """Helper function used to check if the plan settings have changed."""
@@ -2420,7 +2420,7 @@ class WakePlanDelete(WakePlanBaseMixin, DeleteView):
                 pcs_in_groups = pcs_in_groups.union(g.pcs.all())
             run_wake_plan_script(plan.site, pcs_in_groups, [], self.request.user)
 
-        response = super(WakePlanDelete, self).delete(form, *args, **kwargs)
+        response = super().delete(form, *args, **kwargs)
 
         set_notification_cookie(
             response,
@@ -2464,7 +2464,7 @@ class WakePlanDuplicate(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
 
 class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
     def get_context_data(self, **kwargs):
-        context = super(WakeChangeEventBaseMixin, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
         # Basically in common between both Create, Update and Delete, so consider refactoring out to a Mixin
         context["site"] = get_object_or_404(Site, uid=self.kwargs["slug"])
@@ -2556,7 +2556,7 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
 
         valid, overlapping_event, plan_with_overlap = self.validate_dates()
         if valid:
-            response = super(WakeChangeEventUpdate, self).form_valid(form)
+            response = super().form_valid(form)
 
             # If the settings have changed and the wake change event is used
             # by active wake plans, update the pcs connected to those plans
@@ -2601,7 +2601,7 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
         return response
 
     def form_invalid(self, form):
-        return super(WakeChangeEventUpdate, self).form_invalid(form)
+        return super().form_invalid(form)
 
     def check_settings_updates(self, event_pre):
         """Helper function used to check if the settings have changed
@@ -2642,7 +2642,7 @@ class WakeChangeEventCreate(WakeChangeEventBaseMixin, CreateView):
 
         valid, overlapping_event, plan_with_overlap = self.validate_dates()
         if valid:
-            response = super(WakeChangeEventCreate, self).form_valid(form)
+            response = super().form_valid(form)
         else:
             response = self.form_invalid(form)
             set_notification_cookie(
@@ -2654,7 +2654,7 @@ class WakeChangeEventCreate(WakeChangeEventBaseMixin, CreateView):
         return response
 
     def form_invalid(self, form):
-        return super(WakeChangeEventCreate, self).form_invalid(form)
+        return super().form_invalid(form)
 
 
 class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):
@@ -2685,7 +2685,7 @@ class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):
         event = self.get_object()
         plans = set(event.wake_week_plans.all())
 
-        response = super(WakeChangeEventDelete, self).delete(form, *args, **kwargs)
+        response = super().delete(form, *args, **kwargs)
 
         for plan in plans:
             pcs_in_groups = PC.objects.none()
@@ -2808,7 +2808,7 @@ class UserLink(FormView, UsersMixin, SuperAdminOrThisSiteMixin):
         return response
 
     def get_context_data(self, **kwargs):
-        context = super(UserLink, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         self.add_membership_to_context(context)
 
         site = context["site"]
@@ -2850,7 +2850,7 @@ class UserLink(FormView, UsersMixin, SuperAdminOrThisSiteMixin):
                 site=site,
                 site_user_type=selected_user_type,
             )
-        response = super(UserLink, self).form_valid(form)
+        response = super().form_valid(form)
 
         if selected_users_names:
             added_users_string = get_notification_string(selected_users_names)
@@ -2880,12 +2880,12 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
     template_name = "system/users/update.html"
 
     def get_form_kwargs(self):
-        kwargs = super(UserCreate, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         kwargs["language"] = self.request.user.user_profile.language
         return kwargs
 
     def get_context_data(self, **kwargs):
-        context = super(UserCreate, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         self.add_membership_to_context(context)
         return context
 
@@ -2928,7 +2928,7 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
                     Permission.objects.filter(name="Can view login log")
                 )
                 self.object.is_staff = True
-            result = super(UserCreate, self).form_valid(form)
+            result = super().form_valid(form)
             return result
         else:
             raise PermissionDenied
@@ -2973,7 +2973,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
     def get_context_data(self, **kwargs):
         # This line is necessary, as without it UserUpdate will think that user = selected_user
         self.context_object_name = "selected_user"
-        context = super(UserUpdate, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         self.add_membership_to_context(context)
 
         context["selected_user"] = User.objects.get(username=self.kwargs["username"])
@@ -2988,7 +2988,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         return context
 
     def get_form_kwargs(self):
-        kwargs = super(UserUpdate, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
         kwargs["site"] = site
 
@@ -3063,7 +3063,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
                 self.object.is_staff = False
             user_profile.language = form.cleaned_data["language"]
             user_profile.save()
-            response = super(UserUpdate, self).form_valid(form)
+            response = super().form_valid(form)
             set_notification_cookie(
                 response, _("User %s updated") % self.object.username
             )
@@ -3104,7 +3104,7 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
         return self.selected_user
 
     def get_context_data(self, **kwargs):
-        context = super(UserDelete, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         self.add_userlist_to_context(context)
         context["selected_user"] = self.selected_user
 
@@ -3133,7 +3133,7 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
                 % (self.kwargs["username"], site.name),
             )
         else:
-            response = super(UserDelete, self).delete(form, *args, **kwargs)
+            response = super().delete(form, *args, **kwargs)
             set_notification_cookie(
                 response, _("User %s deleted") % self.kwargs["username"]
             )
@@ -3149,7 +3149,7 @@ class ConfigurationEntryCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin)
         self.object = form.save(commit=False)
         self.object.owner_configuration = site.configuration
 
-        return super(ConfigurationEntryCreate, self).form_valid(form)
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse("settings", kwargs={"slug": self.kwargs["slug"]})
@@ -3183,7 +3183,7 @@ class PCGroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
     template_name = "system/pcgroups/site_groups.html"
 
     def get_context_data(self, **kwargs):
-        context = super(PCGroupCreate, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
         context["newform"] = PCGroupForm()
         del context["newform"].fields["pcs"]
@@ -3196,14 +3196,14 @@ class PCGroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
                 reverse("groups", kwargs={"slug": self.kwargs["slug"]})
             )
         else:
-            return super(PCGroupCreate, self).render_to_response(context)
+            return super().render_to_response(context)
 
     def form_valid(self, form):
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
         self.object = form.save(commit=False)
         self.object.site = site
 
-        return super(PCGroupCreate, self).form_valid(form)
+        return super().form_valid(form)
 
 
 class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
@@ -3227,7 +3227,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
             )
 
     def get_context_data(self, **kwargs):
-        context = super(PCGroupUpdate, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
         group = self.object
         form = context["form"]
@@ -3325,7 +3325,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                     self.request, "group_policies"
                 )
 
-                response = super(PCGroupUpdate, self).form_valid(form)
+                response = super().form_valid(form)
 
                 members_post = set(self.object.pcs.all())
                 policy_post = set(self.object.policy.all())
@@ -3444,7 +3444,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
             return response
 
     def form_invalid(self, form):
-        return super(PCGroupUpdate, self).form_invalid(form)
+        return super().form_invalid(form)
 
     def get_notification_strings(self, pc_names, plan_names):
         """Helper function used to generate strings for the notification displayed
@@ -3516,7 +3516,7 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
                     self_object.site, pcs_to_be_reset, [], self.request.user
                 )
 
-        response = super(PCGroupDelete, self).delete(form, *args, **kwargs)
+        response = super().delete(form, *args, **kwargs)
         set_notification_cookie(response, _("Group %s deleted") % name)
         return response
 
@@ -3598,7 +3598,7 @@ class EventRuleRedirect(RedirectView, SuperAdminOrThisSiteMixin):
 
 class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
     def get_context_data(self, **kwargs):
-        context = super(EventRuleBaseMixin, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
         # For the menu: Gather all security problems and notifications rules and sort them
         event_listeners = list(context["site"].securityproblem.all())
@@ -3650,7 +3650,7 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         return context
 
     def form_valid(self, form):
-        response = super(__class__, self).form_valid(form)
+        response = super().form_valid(form)
 
         notification_changes_saved(response, self.request.user.user_profile.language)
 
@@ -3708,7 +3708,7 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
             and site_membership.site_user_type < site_membership.SITE_ADMIN
         ):
             raise PermissionDenied
-        response = super(SecurityProblemDelete, self).delete(form, *args, **kwargs)
+        response = super().delete(form, *args, **kwargs)
         return response
 
 
@@ -3764,7 +3764,7 @@ class EventRuleServerDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
             and site_membership.site_user_type < site_membership.SITE_ADMIN
         ):
             raise PermissionDenied
-        response = super(EventRuleServerDelete, self).delete(form, *args, **kwargs)
+        response = super().delete(form, *args, **kwargs)
         return response
 
 
@@ -3773,7 +3773,7 @@ class SecurityEventsView(SiteView):
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
-        context = super(SecurityEventsView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         # Supply extra info as needed.
         level_preselected = set([EventLevels.CRITICAL, EventLevels.HIGH])
         context["level_choices"] = [
@@ -3983,7 +3983,7 @@ class ImageVersionView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
     selection_class = ImageVersion
 
     def get_context_data(self, **kwargs):
-        context = super(ImageVersionView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
 

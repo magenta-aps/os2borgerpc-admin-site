@@ -539,9 +539,18 @@ class SiteDashboardView(SiteView):
             self.object
         ).order_by("-occurred_time")[:ITEMS_PER_SECTION]
 
-        context["latest_failed_jobs"] = Job.objects.filter(
-            batch__site=self.object, status="FAILED"
-        ).order_by(F("finished").desc(nulls_last=True))[:ITEMS_PER_SECTION]
+        context["latest_failed_jobs"] = (
+            Job.objects.filter(
+                Q(batch__script__is_hidden=False)
+                | Q(
+                    batch__script__feature_permission__in=context[
+                        "site"
+                    ].customer.feature_permission.all()
+                )
+            )
+            .filter(batch__site=self.object, status="FAILED")
+            .order_by(F("finished").desc(nulls_last=True))[:ITEMS_PER_SECTION]
+        )
 
         context["latest_news"] = Changelog.objects.filter(published=True).order_by(
             "-created"
@@ -1720,7 +1729,18 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         orderby = params.get("orderby", "-pk")
         if orderby not in JobSearch.VALID_ORDER_BY:
             orderby = "-pk"
-        context["joblist"] = pc.jobs.order_by("status", "pk").order_by(orderby, "pk")
+        if not self.request.user.is_superuser:
+            visible_jobs = pc.jobs.filter(
+                Q(batch__script__is_hidden=False)
+                | Q(
+                    batch__script__feature_permission__in=site.customer.feature_permission.all()
+                )
+            )
+        else:
+            visible_jobs = pc.jobs.all()
+        context["joblist"] = visible_jobs.order_by("status", "pk").order_by(
+            orderby, "pk"
+        )
 
         if orderby.startswith("-"):
             context["orderby_key"] = orderby[1:]

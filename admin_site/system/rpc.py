@@ -92,6 +92,8 @@ def register_new_computer_v2(mac, name, site, configuration):
             "pc_manufacturer",
             "pc_model",
             "pc_ram",
+            "os_name",
+            "_os_release",
         ]:
             read_only = True
         else:

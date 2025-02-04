@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-16 13:55+0100\n"
+"POT-Creation-Date: 2025-01-08 14:35+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -84,7 +84,7 @@ msgstr "Lägg till en kommentar"
 #: templates/system/pcgroups/confirm_delete.html
 #: templates/system/pcgroups/policy_list/templates.html
 #: templates/system/pcgroups/site_groups.html
-#: templates/system/pcs/confirm_delete.html templates/system/pcs/form.html
+#: templates/system/pcs/confirm_delete.html templates/system/pcs/update.html
 #: templates/system/scripts/confirm_delete.html
 #: templates/system/scripts/create.html templates/system/scripts/update.html
 #: templates/system/security_events/site_security_events.html
@@ -136,7 +136,7 @@ msgstr "Kommentarer"
 
 #: changelog/templates/list.html docs/templates/om_os2borgerpc_admin.html
 #: docs/templates/sites_overview/index.html docs/views.py
-#: templates/system/site_status.html templates/system/sites/list.html
+#: templates/system/pcs/pcs.html templates/system/sites/list.html
 msgid "OS2borgerPC"
 msgstr "Sambruk MedborgarPC"
 
@@ -248,7 +248,7 @@ msgstr "Inloggningar"
 #: docs/templates/api.html docs/templates/computers/index.html
 #: docs/templates/configuration/index.html docs/templates/groups/index.html
 #: docs/views.py templates/site_with_navigation.html
-#: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
+#: templates/system/pcgroups/site_groups.html templates/system/pcs/update.html
 #: templates/system/site_settings/site_settings.html
 msgid "Configurations"
 msgstr "Konfigurationer"
@@ -681,7 +681,7 @@ msgstr ""
 msgid "General editing"
 msgstr "Allmän redigering"
 
-#: docs/templates/computers/__submenu__.html templates/system/pcs/form.html
+#: docs/templates/computers/__submenu__.html templates/system/pcs/update.html
 msgid "Job history"
 msgstr "Jobbhistorik"
 
@@ -1070,8 +1070,8 @@ msgstr ""
 "ändras via administrationsgränssnittet."
 
 #: docs/templates/configuration/index.html
-#: templates/system/configs/templates.html
-#: templates/system/scripts/update_form.html templates/system/site_status.html
+#: templates/system/configs/templates.html templates/system/pcs/pcs.html
+#: templates/system/scripts/update_form.html
 #: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid "Name"
 msgstr "Namn"
@@ -1548,7 +1548,7 @@ msgstr "Anteckningar"
 #: docs/templates/groups/scripts.html
 #: templates/system/event_rules/site_event_rules_server.html
 #: templates/system/event_rules/site_security_problems.html
-#: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
+#: templates/system/pcgroups/site_groups.html templates/system/pcs/update.html
 #: templates/system/scripts/update.html
 #: templates/system/site_settings/site_settings.html
 #: templates/system/users/update.html
@@ -2778,7 +2778,7 @@ msgid ""
 msgstr ""
 "Det totala antalet aktiverade datorer på de sites som du har tillgång till"
 
-#: docs/templates/sites_overview/index.html templates/system/site_status.html
+#: docs/templates/sites_overview/index.html templates/system/pcs/pcs.html
 #: templates/system/sites/list.html
 msgid "Online"
 msgstr "Online"
@@ -2797,7 +2797,7 @@ msgstr ""
 "tillgång till"
 
 #: docs/templates/sites_overview/index.html docs/views.py
-#: templates/system/site_status.html templates/system/sites/list.html
+#: templates/system/pcs/pcs.html templates/system/sites/list.html
 msgid "OS2borgerPC Kiosk"
 msgstr "Sambruk MedborgarPC Kiosk"
 
@@ -2897,9 +2897,9 @@ msgstr ""
 
 #: docs/templates/status/index.html
 #: docs/templates/wake_plans/edit_settings.html docs/views.py
-#: templates/system/jobs/site_jobs.html templates/system/pcs/form.html
+#: templates/system/jobs/site_jobs.html templates/system/pcs/pcs.html
+#: templates/system/pcs/update.html
 #: templates/system/security_events/site_security_events.html
-#: templates/system/site_status.html
 msgid "Status"
 msgstr "Status"
 
@@ -2916,8 +2916,9 @@ msgstr ""
 #: docs/templates/status/index.html docs/templates/users/index.html
 #: docs/views.py templates/site_with_navigation.html
 #: templates/system/jobs/site_jobs.html
-#: templates/system/pcgroups/confirm_delete.html templates/system/pcs/form.html
-#: templates/system/pcs/site_pcs.html templates/system/sites/list.html
+#: templates/system/pcgroups/confirm_delete.html
+#: templates/system/pcs/no_pcs.html templates/system/pcs/pcs.html
+#: templates/system/pcs/update.html templates/system/sites/list.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_plan.html
 msgid "Computers"
@@ -3267,14 +3268,22 @@ msgstr ""
 "knappen \"Spara ändringar\" längst ner på skärmen."
 
 #: docs/templates/wake_plans/edit_exceptions.html
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
+msgid ""
+"Exceptions that are used by the same on/off schedule cannot have overlapping "
+"dates."
+msgstr ""
+"Undantag som används av samma på/av-schema kan inte ha överlappande datum."
+
+#: docs/templates/wake_plans/edit_exceptions.html
 msgid ""
 "Note that if you change the settings for an exception that is being used by "
 "one or more schedules, those schedules will also be updated when you click "
 "on \"Save changes.\""
 msgstr ""
 "Observera att om du ändrar inställningarna för ett undantag som används av "
-"flera aktiva scheman, kommer scheman också att uppdateras när du trycker på "
-"\"Spara ändringar.\""
+"en eller flera aktiva scheman, kommer scheman också att uppdateras när du "
+"trycker på \"Spara ändringar.\""
 
 #: docs/templates/wake_plans/edit_exceptions.html
 msgid ""
@@ -3459,24 +3468,26 @@ msgstr "Inställningar: Undantag"
 msgid ""
 "Below the header \"Exceptions: Closed days and altered opening hours\", one "
 "can add or remove exceptions to the week plan for specific dates or periods. "
-"If an exception for a given date exists, the settings for the exception will "
-"be used instead of the week plan settings. An exception can be a change in "
-"the on and off times or a constant shutdown for a specific date or period. "
-"Exceptions are created, deleted and edited in the tab that opens when you "
-"click \"Create closed days\", \"Create altered opening hours\" or \"Edit "
-"exceptions\". The different buttons redirect to the part of the tab that is "
-"related to their name."
+"An on/off schedule can only have a single exception to the week plan for a "
+"given date. If an exception for a given date exists, the settings for the "
+"exception will be used instead of the week plan settings. An exception can "
+"be a change in the on and off times or a constant shutdown for a specific "
+"date or period. Exceptions are created, deleted and edited in the tab that "
+"opens when you click \"Create closed days\", \"Create altered opening "
+"hours\" or \"Edit exceptions\". The different buttons redirect to the part "
+"of the tab that is related to their name."
 msgstr ""
 "Under rubriken \"Undantag: Stängningsdagar och ändrade öppettider\" kan du "
 "lägga till eller ta bort undantag till veckoschemat för specifika datum "
-"eller perioder. Om det finns ett undantag för ett visst datum används "
-"undantagsinställningarna i stället för veckoschemainställningarna. Ett "
-"undantag kan vara en förändring i på- och avstängningstiderna eller en "
-"konstant avstängning för ett visst datum eller en viss period. Undantag "
-"skapas, raderas och redigeras i fliken som öppnas när du trycker på \"Skapa "
-"stängningsdagar\", \"Skapa ändrade öppettider\" eller \"Redigera undantag\". "
-"De olika knapparna går direkt till den del av fliken som är relaterad till "
-"deras namn."
+"eller perioder. Ett på/av-schema kan bara ha ett enda undantag från "
+"veckoschemat för ett givet datum. Om det finns ett undantag för ett visst "
+"datum används undantagsinställningarna i stället för "
+"veckoschemainställningarna. Ett undantag kan vara en förändring i på- och "
+"avstängningstiderna eller en konstant avstängning för ett visst datum eller "
+"en viss period. Undantag skapas, raderas och redigeras i fliken som öppnas "
+"när du trycker på \"Skapa stängningsdagar\", \"Skapa ändrade öppettider\" "
+"eller \"Redigera undantag\". De olika knapparna går direkt till den del av "
+"fliken som är relaterad till deras namn."
 
 #: docs/templates/wake_plans/edit_settings.html
 msgid "Add exceptions"
@@ -3498,17 +3509,18 @@ msgstr ""
 
 #: docs/templates/wake_plans/edit_settings.html
 msgid ""
-"If you attempt to add an exception that overlaps with one or more already "
-"added exceptions, the chosen exception will be rejected during the update of "
-"the schedule when you click \"Save changes\". Valid exceptions will still be "
-"added. If one or more exceptions are rejected, the page will inform you of "
-"this along with the reason."
+"If you attempt to add an exception where the date(s) overlap with a date "
+"used by an already added exception, the chosen exception will be rejected "
+"during the update of the schedule when you click \"Save changes\". Valid "
+"exceptions will still be added. If one or more exceptions are rejected, the "
+"page will inform you of this along with the reason."
 msgstr ""
-"Om du försöker lägga till ett undantag som överlappar ett eller flera redan "
-"associerade undantag kommer det valda undantaget att avvisas för "
-"uppdateringen av schemat när du klickar på \"Spara ändringar\". Giltiga "
-"undantag kommer fortfarande att läggas till. Om ett eller flera undantag "
-"avvisas, kommer sidan att informera dig om detta tillsammans med anledningen."
+"Om du försöker lägga till ett undantag där datumet överlappar ett datum som "
+"används av ett redan tillagt undantag, kommer det valda undantaget att "
+"avvisas för uppdateringen av schemat när du klickar på \"Spara ändringar\". "
+"Giltiga undantag kommer fortfarande att läggas till. Om ett eller flera "
+"undantag avvisas, kommer sidan att informera dig om detta tillsammans med "
+"anledningen."
 
 #: docs/templates/wake_plans/edit_settings.html
 msgid "Remove exceptions"
@@ -3543,7 +3555,7 @@ msgid ""
 "The customers that helped fund the functions automatically have access. "
 "Other customers can contact Magenta if they are interested."
 msgstr ""
-"De energisparande funktionerna består av ett skript för vila och på / av-"
+"De energisparande funktionerna består av ett skript för vila och på/av-"
 "scheman. Dessa funktioner kan endast användas av kunder som har köpt "
 "åtkomst. Alla kunder som hjälpte till att finansiera funktionerna har "
 "automatisk åtkomst. Andra kunder kan kontakta Magenta om de är intresserade."
@@ -4353,6 +4365,10 @@ msgid "finished"
 msgstr "Slutförd"
 
 #: system/models.py
+msgid "hidden on dashboard"
+msgstr "dold på dashboard"
+
+#: system/models.py
 #, python-brace-format
 msgid "Cannot change status from {0} to {1}"
 msgstr "Kan inte ändra status från {0} til {1}"
@@ -4431,7 +4447,7 @@ msgstr "rapporterat"
 msgid "assigned user"
 msgstr "hanteras av"
 
-#: system/models.py templates/system/site_status.html
+#: system/models.py templates/system/pcs/pcs.html
 msgid "product"
 msgstr "produkt"
 
@@ -4875,6 +4891,45 @@ msgstr "Hantera konfiguration"
 msgid "Save"
 msgstr "Spara"
 
+#: templates/system/dashboard_job_list.html
+msgid "Latest failed jobs"
+msgstr "Senaste misslyckade jobb"
+
+#: templates/system/dashboard_job_list.html
+msgid ""
+"Hiding a failed job means that it will no longer be shown on the dashboard. "
+"Are you sure you want to hide all the shown failed jobs?"
+msgstr ""
+"Att dölja ett misslyckat jobb innebär att det inte längre kommer att visas "
+"på dashboardet. Är du säker på att du vill dölja alla visade misslyckade "
+"jobb?"
+
+#: templates/system/dashboard_job_list.html
+msgid "Hide all shown jobs"
+msgstr "Dölj alla visade jobb"
+
+#: templates/system/dashboard_job_list.html
+#: templates/system/site_dashboard.html
+msgid "See all"
+msgstr "Se alla"
+
+#: templates/system/dashboard_job_list.html
+msgid ""
+"Hiding a failed job means that it will no longer be shown on the dashboard. "
+"Are you sure you want to hide this failed job?:"
+msgstr ""
+"Att dölja ett misslyckat jobb innebär att det inte längre kommer att visas "
+"på dashboardet. Är du säker på att du vill dölja det här misslyckade jobbet?:"
+
+#: templates/system/dashboard_job_list.html
+msgid "Hide this failed job"
+msgstr "Dölj det här misslyckade jobbet"
+
+#: templates/system/dashboard_job_list.html
+#: templates/system/site_dashboard.html
+msgid "Nothing to show"
+msgstr "Inget att visa"
+
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
 msgid "Delete offline rule"
 msgstr "Ta bort offline-regel"
@@ -5037,14 +5092,14 @@ msgstr "Fjärrmottagare"
 
 #: templates/system/event_rules/site_event_rules_server.html
 #: templates/system/event_rules/site_security_problems.html
-#: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
+#: templates/system/pcgroups/site_groups.html templates/system/pcs/update.html
 #: templates/system/wake_plan/wake_plan.html
 msgid "None chosen"
 msgstr "Ingen vald"
 
 #: templates/system/event_rules/site_event_rules_server.html
 #: templates/system/event_rules/site_security_problems.html
-#: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
+#: templates/system/pcgroups/site_groups.html templates/system/pcs/update.html
 msgid "Details about"
 msgstr "Detaljer om"
 
@@ -5170,7 +5225,8 @@ msgstr "Batches"
 
 #: templates/system/jobs/site_jobs.html
 #: templates/system/pcgroups/policy_list/list.html
-#: templates/system/pcs/form.html templates/system/scripts/confirm_delete.html
+#: templates/system/pcs/update.html
+#: templates/system/scripts/confirm_delete.html
 #: templates/system/scripts/create.html templates/system/scripts/update.html
 msgid "Script"
 msgstr "Skript"
@@ -5179,16 +5235,16 @@ msgstr "Skript"
 msgid "User"
 msgstr "Användare"
 
-#: templates/system/jobs/site_jobs.html templates/system/pcs/form.html
+#: templates/system/jobs/site_jobs.html templates/system/pcs/update.html
 #: templates/system/scripts/update.html templates/system/users/update.html
 msgid "Created"
 msgstr "Skapad"
 
-#: templates/system/jobs/site_jobs.html templates/system/pcs/form.html
+#: templates/system/jobs/site_jobs.html templates/system/pcs/update.html
 msgid "Started"
 msgstr "Startad"
 
-#: templates/system/jobs/site_jobs.html templates/system/pcs/form.html
+#: templates/system/jobs/site_jobs.html templates/system/pcs/update.html
 msgid "Finished"
 msgstr "Avslutad"
 
@@ -5268,7 +5324,7 @@ msgstr "Lägg till ny grupp"
 msgid "Delete group"
 msgstr "Ta bort grupp"
 
-#: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
+#: templates/system/pcgroups/site_groups.html templates/system/pcs/update.html
 #: templates/system/scripts/update_form.html
 msgid "Details"
 msgstr "Detaljer"
@@ -5383,7 +5439,7 @@ msgstr ""
 msgid "Create group"
 msgstr "Skapa en grupp"
 
-#: templates/system/pcs/confirm_delete.html templates/system/pcs/form.html
+#: templates/system/pcs/confirm_delete.html templates/system/pcs/update.html
 msgid "Delete computer"
 msgstr "Radera dator"
 
@@ -5395,55 +5451,95 @@ msgstr "Datorns hela jobbhistorik kommer också att raderas"
 msgid "Are you sure you want to delete the computer"
 msgstr "Är du säker på att du vill radera datorn"
 
-#: templates/system/pcs/form.html
-msgid "There are no computers"
-msgstr "Det finns inga datorer"
+#: templates/system/pcs/no_pcs.html
+msgid "No computers were found"
+msgstr "Inga datorer hittades"
 
-#: templates/system/pcs/form.html templates/system/site_status.html
+#: templates/system/pcs/pcs.html templates/system/sites/list.html
+msgid "Total number of"
+msgstr "Totalt antal"
+
+#: templates/system/pcs/pcs.html templates/system/sites/list.html
+msgid "Total number of BorgerPC's"
+msgstr "Totalt antal MedborgarPC'er"
+
+#: templates/system/pcs/pcs.html templates/system/sites/list.html
+msgid "Total number of Kiosk PC's"
+msgstr "Totalt antal Kiosk PC'er"
+
+#: templates/system/pcs/pcs.html templates/system/sites/list.html
+msgid "Activated:"
+msgstr "Aktiverade:"
+
+#: templates/system/pcs/pcs.html
+msgid "Activated"
+msgstr "Aktiverad"
+
+#: templates/system/pcs/pcs.html
+msgid "Description"
+msgstr "Beskrivning"
+
+#: templates/system/pcs/pcs.html
+msgid "Location"
+msgstr "Placering"
+
+#: templates/system/pcs/pcs.html
+msgid "Latest check-in"
+msgstr "Senaste incheckning"
+
+#: templates/system/pcs/pcs.html
+msgid "Latest event received"
+msgstr "Senaste incidenten har tagits emot"
+
+#: templates/system/pcs/pcs.html templates/system/pcs/update.html
 msgid "Not activated"
 msgstr "Inte aktiverad"
 
-#: templates/system/pcs/form.html
-msgid "Registered"
-msgstr "Registrerad"
+#: templates/system/pcs/pcs.html
+msgid "Offline"
+msgstr "Offline"
 
-#: templates/system/pcs/form.html
-msgid "Last check-in"
-msgstr "Senaste incheckning"
-
-#: templates/system/pcs/form.html templates/system/site_dashboard.html
-#: templates/system/site_status.html
+#: templates/system/pcs/pcs.html templates/system/pcs/update.html
+#: templates/system/site_dashboard.html
 msgid "ago"
 msgstr "sedan"
 
-#: templates/system/pcs/form.html templates/system/site_status.html
+#: templates/system/pcs/pcs.html templates/system/pcs/update.html
 msgid "Never"
 msgstr "Aldrig"
 
-#: templates/system/pcs/form.html
+#: templates/system/pcs/update.html
+msgid "There are no computers"
+msgstr "Det finns inga datorer"
+
+#: templates/system/pcs/update.html
+msgid "Registered"
+msgstr "Registrerad"
+
+#: templates/system/pcs/update.html
+msgid "Last check-in"
+msgstr "Senaste incheckning"
+
+#: templates/system/pcs/update.html
 msgid "Last event received"
 msgstr "Senaste incidenten har tagits emot"
 
-#: templates/system/pcs/form.html
+#: templates/system/pcs/update.html
 msgid "Groups the computer is a member of"
 msgstr "Grupper som datorn är medlem i"
 
-#: templates/system/pcs/form.html
+#: templates/system/pcs/update.html
 msgid "Add computer to group"
 msgstr "Lägg till dator i gruppen"
 
-#: templates/system/pcs/form.html
+#: templates/system/pcs/update.html
 msgid "Remove computer from group"
 msgstr "Ta bort datorn från gruppen"
 
-#: templates/system/pcs/form.html
+#: templates/system/pcs/update.html
 #: templates/system/security_events/site_security_events.html
 msgid "Info"
 msgstr "Info"
-
-#: templates/system/pcs/site_pcs.html
-msgid "No computers were found"
-msgstr "Inga datorer hittades"
 
 #: templates/system/scripts/confirm_delete.html
 msgid "the Script"
@@ -5642,18 +5738,6 @@ msgid "Latest unhandled events"
 msgstr "Senaste obehandlade incidenter"
 
 #: templates/system/site_dashboard.html
-msgid "See all"
-msgstr "Se alla"
-
-#: templates/system/site_dashboard.html
-msgid "Nothing to show"
-msgstr "Inget att visa"
-
-#: templates/system/site_dashboard.html
-msgid "Latest failed jobs"
-msgstr "Senaste misslyckade jobb"
-
-#: templates/system/site_dashboard.html
 msgid "Latest news"
 msgstr "Senaste nyheterna"
 
@@ -5730,10 +5814,6 @@ msgid "Download"
 msgstr "Ladda ner"
 
 #: templates/system/site_settings/api_keys/api_keys.html
-msgid "API Keys for"
-msgstr "API-nycklar för"
-
-#: templates/system/site_settings/api_keys/api_keys.html
 msgid "These API keys are used to access our API. See our"
 msgstr "Dessa API-nycklar används för att komma åt vårt API. Se vår"
 
@@ -5764,54 +5844,6 @@ msgstr "Är du säker på att du vill ta bort följande API-nyckel?:"
 #: templates/system/site_settings/api_keys/partials/list.html
 msgid "There are currently no API keys"
 msgstr "Det finns för närvarande inga API-nycklar"
-
-#: templates/system/site_settings/site_settings.html
-msgid "Settings for"
-msgstr "Inställningar för"
-
-#: templates/system/site_status.html
-msgid "computers"
-msgstr "datorer"
-
-#: templates/system/site_status.html templates/system/sites/list.html
-msgid "Total number of"
-msgstr "Totalt antal"
-
-#: templates/system/site_status.html templates/system/sites/list.html
-msgid "Total number of BorgerPC's"
-msgstr "Totalt antal MedborgarPC'er"
-
-#: templates/system/site_status.html templates/system/sites/list.html
-msgid "Total number of Kiosk PC's"
-msgstr "Totalt antal Kiosk PC'er"
-
-#: templates/system/site_status.html templates/system/sites/list.html
-msgid "Activated:"
-msgstr "Aktiverade:"
-
-#: templates/system/site_status.html
-msgid "Activated"
-msgstr "Aktiverad"
-
-#: templates/system/site_status.html
-msgid "Description"
-msgstr "Beskrivning"
-
-#: templates/system/site_status.html
-msgid "Location"
-msgstr "Placering"
-
-#: templates/system/site_status.html
-msgid "Latest check-in"
-msgstr "Senaste incheckning"
-
-#: templates/system/site_status.html
-msgid "Latest event received"
-msgstr "Senaste incidenten har tagits emot"
-
-#: templates/system/site_status.html
-msgid "Offline"
-msgstr "Offline"
 
 #: templates/system/site_two_factor_pc.html
 msgid ""
@@ -6213,6 +6245,10 @@ msgstr ""
 #: templates/system/wake_plan/wake_plan.html
 msgid "the suspend script."
 msgstr "Skriptet för vila."
+
+#: templates/system/wake_plan/wake_plan.html
+msgid "An on/off schedule can only have one exception for a given date."
+msgstr "Ett på/av-schema kan bara ha ett undantag för ett givet datum."
 
 #: templates/system/wake_plan/wake_plan.html
 msgid "Schedule status"

@@ -57,6 +57,11 @@
             {% endblocktranslate %}
             <a href="{% url 'script_redirect_uid' 'suspend_after_time' %}">{% translate "the suspend script." %}</a>
           </li>
+          <li>
+            {% blocktranslate trimmed %}
+            An on/off schedule can only have one exception for a given date.
+            {% endblocktranslate %}
+          </li>
         </ul>
       </div>
 

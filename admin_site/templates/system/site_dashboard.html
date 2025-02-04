@@ -23,7 +23,7 @@
             </thead>
             <tbody>
                 {% for event in latest_events %}
-                    <tr class="click-list--item">
+                    <tr>
                         <td>
                             <strong>{% if event.problem %}{{ event.problem.name }}{% else %}{{ event.event_rule_server.name }}{% endif %} - {{ event.pc.name }}</strong>
                         </td>
@@ -32,7 +32,7 @@
                         </td>
                     </tr>
                 {% empty %}
-                    <tr class="click-list--item">
+                    <tr>
                         <td>
                             {% translate "Nothing to show" %}
                         </td>
@@ -42,35 +42,7 @@
             </tbody>
         </table>
         <table class="table table-light mt-4" id="jobs-table">
-            <thead>
-                <tr>
-                    <th>
-                        {% translate "Latest failed jobs" %}
-                    </th>
-                    <th class="text-end">
-                        <a href="{% url 'jobs' slug=site.uid %}?job_status=FAILED" >{% translate "See all" %}</a>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for job in latest_failed_jobs %}
-                    <tr class="click-list--item">
-                        <td>
-                            <strong>{{ job.batch.script.name }} - {{ job.pc.name }}</strong>
-                        </td>
-                        <td class="text-end">
-                            {{ job.finished }}
-                        </td>
-                    </tr>
-                {% empty %}
-                    <tr class="click-list--item">
-                        <td>
-                            {% translate "Nothing to show" %}
-                        </td>
-                        <td></td>
-                    </tr>
-                {% endfor %}
-            </tbody>
+            {% include "system/dashboard_job_list.html" %}
         </table>
         <table class="table table-light mt-4" id="news-table">
             <thead>
@@ -85,7 +57,7 @@
             </thead>
             <tbody>
                 {% for changelog in latest_news %}
-                    <tr class="click-list--item">
+                    <tr>
                         <td>
                             <a href="{% url 'changelogs' %}{{ changelog.id }}/">
                             <strong>{{ changelog.title }}</strong>
@@ -96,7 +68,7 @@
                         </td>
                     </tr>
                 {% empty %}
-                    <tr class="click-list--item">
+                    <tr>
                         <td>
                             {% translate "Nothing to show" %}
                         </td>
@@ -120,7 +92,7 @@
             </thead>
             <tbody>
                 {% for pc in latest_offline_pcs %}
-                    <tr class="click-list--item">
+                    <tr>
                         <td class="align-middle">
                             <a href="{% url 'computer' site.uid pc.uid %}">
                             <strong>{{ pc.name }}</strong>
@@ -132,7 +104,7 @@
                         </td>
                     </tr>
                 {% empty %}
-                    <tr class="click-list--item">
+                    <tr>
                         <td>
                             {% translate "Nothing to show" %}
                         </td>
@@ -154,7 +126,7 @@
             </thead>
             <tbody>
                 {% for script in latest_scripts %}
-                    <tr class="click-list--item">
+                    <tr>
                         <td>
                             {% if script.is_security_script %}
                             <a href="{% url 'security_script' site.uid script.pk %}">
@@ -167,7 +139,7 @@
                         <td></td>
                     </tr>
                 {% empty %}
-                    <tr class="click-list--item">
+                    <tr>
                         <td>
                             {% translate "Nothing to show" %}
                         </td>
@@ -191,7 +163,7 @@
             </thead>
             <tbody>
                 {% for entry in oldest_full_updates %}
-                    <tr class="click-list--item">
+                    <tr>
                         <td>
                             <a href="{% url 'computer' site.uid entry.owner_configuration.pc_set.first.uid %}">
                             <strong>{{ entry.owner_configuration.pc_set.first.name }}</strong>
@@ -202,7 +174,7 @@
                         </td>
                     </tr>
                 {% empty %}
-                    <tr class="click-list--item">
+                    <tr>
                         <td>
                             {% translate "Nothing to show" %}
                         </td>
@@ -214,4 +186,5 @@
     </fieldset>
     </div>
 </div>
+
 {% endblock %}

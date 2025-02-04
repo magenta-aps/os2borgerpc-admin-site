@@ -310,7 +310,7 @@ class Site(models.Model):
             self.configuration = Configuration.objects.create()
 
         # Perform save
-        super(Site, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
         # After save
         pass
@@ -597,7 +597,7 @@ class PCGroup(models.Model):
         if is_new:
             self.configuration = Configuration.objects.create()
         # Perform save
-        super(PCGroup, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
         # After save
         pass
@@ -1091,6 +1091,9 @@ class Job(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     batch = models.ForeignKey(Batch, related_name="jobs", on_delete=models.CASCADE)
     pc = models.ForeignKey(PC, related_name="jobs", on_delete=models.CASCADE)
+    dashboard_hidden = models.BooleanField(
+        verbose_name=_("hidden on dashboard"), default=False
+    )
 
     def __str__(self):
         return "_".join(map(str, [self.batch, self.id]))

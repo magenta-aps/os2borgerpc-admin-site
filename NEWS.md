@@ -1,3 +1,11 @@
+## Version 6.5.0, February 4, 2025
+
+- Allow users to hide failed jobs on the dashboard
+- Correctly determine which failed jobs to show on the pc joblist and dashboard
+- Wake plan: Sort wake change events chronologically, indicate a day can only
+have one wake change event
+- Minor views cleanup
+
 ## Version 6.4.0, December 17, 2024
 
 - Add dashboard and move status under computers

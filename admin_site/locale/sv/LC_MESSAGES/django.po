@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-06 11:05+0100\n"
+"POT-Creation-Date: 2025-01-08 14:35+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -4365,6 +4365,10 @@ msgid "finished"
 msgstr "Slutförd"
 
 #: system/models.py
+msgid "hidden on dashboard"
+msgstr "dold på dashboard"
+
+#: system/models.py
 #, python-brace-format
 msgid "Cannot change status from {0} to {1}"
 msgstr "Kan inte ändra status från {0} til {1}"
@@ -4886,6 +4890,45 @@ msgstr "Hantera konfiguration"
 #: templates/system/pcgroups/policy_list/templates.html
 msgid "Save"
 msgstr "Spara"
+
+#: templates/system/dashboard_job_list.html
+msgid "Latest failed jobs"
+msgstr "Senaste misslyckade jobb"
+
+#: templates/system/dashboard_job_list.html
+msgid ""
+"Hiding a failed job means that it will no longer be shown on the dashboard. "
+"Are you sure you want to hide all the shown failed jobs?"
+msgstr ""
+"Att dölja ett misslyckat jobb innebär att det inte längre kommer att visas "
+"på dashboardet. Är du säker på att du vill dölja alla visade misslyckade "
+"jobb?"
+
+#: templates/system/dashboard_job_list.html
+msgid "Hide all shown jobs"
+msgstr "Dölj alla visade jobb"
+
+#: templates/system/dashboard_job_list.html
+#: templates/system/site_dashboard.html
+msgid "See all"
+msgstr "Se alla"
+
+#: templates/system/dashboard_job_list.html
+msgid ""
+"Hiding a failed job means that it will no longer be shown on the dashboard. "
+"Are you sure you want to hide this failed job?:"
+msgstr ""
+"Att dölja ett misslyckat jobb innebär att det inte längre kommer att visas "
+"på dashboardet. Är du säker på att du vill dölja det här misslyckade jobbet?:"
+
+#: templates/system/dashboard_job_list.html
+msgid "Hide this failed job"
+msgstr "Dölj det här misslyckade jobbet"
+
+#: templates/system/dashboard_job_list.html
+#: templates/system/site_dashboard.html
+msgid "Nothing to show"
+msgstr "Inget att visa"
 
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
 msgid "Delete offline rule"
@@ -5693,18 +5736,6 @@ msgstr "Hanteras av"
 #: templates/system/site_dashboard.html
 msgid "Latest unhandled events"
 msgstr "Senaste obehandlade incidenter"
-
-#: templates/system/site_dashboard.html
-msgid "See all"
-msgstr "Se alla"
-
-#: templates/system/site_dashboard.html
-msgid "Nothing to show"
-msgstr "Inget att visa"
-
-#: templates/system/site_dashboard.html
-msgid "Latest failed jobs"
-msgstr "Senaste misslyckade jobb"
 
 #: templates/system/site_dashboard.html
 msgid "Latest news"

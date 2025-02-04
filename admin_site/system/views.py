@@ -548,7 +548,7 @@ class SiteDashboardView(SiteView):
                     ].customer.feature_permission.all()
                 )
             )
-            .filter(batch__site=self.object, status="FAILED")
+            .filter(batch__site=self.object, status="FAILED", dashboard_hidden=False)
             .order_by(F("finished").desc(nulls_last=True))[:ITEMS_PER_SECTION]
         )
 
@@ -576,6 +576,50 @@ class SiteDashboardView(SiteView):
         ).order_by("value")[:ITEMS_PER_SECTION]
 
         return context
+
+
+class SiteDashboardJobListUpdate(SuperAdminOrThisSiteMixin):
+
+    def get_context_data(self, **kwargs):
+        context = {}
+
+        ITEMS_PER_SECTION = 5
+
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        context["site"] = site
+
+        context["latest_failed_jobs"] = (
+            Job.objects.filter(
+                Q(batch__script__is_hidden=False)
+                | Q(
+                    batch__script__feature_permission__in=site.customer.feature_permission.all()
+                )
+            )
+            .filter(batch__site=site, status="FAILED", dashboard_hidden=False)
+            .order_by(F("finished").desc(nulls_last=True))[:ITEMS_PER_SECTION]
+        )
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        target_jobs = request.POST["target_jobs"]
+
+        context = self.get_context_data(**kwargs)
+
+        if target_jobs == "all":
+            ids = context["latest_failed_jobs"].values_list("pk", flat=True)
+        else:
+            ids = [target_jobs]
+
+        Job.objects.filter(batch__site=context["site"], id__in=ids).update(
+            dashboard_hidden=True
+        )
+
+        return render(
+            request,
+            "system/dashboard_job_list.html",
+            self.get_context_data(),
+        )
 
 
 class SiteSettings(UpdateView, SiteView):

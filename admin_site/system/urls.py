@@ -52,6 +52,7 @@ from system.views import (
     EventRuleServerCreate,
     EventRuleServerDelete,
     EventRuleServerUpdate,
+    SiteDashboardJobListUpdate,
     SiteDashboardView,
     SiteList,
     SiteCreate,
@@ -419,6 +420,11 @@ htmx_urlpatterns = [
         r"^site/(?P<slug>[^/]+)/api-key/(?P<pk>\d+)/delete/$",
         APIKeyDelete.as_view(),
         name="api_key_delete",
+    ),
+    re_path(
+        r"^site/(?P<slug>[^/]+)/dashboard/update/$",
+        SiteDashboardJobListUpdate.as_view(),
+        name="dashboard_jobs",
     ),
     re_path(
         r"^sites/new-validate$",

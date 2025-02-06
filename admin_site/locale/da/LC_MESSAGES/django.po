@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-08 14:35+0100\n"
+"POT-Creation-Date: 2025-02-06 14:31+0100\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -5529,6 +5529,10 @@ msgstr "Seneste tjek-ind"
 #: templates/system/pcs/update.html
 msgid "Last event received"
 msgstr "Seneste hændelse modtaget"
+
+#: templates/system/pcs/update.html
+msgid "Ubuntu version"
+msgstr "Ubuntu-version"
 
 #: templates/system/pcs/update.html
 msgid "Groups the computer is a member of"

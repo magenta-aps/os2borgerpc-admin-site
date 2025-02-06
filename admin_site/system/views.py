@@ -579,7 +579,6 @@ class SiteDashboardView(SiteView):
 
 
 class SiteDashboardJobListUpdate(SuperAdminOrThisSiteMixin):
-
     def get_context_data(self, **kwargs):
         context = {}
 
@@ -1796,6 +1795,7 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         context["orderby_base_url"] = pc.get_absolute_url() + "?"
 
         context["selected_pc"] = pc
+        context["os_release"] = pc.get_config_value("_os_release")
 
         context["security_event"] = pc.security_events.latest_event()
         context["has_security_events"] = (

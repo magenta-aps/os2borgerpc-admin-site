@@ -74,6 +74,10 @@
             {% translate "Never" %}
           {% endif %}
         </span>
+        <span class="me-5">
+          {% translate "Ubuntu version" %}:
+          {{ os_release }}
+        </span>
       </div>
 
       {% csrf_token %}

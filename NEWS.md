@@ -1,3 +1,7 @@
+## Version 6.6.0, February 10, 2025
+
+- Add SSO via OIDC support
+
 ## Version 6.5.0, February 4, 2025
 
 - Allow users to hide failed jobs on the dashboard

@@ -268,6 +268,28 @@ class UserForm(forms.ModelForm):
         return user
 
 
+class UserFormSSO(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        # The form receives this argument that only the regular UserForm needs
+        kwargs.pop("site")
+
+        initial = kwargs.setdefault("initial", {})
+        user_profile = kwargs["instance"].user_profile
+        initial["language"] = user_profile.language
+
+        super().__init__(*args, **kwargs)
+
+    language = forms.ChoiceField(
+        required=True,
+        choices=UserProfile.language_choices,
+        label=_("Language"),
+    )
+
+    class Meta:
+        model = User
+        fields = ("language",)
+
+
 class ParameterForm(forms.Form):
     def __init__(self, *args, **kwargs):
         script = kwargs.pop("script")

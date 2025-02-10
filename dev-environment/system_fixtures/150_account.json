@@ -45,6 +45,15 @@
     }
 },
 {
+    "model": "account.userprofile",
+    "pk": 6,
+    "fields": {
+        "user": 40,
+        "language": "da",
+        "is_hidden": false
+    }
+},
+{
     "model": "account.sitemembership",
     "pk": 1,
     "fields": {
@@ -60,15 +69,6 @@
         "site_user_type": 1,
         "site": 1,
         "user_profile": 2
-    }
-},
-{
-    "model": "account.sitemembership",
-    "pk": 3,
-    "fields": {
-        "site_user_type": 1,
-        "site": 1,
-        "user_profile": 3
     }
 },
 {
@@ -91,20 +91,29 @@
 },
 {
     "model": "account.sitemembership",
-    "pk": 6,
-    "fields": {
-        "site_user_type": 2,
-        "site": 9,
-        "user_profile": 3
-    }
-},
-{
-    "model": "account.sitemembership",
     "pk": 7,
     "fields": {
         "site_user_type": 2,
         "site": 13,
         "user_profile": 3
+    }
+},
+{
+    "model": "account.sitemembership",
+    "pk": 8,
+    "fields": {
+        "site_user_type": 1,
+        "site": 14,
+        "user_profile": 3
+    }
+},
+{
+    "model": "account.sitemembership",
+    "pk": 9,
+    "fields": {
+        "site_user_type": 1,
+        "site": 13,
+        "user_profile": 6
     }
 }
 ]

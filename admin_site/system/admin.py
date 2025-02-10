@@ -324,6 +324,7 @@ class CustomerAdmin(admin.ModelAdmin):
     list_display = (
         "name",
         "is_test",
+        "using_sso",
         "number_of_computers",
         "number_of_borgerpc_computers",
         "number_of_kioskpc_computers",

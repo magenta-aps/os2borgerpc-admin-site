@@ -1,5 +1,6 @@
 import jwt
 import requests
+import logging
 
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -10,6 +11,8 @@ from mozilla_django_oidc.auth import OIDCAuthenticationBackend
 from django.contrib.auth.models import User
 from account.models import UserProfile, SiteMembership, Site
 from system.models import Customer
+
+logger = logging.getLogger(__name__)
 
 
 class MyOIDCAB(OIDCAuthenticationBackend):
@@ -48,7 +51,8 @@ class MyOIDCAB(OIDCAuthenticationBackend):
         return user
 
     def update_user(self, user, claims):
-        user.username = claims.get("email", "")
+        user.username = claims.get("upn", "")
+        user.email = claims.get("email", "")
         user.password = ""
         user.save()
 
@@ -102,7 +106,9 @@ class MyOIDCAB(OIDCAuthenticationBackend):
                 try:
                     site_uid, site_role = role.split("_")
                 except ValueError:
-                    print("SSO error: Roles do not contain the delimiter: _")
+                    logger.error(
+                        f"SSO error: A received role does not contain the delimiter: _. The role was: {role}."
+                    )
                     return redirect(reverse("login") + "?sso_error=true")
                 if site_uid in site_uids:
                     if site_role.lower() == "siteadmin":
@@ -110,6 +116,9 @@ class MyOIDCAB(OIDCAuthenticationBackend):
                     elif site_role.lower() == "siteuser":
                         site_user_type = SiteMembership.SITE_USER
                     else:
+                        logger.error(
+                            f"SSO error: A received role does not match a role in this application. The role was: {site_role}."
+                        )
                         return redirect(reverse("login") + "?sso_error=true")
                     SiteMembership.objects.create(
                         user_profile=user_profile,

@@ -352,3 +352,8 @@ AUTHENTICATION_BACKENDS = [
 ]
 OIDC_USE_PKCE = settings.get("OIDC_USE_PKCE")
 OIDC_CUSTOMER = settings.get("OIDC_CUSTOMER")
+
+if settings.get("SECURE_PROXY_SSL_HEADER"):
+    SECURE_PROXY_SSL_HEADER = settings.get("SECURE_PROXY_SSL_HEADER").split(",")
+else:
+    SECURE_PROXY_SSL_HEADER = None

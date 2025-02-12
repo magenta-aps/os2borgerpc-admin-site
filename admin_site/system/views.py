@@ -1202,11 +1202,15 @@ class ScriptMixin(object):
         context["site"] = self.site
         context["script_tags"] = ScriptTag.objects.all()
 
-        scripts = self.scripts.filter(is_hidden=False)
-
-        # Append scripts the site has permissions for
-        for fp in context["site"].customer.feature_permission.all():
-            scripts = scripts | fp.scripts.filter(is_security_script=self.is_security)
+        if self.request.user.is_superuser:
+            scripts = self.scripts.all()
+        else:
+            scripts = self.scripts.filter(is_hidden=False)
+            # Append scripts the site has permissions for
+            for fp in context["site"].customer.feature_permission.all():
+                scripts = scripts | fp.scripts.filter(
+                    is_security_script=self.is_security
+                )
 
         local_scripts = scripts.filter(site=self.site)
         context["local_scripts"] = local_scripts

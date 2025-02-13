@@ -337,6 +337,8 @@ MARKDOWNX_MEDIA_PATH = datetime.now().strftime("changelog-images/%Y/%m/%d")
 FORM_RENDERER = "django.forms.renderers.DjangoDivFormRenderer"
 
 LOGIN_REDIRECT_URL = "/"
+# Only called when SSO logins fail
+LOGIN_REDIRECT_URL_FAILURE = "/accounts/sso-login-error/"
 
 # SSO
 OIDC_RP_CLIENT_ID = settings.get("OIDC_RP_CLIENT_ID")

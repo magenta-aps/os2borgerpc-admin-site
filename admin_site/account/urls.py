@@ -6,7 +6,11 @@ urlpatterns = [
     path(
         "accounts/login/",
         account_views.LoginView.as_view(template_name="two_factor/core/login.html"),
-        name="login",
+    ),
+    path(
+        "accounts/sso-login-error/",
+        account_views.LoginView.as_view(template_name="two_factor/core/login.html"),
+        name="sso-login-error",
     ),
     path(
         "accounts/logout/",

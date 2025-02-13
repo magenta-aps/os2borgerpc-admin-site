@@ -9,6 +9,7 @@ from django.conf import settings
 from mozilla_django_oidc.auth import OIDCAuthenticationBackend
 
 from django.contrib.auth.models import User
+
 from account.models import UserProfile, SiteMembership, Site
 from system.models import Customer
 
@@ -20,14 +21,6 @@ class MyOIDCAB(OIDCAuthenticationBackend):
 
     # TODO: Ideally we override get_or_create_user and do error handling in there instead of here, and then this function should return self.UserModel.objects.none() on errors.
     def filter_users_by_claims(self, claims):
-        if (
-            not claims
-            or "upn" not in claims
-            or "email" not in claims
-            or "roles" not in claims
-        ):
-            return redirect(reverse("login") + "?sso_error=true")
-
         upn = claims.get("upn")
         try:
             user = User.objects.get(username=upn)
@@ -64,7 +57,7 @@ class MyOIDCAB(OIDCAuthenticationBackend):
         return user
 
     def get_userinfo(self, access_token, id_token, payload):
-        """Return user details dictionary. The id_token isand payload are not used in
+        """Return user details dictionary. The id_token and payload are not used in
         the default implementation, but may be used when overriding this method.
         NB: "roles" are extracted from payload and added to user_response."""
 
@@ -125,3 +118,44 @@ class MyOIDCAB(OIDCAuthenticationBackend):
                         site=Site.objects.get(uid=site_uid),
                         site_user_type=site_user_type,
                     )
+
+    def verify_claims(self, claims):
+        """Verify the provided claims to decide if authentication should be allowed.
+        OVERRIDE: Claim validation altered. Also added roles check."""
+        if (
+            not claims
+            or "upn" not in claims
+            or "email" not in claims
+            or "roles" not in claims
+        ):
+            logger.error(
+                f"SSO error: Received insufficent claims"
+            )
+            return False
+        if (not self.validate_roles(claims)):
+            return False
+        
+        return True
+
+    def validate_roles(self, claims):
+        """NOT an override method."""
+        roles = claims.get("roles", "")
+        user = claims.get("upn")
+        site_uid_check = []
+        for role in roles:
+            try:
+                site_uid, site_role = role.split("_")  
+                site_uid_check.append(site_uid)      
+            except ValueError:
+                logger.error(
+                    f"SSO error: A received role does not contain the delimiter: _. The role was: {role}."
+                )
+                return False
+            
+            if(site_uid in site_uid_check):
+                logger.error(
+                    f"SSO error: It seems \"{user}\" has more than one role for the site \"{site_uid}\"."
+                )
+                return False
+            
+        return True

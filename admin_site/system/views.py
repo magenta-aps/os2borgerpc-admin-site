@@ -3528,7 +3528,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
             parameter = e.args[0]
             set_notification_cookie(
                 response,
-                _("No value was specified for the mandatory input %s" " of script %s")
+                _("No value was specified for the mandatory input %s of script %s")
                 % (parameter.name, parameter.script.name),
                 error=True,
             )

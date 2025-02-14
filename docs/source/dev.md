@@ -17,4 +17,4 @@
 
 ### Configuring the use of customer admins
 
-See the related [guide](https://github.com/OS2borgerPC/admin-site/raw/development/admin_site/static/docs/configuring_customer_admins.pdf).
+See the related [guide](https://github.com/magenta-aps/os2borgerpc-admin-site/raw/development/admin_site/static/docs/configuring_customer_admins.pdf).

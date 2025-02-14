@@ -66,17 +66,17 @@ class MyOIDCAB(OIDCAuthenticationBackend):
                     f"SSO error: A received role does not match a role in this application. The role was: {site_role}."
                 )
                 return False
-            if site_uid in site_uid_check:
-                logger.error(
-                    f'SSO error: It seems "{user}" has more than one role for the site "{site_uid}".'
-                )
-                return False
-            site_uid_check.append(site_uid)
             if site_uid not in site_uids:
                 logger.error(
                     f"SSO error: A site uid was received from the SSO, which doesn't match any of the customer's sites. The uid is {site_uid}."
                 )
                 return False
+            if site_uid in site_uid_check:
+                logger.error(
+                    f'SSO error: Only one Role per Site is allowed. It seems "{user}" has more than one role for the site "{site_uid}".'
+                )
+                return False
+            site_uid_check.append(site_uid)
 
         return True
 

@@ -43,6 +43,11 @@ class MyOIDCAB(OIDCAuthenticationBackend):
         roles = claims.get("roles", "")
         user = claims.get("upn")
         site_uid_check = []
+        site_uids = list(
+            Customer.objects.get(id=settings.OIDC_CUSTOMER)
+            .sites.all()
+            .values_list("uid", flat=True)
+        )
         if "all_customeradmin" in roles and len(roles) > 1:
             logger.error(
                 f"SSO error: When a user is a Customer Admin, the user should have no other roles. Roles received: {roles}"
@@ -67,6 +72,11 @@ class MyOIDCAB(OIDCAuthenticationBackend):
                 )
                 return False
             site_uid_check.append(site_uid)
+            if site_uid not in site_uids:
+                logger.error(
+                    f"SSO error: A site uid was received from the SSO, which doesn't match any of the customer's sites. The uid is {site_uid}."
+                )
+                return False
 
         return True
 
@@ -108,16 +118,15 @@ class MyOIDCAB(OIDCAuthenticationBackend):
         else:
             for role in roles:
                 site_uid, site_role = role.split("_")
-                if site_uid in site_uids:
-                    if site_role.lower() == "siteadmin":
-                        site_user_type = SiteMembership.SITE_ADMIN
-                    else:
-                        site_user_type = SiteMembership.SITE_USER
-                    SiteMembership.objects.create(
-                        user_profile=user_profile,
-                        site=Site.objects.get(uid=site_uid),
-                        site_user_type=site_user_type,
-                    )
+                if site_role.lower() == "siteadmin":
+                    site_user_type = SiteMembership.SITE_ADMIN
+                else:
+                    site_user_type = SiteMembership.SITE_USER
+                SiteMembership.objects.create(
+                    user_profile=user_profile,
+                    site=Site.objects.get(uid=site_uid),
+                    site_user_type=site_user_type,
+                )
 
     def create_user(self, claims):
         user = super(MyOIDCAB, self).create_user(claims)

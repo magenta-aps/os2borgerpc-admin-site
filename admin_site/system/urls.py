@@ -106,12 +106,12 @@ urlpatterns = [
         name="event_rule_security_problem_new",
     ),
     path(
-        "site/<slug>/security_problems/<id>/delete/",
+        "site/<slug>/security_problems/<int:id>/delete/",
         SecurityProblemDelete.as_view(),
         name="event_rule_security_problem_delete",
     ),
     path(
-        "site/<slug>/security_problems/<id>/",
+        "site/<slug>/security_problems/<int:id>/",
         SecurityProblemUpdate.as_view(),
         name="event_rule_security_problem",
     ),
@@ -122,23 +122,23 @@ urlpatterns = [
         name="event_rule_server_new",
     ),
     path(
-        "site/<slug>/event_rules_server/<id>/delete/",
+        "site/<slug>/event_rules_server/<int:id>/delete/",
         EventRuleServerDelete.as_view(),
         name="event_rule_server_delete",
     ),
     path(
-        "site/<slug>/event_rules_server/<id>/",
+        "site/<slug>/event_rules_server/<int:id>/",
         EventRuleServerUpdate.as_view(),
         name="event_rule_server",
     ),
     # Security scripts
     path(
-        "site/<slug>/security_scripts/<script_pk>)/delete/",
+        "site/<slug>/security_scripts/<int:script_pk>)/delete/",
         ScriptDelete.as_view(is_security=True),
         name="security_script_delete",
     ),
     path(
-        "site/<slug>/security_scripts/<script_pk>/",
+        "site/<slug>/security_scripts/<int:script_pk>/",
         ScriptUpdate.as_view(is_security=True),
         name="security_script",
     ),
@@ -197,7 +197,7 @@ urlpatterns = [
         name="new_configuration",
     ),
     path(
-        "site/<slug>/configuration/edit/<pk>/",
+        "site/<slug>/configuration/edit/<int:pk>/",
         ConfigurationEntryUpdate.as_view(),
         name="edit_configuration",
     ),
@@ -230,17 +230,17 @@ urlpatterns = [
         name="new_group",
     ),
     path(
-        "site/<slug>/groups/<group_id>/",
+        "site/<slug>/groups/<int:group_id>/",
         PCGroupUpdate.as_view(),
         name="group",
     ),
     path(
-        "site/<slug>/groups/<group_id>/delete/",
+        "site/<slug>/groups/<int:group_id>/delete/",
         PCGroupDelete.as_view(),
         name="group_delete",
     ),
     path(
-        "site/<slug>/groups/<group_id>/duplicate/",
+        "site/<slug>/groups/<int:group_id>/duplicate/",
         PCGroupDuplicate.as_view(),
         name="group_duplicate",
     ),
@@ -257,17 +257,17 @@ urlpatterns = [
         name="wake_plan_new",
     ),
     path(
-        "site/<slug>/wake_plan/<wake_week_plan_id>/",
+        "site/<slug>/wake_plan/<int:wake_week_plan_id>/",
         WakePlanUpdate.as_view(),
         name="wake_plan",
     ),
     path(
-        "site/<slug>/wake_plan/<wake_week_plan_id>/delete/",
+        "site/<slug>/wake_plan/<int:wake_week_plan_id>/delete/",
         WakePlanDelete.as_view(),
         name="wake_plan_delete",
     ),
     path(
-        "site/<slug>/wake_plan/<wake_week_plan_id>/duplicate/",
+        "site/<slug>/wake_plan/<int:wake_week_plan_id>/duplicate/",
         WakePlanDuplicate.as_view(),
         name="wake_plan_duplicate",
     ),
@@ -289,48 +289,48 @@ urlpatterns = [
         name="wake_change_event_new_closed",
     ),
     path(
-        "site/<slug>/wake_change_event/<wake_change_event_id>/",
+        "site/<slug>/wake_change_event/<int:wake_change_event_id>/",
         WakeChangeEventUpdate.as_view(),
         name="wake_change_event",
     ),
     path(
-        "site/<slug>/wake_change_event/<wake_change_event_id>/delete/",
+        "site/<slug>/wake_change_event/<int:wake_change_event_id>/delete/",
         WakeChangeEventDelete.as_view(),
         name="wake_change_event_delete",
     ),
     # Jobs
     path("site/<slug>/jobs/search/", JobSearch.as_view(), name="jobsearch"),
     path(
-        "site/<slug>/jobs/<pk>/restart/",
+        "site/<slug>/jobs/<int:pk>/restart/",
         JobRestarter.as_view(),
         name="restart_job",
     ),
     path(
-        "site/<slug>/jobs/<pk>/info/",
+        "site/<slug>/jobs/<int:pk>/info/",
         JobInfo.as_view(),
         name="job_info",
     ),
     path("site/<slug>/jobs/", JobsView.as_view(), name="jobs"),
     # Scripts
     path(
-        "site/<slug>/scripts/<script_pk>/delete/",
+        "site/<slug>/scripts/<int:script_pk>/delete/",
         ScriptDelete.as_view(),
         name="script_delete",
     ),
     path(
-        "site/<slug>/scripts/<script_pk>/run/",
+        "site/<slug>/scripts/<int:script_pk>/run/",
         ScriptRun.as_view(),
         name="run_script",
     ),
     path(
-        "site/<slug>/scripts/<script_pk>/",
+        "site/<slug>/scripts/<int:script_pk>/",
         ScriptUpdate.as_view(),
         name="script",
     ),
     path("site/<slug>/scripts/new/", ScriptCreate.as_view(), name="new_script"),
     path("site/<slug>/scripts/", ScriptRedirect.as_view(), name="scripts"),
     path(
-        "scripts/<script_pk>/",
+        "scripts/<int:script_pk>/",
         GlobalScriptRedirect.as_view(),
         name="script_redirect_id",
     ),
@@ -375,7 +375,7 @@ urlpatterns = [
         name="images-redirect-site",
     ),
     path(
-        "site/<slug>/image-versions/<product_id>/",
+        "site/<slug>/image-versions/<int:product_id>/",
         ImageVersionView.as_view(),
         name="images-product",
     ),
@@ -396,12 +396,12 @@ htmx_urlpatterns = [
         name="api_key_new",
     ),
     path(
-        "site/<slug>/api-key/<pk>/update/",
+        "site/<slug>/api-key/<int:pk>/update/",
         APIKeyUpdate.as_view(),
         name="api_key_update",
     ),
     path(
-        "site/<slug>/api-key/<pk>/delete/",
+        "site/<slug>/api-key/<int:pk>/delete/",
         APIKeyDelete.as_view(),
         name="api_key_delete",
     ),

@@ -174,20 +174,6 @@ var BibOS
       this.loadResource("css", src)
     },
 
-    translate: function () {
-      // TODO: implement actual translation, this is just poor man's sprintf
-      var args = arguments,
-        arg_idx = 1,
-        key = arguments[0] || ""
-      if (arguments.length > 1) {
-        key = key.replace(/\%s/g, function (m) {
-          var v = args[arg_idx++]
-          return v == undefined ? "" : v
-        })
-      }
-      return key
-    },
-
     // Load a template from innerHTML of element specified by id
     addTemplate: function (name, id) {
       this.templates[name] = $(id).html()

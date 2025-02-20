@@ -1,5 +1,4 @@
 ;(function (BibOS, $) {
-  tr = BibOS.translate
   if (!document.getElementById("policylist-templates")) {
     alert(
       "policy_list.js loaded without templates present" +

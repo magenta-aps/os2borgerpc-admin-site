@@ -234,7 +234,7 @@ function submitEditDialog(policy_id) {
       }
     } else if (inputElement.getAttribute('type') === 'checkbox') {
       inputField.value = inputElement.checked ? 'True' : 'False'
-      visibleValueField.innerHTML = '<input type="checkbox" disabled ' + (inputElement.checked ? 'checked>' : '>')
+      visibleValueField.innerHTML = '<input type="checkbox" class="form-check-input" disabled ' + (inputElement.checked ? 'checked>' : '>')
     } else if (inputElement.getAttribute('type') === 'password') {
       inputField.value = inputElement.value
       visibleValueField.textContent = '•••••'

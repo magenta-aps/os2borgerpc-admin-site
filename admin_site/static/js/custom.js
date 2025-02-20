@@ -32,6 +32,31 @@ document.addEventListener("DOMContentLoaded", (event) => {
     document.cookie =
       "page-notification=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;"
   }
+
+  // TODO: With this we can link directly to a specific tab
+  // The functionality can be used to make tab forms redirect to whatever the current tab is, after pressing "Save" on
+  // the form.
+  // Example: This URL should go directly to site configs:
+  // http://localhost:9999/site/magenta/settings/#configs-tab
+  // In other words you trigger it based off the ID of the button activating it, rather than the ID of the tab
+  // itself.
+  if (window.location.hash) {
+    var someTabTriggerEl = document.querySelector(window.location.hash)
+    var tab = new bootstrap.Tab(someTabTriggerEl)
+    tab.show()
+    // Now remove the tab's highlighting
+    tab._element.blur()
+  }
+
+  // Scroll to the active li in the list
+  const scrollableList = document.getElementsByClassName("sublevelnav")[0]
+  if (typeof scrollableList !== "undefined") {
+    const activeItem = scrollableList.querySelector(".active")
+
+    if (activeItem) {
+      activeItem.scrollIntoView({ block: "center" })
+    }
+  }
 })
 
 // Set up global BibOS instance used for accessing utility methods
@@ -74,21 +99,6 @@ var BibOS
 
       if (location.href.match(documentation_match)) {
         this.setupDocumentationBackLinks()
-      }
-
-      // TODO: With this we can link directly to a specific tab
-      // The functionality can be used to make tab forms redirect to whatever the current tab is, after pressing "Save" on
-      // the form.
-      // Example: This URL should go directly to site configs:
-      // http://localhost:9999/site/magenta/settings/#configs-tab
-      // In other words you trigger it based off the ID of the button activating it, rather than the ID of the tab
-      // itself.
-      if (window.location.hash) {
-        var someTabTriggerEl = document.querySelector(window.location.hash)
-        var tab = new bootstrap.Tab(someTabTriggerEl)
-        tab.show()
-        // Now remove the tab's highlighting
-        tab._element.blur()
       }
     },
     setupDocumentationBackLinks: function () {
@@ -306,8 +316,6 @@ var BibOS
       var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
         return new bootstrap.Popover(popoverTriggerEl)
       })
-
-      var t = this
 
       $(rootElem)
         .find(".loginfobutton")

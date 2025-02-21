@@ -160,20 +160,6 @@ def site_pcs_stats(context, site_list):
     return context
 
 
-def site_uid_available_check(request):
-    uid = request.GET["uid"]
-    uid = Site.objects.filter(uid=uid)
-    if uid:
-        return HttpResponse(
-            _("The specified UID is unavailable. Please choose another.")
-            + "<script>document.getElementById('create_site_save_button').disabled = true</script>"
-        )
-    else:
-        return HttpResponse(
-            "<script>document.getElementById('create_site_save_button').disabled = false</script>"
-        )
-
-
 # Mixin class to require login
 class LoginRequiredMixin(View):
     """Subclass in all views where login is required."""
@@ -289,6 +275,22 @@ class SiteMixin(View):
         context["sec_events"] = no_of_sec_events
 
         return context
+
+
+class SiteUIDAvailableCheck(LoginRequiredMixin):
+
+    def dispatch(self, *args, **kwargs):
+        uid = self.request.GET["uid"]
+        uid = Site.objects.filter(uid=uid)
+        if uid:
+            return HttpResponse(
+                _("The specified UID is unavailable. Please choose another.")
+                + "<script>document.getElementById('create_site_save_button').disabled = true</script>"
+            )
+        else:
+            return HttpResponse(
+                "<script>document.getElementById('create_site_save_button').disabled = false</script>"
+            )
 
 
 # Main index/site root view

@@ -1,20 +1,17 @@
-
 // This event displays the notification message in the toast element, when the page is loaded
-document.addEventListener('DOMContentLoaded', (event) => {
-
+document.addEventListener("DOMContentLoaded", (event) => {
   // First check if there is a page-notification in the cookie with the response from the server
   let notification = document.cookie.match(/\bpage-notification\s*=\s*([^;]+)/)
 
-  if(notification) {
+  if (notification) {
     try {
-
       let descriptor = JSON.parse(decodeURIComponent(notification[1]))
 
       // The bootstrap 5 toast html element, located in the notification.html file and must be included in the html to display the toast
       const toastElement = document.getElementById("toast")
       const toastBody = toastElement.firstElementChild.firstElementChild
 
-      let toast_color="bg-success"
+      let toast_color = "bg-success"
       // if autoHide is set to true, the toast will disappear automatically, default is 5 seconds
       let autoHide = true
 
@@ -27,21 +24,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
       toastElement.classList.add(toast_color)
       toastBody.innerText = descriptor["message"]
 
-      const toast = new bootstrap.Toast(toastElement, {autohide: autoHide})
+      const toast = new bootstrap.Toast(toastElement, { autohide: autoHide })
       toast.show()
-
     } catch (e) {
       console.error(e)
     }
-    document.cookie = 'page-notification=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie =
+      "page-notification=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;"
   }
-});
-
-
+})
 
 // Set up global BibOS instance used for accessing utility methods
 var BibOS
-(function($) {
+;(function ($) {
   function BibOS(args) {
     this.templates = {}
     this.documentReady = false
@@ -55,31 +50,29 @@ var BibOS
   var back_match = /[\?\&]back=([^\&]+)/
 
   $.extend(BibOS.prototype, {
-    init: function() {
-    },
+    init: function () {},
 
-    onDOMReady: function() {
+    onDOMReady: function () {
       var t = this
       t.documentReady = true
 
       // Mark what we have already loaded
-      $('script').each(function() {
-        t.loadedItems[$(this).attr('src') || ''] = true
+      $("script").each(function () {
+        t.loadedItems[$(this).attr("src") || ""] = true
       })
-      $.each(this.scriptsToLoad, function() {
+      $.each(this.scriptsToLoad, function () {
         t.loadScript(this)
       })
-      $('link').each(function() {
-        t.loadedItems[$(this).attr('href') || ''] = true
+      $("link").each(function () {
+        t.loadedItems[$(this).attr("href") || ""] = true
       })
-      $.each(this.cssToLoad, function() {
+      $.each(this.cssToLoad, function () {
         t.loadStylesheet(this)
       })
 
-      $('#editconfig_value').attr('maxlength', 4096)
+      $("#editconfig_value").attr("maxlength", 4096)
 
-      if(location.href.match(documentation_match))
-      {
+      if (location.href.match(documentation_match)) {
         this.setupDocumentationBackLinks()
       }
 
@@ -98,109 +91,104 @@ var BibOS
         tab._element.blur()
       }
     },
-    setupDocumentationBackLinks: function() {
-      var ref = document.referrer || ''
-      var back = ''
+    setupDocumentationBackLinks: function () {
+      var ref = document.referrer || ""
+      var back = ""
 
       var m = ref.match(back_match) || location.href.match(back_match)
-      if(m) {
+      if (m) {
         back = unescape(m[1])
-      } else if(!ref.match(documentation_match)) {
+      } else if (!ref.match(documentation_match)) {
         back = ref
       }
 
-      if(! back)
-        return
+      if (!back) return
 
       back = escape(back)
-      $('a').each(function() {
-        var href = $(this).attr('href') || ''
-        if(href == '#' || href.match(/^javascript:/))
-          return true
-        if(href.match(documentation_match)) {
+      $("a").each(function () {
+        var href = $(this).attr("href") || ""
+        if (href == "#" || href.match(/^javascript:/)) return true
+        if (href.match(documentation_match)) {
           var url_parts = href.split(/[\?#]/)
-          var qstring_parts = (url_parts[1] || '').split('&')
+          var qstring_parts = (url_parts[1] || "").split("&")
           var args = []
-          $.each(qstring_parts, function() {
-            if(this != '' && !this.match(/back=/))
-              args.push(this)
+          $.each(qstring_parts, function () {
+            if (this != "" && !this.match(/back=/)) args.push(this)
           })
-          args.push('back=' + back)
-          var new_href = [
-            url_parts[0],
-            '?', args.join('&'),
-          ].join('')
-          if(url_parts.length > 2) {
+          args.push("back=" + back)
+          var new_href = [url_parts[0], "?", args.join("&")].join("")
+          if (url_parts.length > 2) {
             url_parts.splice(0, 2)
-            new_href += '#' + url_parts.join("#")
+            new_href += "#" + url_parts.join("#")
           }
-          $(this).attr('href', new_href)
+          $(this).attr("href", new_href)
         }
         return true
       })
     },
-    loadResource: function(type, src) {
-      if(this.documentReady) {
+    loadResource: function (type, src) {
+      if (this.documentReady) {
         var item
-        if(this.loadedItems[src])
-          return
-        if(type == 'css' || type == 'stylesheet') {
-          var css = $('<link>', {
-            'href': src,
-            'type': 'text/css',
-            'rel': 'stylesheet'
+        if (this.loadedItems[src]) return
+        if (type == "css" || type == "stylesheet") {
+          var css = $("<link>", {
+            href: src,
+            type: "text/css",
+            rel: "stylesheet",
           })
-          css.appendTo($('head'))
-        } else if(type == 'script' || type == 'javascript') {
-          var script = $('<script>', {'src': src, 'type':'text/javascript'})
-          script.appendTo($('body'))
+          css.appendTo($("head"))
+        } else if (type == "script" || type == "javascript") {
+          var script = $("<script>", { src: src, type: "text/javascript" })
+          script.appendTo($("body"))
         } else {
           alert("Don't know how to load item of type " + type)
           return
         }
         this.loadedItems[src] = true
       } else {
-        if (type == 'css' || type == 'stylesheet') {
+        if (type == "css" || type == "stylesheet") {
           this.cssToLoad.push(src)
-        } else if(type == 'script') {
+        } else if (type == "script") {
           this.scriptsToLoad.push(src)
         } else {
-          alert("Don't know how to load item of type " + type + ' once')
+          alert("Don't know how to load item of type " + type + " once")
         }
       }
     },
 
-    loadScript: function(src) {
-      this.loadResource('script', src)
+    loadScript: function (src) {
+      this.loadResource("script", src)
     },
 
-    loadStylesheet: function(src) {
-      this.loadResource('css', src)
+    loadStylesheet: function (src) {
+      this.loadResource("css", src)
     },
 
-    translate: function() {
+    translate: function () {
       // TODO: implement actual translation, this is just poor man's sprintf
-      var args = arguments, arg_idx = 1, key = arguments[0] || ''
+      var args = arguments,
+        arg_idx = 1,
+        key = arguments[0] || ""
       if (arguments.length > 1) {
-        key = key.replace(/\%s/g, function(m) {
+        key = key.replace(/\%s/g, function (m) {
           var v = args[arg_idx++]
-          return v == undefined ? '' : v
+          return v == undefined ? "" : v
         })
       }
       return key
     },
 
     // Load a template from innerHTML of element specified by id
-    addTemplate: function(name, id) {
+    addTemplate: function (name, id) {
       this.templates[name] = $(id).html()
     },
 
     // Expand a template with the given data
-    expandTemplate: function(templateName, data) {
-      var html = this.templates[templateName] || ''
-      var expander = function(fullmatch, key) {
-          k = key.toLowerCase()
-          return k in data ? data[k] : fullmatch
+    expandTemplate: function (templateName, data) {
+      var html = this.templates[templateName] || ""
+      var expander = function (fullmatch, key) {
+        k = key.toLowerCase()
+        return k in data ? data[k] : fullmatch
       }
       html = html.replace(/<!--#([^#]+)#-->/g, expander)
       return html.replace(/#([^#]+)#/g, expander)
@@ -208,72 +196,86 @@ var BibOS
 
     getCookie: function (name) {
       var cookieValue = null
-      if (document.cookie && document.cookie != '') {
-          var cookies = document.cookie.split(';')
-          for (var i = 0; i < cookies.length; i++) {
-              var cookie = cookies[i].trim()
-              // Does this cookie string begin with the name we want?
-              if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
-                  break
-              }
+      if (document.cookie && document.cookie != "") {
+        var cookies = document.cookie.split(";")
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim()
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) == name + "=") {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
+            break
           }
+        }
       }
       return cookieValue
     },
     csrfSafeMethod: function (method) {
-        // these HTTP methods do not require CSRF protection
-        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method))
+      // these HTTP methods do not require CSRF protection
+      return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method)
     },
     sameOrigin: function (url) {
-        // test that a given url is a same-origin URL
-        // url could be relative or scheme relative or absolute
-        var host = document.location.host // host + port
-        var protocol = document.location.protocol
-        var sr_origin = '//' + host
-        var origin = protocol + sr_origin
-        // Allow absolute or scheme relative URLs to same origin
-        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
-            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
-            // or any other URL that isn't scheme relative or absolute i.e relative.
-            !(/^(\/\/|http:|https:).*/.test(url))
+      // test that a given url is a same-origin URL
+      // url could be relative or scheme relative or absolute
+      var host = document.location.host // host + port
+      var protocol = document.location.protocol
+      var sr_origin = "//" + host
+      var origin = protocol + sr_origin
+      // Allow absolute or scheme relative URLs to same origin
+      return (
+        url == origin ||
+        url.slice(0, origin.length + 1) == origin + "/" ||
+        url == sr_origin ||
+        url.slice(0, sr_origin.length + 1) == sr_origin + "/" ||
+        // or any other URL that isn't scheme relative or absolute i.e relative.
+        !/^(\/\/|http:|https:).*/.test(url)
+      )
     },
-    getOrderBy: function(old_order, new_order) {
+    getOrderBy: function (old_order, new_order) {
       var desc = false,
-          old_desc = false
+        old_desc = false
       if (old_order.match(/^\-/)) {
-          old_order = old_order.replace(/^\-/, '')
-          old_desc = true
+        old_order = old_order.replace(/^\-/, "")
+        old_desc = true
       }
-      if (new_order == old_order)
-          desc = !old_desc
-      return (desc ? '-' : '') + new_order
+      if (new_order == old_order) desc = !old_desc
+      return (desc ? "-" : "") + new_order
     },
-    setOrderByClasses: function(elem, list, orderkey) {
-      $(list).removeClass('orderby').removeClass('orderby-desc')
-      $(elem).addClass(orderkey.match(/^-/) ? 'orderby-desc' : 'orderby')
+    setOrderByClasses: function (elem, list, orderkey) {
+      $(list).removeClass("orderby").removeClass("orderby-desc")
+      $(elem).addClass(orderkey.match(/^-/) ? "orderby-desc" : "orderby")
     },
-    insertToOrderedList: function(topElem, selector, matcher, elem, defaultInsertCallback) {
+    insertToOrderedList: function (
+      topElem,
+      selector,
+      matcher,
+      elem,
+      defaultInsertCallback,
+    ) {
       var inserted = false,
-        lastInsert = defaultInsertCallback || function() {
-          elem.detach().appendTo($(topElem))
-        }
+        lastInsert =
+          defaultInsertCallback ||
+          function () {
+            elem.detach().appendTo($(topElem))
+          }
 
-      $(topElem).children(selector).each(function() {
-        var currentElem = $(this)
-        if(matcher(currentElem)) {
-          elem.detach().insertBefore(currentElem)
-          inserted = true
-        }
-        return !inserted
-      })
+      $(topElem)
+        .children(selector)
+        .each(function () {
+          var currentElem = $(this)
+          if (matcher(currentElem)) {
+            elem.detach().insertBefore(currentElem)
+            inserted = true
+          }
+          return !inserted
+        })
 
-      if(!inserted)
-        lastInsert(elem)
+      if (!inserted) lastInsert(elem)
     },
-    setupJobInfoButtons: function(rootElem) {
+    setupJobInfoButtons: function (rootElem) {
       // initialize all job info popovers.
-      var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+      var popoverTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="popover"]'),
+      )
       var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
         return new bootstrap.Popover(popoverTriggerEl)
       })
@@ -281,62 +283,69 @@ var BibOS
       var t = this
 
       // JOBINFOBUTTON
-      $(rootElem).find('.jobinfobutton').on('show.bs.popover', function(e) {
-        // hide all popovers before a new popover is shown.
-        popoverTriggerList.map(function (popoverTriggerEl) {
-          $(popoverTriggerEl).popover('hide')
+      $(rootElem)
+        .find(".jobinfobutton")
+        .on("show.bs.popover", function (e) {
+          // hide all popovers before a new popover is shown.
+          popoverTriggerList.map(function (popoverTriggerEl) {
+            $(popoverTriggerEl).popover("hide")
+          })
         })
-      })
 
-      $(rootElem).find('.jobinfobutton').on('shown.bs.popover', function(e) {
-        t.showJobInfo(this)
-      })
+      $(rootElem)
+        .find(".jobinfobutton")
+        .on("shown.bs.popover", function (e) {
+          t.showJobInfo(this)
+        })
     },
-    setupSecurityEventLogInfoButtons: function(rootElem) {
+    setupSecurityEventLogInfoButtons: function (rootElem) {
       // initialize all security event log info popovers.
-      var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+      var popoverTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="popover"]'),
+      )
       var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
         return new bootstrap.Popover(popoverTriggerEl)
       })
 
       var t = this
 
-      $(rootElem).find('.loginfobutton').on('show.bs.popover', function(e) {
-        // hide all popovers before a new popover is shown.
-        popoverTriggerList.map(function (popoverTriggerEl) {
-          $(popoverTriggerEl).popover('hide')
+      $(rootElem)
+        .find(".loginfobutton")
+        .on("show.bs.popover", function (e) {
+          // hide all popovers before a new popover is shown.
+          popoverTriggerList.map(function (popoverTriggerEl) {
+            $(popoverTriggerEl).popover("hide")
+          })
         })
-      })
     },
-    showJobInfo: function(triggerElem) {
+    showJobInfo: function (triggerElem) {
       var t = this
       var popover = bootstrap.Popover.getInstance(triggerElem)
       triggerElem = $(triggerElem)
-      var id = triggerElem.attr('data-pk')
+      var id = triggerElem.attr("data-pk")
       this.shownJobInfo = id
       var url = location.href.match(/^(https?:\/\/[^\/]+\/site\/[^\/]+\/)/)
       if (url) {
-        url = url[1] + 'jobs/' + id + '/info/'
+        url = url[1] + "jobs/" + id + "/info/"
       } else {
         return false
       }
       $.ajax({
-        'type': 'GET',
-        'url': url,
-        'success': function(data) {
+        type: "GET",
+        url: url,
+        success: function (data) {
           // set content from backend data and redraw popover.
           triggerElem.attr("data-bs-content", data)
           popover.setContent()
 
-          const parser = new DOMParser();
-          const dataHTML = parser.parseFromString(data, 'text/html');
+          const parser = new DOMParser()
+          const dataHTML = parser.parseFromString(data, "text/html")
 
           const jobLog = dataHTML.getElementById("job-log").innerText
 
           addEventListenerForClipBoardButton(jobLog)
         },
-        'error': function() {
-        }
+        error: function () {},
       })
       return false
     },
@@ -344,47 +353,47 @@ var BibOS
   window.BibOS = window.BibOS || new BibOS()
   var b = window.BibOS
   b.init()
-  $(function() { b.onDOMReady() })
+  $(function () {
+    b.onDOMReady()
+  })
 
   //(Setup support for CSRFToken in ajax calls
   $.ajaxSetup({
-    beforeSend: function(xhr, settings) {
+    beforeSend: function (xhr, settings) {
       if (!b.csrfSafeMethod(settings.type) && b.sameOrigin(settings.url)) {
         // Send the token to same-origin, relative URLs only.
         // Send the token only if the method warrants CSRF protection
         // Using the CSRFToken value acquired earlier
-        xhr.setRequestHeader("X-CSRFToken", b.getCookie('csrftoken'))
+        xhr.setRequestHeader("X-CSRFToken", b.getCookie("csrftoken"))
       }
-    }
+    },
   })
-
 })($)
 
 /* Utility function to calculate some pagination numbers */
 function calcPaginationRange(pag_data, obj_per_page) {
-  const first = ((pag_data.page - 1) * obj_per_page ) + 1
-  const last = ((pag_data.page - 1) * obj_per_page ) + pag_data.results.length
+  const first = (pag_data.page - 1) * obj_per_page + 1
+  const last = (pag_data.page - 1) * obj_per_page + pag_data.results.length
   const range = first + "-" + last + " af " + pag_data.count
   return range
 }
 
 // Function to get the value of a named cookie
 function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(";").shift()
 }
 
 /* Currently only used by the job log copy button */
 function addEventListenerForClipBoardButton(log) {
   let btn = document.getElementById("clipboard-button")
 
-  btn.addEventListener('click', () => {
-
+  btn.addEventListener("click", () => {
     navigator.clipboard.writeText(log)
 
-    btn.getElementsByClassName("copy-btn-text-orig")[0].classList.add('d-none')
-    btn.lastElementChild.classList.remove('d-none')
+    btn.getElementsByClassName("copy-btn-text-orig")[0].classList.add("d-none")
+    btn.lastElementChild.classList.remove("d-none")
   })
 }
 
@@ -393,21 +402,21 @@ function addEventListenerForClipBoardButton(log) {
  * copy-btn: The button to attach the event listener to, which copies
  * copy-text: The element containing the text to copy
  * after-copy-text: The element containing the text to be shown after copying
-*/
+ */
 function copy_button(el) {
-  const btn = el.getElementsByClassName('copy-btn')[0]
+  const btn = el.getElementsByClassName("copy-btn")[0]
 
-  btn.addEventListener('click', () => {
-
-    const text_to_copy = el.getElementsByClassName('copy-text')[0].innerText
-    const el_to_show_after_copy = el.getElementsByClassName('after-copy-text')[0]
+  btn.addEventListener("click", () => {
+    const text_to_copy = el.getElementsByClassName("copy-text")[0].innerText
+    const el_to_show_after_copy =
+      el.getElementsByClassName("after-copy-text")[0]
 
     // Remove the ugly focus brorder around the btn after clicking it
     btn.blur()
 
     navigator.clipboard.writeText(text_to_copy)
 
-    el_to_show_after_copy.classList.remove('d-none')
+    el_to_show_after_copy.classList.remove("d-none")
   })
 }
 
@@ -415,14 +424,13 @@ function copy_api_key(event) {
   const btn = event.currentTarget
   btn.blur() // Remove the focus around the button after copying
   navigator.clipboard.writeText(btn.parentElement.firstElementChild.innerText)
-  btn.parentElement.lastElementChild.classList.remove('d-none')
+  btn.parentElement.lastElementChild.classList.remove("d-none")
 }
 
-
 // Activate all popovers except those for job info and security event logs
-$(document).ready(function(){
-  $('[data-toggle="popover"]').popover();
-});
+$(document).ready(function () {
+  $('[data-toggle="popover"]').popover()
+})
 
 // This function is used in the picklist.html file, to display the names
 // correctly, if it contains chars like ' or "

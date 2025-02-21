@@ -1,5 +1,4 @@
 ;(function (BibOS, $) {
-  tr = BibOS.translate
   if (!document.getElementById("configlist-templates")) {
     alert(
       "configlist.js loaded without templates present" +
@@ -92,12 +91,17 @@
 
       if (pk == "new") {
         if (!name) {
-          alert(tr("Du skal angive et navn"))
+          alert(gettext("Error: You have to specify a name"))
           return false
         }
         existing = $("#" + id).find("input.config-key[value=" + name + "]")
         if (existing.length) {
-          alert(tr("Config-navnet %s findes allerede", name))
+          alert(
+            interpolate(
+              gettext('Error: Another configuration has the name "%s" already'),
+              [name],
+            ),
+          )
           $("#editconfig_name").trigger("focus").trigger("select")
           return false
         }

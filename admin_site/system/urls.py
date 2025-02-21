@@ -56,7 +56,7 @@ from system.views import (
     SiteDashboardView,
     SiteList,
     SiteCreate,
-    site_uid_available_check,
+    SiteUIDAvailableCheck,
     SiteDelete,
     SiteSettings,
     TwoFactor,
@@ -412,7 +412,7 @@ htmx_urlpatterns = [
     ),
     path(
         "sites/new-validate/",
-        site_uid_available_check,
+        SiteUIDAvailableCheck.as_view(),
         name="site_uid_available_check",
     ),
 ]

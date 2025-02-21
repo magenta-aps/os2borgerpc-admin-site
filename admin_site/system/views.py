@@ -191,7 +191,10 @@ class SuperAdminOrThisSiteMixin(LoginRequiredMixin):
             slug_field = "slug"
         # If none given, give up
         if slug_field:
-            site = get_object_or_404(Site, uid=kwargs[slug_field])
+            try:
+                site = Site.objects.get(uid=kwargs["slug"])
+            except Site.DoesNotExist:
+                return redirect("/")
         check_function = user_passes_test(
             lambda u: (u.is_superuser) or (site and site in u.user_profile.sites.all()),
             login_url="/",

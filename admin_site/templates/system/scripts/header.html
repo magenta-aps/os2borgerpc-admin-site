@@ -5,14 +5,7 @@
 {% if is_security %} {% translate "Security Scripts" %} {% else %} {% translate "Scripts" %} {% endif %}
 {% endblock %}
 
-<!-- Syntax highlighting -->
-{% block stylesheets %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/foundation.min.css">
-{% endblock %}
-
 {% block javascripts %}
-<!-- Syntax highlighting -->
-<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
 <script type="text/javascript" src="/static/js/script_edit.js"></script>
 
 <script type="text/javascript">

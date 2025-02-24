@@ -10,7 +10,7 @@ RUN npm ci \
   && npm run build
 CMD ["/bin/sh", "-c", "npm run watch-sass"]
 
-FROM python:3.9 AS os2borgerpc
+FROM python:3.9-slim AS os2borgerpc
 
 LABEL org.opencontainers.image.title="OS2borgerPC" \
   org.opencontainers.image.vendor="Magenta ApS" \

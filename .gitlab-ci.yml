@@ -33,19 +33,17 @@ variables:
 .lint-default: &lint-default
   stage: lint
   needs: []
-  image: python:3.8
 Lint Python:
   <<: *lint-default
-  before_script:
-    - pip3 install -r admin_site/requirements.txt
-    - pip3 install black
+  image: python:3.13-alpine
+  before_script: [pip3 install black]
   script: [cd admin_site, black --version, black --check --diff .]
 Lint Dockerfiles:
   <<: *lint-default
   image: hadolint/hadolint:latest-debian
   before_script:
-    - apt-get -y update
-    - apt-get -y install --no-install-recommends git
+    - apt-get --assume-yes update
+    - apt-get --assume-yes install --no-install-recommends git
   script:
     - git ls-files --exclude='Dockerfile*' --ignored | xargs --max-lines=1 hadolint
 # Build stage

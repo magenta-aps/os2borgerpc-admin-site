@@ -19,7 +19,7 @@
                             {% translate "News categories" %}
                         </strong>
                     </p>
-                    
+
                     <p class="meta-tags">
                     {% for tag in entry.get_tags %}
                     <a class="btn btn-md tag-filter-btn bg-primary text-white me-2" href="?tag={{ tag.pk }}&back={{ back_link }}">
@@ -30,7 +30,7 @@
                     <hr>
                 </div>
             </div>
-            
+
             <div class="comment-container ">
                 <h3 class="mb-4 ">{% translate "Comments" %}</h3>
                     {% include 'comments/form.html' with parent=None %}

@@ -92,10 +92,6 @@
         $("#" + id + "_new_entries").val(num)
       })
     },
-    addScript: function (id) {
-      $("#addpolicyscriptdialog input").removeAttr("disabled")
-      $("#addpolicyscriptdialog").modal("show")
-    },
     renderScriptFields: function (pk, scriptPk, submitName) {
       // If we come directly from adding a new script, django template variable "params" will only be #PARAMS#, so we need to render the fields dynamically
       var param_fields = ""

@@ -337,6 +337,8 @@ MARKDOWNX_MEDIA_PATH = datetime.now().strftime("changelog-images/%Y/%m/%d")
 FORM_RENDERER = "django.forms.renderers.DjangoDivFormRenderer"
 
 LOGIN_REDIRECT_URL = "/"
+# Only called when SSO logins fail
+LOGIN_REDIRECT_URL_FAILURE = "/accounts/sso-login-error/"
 
 # SSO
 OIDC_RP_CLIENT_ID = settings.get("OIDC_RP_CLIENT_ID")
@@ -352,3 +354,8 @@ AUTHENTICATION_BACKENDS = [
 ]
 OIDC_USE_PKCE = settings.get("OIDC_USE_PKCE")
 OIDC_CUSTOMER = settings.get("OIDC_CUSTOMER")
+
+if settings.get("SECURE_PROXY_SSL_HEADER"):
+    SECURE_PROXY_SSL_HEADER = settings.get("SECURE_PROXY_SSL_HEADER").split(",")
+else:
+    SECURE_PROXY_SSL_HEADER = None

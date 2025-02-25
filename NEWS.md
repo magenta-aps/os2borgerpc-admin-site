@@ -1,3 +1,15 @@
+## Version 6.6.0, February 25, 2025
+
+- Add support for SSO via OIDC
+- Update the dashboard UI for failed jobs
+- Make it more visible which Ubuntu version a computer is running
+- Only allow registered computers to use login integrations
+- Update docs
+- Switch python image to slim
+- Update backend dependencies
+- Speed up CI
+- General code cleanup and formatting
+
 ## Version 6.5.0, February 4, 2025
 
 - Allow users to hide failed jobs on the dashboard

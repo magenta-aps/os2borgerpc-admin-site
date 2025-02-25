@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 09:29+0100\n"
+"POT-Creation-Date: 2025-02-13 18:19+0100\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -6434,7 +6434,7 @@ msgid ""
 "to the source code here:"
 msgstr ""
 "OS2borgerPC er en open source løsning. Du kan finde dokumentation og et link "
-"til kildekoden dokumentationen her:"
+"til kildekoden her:"
 
 #: templates/two_factor/_base.html
 msgid "Check updates for OS2borgerPC"
@@ -6519,8 +6519,13 @@ msgid "backup token"
 msgstr "backupkode"
 
 #: templates/two_factor/core/login.html
-msgid "SSO login failed. Click here to try again"
-msgstr "SSO-login fejlede. Klik her for at prøve igen"
+msgid ""
+"SSO login failed. If the error persists, verify that your user is correctly "
+"configured in AD/Entra. Click the following link to try again:"
+msgstr ""
+"SSO-login mislykkedes. Hvis fejlen fortsætter, så verificer at din bruger er "
+"korrekt konfigureret i AD/Entra. Klik på det følgende link, for at prøve "
+"igen:"
 
 #: templates/two_factor/core/login.html
 msgid "SSO login"

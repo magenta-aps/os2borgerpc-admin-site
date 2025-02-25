@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-import os
 import json
 import secrets
 
-from django.http import HttpResponseRedirect, Http404, JsonResponse, HttpResponse
+from django.http import Http404, JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
@@ -425,7 +424,7 @@ class SiteCreate(CreateView, LoginRequiredMixin):
             raise PermissionDenied
 
     def form_invalid(self, form):
-        response = HttpResponseRedirect(reverse("sites"))
+        response = redirect(reverse("sites"))
 
         set_notification_cookie(
             response,
@@ -1110,7 +1109,7 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
     model = Job
 
     def status_fail_response(self):
-        response = HttpResponseRedirect(self.get_success_url())
+        response = redirect(self.get_success_url())
         set_notification_cookie(
             response,
             _("Can only restart jobs that are Done or Failed %s") % "",
@@ -1143,7 +1142,7 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
             return self.status_fail_response()
 
         self.object.restart(user=self.request.user)
-        response = HttpResponseRedirect(self.get_success_url())
+        response = redirect(self.get_success_url())
         set_notification_cookie(
             response,
             _("The script %s is being rerun on the computer %s")
@@ -1405,7 +1404,7 @@ class ScriptCreate(ScriptMixin, CreateView, SuperAdminOrThisSiteMixin):
                 self.object.is_security_script = True
                 self.object.save()
             self.save_script_inputs()
-            return HttpResponseRedirect(self.get_success_url())
+            return redirect(self.get_success_url())
         else:
             return self.form_invalid(form, transfer_inputs=False)
 
@@ -1705,7 +1704,7 @@ class PCUpdateRedirect(SelectionMixin, SiteView):
 
     def render_to_response(self, context):
         if "selected_pc" in context:
-            return HttpResponseRedirect(
+            return redirect(
                 reverse(
                     "computer",
                     kwargs={
@@ -3222,7 +3221,7 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
         # If the selected_user is a member of multiple sites, only remove them from this site
         if len(self.object.user_profile.sitemembership_set.all()) > 1:
             self.object.user_profile.sitemembership_set.get(site_id=site.id).delete()
-            response = HttpResponseRedirect(self.get_success_url())
+            response = redirect(self.get_success_url())
             set_notification_cookie(
                 response,
                 _("User %s removed from the site %s")
@@ -3288,9 +3287,7 @@ class PCGroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
 
     def render_to_response(self, context):
         if context["site"].groups.all():
-            return HttpResponseRedirect(
-                reverse("groups", kwargs={"slug": self.kwargs["slug"]})
-            )
+            return redirect(reverse("groups", kwargs={"slug": self.kwargs["slug"]}))
         else:
             return super().render_to_response(context)
 

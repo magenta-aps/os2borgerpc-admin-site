@@ -1,3 +1,7 @@
+## Version 6.6.1, February 25, 2025
+
+- Remove OIDC middleware suspected of causing errors
+
 ## Version 6.6.0, February 25, 2025
 
 - Add support for SSO via OIDC

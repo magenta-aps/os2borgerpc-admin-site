@@ -48,6 +48,9 @@ class MyOIDCAB(OIDCAuthenticationBackend):
             .sites.all()
             .values_list("uid", flat=True)
         )
+        if not roles:
+            logger.error(f"SSO error: It seems that {user} has no roles configured.")
+            return False
         if "all_customeradmin" in roles and len(roles) > 1:
             logger.error(
                 f"SSO error: When a user is a Customer Admin, the user should have no other roles. Roles received: {roles}"

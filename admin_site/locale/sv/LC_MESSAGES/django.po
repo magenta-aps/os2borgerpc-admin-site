@@ -6511,10 +6511,12 @@ msgstr "reservkod"
 
 #: templates/two_factor/core/login.html
 msgid ""
-"SSO login failed. If the error persists, ensure that your user is correctly "
-"configured in AD/Entra. Click the following link to try again"
+"SSO login failed. If the error persists, verify that your user is correctly "
+"configured in AD/Entra. Click the following link to try again:"
 msgstr ""
-"SSO-inloggning misslyckades. Om felet kvarstår, kontrollera att din användare är korrekt konfigurerad i AD/Entra. Klicka på följande länk för att försöka igen"
+"SSO-inloggning misslyckades. Om felet kvarstår, kontrollera att din "
+"användare är korrekt konfigurerad i AD/Entra. Klicka på följande länk för "
+"att försöka igen:"
 
 #: templates/two_factor/core/login.html
 msgid "SSO login"

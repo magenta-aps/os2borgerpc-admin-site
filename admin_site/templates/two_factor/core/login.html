@@ -33,7 +33,7 @@
     {% endif %}
   </form>
   {% else %}
-    <p>{% trans "SSO login failed. If the error persists, ensure that your user is correctly configured in AD/Entra. Click the following link to try again" %}:</p>
+    <p>{% trans "SSO login failed. If the error persists, verify that your user is correctly configured in AD/Entra. Click the following link to try again:" %}</p>
     <a href="{% url 'oidc_authentication_init' %}">{% trans "SSO login" %}</a>
   {% endif %}
 {% endblock %}

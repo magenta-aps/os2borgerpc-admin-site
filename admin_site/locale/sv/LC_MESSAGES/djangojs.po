@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-09 15:03+0200\n"
+"POT-Creation-Date: 2025-02-20 17:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: static/js/configlist.js
+msgid "Error: You have to specify a name"
+msgstr "Fel: Du måste ange ett namn"
+
+#: static/js/configlist.js
+#, javascript-format
+msgid "Error: Another configuration has the name \"%s\" already"
+msgstr "Fel: En annan konfiguration har redan namnet \"%s\""
 
 #: static/js/jobs_list.js
 msgid "No user"

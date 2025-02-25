@@ -7,16 +7,16 @@ WORKDIR /code/nodejs
 
 COPY nodejs .
 RUN npm ci \
- && npm run build
+  && npm run build
 CMD ["/bin/sh", "-c", "npm run watch-sass"]
 
-FROM python:3.8 AS os2borgerpc
+FROM python:3.9-slim AS os2borgerpc
 
 LABEL org.opencontainers.image.title="OS2borgerPC" \
-      org.opencontainers.image.vendor="Magenta ApS" \
-      org.opencontainers.image.licenses="GPL" \
-      org.opencontainers.image.url="https://os2.eu/produkt/os2borgerpc"\
-      org.opencontainers.image.source="https://github.com/OS2borgerPC/admin-site"
+  org.opencontainers.image.vendor="Magenta ApS" \
+  org.opencontainers.image.licenses="GPL" \
+  org.opencontainers.image.url="https://www.magenta.dk/loesninger/os2borgerpc/"\
+  org.opencontainers.image.source="https://github.com/magenta-aps/os2borgerpc-admin-site"
 
 ENV PYTHONUNBUFFERED=1 \
   BPC_USER_CONFIG_PATH=/user-settings.ini \
@@ -41,9 +41,9 @@ RUN set -ex \
   # clean up after apt-get and man-pages
   && apt-get clean \
   && rm -rf "/var/lib/apt/lists/*"  "/tmp/*"  "/var/tmp/*"  "/usr/share/man/??"  "/usr/share/man/??_*" \
- # create folders at easily mountable paths for output from django
- && install -o bpc -g bpc -d /log \
- && install -o bpc -g bpc -d /media
+  # create folders at easily mountable paths for output from django
+  && install -o bpc -g bpc -d /log \
+  && install -o bpc -g bpc -d /media
 
 VOLUME /log
 VOLUME /media
@@ -58,15 +58,15 @@ RUN pip3 install --no-cache-dir -r  admin_site/requirements.txt
 
 # Install supercronic
 ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.2.25/supercronic-linux-amd64 \
-    SUPERCRONIC=supercronic-linux-amd64 \
-    SUPERCRONIC_SHA1SUM=642f4f5a2b67f3400b5ea71ff24f18c0a7d77d49
+  SUPERCRONIC=supercronic-linux-amd64 \
+  SUPERCRONIC_SHA1SUM=642f4f5a2b67f3400b5ea71ff24f18c0a7d77d49
 
 # hadolint ignore=DL4006
 RUN curl -fsSLO "$SUPERCRONIC_URL" \
- && echo "${SUPERCRONIC_SHA1SUM}  ${SUPERCRONIC}" | sha1sum -c - \
- && chmod +x "$SUPERCRONIC" \
- && mv "$SUPERCRONIC" "/usr/local/bin/${SUPERCRONIC}" \
- && ln -s "/usr/local/bin/${SUPERCRONIC}" /usr/local/bin/supercronic
+  && echo "${SUPERCRONIC_SHA1SUM}  ${SUPERCRONIC}" | sha1sum -c - \
+  && chmod +x "$SUPERCRONIC" \
+  && mv "$SUPERCRONIC" "/usr/local/bin/${SUPERCRONIC}" \
+  && ln -s "/usr/local/bin/${SUPERCRONIC}" /usr/local/bin/supercronic
 
 # Copy backend code.
 COPY README.md .

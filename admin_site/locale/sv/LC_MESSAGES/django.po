@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-08 14:35+0100\n"
+"POT-Creation-Date: 2025-02-13 18:19+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -743,6 +743,7 @@ msgstr ""
 #: templates/system/scripts/confirm_delete.html
 #: templates/system/site_two_factor_pc.html
 #: templates/system/sites/confirm_delete.html
+#: templates/system/users/update.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_change_events/confirm_delete.html
 #: templates/system/wake_plan/wake_plan.html
@@ -4088,6 +4089,10 @@ msgid "Is a test customer"
 msgstr "Är en test kund"
 
 #: system/models.py
+msgid "Enable to require SSO"
+msgstr "Aktivera för att kräva sso"
+
+#: system/models.py
 msgid "UID"
 msgstr "UID"
 
@@ -4898,11 +4903,12 @@ msgstr "Senaste misslyckade jobb"
 #: templates/system/dashboard_job_list.html
 msgid ""
 "Hiding a failed job means that it will no longer be shown on the dashboard. "
-"Are you sure you want to hide all the shown failed jobs?"
+"It will be hidden for all users, not just you. Are you sure you want to hide "
+"all the shown failed jobs?"
 msgstr ""
 "Att dölja ett misslyckat jobb innebär att det inte längre kommer att visas "
-"på dashboardet. Är du säker på att du vill dölja alla visade misslyckade "
-"jobb?"
+"på dashboardet. Det kommer att döljas för alla användare, inte bara för dig. "
+"Är du säker på att du vill dölja alla visade misslyckade jobb?"
 
 #: templates/system/dashboard_job_list.html
 msgid "Hide all shown jobs"
@@ -4916,10 +4922,12 @@ msgstr "Se alla"
 #: templates/system/dashboard_job_list.html
 msgid ""
 "Hiding a failed job means that it will no longer be shown on the dashboard. "
-"Are you sure you want to hide this failed job?:"
+"It will be hidden for all users, not just you. Are you sure you want to hide "
+"this failed job?:"
 msgstr ""
-"Att dölja ett misslyckat jobb innebär att det inte längre kommer att visas "
-"på dashboardet. Är du säker på att du vill dölja det här misslyckade jobbet?:"
+"Att dölja ett misslyckat jobb betyder att det inte längre kommer att visas "
+"på dashboardet. Det kommer att döljas för alla användare, inte bara för dig. "
+"Är du säker på att du vill dölja detta misslyckade jobb?:"
 
 #: templates/system/dashboard_job_list.html
 msgid "Hide this failed job"
@@ -5525,6 +5533,10 @@ msgid "Last event received"
 msgstr "Senaste incidenten har tagits emot"
 
 #: templates/system/pcs/update.html
+msgid "Ubuntu version"
+msgstr "Ubuntu version"
+
+#: templates/system/pcs/update.html
 msgid "Groups the computer is a member of"
 msgstr "Grupper som datorn är medlem i"
 
@@ -6031,6 +6043,18 @@ msgstr "Generera reservkoder"
 msgid "Deactivate two-factor authentication"
 msgstr "Inaktivera tvåstegsverifiering"
 
+#: templates/system/users/form_sso.html
+msgid "username"
+msgstr "Användarnamn"
+
+#: templates/system/users/form_sso.html
+msgid "email address"
+msgstr "E-postadress"
+
+#: templates/system/users/form_sso.html
+msgid "usertype"
+msgstr "Typ av användare"
+
 #: templates/system/users/link.html
 msgid "Add existing users from your other sites to the site "
 msgstr "Lägg till befintliga användare från dina andra sites till sitet "
@@ -6054,6 +6078,14 @@ msgstr "Senaste inloggningen"
 #: templates/system/users/update.html
 msgid "Create new user"
 msgstr "Lägg till en ny användare"
+
+#: templates/system/users/update.html
+msgid ""
+"Since you're using SSO, most of the user management is locked here because "
+"it's managed by your IdP."
+msgstr ""
+"Eftersom du använder SSO är det mesta av användarhanteringen här låst, "
+"eftersom den istället hanteras av din IdP."
 
 #: templates/system/users/update.html
 msgid ""
@@ -6389,11 +6421,11 @@ msgstr "Sambruk MedborgarPC Administration Inloggning"
 
 #: templates/two_factor/_base.html
 msgid ""
-"OS2borgerPC is an open source product. You can download the source code and "
-"documentation here:"
+"OS2borgerPC is an open source product. You can find documentation and a link "
+"to the source code here:"
 msgstr ""
-"Sambruk MedborgarPC är en lösning med öppen källkod. Du kan ladda ner "
-"källkoden och dokumentationen här:"
+"Sambruk MedborgarPC är en lösning med öppen källkod. Du kan hitta "
+"dokumentation och en länk till källkoden här"
 
 #: templates/two_factor/_base.html
 msgid "Check updates for OS2borgerPC"
@@ -6476,6 +6508,19 @@ msgstr "Som en sista utväg kan du använda en"
 #: templates/two_factor/core/login.html
 msgid "backup token"
 msgstr "reservkod"
+
+#: templates/two_factor/core/login.html
+msgid ""
+"SSO login failed. If the error persists, verify that your user is correctly "
+"configured in AD/Entra. Click the following link to try again:"
+msgstr ""
+"SSO-inloggning misslyckades. Om felet kvarstår, kontrollera att din "
+"användare är korrekt konfigurerad i AD/Entra. Klicka på följande länk för "
+"att försöka igen:"
+
+#: templates/two_factor/core/login.html
+msgid "SSO login"
+msgstr "SSO-inloggning"
 
 #: templates/two_factor/core/setup.html
 #: templates/two_factor/core/setup_complete.html

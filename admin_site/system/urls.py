@@ -1,4 +1,4 @@
-from django.urls import re_path
+from django.urls import path
 from django.views.generic import RedirectView
 from django.templatetags.static import static
 
@@ -56,7 +56,7 @@ from system.views import (
     SiteDashboardView,
     SiteList,
     SiteCreate,
-    site_uid_available_check,
+    SiteUIDAvailableCheck,
     SiteDelete,
     SiteSettings,
     TwoFactor,
@@ -76,328 +76,312 @@ from system.views import (
 urlpatterns = [
     # TODO: Switch to using the django javascript translation system
     # For translations of strings in javascript files that are printed to the user
-    re_path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
+    path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     # Security events UI
-    re_path(
-        r"^site/(?P<slug>[^/]+)/security_events/update/$",
+    path(
+        "site/<slug>/security_events/update/",
         SecurityEventsUpdate.as_view(),
         name="security_events_update",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/security_events/search/$",
+    path(
+        "site/<slug>/security_events/search/",
         SecurityEventSearch.as_view(),
         name="security_event_search",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/security_events/$",
+    path(
+        "site/<slug>/security_events/",
         SecurityEventsView.as_view(),
         name="security_events",
     ),
     # Shared by Security Problems and Event Rule Servers
-    re_path(
-        r"^site/(?P<slug>[^/]+)/event_rules/$",
+    path(
+        "site/<slug>/event_rules/",
         EventRuleRedirect.as_view(),
         name="event_rules",
     ),
     # Security problems
-    re_path(
-        r"^site/(?P<slug>[^/]+)/security_problems/new/$",
+    path(
+        "site/<slug>/security_problems/new/",
         SecurityProblemCreate.as_view(),
         name="event_rule_security_problem_new",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/security_problems/(?P<id>[^/]+)/delete/$",
+    path(
+        "site/<slug>/security_problems/<int:id>/delete/",
         SecurityProblemDelete.as_view(),
         name="event_rule_security_problem_delete",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/security_problems/(?P<id>[^/]+)/$",
+    path(
+        "site/<slug>/security_problems/<int:id>/",
         SecurityProblemUpdate.as_view(),
         name="event_rule_security_problem",
     ),
     # Event Rule Server
-    re_path(
-        r"^site/(?P<slug>[^/]+)/event_rules_server/new/$",
+    path(
+        "site/<slug>/event_rules_server/new/",
         EventRuleServerCreate.as_view(),
         name="event_rule_server_new",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/event_rules_server/(?P<id>[^/]+)/delete/$",
+    path(
+        "site/<slug>/event_rules_server/<int:id>/delete/",
         EventRuleServerDelete.as_view(),
         name="event_rule_server_delete",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/event_rules_server/(?P<id>[^/]+)/$",
+    path(
+        "site/<slug>/event_rules_server/<int:id>/",
         EventRuleServerUpdate.as_view(),
         name="event_rule_server",
     ),
     # Security scripts
-    re_path(
-        r"^site/(?P<slug>[^/]+)/security_scripts/(?P<script_pk>\d+)/delete/",
+    path(
+        "site/<slug>/security_scripts/<int:script_pk>)/delete/",
         ScriptDelete.as_view(is_security=True),
         name="security_script_delete",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/security_scripts/(?P<script_pk>\d+)/",
+    path(
+        "site/<slug>/security_scripts/<int:script_pk>/",
         ScriptUpdate.as_view(is_security=True),
         name="security_script",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/security_scripts/new/",
+    path(
+        "site/<slug>/security_scripts/new/",
         ScriptCreate.as_view(is_security=True),
         name="new_security_script",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/security_scripts/",
+    path(
+        "site/<slug>/security_scripts/",
         ScriptRedirect.as_view(),
         name="security_scripts",
     ),
     # Two-factor for OS2borgerPC machines
-    re_path(
-        r"^site/(?P<slug>[^/]+)/two-factor/$", TwoFactor.as_view(), name="two_factor"
-    ),
+    path("site/<slug>/two-factor/", TwoFactor.as_view(), name="two_factor"),
     # Two-factor for admin-site
-    re_path(
-        r"^site/(?P<slug>[^/]+)/admin-two-factor/(?P<username>[_\w\@\.\+\-]+)/setup/$",
+    path(
+        "site/<slug>/admin-two-factor/<username>/setup/",
         AdminTwoFactorSetup.as_view(),
         name="admin_otp_setup",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/admin-two-factor/(?P<username>[_\w\@\.\+\-]+)/setup-complete/$",
+    path(
+        "site/<slug>/admin-two-factor/<username>/setup-complete/",
         AdminTwoFactorSetupComplete.as_view(),
         name="admin_otp_setup_complete",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/admin-two-factor/(?P<username>[_\w\@\.\+\-]+)/disable/$",
+    path(
+        "site/<slug>/admin-two-factor/<username>/disable/",
         AdminTwoFactorDisable.as_view(),
         name="admin_otp_disable",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/admin-two-factor/(?P<username>[_\w\@\.\+\-]+)/backup-tokens/$",
+    path(
+        "site/<slug>/admin-two-factor/<username>/backup-tokens/",
         AdminTwoFactorBackupTokens.as_view(),
         name="admin_otp_backup",
     ),
     # Sites
-    re_path(r"^$", AdminIndex.as_view(), name="index"),
-    re_path(r"^sites/$", SiteList.as_view(), name="sites"),
-    re_path(
-        r"^sites/new/$",
+    path("", AdminIndex.as_view(), name="index"),
+    path("sites/", SiteList.as_view(), name="sites"),
+    path(
+        "sites/new/",
         SiteCreate.as_view(),
         name="site_create",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/delete/$",
+    path(
+        "site/<slug>/delete/",
         SiteDelete.as_view(),
         name="site_delete",
     ),
-    re_path(r"^site/(?P<slug>[^/]+)/$", SiteDashboardView.as_view(), name="dashboard"),
+    path("site/<slug>/", SiteDashboardView.as_view(), name="dashboard"),
     # Site Settings
-    re_path(
-        r"^site/(?P<slug>[^/]+)/settings/$", SiteSettings.as_view(), name="settings"
-    ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/configuration/new/$",
+    path("site/<slug>/settings/", SiteSettings.as_view(), name="settings"),
+    path(
+        "site/<slug>/configuration/new/",
         ConfigurationEntryCreate.as_view(),
         name="new_configuration",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/configuration/edit/(?P<pk>\d+)/$",
+    path(
+        "site/<slug>/configuration/edit/<int:pk>/",
         ConfigurationEntryUpdate.as_view(),
         name="edit_configuration",
     ),
     # Computers
-    re_path(
-        r"^site/(?P<slug>[^/]+)/status/$",
+    path(
+        "site/<slug>/status/",
         PCsOverview.as_view(),
         name="computers_overview",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/computers/$",
+    path(
+        "site/<slug>/computers/",
         PCUpdateRedirect.as_view(),
         name="computers",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/computers/(?P<pc_uid>[^/]+)/$",
+    path(
+        "site/<slug>/computers/<pc_uid>/",
         PCUpdate.as_view(),
         name="computer",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/computers/(?P<pc_uid>[^/]+)/delete/$",
+    path(
+        "site/<slug>/computers/<pc_uid>/delete/",
         PCDelete.as_view(),
         name="computer_delete",
     ),
     # Groups
-    re_path(
-        r"^site/(?P<slug>[^/]+)/groups/$", PCGroupRedirect.as_view(), name="groups"
-    ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/groups/new/$",
+    path("site/<slug>/groups/", PCGroupRedirect.as_view(), name="groups"),
+    path(
+        "site/<slug>/groups/new/",
         PCGroupCreate.as_view(),
         name="new_group",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/groups/(?P<group_id>[^/]+)/$",
+    path(
+        "site/<slug>/groups/<int:group_id>/",
         PCGroupUpdate.as_view(),
         name="group",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/groups/(?P<group_id>[^/]+)/delete/$",
+    path(
+        "site/<slug>/groups/<int:group_id>/delete/",
         PCGroupDelete.as_view(),
         name="group_delete",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/groups/(?P<group_id>[^/]+)/duplicate/$",
+    path(
+        "site/<slug>/groups/<int:group_id>/duplicate/",
         PCGroupDuplicate.as_view(),
         name="group_duplicate",
     ),
     # Wake Plans
-    re_path(
-        r"^site/(?P<slug>[^/]+)/wake_plans/$",
+    path(
+        "site/<slug>/wake_plans/",
         WakePlanRedirect.as_view(),
         name="wake_plans",
     ),
     # This URL needs to be above WakePlanUpdate, as otherwise that regex tries to parse the word "new" as an ID
-    re_path(
-        r"^site/(?P<slug>[^/]+)/wake_plan/new/$",
+    path(
+        "site/<slug>/wake_plan/new/",
         WakePlanCreate.as_view(),
         name="wake_plan_new",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/wake_plan/(?P<wake_week_plan_id>[^/]+)/$",
+    path(
+        "site/<slug>/wake_plan/<int:wake_week_plan_id>/",
         WakePlanUpdate.as_view(),
         name="wake_plan",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/wake_plan/(?P<wake_week_plan_id>[^/]+)/delete/$",
+    path(
+        "site/<slug>/wake_plan/<int:wake_week_plan_id>/delete/",
         WakePlanDelete.as_view(),
         name="wake_plan_delete",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/wake_plan/(?P<wake_week_plan_id>[^/]+)/duplicate/$",
+    path(
+        "site/<slug>/wake_plan/<int:wake_week_plan_id>/duplicate/",
         WakePlanDuplicate.as_view(),
         name="wake_plan_duplicate",
     ),
     # Wake Change Events
-    re_path(
-        r"^site/(?P<slug>[^/]+)/wake_change_events/$",
+    path(
+        "site/<slug>/wake_change_events/",
         WakeChangeEventRedirect.as_view(),
         name="wake_change_events",
     ),
     # This URL needs to be above WakeChangeEventUpdate, as otherwise that regex tries to parse the word "new" as an ID
-    re_path(
-        r"^site/(?P<slug>[^/]+)/wake_change_event/new_altered_hours/$",
+    path(
+        "site/<slug>/wake_change_event/new_altered_hours/",
         WakeChangeEventCreate.as_view(),
         name="wake_change_event_new_altered_hours",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/wake_change_event/new_closed/$",
+    path(
+        "site/<slug>/wake_change_event/new_closed/",
         WakeChangeEventCreate.as_view(),
         name="wake_change_event_new_closed",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/wake_change_event/(?P<wake_change_event_id>[^/]+)/$",
+    path(
+        "site/<slug>/wake_change_event/<int:wake_change_event_id>/",
         WakeChangeEventUpdate.as_view(),
         name="wake_change_event",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/wake_change_event/(?P<wake_change_event_id>[^/]+)/delete/$",
+    path(
+        "site/<slug>/wake_change_event/<int:wake_change_event_id>/delete/",
         WakeChangeEventDelete.as_view(),
         name="wake_change_event_delete",
     ),
     # Jobs
-    re_path(
-        r"^site/(?P<slug>[^/]+)/jobs/search/", JobSearch.as_view(), name="jobsearch"
-    ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/jobs/(?P<pk>\d+)/restart/",
+    path("site/<slug>/jobs/search/", JobSearch.as_view(), name="jobsearch"),
+    path(
+        "site/<slug>/jobs/<int:pk>/restart/",
         JobRestarter.as_view(),
         name="restart_job",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/jobs/(?P<pk>\d+)/info/",
+    path(
+        "site/<slug>/jobs/<int:pk>/info/",
         JobInfo.as_view(),
         name="job_info",
     ),
-    re_path(r"^site/(?P<slug>[^/]+)/jobs/", JobsView.as_view(), name="jobs"),
+    path("site/<slug>/jobs/", JobsView.as_view(), name="jobs"),
     # Scripts
-    re_path(
-        r"^site/(?P<slug>[^/]+)/scripts/(?P<script_pk>\d+)/delete/",
+    path(
+        "site/<slug>/scripts/<int:script_pk>/delete/",
         ScriptDelete.as_view(),
         name="script_delete",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/scripts/(?P<script_pk>\d+)/run/",
+    path(
+        "site/<slug>/scripts/<int:script_pk>/run/",
         ScriptRun.as_view(),
         name="run_script",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/scripts/(?P<script_pk>\d+)/",
+    path(
+        "site/<slug>/scripts/<int:script_pk>/",
         ScriptUpdate.as_view(),
         name="script",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/scripts/new/", ScriptCreate.as_view(), name="new_script"
-    ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/scripts/", ScriptRedirect.as_view(), name="scripts"
-    ),
-    re_path(
-        r"^scripts/(?P<script_pk>\d+)/",
+    path("site/<slug>/scripts/new/", ScriptCreate.as_view(), name="new_script"),
+    path("site/<slug>/scripts/", ScriptRedirect.as_view(), name="scripts"),
+    path(
+        "scripts/<int:script_pk>/",
         GlobalScriptRedirect.as_view(),
         name="script_redirect_id",
     ),
-    re_path(
-        r"^scripts/uid/(?P<script_uid>[^/]+)/",
+    path(
+        "scripts/uid/<script_uid>/",
         GlobalScriptRedirect.as_view(),
         name="script_redirect_uid",
     ),
     # Users
-    re_path(r"^site/(?P<slug>[^/]+)/users/$", UserRedirect.as_view(), name="users"),
-    re_path(r"^users/$", UserRedirectSite.as_view(), name="users_redirect_site"),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/users/new/$", UserCreate.as_view(), name="new_user"
-    ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/users/link/$", UserLink.as_view(), name="link_users"
-    ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/users/(?P<username>[_\w\@\.\+\-]+)/$",
+    path("site/<slug>/users/", UserRedirect.as_view(), name="users"),
+    path("users/", UserRedirectSite.as_view(), name="users_redirect_site"),
+    path("site/<slug>/users/new/", UserCreate.as_view(), name="new_user"),
+    path("site/<slug>/users/link/", UserLink.as_view(), name="link_users"),
+    path(
+        "site/<slug>/users/<username>/",
         UserUpdate.as_view(),
         name="user",
     ),
-    re_path(
-        (r"^site/(?P<slug>[^/]+)/users/" + r"(?P<username>[_\w\@\.\+\-]+)/delete/$"),
+    path(
+        "site/<slug>/users/<username>/delete/",
         UserDelete.as_view(),
         name="user_delete",
     ),
     # Documentation
-    re_path(
-        r"^documentation/$",
+    path(
+        "documentation/",
         RedirectView.as_view(url="/documentation/om_os2borgerpc_admin/"),
     ),
-    re_path(
-        r"^documentation/os2borgerpc_installation_guide/",
+    path(
+        "documentation/os2borgerpc_installation_guide/",
         RedirectView.as_view(url=static("docs/OS2BorgerPC_installation_guide_da.pdf")),
     ),
     # Image Versions
-    re_path(
-        r"^site/(?P<slug>[^/]+)/image-versions/$",
+    path(
+        "site/<slug>/image-versions/",
         ImageVersionRedirect.as_view(),
         name="images",
     ),
-    re_path(
-        r"^image-versions/$",
+    path(
+        "image-versions/",
         ImageVersionRedirectSite.as_view(),
         name="images-redirect-site",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/image-versions/(?P<product_id>[^/]+)$",
+    path(
+        "site/<slug>/image-versions/<int:product_id>/",
         ImageVersionView.as_view(),
         name="images-product",
     ),
     # This contains both a regular view and an HTMX view
-    re_path(
-        r"^site/(?P<slug>[^/]+)/api-keys/$",
+    path(
+        "site/<slug>/api-keys/",
         APIKeyUpdate.as_view(),
         name="api_keys",
     ),
@@ -406,29 +390,29 @@ urlpatterns = [
 # Define HTMX URL Patterns here, and add them to the urlpatterns list
 # Basically these are views that only return partial HTML fragments rather than entire pages
 htmx_urlpatterns = [
-    re_path(
-        r"^site/(?P<slug>[^/]+)/api-keys/new/$",
+    path(
+        "site/<slug>/api-keys/new/",
         APIKeyCreate.as_view(),
         name="api_key_new",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/api-key/(?P<pk>\d+)/update/$",
+    path(
+        "site/<slug>/api-key/<int:pk>/update/",
         APIKeyUpdate.as_view(),
         name="api_key_update",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/api-key/(?P<pk>\d+)/delete/$",
+    path(
+        "site/<slug>/api-key/<int:pk>/delete/",
         APIKeyDelete.as_view(),
         name="api_key_delete",
     ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/dashboard/update/$",
+    path(
+        "site/<slug>/dashboard/update/",
         SiteDashboardJobListUpdate.as_view(),
         name="dashboard_jobs",
     ),
-    re_path(
-        r"^sites/new-validate$",
-        site_uid_available_check,
+    path(
+        "sites/new-validate/",
+        SiteUIDAvailableCheck.as_view(),
         name="site_uid_available_check",
     ),
 ]

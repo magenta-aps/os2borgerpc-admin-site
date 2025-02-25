@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-import os
 import json
 import secrets
 
-from django.http import HttpResponseRedirect, Http404, JsonResponse, HttpResponse
+from django.http import Http404, JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
@@ -90,6 +89,7 @@ from system.forms import (
     SiteForm,
     SiteCreateForm,
     UserForm,
+    UserFormSSO,
     UserLinkForm,
     WakeChangeEventForm,
     WakePlanForm,
@@ -159,20 +159,6 @@ def site_pcs_stats(context, site_list):
     return context
 
 
-def site_uid_available_check(request):
-    uid = request.GET["uid"]
-    uid = Site.objects.filter(uid=uid)
-    if uid:
-        return HttpResponse(
-            _("The specified UID is unavailable. Please choose another.")
-            + "<script>document.getElementById('create_site_save_button').disabled = true</script>"
-        )
-    else:
-        return HttpResponse(
-            "<script>document.getElementById('create_site_save_button').disabled = false</script>"
-        )
-
-
 # Mixin class to require login
 class LoginRequiredMixin(View):
     """Subclass in all views where login is required."""
@@ -204,7 +190,10 @@ class SuperAdminOrThisSiteMixin(LoginRequiredMixin):
             slug_field = "slug"
         # If none given, give up
         if slug_field:
-            site = get_object_or_404(Site, uid=kwargs[slug_field])
+            try:
+                site = Site.objects.get(uid=kwargs["slug"])
+            except Site.DoesNotExist:
+                return redirect("/")
         check_function = user_passes_test(
             lambda u: (u.is_superuser) or (site and site in u.user_profile.sites.all()),
             login_url="/",
@@ -288,6 +277,22 @@ class SiteMixin(View):
         context["sec_events"] = no_of_sec_events
 
         return context
+
+
+class SiteUIDAvailableCheck(LoginRequiredMixin):
+
+    def dispatch(self, *args, **kwargs):
+        uid = self.request.GET["uid"]
+        uid = Site.objects.filter(uid=uid)
+        if uid:
+            return HttpResponse(
+                _("The specified UID is unavailable. Please choose another.")
+                + "<script>document.getElementById('create_site_save_button').disabled = true</script>"
+            )
+        else:
+            return HttpResponse(
+                "<script>document.getElementById('create_site_save_button').disabled = false</script>"
+            )
 
 
 # Main index/site root view
@@ -419,7 +424,7 @@ class SiteCreate(CreateView, LoginRequiredMixin):
             raise PermissionDenied
 
     def form_invalid(self, form):
-        response = HttpResponseRedirect(reverse("sites"))
+        response = redirect(reverse("sites"))
 
         set_notification_cookie(
             response,
@@ -579,7 +584,6 @@ class SiteDashboardView(SiteView):
 
 
 class SiteDashboardJobListUpdate(SuperAdminOrThisSiteMixin):
-
     def get_context_data(self, **kwargs):
         context = {}
 
@@ -1105,7 +1109,7 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
     model = Job
 
     def status_fail_response(self):
-        response = HttpResponseRedirect(self.get_success_url())
+        response = redirect(self.get_success_url())
         set_notification_cookie(
             response,
             _("Can only restart jobs that are Done or Failed %s") % "",
@@ -1138,7 +1142,7 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
             return self.status_fail_response()
 
         self.object.restart(user=self.request.user)
-        response = HttpResponseRedirect(self.get_success_url())
+        response = redirect(self.get_success_url())
         set_notification_cookie(
             response,
             _("The script %s is being rerun on the computer %s")
@@ -1202,11 +1206,15 @@ class ScriptMixin(object):
         context["site"] = self.site
         context["script_tags"] = ScriptTag.objects.all()
 
-        scripts = self.scripts.filter(is_hidden=False)
-
-        # Append scripts the site has permissions for
-        for fp in context["site"].customer.feature_permission.all():
-            scripts = scripts | fp.scripts.filter(is_security_script=self.is_security)
+        if self.request.user.is_superuser:
+            scripts = self.scripts.all()
+        else:
+            scripts = self.scripts.filter(is_hidden=False)
+            # Append scripts the site has permissions for
+            for fp in context["site"].customer.feature_permission.all():
+                scripts = scripts | fp.scripts.filter(
+                    is_security_script=self.is_security
+                )
 
         local_scripts = scripts.filter(site=self.site)
         context["local_scripts"] = local_scripts
@@ -1396,7 +1404,7 @@ class ScriptCreate(ScriptMixin, CreateView, SuperAdminOrThisSiteMixin):
                 self.object.is_security_script = True
                 self.object.save()
             self.save_script_inputs()
-            return HttpResponseRedirect(self.get_success_url())
+            return redirect(self.get_success_url())
         else:
             return self.form_invalid(form, transfer_inputs=False)
 
@@ -1696,7 +1704,7 @@ class PCUpdateRedirect(SelectionMixin, SiteView):
 
     def render_to_response(self, context):
         if "selected_pc" in context:
-            return HttpResponseRedirect(
+            return redirect(
                 reverse(
                     "computer",
                     kwargs={
@@ -1796,6 +1804,7 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         context["orderby_base_url"] = pc.get_absolute_url() + "?"
 
         context["selected_pc"] = pc
+        context["os_release"] = pc.get_config_value("_os_release")
 
         context["security_event"] = pc.security_events.latest_event()
         context["has_security_events"] = (
@@ -2841,8 +2850,10 @@ class UsersMixin(object):
             loginusertype = site_membership.site_user_type
         else:
             loginusertype = 0
-
-        context["form"].setup_usertype_choices(loginusertype, request_user.is_superuser)
+        if not context["site"].customer.using_sso:
+            context["form"].setup_usertype_choices(
+                loginusertype, request_user.is_superuser
+            )
 
         context["site_membership"] = site_membership
         return context
@@ -3009,14 +3020,26 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
 
 class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
     model = User
-    form_class = UserForm
     template_name = "system/users/update.html"
+
+    # SSO user form is a lot simpler and only has a single field in the form, so conditionally set which form is used based on whether sso is set
+    def get_form(self, form_class=None):
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+
+        if site.customer.using_sso:
+            form_class = UserFormSSO
+        else:
+            form_class = UserForm
+
+        return super().get_form(form_class)
 
     def get_object(self, queryset=None):
         try:
             self.selected_user = User.objects.get(username=self.kwargs["username"])
-            site_membership = self.selected_user.user_profile.sitemembership_set.get(
-                site__uid=self.kwargs["slug"]
+            selected_user_site_membership = (
+                self.selected_user.user_profile.sitemembership_set.get(
+                    site__uid=self.kwargs["slug"]
+                )
             )
         except (User.DoesNotExist, SiteMembership.DoesNotExist):
             raise Http404(
@@ -3024,7 +3047,8 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
                 % self.kwargs["username"]
             )
         if (
-            site_membership.site_user_type == SiteMembership.CUSTOMER_ADMIN
+            selected_user_site_membership.site_user_type
+            == SiteMembership.CUSTOMER_ADMIN
             and not self.request.user.is_superuser
             and not self.request.user.user_profile.sitemembership_set.filter(
                 site_user_type=SiteMembership.CUSTOMER_ADMIN
@@ -3040,7 +3064,13 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         context = super().get_context_data(**kwargs)
         self.add_membership_to_context(context)
 
+        context["customer_using_sso"] = context["site"].customer.using_sso
+
         context["selected_user"] = User.objects.get(username=self.kwargs["username"])
+
+        context["selected_user_site_membership"] = context[
+            "selected_user"
+        ].user_profile.sitemembership_set.get(site=context["site"])
 
         if context["selected_user"].user_profile.sitemembership_set.filter(
             site_user_type=SiteMembership.CUSTOMER_ADMIN
@@ -3075,46 +3105,47 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             site_membership = user_profile.sitemembership_set.get(
                 site=site, user_profile=user_profile
             )
+            if site.customer.using_sso:
+                requested_user_type = site_membership.site_user_type
+            else:
+                requested_user_type = int(form.cleaned_data["usertype"])
+
             # If a user was made a customer admin, ensure that they have access
             # to all sites for this customer
             if (
-                site_membership.site_user_type != int(form.cleaned_data["usertype"])
-                and int(form.cleaned_data["usertype"]) == SiteMembership.CUSTOMER_ADMIN
+                site_membership.site_user_type != requested_user_type
+                and requested_user_type == SiteMembership.CUSTOMER_ADMIN
             ):
                 for customer_site in site.customer.sites.all():
                     try:
                         customer_site_membership = user_profile.sitemembership_set.get(
                             site=customer_site
                         )
-                        customer_site_membership.site_user_type = form.cleaned_data[
-                            "usertype"
-                        ]
+                        customer_site_membership.site_user_type = requested_user_type
                         customer_site_membership.save()
                     except SiteMembership.DoesNotExist:
                         SiteMembership.objects.create(
                             user_profile=user_profile,
                             site=customer_site,
-                            site_user_type=form.cleaned_data["usertype"],
+                            site_user_type=requested_user_type,
                         )
             # If a customer admin was changed to a less privileged user type,
             # update all their site memberships to reflect this
             elif (
-                site_membership.site_user_type != int(form.cleaned_data["usertype"])
+                site_membership.site_user_type != requested_user_type
                 and site_membership.site_user_type == SiteMembership.CUSTOMER_ADMIN
             ):
                 for customer_site_membership in user_profile.sitemembership_set.filter(
                     site__customer=site.customer
                 ):
-                    customer_site_membership.site_user_type = form.cleaned_data[
-                        "usertype"
-                    ]
+                    customer_site_membership.site_user_type = requested_user_type
                     customer_site_membership.save()
             else:
-                site_membership.site_user_type = form.cleaned_data["usertype"]
+                site_membership.site_user_type = requested_user_type
                 site_membership.save()
             if (
                 not self.selected_user.is_superuser
-                and int(form.cleaned_data["usertype"]) >= site_membership.SITE_ADMIN
+                and requested_user_type >= site_membership.SITE_ADMIN
             ):
                 self.object.user_permissions.set(
                     Permission.objects.filter(name="Can view login log")
@@ -3122,7 +3153,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
                 self.object.is_staff = True
             elif (
                 not self.selected_user.is_superuser
-                and int(form.cleaned_data["usertype"]) < site_membership.SITE_ADMIN
+                and requested_user_type < site_membership.SITE_ADMIN
             ):
                 self.object.is_staff = False
             user_profile.language = form.cleaned_data["language"]
@@ -3190,7 +3221,7 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
         # If the selected_user is a member of multiple sites, only remove them from this site
         if len(self.object.user_profile.sitemembership_set.all()) > 1:
             self.object.user_profile.sitemembership_set.get(site_id=site.id).delete()
-            response = HttpResponseRedirect(self.get_success_url())
+            response = redirect(self.get_success_url())
             set_notification_cookie(
                 response,
                 _("User %s removed from the site %s")
@@ -3256,9 +3287,7 @@ class PCGroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
 
     def render_to_response(self, context):
         if context["site"].groups.all():
-            return HttpResponseRedirect(
-                reverse("groups", kwargs={"slug": self.kwargs["slug"]})
-            )
+            return redirect(reverse("groups", kwargs={"slug": self.kwargs["slug"]}))
         else:
             return super().render_to_response(context)
 
@@ -3501,7 +3530,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
             parameter = e.args[0]
             set_notification_cookie(
                 response,
-                _("No value was specified for the mandatory input %s" " of script %s")
+                _("No value was specified for the mandatory input %s of script %s")
                 % (parameter.name, parameter.script.name),
                 error=True,
             )

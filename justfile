@@ -102,7 +102,7 @@ recreate-db:
 # Start the admin-site stack
 run:
   docker compose up
-  printf '%s' "If permissions fail, verify umask and/or manually check if the permissions differ on the file mentioned, e.g. initialize.py"
+  @printf '%s' "If permissions fail, verify umask and/or manually check if the permissions differ on the file mentioned, e.g. initialize.py"
 
 # Start the admin-site stack in the background and attach specifically to the django container - so python breakpoints work
 run-debug:
@@ -111,9 +111,7 @@ run-debug:
 
 # --no-obsolete removes unused translations, --add-location file is there to make diffs clearer by skipping line
 # numbers, so a change early in views.py doesn't make makemessages update hundreds of line references
-# TODO: makemessages sometimes suddenly makes changes to where it line wraps, making diffs hard to read. Seemingly there's
-# no hard line wrap set, and the only option is to disable line wrap completely which doesn't seem ideal. Hopefully a
-# future Django version provides a solution.
+# TODO: makemessages sometimes suddenly makes changes to where it line wraps, making diffs hard to read. Seemingly there's no hard line wrap set, and the only option is to disable line wrap completely which doesn't seem ideal. Hopefully a future Django version provides a solution.
 [doc("Run django's make-messages for translations, including translations for javascript files (djangojs)")]
 translations-make-messages: (_verify-container-running django_container) fix-permissions
   @just managepy makemessages --all --ignore venv --add-location file --no-obsolete

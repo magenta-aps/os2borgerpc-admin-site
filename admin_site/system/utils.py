@@ -1,5 +1,6 @@
 """Utility methods for the OS2borgerPC project."""
 
+import jwt
 import json
 import logging
 import re
@@ -75,7 +76,7 @@ def quria_login_validate(site, loaner_number, pincode):
     logger = logging.getLogger(__name__)
 
     if not site.agency_id:  # ISIL/NCIP must be specified
-        logger.error(f"{site.name}: Agency ID / NCIP MUST be specified.")
+        logger.error(f"Quria: {site.name}: Agency ID / NCIP MUST be specified.")
         return 0
 
     headers = {
@@ -97,9 +98,7 @@ def quria_login_validate(site, loaner_number, pincode):
             status = response.json()["status"]
             return status
         else:
-            logger.error(
-                f"{site.name} was unable to authenticate with Quria: Invalid NCIP"
-            )
+            logger.error(f"Quria: {site.name} was unable to authenticate: Invalid NCIP")
             return 0
     else:
         # Unable to authenticate with Quria - log this.
@@ -108,16 +107,18 @@ def quria_login_validate(site, loaner_number, pincode):
         except ValueError:
             if response.status_code == 502:
                 # This can happen if the API for Quria fails to respond correctly
-                message = "Received error 502 - Axiells API for Quria most likely has an error"
+                message = (
+                    "Quria: Received error 502 - Axiells API most likely has an error"
+                )
             elif response.status_code == 504:
                 # Error 504 is normally related to the NCIP being invalid
-                message = "Received error 504 - NCIP is most likely invalid"
+                message = "Quria: Received error 504 - NCIP is most likely invalid"
             else:
                 # Other errors can have various causes
                 message = (
                     f"Received error {response.status_code} - Exact cause is unknown"
                 )
-        logger.error(f"{site.name} was unable to authenticate with Quria: {message}")
+        logger.error(f"Quria: {site.name} was unable to authenticate: {message}")
         return 0
 
 
@@ -157,7 +158,9 @@ def easy_appointments_booking_validate(
     date_time = now.strftime("%Y-%m-%d %H:%M:%S")
     date = date_time.split(" ")[0]
     if not site.booking_api_url:
-        logger.error(f"{site.name}: Booking API URL MUST be specified.")
+        logger.error(
+            f"EasyAppointments: {site.name}: Booking API URL MUST be specified."
+        )
         return 0, ""
     appointment_url = (
         f"https://{site.booking_api_url}/index.php/api/v1/appointments?aggregates"
@@ -174,7 +177,7 @@ def easy_appointments_booking_validate(
         # Unable to authenticate with system API key - log this.
         message = response.text
         logger.error(
-            f"{site.name} was unable to authorize with configured EasyAppointments API key: {message}"
+            f"EasyAppointments: {site.name} was unable to authorize with configured API key: {message}"
         )
         return 0, ""
     time_allowed = None
@@ -323,7 +326,7 @@ def send_password_sms(phone_number, message, site):
         if "no valid recipients" not in response.text.lower():
             # Unable to authenticate with system user - log this.
             logger.error(
-                f"{site.name} was unable to authorize with SMSTeknik "
+                f"SMSTeknik: {site.name} was unable to authorize "
                 f"with configured user name and password: {response.text}"
             )
         return False
@@ -342,7 +345,7 @@ def cicero_validate(loaner_number, pincode, site, pc=None):
         # logger.warning("{site.name}: Pincode must be a number.")
         return 0
     if not site.agency_id:
-        logger.error(f"{site.name}: Agency ID / ISIL MUST be specified.")
+        logger.error(f"Cicero: {site.name}: Agency ID / ISIL MUST be specified.")
         return 0
     # First, get sessionKey.
     session_key_url = (
@@ -362,7 +365,7 @@ def cicero_validate(loaner_number, pincode, site, pc=None):
         # Unable to authenticate with system user - log this.
         message = response.json()["message"]
         logger.error(
-            f"{site.name} was unable to log in with configured user name and password: {message}"
+            f"Cicero: {site.name} was unable to log in with configured user name and password: {message}"
         )
         return 0
     # We now have a valid session key.

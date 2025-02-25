@@ -2,37 +2,40 @@
 <thead>
     <tr>
         <th>
-            <form method="post">
-                {% csrf_token %}
                 <span class="me-2">{% translate "Latest failed jobs" %}</span>
-                {% if latest_failed_jobs %}
-                {% translate 'Hiding a failed job means that it will no longer be shown on the dashboard. Are you sure you want to hide all the shown failed jobs?' as all_confirm_text %}
-                <input type="hidden" name="target_jobs" value="all">
-                <button class="btn btn-danger" type="submit" hx-post="{% url 'dashboard_jobs' slug=site.uid %}" hx-target="#jobs-table" hx-confirm="{{ all_confirm_text}}">
-                    {% translate "Hide all shown jobs" %}
-                </button>
-                {% endif %}
-            </form>
         </th>
-        <th class="text-end">
+        <th></th>
+        <th class="text-end ps-0 action-button-th position-relative">
+            {% if latest_failed_jobs %}
+                <form method="post">
+                    {% translate 'Hiding a failed job means that it will no longer be shown on the dashboard. It will be hidden for all users, not just you. Are you sure you want to hide all the shown failed jobs?' as all_confirm_text %}
+                    <input type="hidden" name="target_jobs" value="all">
+                    <button class="btn btn-sm text-light action-button me-4 position-absolute" type="submit" hx-post="{% url 'dashboard_jobs' slug=site.uid %}" hx-target="#jobs-table" hx-confirm="{{ all_confirm_text}}">
+                        <span class="material-icons align-middle">visibility_off</span>
+                        {% translate "Hide all shown jobs" %}
+                    </button>
+                </form>
+            {% endif %}
             <a href="{% url 'jobs' slug=site.uid %}?job_status=FAILED" >{% translate "See all" %}</a>
         </th>
     </tr>
 </thead>
 <tbody>
     {% for job in latest_failed_jobs %}
-        <tr class="dashboard-job-list-item">
+        <tr>
             <td>
+                <strong>{{ job.batch.script.name }} - {{ job.pc.name }}</strong>
+                {% translate 'Hiding a failed job means that it will no longer be shown on the dashboard. It will be hidden for all users, not just you. Are you sure you want to hide this failed job?:' as single_confirm_text %}
+            </td>
+            <td class="text-end pe-0">
                 <form method="post">
-                    <strong>{{ job.batch.script.name }} - {{ job.pc.name }}</strong>
                     <input type="hidden" name="target_jobs" value="{{ job.pk }}">
-                    {% translate 'Hiding a failed job means that it will no longer be shown on the dashboard. Are you sure you want to hide this failed job?:' as single_confirm_text %}
-                    <button class="list-item-hide material-icons" title="{% translate 'Hide this failed job' %}" type="submit" hx-post="{% url 'dashboard_jobs' slug=site.uid %}" hx-target="#jobs-table" hx-confirm="{{ single_confirm_text }} {{ job.batch.script.name }} - {{ job.pc.name }}">
-                        clear
+                    <button class="list-item-hide material-icons text-dark align-middle border-0 fs-4 me-0" title="{% translate 'Hide this failed job' %}" type="submit" hx-post="{% url 'dashboard_jobs' slug=site.uid %}" hx-target="#jobs-table" hx-confirm="{{ single_confirm_text }} {{ job.batch.script.name }} - {{ job.pc.name }}">
+                        visibility_off
                     </button>
                 </form>
             </td>
-            <td class="text-end">
+            <td class="text-end ps-0">
                 {{ job.finished }}
             </td>
         </tr>
@@ -41,6 +44,7 @@
             <td>
                 {% translate "Nothing to show" %}
             </td>
+            <td></td>
             <td></td>
         </tr>
     {% endfor %}

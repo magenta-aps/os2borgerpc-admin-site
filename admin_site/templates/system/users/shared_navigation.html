@@ -8,19 +8,19 @@
 
 {% block subnav %}
 <div class="sublevelnav">
-  {% if site_membership.site_user_type >= site_membership.CUSTOMER_ADMIN or user.is_superuser %}
+  {% if not customer_using_sso and site_membership.site_user_type >= site_membership.CUSTOMER_ADMIN or user.is_superuser %}
     <div class="listutils">
         {% set_css_class_active request.resolver_match.url_name "link_users" as current_url_link_users %}
-        <a class="btn btn-link {{current_url_link_users}}" href="{% url 'link_users' site.uid %}">
+        <a class="btn btn-link {{ current_url_link_users }}" href="{% url 'link_users' site.uid %}">
         <span class="material-icons">add</span>
         {% translate "Add existing users to this site" %}
       </a>
     </div>
   {% endif %}
-  {% if site_membership.site_user_type >= site_membership.SITE_ADMIN or user.is_superuser %}
+  {% if not customer_using_sso and site_membership.site_user_type >= site_membership.SITE_ADMIN or user.is_superuser %}
     <div class="listutils">
         {% set_css_class_active request.resolver_match.url_name "new_user" as current_url_new_user %}
-        <a class="btn btn-link {{current_url_new_user}}" href="{% url 'new_user' site.uid %}">
+        <a class="btn btn-link {{ current_url_new_user }}" href="{% url 'new_user' site.uid %}">
         <span class="material-icons">add</span>
         {% translate "Add new user" %}
       </a>
@@ -30,7 +30,7 @@
   <ul class="item-list">
     {% for listed_user in user_list %}
       <li class="{% if listed_user == selected_user %}active{% endif %}">
-        <a class="item-list-link" href="/site/{{ site.url }}/users/{{ listed_user.username }}">
+        <a class="item-list-link" href="{% url 'user' site.uid listed_user.username %}">
           {{ listed_user.username }}
         </a>
         {% if listed_user == selected_user and not_customer_admin and site_membership.site_user_type >= site_membership.SITE_ADMIN or listed_user == selected_user and user.is_superuser %}

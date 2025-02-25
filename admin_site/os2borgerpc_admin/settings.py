@@ -200,7 +200,6 @@ MIDDLEWARE = (
     "django_otp.middleware.OTPMiddleware",
     "os2borgerpc_admin.middlewares.user_locale_middleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "mozilla_django_oidc.middleware.SessionRefresh",
 )
 
 # Email settings

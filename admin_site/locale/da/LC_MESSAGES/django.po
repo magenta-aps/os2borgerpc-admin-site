@@ -6521,9 +6521,11 @@ msgstr "backupkode"
 #: templates/two_factor/core/login.html
 msgid ""
 "SSO login failed. If the error persists, verify that your user is correctly "
-"configured in AD/Entra. Click the following link to try again"
+"configured in AD/Entra. Click the following link to try again:"
 msgstr ""
-"SSO-login mislykkedes. Hvis fejlen fortsætter, så verificer at din bruger er korrekt konfigureret i AD/Entra. Klik på det følgende link, for at prøve igen:"
+"SSO-login mislykkedes. Hvis fejlen fortsætter, så verificer at din bruger er "
+"korrekt konfigureret i AD/Entra. Klik på det følgende link, for at prøve "
+"igen:"
 
 #: templates/two_factor/core/login.html
 msgid "SSO login"

@@ -95,7 +95,7 @@
         {{ form|crispy }}
       </div>
       <div class="modal-footer">
-        
+
         <button id="handle_events_save_button" type="button" class="btn btn-primary">{% translate "Handle event" %}</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
       </div>
@@ -103,7 +103,7 @@
   </div>
 </div>
 
-  <div class="container-fluid main sublevelmain" style="overflow-x: auto;">
+  <div class="container-fluid main" style="overflow-x: auto;">
     {% include 'notification.html' %}
     <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#handle_events_modal" id="handle-event-button" disabled="true">{% translate "Handle events" %}</button>
     <table class="table table-extendable" id="site_securityevents_table">

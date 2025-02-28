@@ -20,7 +20,7 @@
 </ul>
 {% endblock %}
 {% block specific_content %}
-<div class="container-fluid main sublevelmain">
+<div class="container-fluid main">
   {% if object_list %}
     <!-- First index of 'minor_versions' is the most recent version -->
     {% with object_list|first as first_ver %}

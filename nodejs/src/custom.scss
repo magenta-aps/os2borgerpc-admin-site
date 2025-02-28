@@ -152,6 +152,9 @@ input[type="checkbox"] {
 }
 
 .dashboard {
+  .list-item-hide {
+    background: transparent;
+  }
 
   .list-item-hide:hover {
     border: none;

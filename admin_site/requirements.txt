@@ -16,8 +16,8 @@ google-crc32c==1.6.0              # If using Google Cloud - for hashing
 googleapis-common-protos==1.68.0  # If using Google Cloud
 gunicorn==23.0.0
 mozilla-django-oidc==4.0.1
-psycopg-binary==3.2.5             # Postgres support
-psycopg==3.2.5                    # Postgres support
+psycopg-binary==3.1.18             # Postgres support
+psycopg==3.1.18                    # Postgres support
 python-dateutil==2.9.0            # Required by django-xmlrpc
 PyJWT==2.10.1                     # Required to decode JWT's
 requests==2.32.3

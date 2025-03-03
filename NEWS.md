@@ -1,3 +1,8 @@
+## Version 6.6.2, March 3, 2025
+
+- Revert psycopg to version 3.1.18 due to bug in newer versions
+- Minor change in dashboard UI
+
 ## Version 6.6.1, February 25, 2025
 
 - Remove OIDC middleware suspected of causing errors

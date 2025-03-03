@@ -6,7 +6,7 @@
 
 {% block specific_content %}
 
-<div class="container-fluid main sublevelmain">
+<div class="container-fluid main">
   {% translate "New on/off schedule" as new_text %}
   <h1 class="divideheader">{{selected_plan.name|default:new_text}}</h1>
   {% include 'notification.html' %}

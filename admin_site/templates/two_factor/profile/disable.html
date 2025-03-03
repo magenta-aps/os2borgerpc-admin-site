@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block specific_content %}
-<div class="container-fluid main sublevelmain">
+<div class="container-fluid main">
   <h2 class="divideheader">{% trans "Disable Two-factor Authentication for" %} <em>{{ request.user.username }}</em></h2>
   <div class="tab-content">
   <p>{% blocktrans trimmed %}You are about to disable two-factor authentication. This

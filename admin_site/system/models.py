@@ -727,9 +727,9 @@ class PC(models.Model):
     mac = models.CharField(verbose_name=_("MAC"), max_length=255, blank=True)
     name = models.CharField(
         verbose_name=_("name"),
-        max_length=255,
+        max_length=40,
         help_text=_(
-            "Valid characters are a-z, A-Z, 0-9 and hyphen (-). The length must be 1-63 characters"
+            "Valid characters are a-z, A-Z, 0-9 and hyphen (-). The length must be 1-40 characters"
         ),
     )
     uid = models.CharField(

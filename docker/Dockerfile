@@ -1,7 +1,7 @@
 # Copyright (C) 2021 Magenta ApS, http://magenta.dk.
 # Contact: info@magenta.dk.
 
-FROM node:16 AS frontend
+FROM node:22-alpine AS frontend
 
 WORKDIR /code/nodejs
 

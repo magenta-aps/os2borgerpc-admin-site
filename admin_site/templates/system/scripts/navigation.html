@@ -23,9 +23,9 @@
             role="button"
             aria-expanded="false"
             aria-controls="collapse{{ ltag.name|slugify }}local">
-            <span class="material-icons">folder</span>
+            <span class="material-symbols-outlined">folder</span>
             <span class="collapse-label">{{ ltag.name }}</span>
-            <span class="material-icons collapse-arrow">arrow_drop_down</span>
+            <span class="material-symbols-outlined collapse-arrow">arrow_drop_down</span>
           </a>
           <ul class="item-list collapse collapse-content" id="collapse{{ ltag.name|slugify }}local">
             {% for script in scripts %}
@@ -35,11 +35,11 @@
                 </a>
                 {% if script == selected_script and site_membership.site_user_type >= site_membership.SITE_ADMIN or script == selected_script and user.is_superuser %}
                   {% if script.is_security_script %}
-                    <a class="item-list-deletable material-icons" href="{% url 'security_script_delete' site.uid script.pk %}" title="{% translate "Delete script" %}">
+                    <a class="item-list-deletable material-symbols-outlined" href="{% url 'security_script_delete' site.uid script.pk %}" title="{% translate "Delete script" %}">
                       clear
                     </a>
                   {% else %}
-                    <a class="item-list-deletable material-icons" href="{% url 'script_delete' site.uid script.pk %}" title="{% translate "Delete script" %}">
+                    <a class="item-list-deletable material-symbols-outlined" href="{% url 'script_delete' site.uid script.pk %}" title="{% translate "Delete script" %}">
                       clear
                     </a>
                   {% endif %}
@@ -59,11 +59,11 @@
                 </a>
                 {% if script == selected_script and site_membership.site_user_type >= site_membership.SITE_ADMIN or script == selected_script and user.is_superuser %}
                   {% if script.is_security_script %}
-                  <a class="item-list-deletable material-icons" href="{% url 'security_script_delete' site.uid script.pk %}" title="{% translate "Delete script" %}">
+                  <a class="item-list-deletable material-symbols-outlined" href="{% url 'security_script_delete' site.uid script.pk %}" title="{% translate "Delete script" %}">
                     clear
                   </a>
                   {% else %}
-                  <a class="item-list-deletable material-icons" href="{% url 'script_delete' site.uid script.pk %}" title="{% translate "Delete script" %}">
+                  <a class="item-list-deletable material-symbols-outlined" href="{% url 'script_delete' site.uid script.pk %}" title="{% translate "Delete script" %}">
                     clear
                   </a>
                   {% endif %}
@@ -80,9 +80,9 @@
       {% for gtag, scripts in global_scripts_by_tag.items %}
         {% if gtag != 'untagged' %}
           <a data-bs-toggle="collapse" href="#collapse{{ gtag.name|slugify }}global" role="button" aria-expanded="false" aria-controls="collapse{{ gtag.name|slugify }}global">
-            <span class="material-icons">folder</span>
+            <span class="material-symbols-outlined">folder</span>
             <span class="collapse-label">{{ gtag.name }}</span>
-            <span class="material-icons collapse-arrow">arrow_drop_down</span>
+            <span class="material-symbols-outlined collapse-arrow">arrow_drop_down</span>
           </a>
           <ul class="item-list collapse collapse-content" id="collapse{{ gtag.name|slugify }}global">
             {% for script in scripts %}

@@ -33,7 +33,7 @@ $(function () {
             'data-pk="' +
             this.pk +
             '"' +
-            '><span class="material-icons fs-3">info</span></button>'
+            '><span class="material-symbols-outlined fs-3">info</span></button>'
         }
         var script_link =
           '<a href="' + this.script_url + '">' + this.script_name + "</a>"
@@ -105,7 +105,7 @@ $(function () {
 
       // Go to Start button (First Page)
       var start_item = $(
-        '<li class="page-item"><a class="page-link d-flex justify-content-center align-items-center"><span class="material-icons">first_page</span>' +
+        '<li class="page-item"><a class="page-link d-flex justify-content-center align-items-center"><span class="material-symbols-outlined">first_page</span>' +
           gettext("First") +
           "</a></li>",
       )
@@ -118,7 +118,7 @@ $(function () {
 
       // Previous button
       var previous_item = $(
-        '<li class="page-item pagination-btn-muted"><a class="page-link d-flex justify-content-center align-items-center"><span class="material-icons">navigate_before</span> ' +
+        '<li class="page-item pagination-btn-muted"><a class="page-link d-flex justify-content-center align-items-center"><span class="material-symbols-outlined">navigate_before</span> ' +
           gettext("Previous") +
           "</a></li>",
       )
@@ -160,7 +160,7 @@ $(function () {
       var next_item = $(
         '<li class="page-item disabled"><a class="page-link d-flex justify-content-center align-items-center">' +
           gettext("Next") +
-          '&nbsp;<span class="material-icons">navigate_next</span></a></li>',
+          '&nbsp;<span class="material-symbols-outlined">navigate_next</span></a></li>',
       )
       if (data.has_next) {
         next_item.removeClass("disabled")
@@ -176,7 +176,7 @@ $(function () {
       var end_item = $(
         '<li class="page-item"><a class="page-link d-flex justify-content-center align-items-center"> ' +
           gettext("Last") +
-          '&nbsp;&nbsp;<span class="material-icons">last_page</span></a></li>',
+          '&nbsp;&nbsp;<span class="material-symbols-outlined">last_page</span></a></li>',
       )
       end_item.find("a").on("click", function () {
         var input = $("#jobsearch-filterform input[name=page]")

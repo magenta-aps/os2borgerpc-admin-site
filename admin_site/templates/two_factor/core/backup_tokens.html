@@ -29,7 +29,7 @@
   <form method="post">{% csrf_token %}{{ form.as_p }}
       <a href="{% url 'user' site.uid user.username %}"
        class="btn btn-secondary me-3 mt-3 mb-3">
-          <span class="material-icons">
+          <span class="material-symbols-outlined">
           arrow_back
           </span>
        {% trans "Back to user profile" %}</a>

@@ -39,7 +39,7 @@
                   <form method="post">
                     {% csrf_token %}
                     <button class="d-flex align-items-center btn-primary" type="submit" hx-post="{% url 'api_key_new' slug=site.uid %}" hx-target="#api-keys-list">
-                      <span class="material-icons me-1">add</span>
+                      <span class="material-symbols-outlined me-1">add</span>
                       {% translate "Generate new API Key" %}
                     </button>
                   </form>

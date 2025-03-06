@@ -15,7 +15,7 @@
         <ul class="pick-list-selected list-group">
             <li class="list-group-item list-group-item-action">
                 <button class="btn btn-link d-flex align-items-center pick-list-dropdown-btn" type="button" id="pick-list-{{ submit_name }}-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span class="material-icons">add</span>
+                    <span class="material-symbols-outlined">add</span>
                 </button>
                 <ul class="pick-list-available dropdown-menu" aria-labelledby="pick-list-{{ submit_name }}-dropdown"></ul>
             </li>
@@ -202,7 +202,7 @@
 
                     let acceptButton = document.createElement('button')
                     acceptButton.type = 'button'
-                    acceptButton.className = 'btn btn-primary material-icons'
+                    acceptButton.className = 'btn btn-primary material-symbols-outlined'
                     acceptButton.innerHTML = 'check'
                     acceptButton.addEventListener('click', function() {
                         addCheckedItemsToSelectedList()
@@ -211,7 +211,7 @@
 
                     let cancelButton = document.createElement('button')
                     cancelButton.type = 'button'
-                    cancelButton.className = 'btn btn-secondary material-icons' 
+                    cancelButton.className = 'btn btn-secondary material-symbols-outlined' 
                     cancelButton.innerHTML = 'close'
                     cancelButton.addEventListener('click', function() {
                         cancelChecksInList()

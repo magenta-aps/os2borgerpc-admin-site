@@ -77,11 +77,6 @@ td.after-dash {
   width: 130px;
 }
 
-#wake-change-plan tbody td input {
-  margin-top: 20px
-  vertical-align: middle;
-}
-
 #wake-change-event-name {
   width: 360px!important;
 }

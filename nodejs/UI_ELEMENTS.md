@@ -20,7 +20,7 @@ Styles in nodejs/src/_picklist.scss
                 id="pick-list-dropdown" 
                 data-bs-toggle="dropdown" 
                 aria-expanded="false">
-                <span class="material-icons">add</span>
+                <span class="material-symbols-outlined">add</span>
                 Tilføj xxxx
             </button>
             <ul class="pick-list-available dropdown-menu" aria-labelledby="pick-list-dropdown">
@@ -83,7 +83,7 @@ Styles in nodejs/src/_itemlist.scss
         <a class="item-list-link" href="#">
             Thing that can be deleted
         </a>
-        <a class="item-list-deletable material-icons" href="#" title="Delete the ting">
+        <a class="item-list-deletable material-symbols-outlined" href="#" title="Delete the ting">
             clear
         </a>
     </li>
@@ -97,11 +97,11 @@ Styles in nodejs/src/_collapsible.scss
 ```
 <div class="list-collapsible">
     <a data-bs-toggle="collapse" href="#collapseId" role="button" aria-expanded="false" aria-controls="collapseId">
-        <span class="material-icons">folder</span>
+        <span class="material-symbols-outlined">folder</span>
         <span class="collapse-label">
             ... collapse button label ...
         </span>
-        <span class="material-icons collapse-arrow">arrow_drop_down</span>
+        <span class="material-symbols-outlined collapse-arrow">arrow_drop_down</span>
     </a>
     <ul class="item-list collapse collapse-content" id="collapseId">
         ...

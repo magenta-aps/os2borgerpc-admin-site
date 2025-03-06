@@ -83,7 +83,7 @@
       {% blocktranslate trimmed %}
       You can generate, edit or delete API keys by going to {{site_settings}} and then clicking the link&nbsp;
       {% endblocktranslate %}
-      <a href="{% url 'api_keys' slug=site.url %}"> <span class='material-icons'>vpn_key</span> {% translate "Manage API keys" %} </a>
+      <a href="{% url 'api_keys' slug=site.url %}"> <span class='material-symbols-outlined'>vpn_key</span> {% translate "Manage API keys" %} </a>
     </p>
 
   <p>
@@ -171,7 +171,7 @@
       In order to make a request to the API, you must first {{gen_key}}
       on the page
       {% endblocktranslate %}
-   &nbsp;  <a href="{% url 'api_keys' slug=site.url %}"> <span class='material-icons'>vpn_key</span> {% translate "Manage API keys" %} </a>
+   &nbsp;  <a href="{% url 'api_keys' slug=site.url %}"> <span class='material-symbols-outlined'>vpn_key</span> {% translate "Manage API keys" %} </a>
     </li>
     <li>
       {% blocktranslate trimmed %}

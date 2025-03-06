@@ -3,10 +3,10 @@
           <div class="site-btns me-2 btn-group">
             <a class="btn btn-md" href="{% url 'dashboard' slug=site.url %}" >
               <span class="pe-4">
-                <span class='material-icons'>home</span>
+                <span class='material-symbols-outlined'>home</span>
                 {{site.name}}
               </span>
-             <span class="material-icons" title="">computer</span>{{site.pcs.count}}
+             <span class="material-symbols-outlined material-symbols-outlined-nofill">computer</span>{{site.pcs.count}}
             </a>
             {% if site_membership.site.customer == site.customer and site_membership.site_user_type == site_membership.CUSTOMER_ADMIN and site.customer.sites.count > 1 %}
               <button class="btn btn-md dropdown-toggle" data-bs-toggle="dropdown">
@@ -16,14 +16,14 @@
                 {% if site.pcs.count < 5 %}
                   <li>
                     <a href="{% url "site_delete" site.uid %}" class="p-2 text-decoration-none">
-                      <span class='material-icons'>delete</span>
+                      <span class='material-symbols-outlined'>delete</span>
                       {% translate "Delete site" %}
                   </a>
                   </li>
                 {% else %}
                 {% translate "This Site has 5 or more registered Computers and therefore can't be deleted" as no_delete %}
                   <li>
-                    <span class='material-icons'>delete</span>
+                    <span class='material-symbols-outlined'>delete</span>
                     <span class="icon-remove" title="{{no_delete}}">{% translate "Delete Site" %}</span>
                   </li>
                 {% endif %}

@@ -3,7 +3,7 @@
 {% if job.finished %}
   <a class="btn btn-primary mb-3" href="{% url 'restart_job' site.uid job.pk %}">
       <span>
-          <span class="material-icons">
+          <span class="material-symbols-outlined">
               refresh
           </span>
           {% translate "Restart job" %}
@@ -14,7 +14,7 @@
 
 {% if job.log_output %}
   <span id="clipboard-button" class="btn btn-primary">
-      <span class="material-icons">content_copy</span>
+      <span class="material-symbols-outlined">content_copy</span>
       <span class="copy-btn-text-orig" >{% translate "Copy log to the clipboard" %}</span>
       <span class="d-none">{% translate "Log copied!" %}</span>
   </span>

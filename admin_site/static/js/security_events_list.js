@@ -73,7 +73,7 @@ $(function () {
           'data-pk="' +
           this.pk +
           '"' +
-          '><span class="material-icons fs-2">info</span></button>'
+          '><span class="material-symbols-outlined fs-2">info</span></button>'
         var pc_link = '<a href="' + this.pc_url + '">' + this.pc_name + "</a>"
         var problem_link =
           '<a href="' + this.problem_url + '">' + this.problem_name + "</a>"
@@ -138,7 +138,7 @@ $(function () {
       var eventsearch = this
 
       var previous_item = $(
-        '<li class="page-item disabled"><a class="page-link"><span class="material-icons">navigate_before</span> ' +
+        '<li class="page-item disabled"><a class="page-link"><span class="material-symbols-outlined">navigate_before</span> ' +
           gettext("Previous") +
           "</a></li>",
       )
@@ -175,7 +175,7 @@ $(function () {
       var next_item = $(
         '<li class="page-item disabled"><a class="page-link">' +
           gettext("Next") +
-          ' <span class="material-icons">navigate_next</span></a></li>',
+          ' <span class="material-symbols-outlined">navigate_next</span></a></li>',
       )
       if (data.has_next) {
         next_item.removeClass("disabled")

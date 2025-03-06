@@ -15,11 +15,11 @@
   <div class="listutils">
 
     <a class="btn btn-link" href="{% url 'wake_change_event_new_altered_hours' site.uid %}">
-        <span class="material-icons">add</span>
+        <span class="material-symbols-outlined">add</span>
         {% translate "Add altered opening hours" %}
     </a>
     <a class="btn btn-link" href="{% url 'wake_change_event_new_closed' site.uid %}">
-        <span class="material-icons">add</span>
+        <span class="material-symbols-outlined">add</span>
         {% translate "Add closed days" %}
     </a>
   </div>
@@ -28,15 +28,15 @@
       {% for event in wake_change_events_list %}
         <li class="{% if event == selected_event %}active{% endif %}">
           {% if event.type == "CLOSED" %}
-            <span class="material-icons ms-3 me-0">door_front</span>
+            <span class="material-symbols-outlined ms-3 me-0">door_front</span>
           {% else %}
-            <span class="material-icons ms-3 me-0">schedule</span>
+            <span class="material-symbols-outlined ms-3 me-0">schedule</span>
           {% endif %}
           <a class="item-list-link" id="{{event.id}}" href="{% url 'wake_change_event' site.uid event.id %}">
             {{event}}
           </a>
           {% if event == selected_event %}
-            <a class="item-list-deletable material-icons" {% if wake_plan_access %} href="{% url 'wake_change_event_delete' site.uid event.id %}" {% endif %} title="{% translate "Delete exception" %}">
+            <a class="item-list-deletable material-symbols-outlined" {% if wake_plan_access %} href="{% url 'wake_change_event_delete' site.uid event.id %}" {% endif %} title="{% translate "Delete exception" %}">
               clear
             </a>
           {% endif %}

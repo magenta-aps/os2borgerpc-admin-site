@@ -33,7 +33,7 @@
           {% endif %}
       </a>
       {% if pc == selected_pc %}
-      <a class="item-list-deletable material-icons" href="{% url "computer_delete" site.url pc.uid %}" title="{% translate "Delete computer" %}">
+      <a class="item-list-deletable material-symbols-outlined" href="{% url "computer_delete" site.url pc.uid %}" title="{% translate "Delete computer" %}">
           clear
         </a>
       {% else %}
@@ -121,7 +121,7 @@
               <div class="clearfix">
                 <label class="mb-2">{% translate "Groups the computer is a member of" %}</label>
                 <span class="badge bg-secondary pick-list-counter-badge" style="float: right;">
-                  <span class="material-icons px-1">queue</span>
+                  <span class="material-symbols-outlined px-1">queue</span>
                   <span id="total-pc_groups"></span>
                 </span>
               </div>
@@ -175,7 +175,7 @@
               <td>
                 {% if job.has_info %}
                   <button type="button" class="btn jobinfobutton p-0" data-pk="{{ job.pk }}" data-bs-toggle="popover" data-bs-content="Loading..." data-bs-html="true" data-bs-placement="left" data-bs-trigger="click" data-bs-animation="true">
-                    <span class="material-icons fs-3">info</span>
+                    <span class="material-symbols-outlined fs-3">info</span>
                   </button>
                 {% endif %}
               </td>

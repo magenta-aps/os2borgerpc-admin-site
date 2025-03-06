@@ -41,14 +41,14 @@
       {% if first_ver.image_upload %}
         {% if not selected_product.multilang or user_language == "da" %}
           <a class="btn btn-md btn-success text-light p-3 fs-5" href="{{ first_ver.image_upload.url }}" download>
-            <span class="material-icons align-middle">
+            <span class="material-symbols-outlined">
               cloud_download
             </span>
             {% translate "Download standard image" %}
           </a>
           {% if first_ver.image_upload_multilang != "" and first_ver.image_upload_multilang != "#" %}
             <a class="btn btn-md btn-secondary ms-4" href="{{ first_ver.image_upload_multilang.url }}" download>
-              <span class="material-icons">
+              <span class="material-symbols-outlined">
                 cloud_download
               </span>
               {% translate "Download multi language image" %}
@@ -57,7 +57,7 @@
         {% else %} {# Handle multilang images for languages except danish #}
           {# Views ensure that all images are multilang if the language isn't Danish #}
           <a class="btn btn-md btn-success text-light p-3 fs-5" href="{{ first_ver.image_upload_multilang.url }}" download>
-            <span class="material-icons">
+            <span class="material-symbols-outlined">
               cloud_download
             </span>
             {% translate "Download standard image" %}
@@ -103,7 +103,7 @@
                   {% if not selected_product.multilang or user_language == "da" %}
                     <a class="btn btn-sm btn-secondary mb-1" href="{{ image.image_upload.url }}" download>
                       <span clas="d-flex align-items-center">
-                        <span class="material-icons">
+                        <span class="material-symbols-outlined">
                           cloud_download
                         </span>
                         {% translate "Download standard image" %}
@@ -113,7 +113,7 @@
                       <a class="btn btn-sm btn-secondary mb-1" href="{{ image.image_upload_multilang.url }}" download>
                         <span clas="d-flex align-items-center">
 
-                          <span class="material-icons">
+                          <span class="material-symbols-outlined">
                             cloud_download
                           </span>
                           {% translate "Download multi language image" %}
@@ -125,7 +125,7 @@
                     <a class="btn btn-sm btn-secondary" href="{{ image.image_upload_multilang.url }}" download>
                       <span clas="d-flex align-items-center">
 
-                        <span class="material-icons">
+                        <span class="material-symbols-outlined">
                           cloud_download
                         </span>
                         {% translate "Download standard image" %}

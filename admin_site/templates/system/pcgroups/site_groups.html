@@ -20,7 +20,7 @@ active
 <div class="sublevelnav">
   <div class="listutils">
     <button class="btn btn-link" type="button" data-bs-toggle="modal" data-bs-target="#addNewGroup">
-      <span class="material-icons">add</span>
+      <span class="material-symbols-outlined">add</span>
       {% translate "Add new group" %}
     </button>
   </div>
@@ -31,7 +31,7 @@ active
           {{ group.name }}
         </a>
         {% if group == selected_group %}
-            <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="{% translate "Delete group" %}">
+            <a class="item-list-deletable material-symbols-outlined" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="{% translate "Delete group" %}">
               clear
             </a>
         {% endif %}
@@ -87,7 +87,7 @@ active
               <div class="clearfix">
                 <label class="mb-2">{% translate "Computers in this group" %}</label>
                 <span class="badge bg-secondary pick-list-counter-badge" style="float: right;">
-                  <span class="material-icons px-1">computer</span>
+                  <span class="material-symbols-outlined material-symbols-outlined-nofill px-1">computer</span>
                   <span id="total-pcs"></span>
                 </span>
               </div>
@@ -104,7 +104,7 @@ active
 
                 <label class="mt-2">{% translate "Supervisors for the group" %}</label>
                 {% translate "This is used to control who receives the e-mails for Events, ie. Security Events or Offline Events. If one or more Supervisors are set for a given Group, these people will receive the e-mails instead of those set in the Monitoring Rule" as help_text %}
-                <button type="button" class="material-icons btn align-middle" data-container="body" title='{{help_text}}' data-toggle="popover" data-placement="right">
+                <button type="button" class="material-symbols-outlined btn" data-container="body" title='{{help_text}}' data-toggle="popover" data-placement="right">
                   help_outline
                 </button>
                 {% include 'widgets/picklist.html' with submit_name='supervisors' selected_list=selected_users available_list=available_users identifier='supervisor' add_text=add_s remove_text=remove_s empty_text=empty_t site_url=site.uid target_section='users' %}
@@ -119,11 +119,11 @@ active
                   {% for e in event_rules_incl_site %}
                     <li class="list-group-item py-3">
                       {% if e|get_model_name == "EventRuleServer" %}
-                        <span class='material-icons me-2' title="{% translate "Offline Rule" %}">desktop_access_disabled</span>
+                        <span class='material-symbols-outlined me-2' title="{% translate "Offline Rule" %}">desktop_access_disabled</span>
                         <a class="text-decoration-none" href="{% url 'event_rule_server' site.uid e.id %}">{{ e }}</a>
                         </span>
                       {% else %}
-                        <span class='material-icons me-2' title="{% translate "Security Problem" %}">gpp_maybe</span>
+                        <span class='material-symbols-outlined me-2' title="{% translate "Security Problem" %}">gpp_maybe</span>
                         <a class="text-decoration-none" href="{% url 'event_rule_security_problem' site.uid e.id %}">{{ e }}</a>
                       {% endif %}
                     </li>

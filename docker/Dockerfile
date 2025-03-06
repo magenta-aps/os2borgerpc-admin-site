@@ -81,6 +81,9 @@ WORKDIR /code/admin_site
 
 # Copy frontend static files.
 COPY --from=frontend \
+  /code/nodejs/node_modules/material-symbols/material-symbols-outlined.woff2 \
+  /frontend/fonts/
+COPY --from=frontend \
   /code/nodejs/dist/css/bootstrap.* \
   /code/nodejs/node_modules/bootstrap-table/dist/bootstrap-table.min.css \
   /frontend/css/

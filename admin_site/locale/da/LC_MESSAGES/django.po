@@ -5445,7 +5445,7 @@ msgstr "Ingen grupper blev fundet"
 
 #: templates/system/pcgroups/site_groups.html
 msgid ""
-"Clik the 'Add new group' button in the menu to the left to create a group"
+"Click the 'Add new group' button in the menu to the left to create a group"
 msgstr ""
 "Klik på 'Tilføj ny gruppe' knappen i menuen til venstre for at oprette en "
 "gruppe"

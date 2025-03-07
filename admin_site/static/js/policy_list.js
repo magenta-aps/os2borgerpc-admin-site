@@ -293,4 +293,14 @@ class PolicyList {
     }
 }
 
+
+function updateScriptPositions(){
+    let fields = document.getElementsByClassName("position-field")
+
+    let i = 0
+    for (let item of fields) {
+      item.value = i
+      i++
+    }
+}
 BibOS.PolicyList = new PolicyList()

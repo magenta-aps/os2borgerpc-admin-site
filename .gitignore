@@ -19,6 +19,7 @@ node_modules/
 .ropeproject
 *.egg-info
 .idea
+Session.vim
 *.mo
 # These files are created when running "npm run build-for-dev"
 admin_site/static/css/bootstrap.css
@@ -26,6 +27,7 @@ admin_site/static/css/bootstrap.css.map
 admin_site/static/js/bootstrap.bundle.min.js
 admin_site/static/js/bootstrap.bundle.min.js.map
 dist/
+venv
 
 # Temporary files created by just
 db-data.json

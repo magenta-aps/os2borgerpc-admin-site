@@ -51,35 +51,39 @@ class MyOIDCAB(OIDCAuthenticationBackend):
         if not roles:
             logger.error(f"SSO error: It seems that {user} has no roles configured.")
             return False
-        if "all_customeradmin" in roles and len(roles) > 1:
-            logger.error(
-                f"SSO error: When a user is a Customer Admin, the user should have no other roles. Roles received: {roles}"
-            )
-            return False
-        for role in roles:
-            try:
-                site_uid, site_role = role.split("_")
-            except ValueError:
+        if "all_customeradmin" in roles:
+            if len(roles) == 1:
+                return True
+            else:
                 logger.error(
-                    f"SSO error: A received role does not contain the delimiter: _. The role was: {role}."
+                    f"SSO error: When a user is a Customer Admin, the user should have no other roles. Roles received: {roles}"
                 )
                 return False
-            if site_role.lower() not in ["all_customeradmin", "siteadmin", "siteuser"]:
-                logger.error(
-                    f"SSO error: A received role does not match a role in this application. The role was: {site_role}."
-                )
-                return False
-            if site_uid not in site_uids:
-                logger.error(
-                    f"SSO error: A site uid was received from the SSO, which doesn't match any of the customer's sites. The uid is {site_uid}."
-                )
-                return False
-            if site_uid in site_uid_check:
-                logger.error(
-                    f'SSO error: Only one Role per Site is allowed. It seems "{user}" has more than one role for the site "{site_uid}".'
-                )
-                return False
-            site_uid_check.append(site_uid)
+        else:
+            for role in roles:
+                try:
+                    site_uid, site_role = role.split("_")
+                except ValueError:
+                    logger.error(
+                        f"SSO error: A received role does not contain the delimiter: _. The role was: {role}"
+                    )
+                    return False
+                if site_role.lower() not in ["siteadmin", "siteuser"]:
+                    logger.error(
+                        f"SSO error: A received role does not match a role in this application. The role was: {site_role}"
+                    )
+                    return False
+                if site_uid not in site_uids:
+                    logger.error(
+                        f"SSO error: A site uid was received from the SSO, which doesn't match any of the customer's sites. The uid is {site_uid}"
+                    )
+                    return False
+                if site_uid in site_uid_check:
+                    logger.error(
+                        f'SSO error: Only one Role per Site is allowed. It seems "{user}" has more than one role for the site "{site_uid}"'
+                    )
+                    return False
+                site_uid_check.append(site_uid)
 
         return True
 

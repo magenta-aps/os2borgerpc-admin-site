@@ -1,14 +1,15 @@
-// Run highlight js on all code tags
 document.addEventListener('DOMContentLoaded', (event) => {
+    // Run highlight js on all code tags
     for (const code of document.getElementsByTagName("code")) {
         hljs.highlightElement(code)
     }
 
+    // Support linking to specific changelog entries, shown in modals
     path = window.location.pathname
     regex = /.*\/(\d+)\/$/
-    id = path.match(regex)[1]
-    if (id) {
-        changelogModalId = "changelogDetails-" + id
+    match = path.match(regex)
+    if (match !== null && typeof match[1] !== undefined) {
+        changelogModalId = "changelogDetails-" + match[1]
         new bootstrap.Modal(document.getElementById(changelogModalId)).show()
     }
 })

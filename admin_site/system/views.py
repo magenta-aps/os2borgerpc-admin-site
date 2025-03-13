@@ -2249,7 +2249,15 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
             raise PermissionDenied
         # Ensure that if a start time has been set, so has the end time - or vice versa
         f = self.request.POST
-        for day in ["monday","tuesday","wednesday", "thursday", "friday", "saturday", "sunday"]:
+        for day in [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday",
+        ]:
             if f.get(f"{day}_on") == f.get(f"{day}_off"):
                 print("ERROR: A day has the same on and off-time")
                 return self.form_invalid(form)
@@ -2405,12 +2413,25 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
         """Helper function used to check if the plan settings have changed."""
         plan_post = self.object
 
-        if events_pre != set(plan_post.wake_change_events.all()) or plan_pre.sleep_state != plan_post.sleep_state:
+        if (
+            events_pre != set(plan_post.wake_change_events.all())
+            or plan_pre.sleep_state != plan_post.sleep_state
+        ):
             return True
 
-        for day in ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]:
+        for day in [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday",
+        ]:
             for setting in ["on", "off"]:
-                if getattr(plan_post, f"{day}_open") and getattr(plan_post, f"{day}_{setting}") != getattr(plan_pre,f"{day}_{setting}"):
+                if getattr(plan_post, f"{day}_open") and getattr(
+                    plan_post, f"{day}_{setting}"
+                ) != getattr(plan_pre, f"{day}_{setting}"):
                     return True
             if getattr(plan_post, f"{day}_open") != getattr(plan_pre, f"{day}_open"):
                 return True

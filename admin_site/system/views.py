@@ -369,11 +369,14 @@ class SiteList(ListView, LoginRequiredMixin):
             )
 
         countries_dict = {}
+        total_customers = 0
         for country in countries:
             customers = Customer.objects.filter(
                 country=country, id__in=user_sites.values_list("customer", flat=True)
             )
+            total_customers += len(customers)
             countries_dict[country.name] = customers
+        context["total_customers"] = total_customers
         context["countries_dict"] = countries_dict
         context["form"] = SiteCreateForm()
         return context

@@ -5788,7 +5788,7 @@ msgstr "siden alle opdateringer sidst blev kørt"
 msgid "Most recent version of"
 msgstr "Nyeste udgave af"
 
-#: templates/system/site_images.html
+#: templates/system/site_images.html templates/system/sites/list.html
 msgid "Version"
 msgstr "Version"
 
@@ -5987,8 +5987,8 @@ msgid "Administrate"
 msgstr "Administrér"
 
 #: templates/system/sites/list.html
-msgid "Admin site version"
-msgstr "Adminsite-version"
+msgid "Customers"
+msgstr "Kunder"
 
 #: templates/system/sites/list.html
 msgid "Add new site"

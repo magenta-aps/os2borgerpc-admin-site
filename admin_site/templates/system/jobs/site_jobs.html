@@ -53,11 +53,11 @@
     <div class="list-collapsible">
 
       <a data-bs-toggle="collapse" href="#batches" role="button" aria-expanded="false" aria-controls="batches">
-        <span class="material-icons">folder</span>
+        <span class="material-symbols-outlined">folder</span>
         <span class="collapse-label">
           {% translate "Batches" %}
         </span>
-        <span class="material-icons collapse-arrow">arrow_drop_down</span>
+        <span class="material-symbols-outlined collapse-arrow">arrow_drop_down</span>
       </a>
 
       <div id="batches" class="collapse collapse-content {% if selected_batch %}show{% endif %}">
@@ -76,11 +76,11 @@
       </div>
 
       <a data-bs-toggle="collapse" href="#computers" role="button" aria-expanded="false" aria-controls="computers">
-        <span class="material-icons">folder</span>
+        <span class="material-symbols-outlined">folder</span>
         <span class="collapse-label">
           {% translate "Computers" %}
         </span>
-        <span class="material-icons collapse-arrow">arrow_drop_down</span>
+        <span class="material-symbols-outlined collapse-arrow">arrow_drop_down</span>
       </a>
 
       <div id="computers" class="collapse collapse-content {% if selected_pc %}show{% endif %}">
@@ -99,11 +99,11 @@
       </div>
 
       <a data-bs-toggle="collapse" href="#groups" role="button" aria-expanded="false" aria-controls="groups">
-        <span class="material-icons">folder</span>
+        <span class="material-symbols-outlined">folder</span>
         <span class="collapse-label">
           {% translate "Groups" %}
         </span>
-        <span class="material-icons collapse-arrow">arrow_drop_down</span>
+        <span class="material-symbols-outlined collapse-arrow">arrow_drop_down</span>
       </a>
 
       <div id="groups" class="collapse collapse-content {% if selected_group %}show{% endif %}">
@@ -147,7 +147,7 @@
    </table>
   </div>
 
-  <div class="container-fluid main sublevelmain">
+  <div class="container-fluid main">
     {% include 'notification.html' %}
     <div style="overflow-x: scroll">
       <table class="table jobtable table-extendable">

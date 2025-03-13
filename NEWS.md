@@ -1,3 +1,10 @@
+## Version 6.7.0, March 7, 2025
+
+- Fix SSO role validation
+- Update node version, switch to alpine
+- Switch from material-icons to material-symbols
+- Only show edit button for associated scripts that take input parameters
+
 ## Version 6.6.2, March 3, 2025
 
 - Revert psycopg to version 3.1.18 due to bug in newer versions

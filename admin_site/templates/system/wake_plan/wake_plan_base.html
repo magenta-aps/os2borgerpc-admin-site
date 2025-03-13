@@ -15,7 +15,7 @@
   <div class="listutils">
 
     <a class="btn btn-link" href="{% url 'wake_plan_new' site.uid %}">
-        <span class="material-icons">add</span>
+        <span class="material-symbols-outlined">add</span>
         {% translate "Add new On/Off schedule" %}
     </a>
   </div>
@@ -32,7 +32,7 @@
           </a>
           {% if plan == selected_plan %}
             {% translate "Delete on/off schedule" as delete %}
-            <a class="item-list-deletable material-icons" {% if wake_plan_access %} href="{% url 'wake_plan_delete' site.uid plan.id %}" {% endif %} title="{{delete}}">
+            <a class="item-list-deletable material-symbols-outlined" {% if wake_plan_access %} href="{% url 'wake_plan_delete' site.uid plan.id %}" {% endif %} title="{{delete}}">
               clear
             </a>
           {% endif %}

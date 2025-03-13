@@ -1,7 +1,7 @@
 # Copyright (C) 2021 Magenta ApS, http://magenta.dk.
 # Contact: info@magenta.dk.
 
-FROM node:16 AS frontend
+FROM node:22-alpine AS frontend
 
 WORKDIR /code/nodejs
 
@@ -80,6 +80,9 @@ COPY crontab /crontab
 WORKDIR /code/admin_site
 
 # Copy frontend static files.
+COPY --from=frontend \
+  /code/nodejs/node_modules/material-symbols/material-symbols-outlined.woff2 \
+  /frontend/fonts/
 COPY --from=frontend \
   /code/nodejs/dist/css/bootstrap.* \
   /code/nodejs/node_modules/bootstrap-table/dist/bootstrap-table.min.css \

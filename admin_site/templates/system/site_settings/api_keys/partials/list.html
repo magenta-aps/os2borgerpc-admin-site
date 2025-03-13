@@ -10,7 +10,7 @@ events/changes.
     <td>
       <span>{{ key.key }}</span>
       <button id="clipboard-button" type="button" class="btn btn-link" onclick="copy_api_key(event);">
-        <span class="material-icons">content_copy</span>
+        <span class="material-symbols-outlined">content_copy</span>
       </button>
       <span class="d-none">{% translate "API Key copied!" %}</span>
     </td>
@@ -24,7 +24,7 @@ events/changes.
       <p class="mb-0" style="margin-left: -.5rem;">
         <form type="delete">
           <button class="btn btn-sm ps-3" type="submit" hx-target="#api-keys-list" hx-delete="{% url "api_key_delete" slug=key.site.uid pk=key.pk %}" hx-confirm="{% translate "Are you sure you want to delete the following API Key?:" %} {{key.key}}">
-            <span class='material-icons'>delete</span>
+            <span class='material-symbols-outlined'>delete</span>
             {% translate "Delete" %}
           </button>
         </form>

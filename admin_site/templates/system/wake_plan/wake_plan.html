@@ -6,7 +6,7 @@
 
 {% block specific_content %}
 
-<div class="container-fluid main sublevelmain">
+<div class="container-fluid main">
   {% translate "New on/off schedule" as new_text %}
   <h1 class="divideheader">{{selected_plan.name|default:new_text}}</h1>
   {% include 'notification.html' %}
@@ -91,7 +91,7 @@
 
           {{form.sleep_state|as_crispy_field}}
           {% translate 'Some sleep states save more power than others, but some hardware does not support the most power saving states. We recommend starting with "Off" (which saves the most power), and if that does not work then try them in the order: mem, freeze' as help_text %}
-          <button type="button" class="material-icons btn d-table-cell align-middle" data-container="body" title='{{help_text}}' data-toggle="popover" data-placement="right">
+          <button type="button" class="material-symbols-outlined btn d-table-cell" data-container="body" title='{{help_text}}' data-toggle="popover" data-placement="right">
             help_outline
           </button>
 
@@ -248,9 +248,9 @@
 
           {# Wake change events #}
           <fieldset id="custom-wake-plans">
-            <a class="btn btn-secondary me-3 mb-3" href="{% url 'wake_change_event_new_closed' site.uid %}"><span class="material-icons">door_front</span>{% translate "Create closed days" %}</a>
-            <a class="btn btn-secondary me-3 mb-3" href="{% url 'wake_change_event_new_altered_hours' site.uid %}"><span class="material-icons">meeting_room</span>{% translate "Create altered opening hours" %}</a>
-            <a class="btn btn-secondary mb-3" href="{% url 'wake_change_events' site.uid %}"><span class="material-icons">edit</span>{% translate "Edit exceptions" %}</a>
+            <a class="btn btn-secondary me-3 mb-3" href="{% url 'wake_change_event_new_closed' site.uid %}"><span class="material-symbols-outlined">door_front</span>{% translate "Create closed days" %}</a>
+            <a class="btn btn-secondary me-3 mb-3" href="{% url 'wake_change_event_new_altered_hours' site.uid %}"><span class="material-symbols-outlined">meeting_room</span>{% translate "Create altered opening hours" %}</a>
+            <a class="btn btn-secondary mb-3" href="{% url 'wake_change_events' site.uid %}"><span class="material-symbols-outlined">edit</span>{% translate "Edit exceptions" %}</a>
           </fieldset>
 
           <fieldset class="col-12 col-lg-12">
@@ -258,7 +258,7 @@
             {{ form.events.errors }}
             <div class="clearfix">
               <span class="badge bg-secondary pick-list-counter-badge" style="float: right;">
-                <span class="material-icons px-1">queue</span>
+                <span class="material-symbols-outlined px-1">queue</span>
                 <span id="total-wake_change_events"></span>
               </span>
             </div>
@@ -277,7 +277,7 @@
             {{ form.groups.errors }}
             <div class="clearfix">
               <span class="badge bg-secondary pick-list-counter-badge" style="float: right;">
-                <span class="material-icons px-1">queue</span>
+                <span class="material-symbols-outlined px-1">queue</span>
                 <span id="total-groups"></span>
               </span>
             </div>

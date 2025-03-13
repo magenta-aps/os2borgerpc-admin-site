@@ -21,7 +21,7 @@
 <nav id="left-menu" class="nav nav-pills utils-global float-start">
     <h2 class="text-light">{% translate "News" %}</h2>
     <a href="{{ back_link }}" class="nav-link">
-        <span class="material-icons" style="margin: 0 .25rem 0 -.25rem; font-size: 1.25rem;">arrow_back</span>
+        <span class="material-symbols-outlined" style="margin: 0 .25rem 0 -.25rem; font-size: 1.25rem;">arrow_back</span>
         {% translate "Back to previous page" %}
     </a>
     <hr>
@@ -41,7 +41,7 @@
                     <form action="{% url 'changelogs' %}">
                         <div class="input-group">
                             <span class="input-group-text bg-white">
-                                <span class="material-icons">search</span>
+                                <span class="material-symbols-outlined">search</span>
                                 <input type="search" id="search" name="search" class="form-control" style="border: 0" placeholder="{% translate "Search..." %}">
                                 <input type="hidden" name="back" value="{{ back_link }}">
                             </span>
@@ -114,7 +114,7 @@
                         </div>
 
                         <div class="changelog-comment-info" title="{% translate "Show" %} ">
-                            <p>{{ entry.comments.count }} <span class="material-icons fs-2">{% translate "chat" %}</span></p>
+                            <p>{{ entry.comments.count }} <span class="material-symbols-outlined fs-2">{% translate "chat" %}</span></p>
                         </div>
                         <div class="clearfix"></div>
                     </footer>

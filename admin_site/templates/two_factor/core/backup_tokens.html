@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block specific_content %}
-<div class="container-fluid main sublevelmain">
+<div class="container-fluid main">
   <h2 class="divideheader">{% trans "Backup Tokens" %}: <em>{{ request.user.username }}</em></h2>
   <div class="tab-content">
   <p>{% blocktrans trimmed %}Backup tokens can be used when your authenticator app isn't available.<br>
@@ -29,7 +29,7 @@
   <form method="post">{% csrf_token %}{{ form.as_p }}
       <a href="{% url 'user' site.uid user.username %}"
        class="btn btn-secondary me-3 mt-3 mb-3">
-          <span class="material-icons">
+          <span class="material-symbols-outlined">
           arrow_back
           </span>
        {% trans "Back to user profile" %}</a>

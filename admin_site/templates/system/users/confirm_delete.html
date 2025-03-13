@@ -7,7 +7,7 @@
 
 {% block specific_content %}
 
-  <div class="container-fluid main sublevelmain">
+  <div class="container-fluid main">
       <h2 class="divideheader">{% translate "Delete user" %}: <em>{{ selected_user.username }}</em></h2>
       <div>
         <form action="{% url 'user_delete' site.uid selected_user.username %}" name="update_user_form" id="update_user_form" method="post">

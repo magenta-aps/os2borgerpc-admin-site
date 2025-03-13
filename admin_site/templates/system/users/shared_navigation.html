@@ -12,7 +12,7 @@
     <div class="listutils">
         {% set_css_class_active request.resolver_match.url_name "link_users" as current_url_link_users %}
         <a class="btn btn-link {{ current_url_link_users }}" href="{% url 'link_users' site.uid %}">
-        <span class="material-icons">add</span>
+        <span class="material-symbols-outlined">add</span>
         {% translate "Add existing users to this site" %}
       </a>
     </div>
@@ -21,7 +21,7 @@
     <div class="listutils">
         {% set_css_class_active request.resolver_match.url_name "new_user" as current_url_new_user %}
         <a class="btn btn-link {{ current_url_new_user }}" href="{% url 'new_user' site.uid %}">
-        <span class="material-icons">add</span>
+        <span class="material-symbols-outlined">add</span>
         {% translate "Add new user" %}
       </a>
     </div>
@@ -35,7 +35,7 @@
         </a>
         {% if listed_user == selected_user and not_customer_admin and site_membership.site_user_type >= site_membership.SITE_ADMIN or listed_user == selected_user and user.is_superuser %}
           {% translate "Delete user" as delete_name %}
-          <a class="item-list-deletable material-icons" href="{% url 'user_delete' site.uid selected_user.username %}" title="{{ delete_name }}">
+          <a class="item-list-deletable material-symbols-outlined" href="{% url 'user_delete' site.uid selected_user.username %}" title="{{ delete_name }}">
             clear
           </a>
         {% endif %}

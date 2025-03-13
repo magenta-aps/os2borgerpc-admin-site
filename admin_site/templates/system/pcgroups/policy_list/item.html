@@ -5,14 +5,14 @@
   {% if script_id %}
     <td class="sortable-handle" style="min-width: 6.2rem; width: 5%; cursor: pointer;">
       <input type="hidden" class="position-field" name="{{ submit_name|default:'policy' }}_{{ ps_pk }}_position" value="{{ ps.position }}">
-      <span class="material-icons disable-select">&#xf101;</span>
+      <span class="material-symbols-outlined disable-select">&#xf101;</span>
     </td>
     <td class="policy-script-print-key" style="width: 35%;">
       <a href="{% url 'script' site.uid script_id %}">{{ name }}</a>
     </td>
   {% else %}
     <td class="sortable-handle" style="width: 5%; cursor: pointer;">
-      <span class="material-icons disable-select">&#xf101;</span>
+      <span class="material-symbols-outlined disable-select">&#xf101;</span>
     </td>
     <input type="hidden" class="position-field" name="{{ submit_name|default:'policy' }}_{{ ps_pk }}_position" value="{{ ps.position }}">
     <td class="policy-script-print-key" style="width: 35%;">
@@ -73,7 +73,7 @@
   </td>
   <td style="min-width: 6.2rem; width: 20%;">
     <p class="mb-0" style="margin-left: -.5rem;">
-     <a class="mb-1 mt-1 btn btn-sm" onclick="scriptEdit(this, {% if params != '#PARAMS#' %}
+     <a class="mb-1 mt-1 btn btn-sm {% if not params %} invisible {% endif %}" onclick="scriptEdit(this, {% if params != '#PARAMS#' %}
       [{% for param in params %}
       '{{ param.input.default_value }}',
       {% endfor %}]
@@ -81,10 +81,10 @@
       'None'
       {% endif %})">
 
-        <span class='material-icons'>edit</span>{% translate "Edit" %}
+        <span class='material-symbols-outlined'>edit</span>{% translate "Edit" %}
       </a>
       <a class="btn btn-sm ps-3" href="javascript:void(0)" onclick="removeItem(this, '{{ submit_name }}')">
-        <span class='material-icons'>delete</span>{% translate "Remove" %}
+        <span class='material-symbols-outlined'>delete</span>{% translate "Remove" %}
       </a>
     </p>
   </td>

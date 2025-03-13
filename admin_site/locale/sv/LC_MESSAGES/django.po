@@ -5780,7 +5780,7 @@ msgstr "sedan alla uppdateringar senast kördes"
 msgid "Most recent version of"
 msgstr "Senaste upplagan av"
 
-#: templates/system/site_images.html
+#: templates/system/site_images.html templates/system/sites/list.html
 msgid "Version"
 msgstr "Version"
 
@@ -5980,8 +5980,8 @@ msgid "Administrate"
 msgstr "Hantera"
 
 #: templates/system/sites/list.html
-msgid "Admin site version"
-msgstr "Adminsida-version"
+msgid "Customers"
+msgstr "Kunder"
 
 #: templates/system/sites/list.html
 msgid "Add new site"

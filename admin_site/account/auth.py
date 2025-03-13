@@ -105,7 +105,7 @@ class MyOIDCAB(OIDCAuthenticationBackend):
 
     def filter_users_by_claims(self, claims):
         upn = claims.get("upn")
-        return self.UserModel.objects.filter(username=upn)
+        return self.UserModel.objects.filter(username__iexact=upn)
 
     def configure_sites_access_and_roles(self, roles, user_profile):
         site_uids = list(

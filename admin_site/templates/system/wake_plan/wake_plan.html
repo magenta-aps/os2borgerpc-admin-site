@@ -96,7 +96,7 @@
             help_outline
           </button>
 
-          <h2 class="mt-4"><strong>{% translate "Week plan" %}</strong> <button type="button" onclick="getWakePlanSettingsAsJSON()">Get json data</button></h2>
+          <h2 class="mt-4"><strong>{% translate "Week plan" %}</strong></h2>
           <p>{% translate "Configure on and off for the recurring week plan" %}</p>
           <table id="week-plan" class="form-switch table">
             <thead>
@@ -248,7 +248,7 @@
           <p>{% translate "Plan and create upcoming closed days and altered opening hours from the recurring week plan" %}</p>
 
           {# Wake change events #}
-          <fieldset id="custom-wake-plans">
+          <fieldset id="custom-wake-plans" class="wake_change_events_link">
             <a class="btn btn-secondary me-3 mb-3" href="{% url 'wake_change_event_new_closed' site.uid %}"><span class="material-symbols-outlined">door_front</span>{% translate "Create closed days" %}</a>
             <a class="btn btn-secondary me-3 mb-3" href="{% url 'wake_change_event_new_altered_hours' site.uid %}"><span class="material-symbols-outlined">meeting_room</span>{% translate "Create altered opening hours" %}</a>
             <a class="btn btn-secondary mb-3" href="{% url 'wake_change_events' site.uid %}"><span class="material-symbols-outlined">edit</span>{% translate "Edit exceptions" %}</a>

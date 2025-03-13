@@ -30,12 +30,12 @@
 
         (function() {
 
-            var element_id = 'pick-list-{{ submit_name }}{{ unique_id }}'
-            var text_add = '{{ add_text }}'
-            var text_remove = '{{ remove_text }}'
-            var text_empty = '{{ empty_text }}'
-            var list_el = document.getElementById(element_id)
-            var options = []
+            const element_id = 'pick-list-{{ submit_name }}{{ unique_id }}'
+            const text_add = '{{ add_text }}'
+            const text_remove = '{{ remove_text }}'
+            const text_empty = '{{ empty_text }}'
+            const list_el = document.getElementById(element_id)
+            const options = []
             {% if selected_list %}
                 {% for pk, identifier, uid in selected_list %}
                     options.push({
@@ -61,32 +61,20 @@
             if ( '{{ save_state }}') {
                 // Check if user has made changes to selected groups or wake_change_events without saving them
                 // if no changes use options from db else use options with selected from sessionStorage
-                let user_has_made_changes_to_options_string = sessionStorage.getItem('{{ save_state }}_{{ submit_name }}_user_has_made_changes_to_options')
-                let user_has_made_changes_to_options_boolean = user_has_made_changes_to_options_string === 'true'
-                
-
-                if (user_has_made_changes_to_options_boolean) {
-
-                    optionsFromSessionStorage = JSON.parse(sessionStorage.getItem('{{ save_state }}_{{ submit_name }}_options'))
-
-                    for (let i = 0; i < options.length; i++) {
+                if (sessionStorage.getItem('{{ save_state }}_{{ submit_name }}_user_has_made_changes_to_options') === "true") {
+                    const optionsFromSessionStorage = JSON.parse(sessionStorage.getItem('{{ save_state }}_{{ submit_name }}_options'))
+                    for (const option of options){
                         // *** hvis der er et element med samme uid eller pk(hvilken af de to??) som i optionsFromSessionStorage, så skal selected sættes til sidstnævnte værdi
-                        let foundElement = optionsFromSessionStorage.find((element) => {
-                            console.log(element.uid, element.name, options[i].uid)
-                            return element.uid === options[i].uid
-                        })
-
+                       let foundElement = optionsFromSessionStorage.find((element) => element.uid === option.uid)
                         if (foundElement) {
-                            options[i].selected = foundElement.selected
+                            option.selected = foundElement.selected
                         }
                     }
                 }
-            }    
+            }
  
             function updateListHandler(id, selected_value) {
-                var item = options.find(function(o) {
-                    return o.id === id
-                })
+                const item = options.find(o => o.id === id)
                 if (item) {
                     item.selected = selected_value
 
@@ -104,76 +92,48 @@
             }
 
             function renderHiddenInput(input_value) {
-                var input = '<input type="hidden" name="{{ submit_name }}" value="' + input_value + '">'
-                return input
+                return '<input type="hidden" name="{{ submit_name }}" value="' + input_value + '">'
             }
 
-            function renderSelectedListItem(item) {
-                let list_item = document.createElement('li')
-                list_item.className = 'list-group-item pick-list-item'
+            function renderAvailableListItem(container, item){
+               const listItemHTML = `
+                <li class="mt-1 dropdown-item">
+                    <input type="checkbox" class="li-checkbox" value="${item.uid}">
+                    ${htmlDecode(item.name)}
+                </li>
+                `;
 
-                let itemElement = document.createElement('span')
-                let button = document.createElement('button')
-                button.type = 'button'
-                button.title = text_remove
-                button.className = 'btn btn-close'
-                button.addEventListener('click', function() {
-                    updateListHandler(item.id, false)
-                })
-                let name = htmlDecode(item.name)
-                let uid = item.uid
-                let id = item.id
-                itemElement.innerHTML = `<a class="nav-link" href="/site/{{site_url}}/{{ target_section }}/${uid}">${name}</a>`
-                itemElement.innerHTML += renderHiddenInput(id)
-                itemElement.appendChild(button)
-
-                list_item.appendChild(itemElement)
-                return list_item
-            }
-
-            function renderAvailableListItem(item){
-                let list_item = document.createElement('li')
-                list_item.className = 'mt-1 dropdown-item'
-
-                let checkbox = document.createElement('input')
-                checkbox.type = 'checkbox'
-                checkbox.className = 'li-checkbox me-2'
-                checkbox.value = item.uid
-
-                list_item.addEventListener('click', function(event) {
-                    // If the event's target is not the checkbox, click the checkbox
-                    if (event.target !== checkbox) {
-                        checkbox.click()
-                    }
-                    // Stop the propagation of the click event, so it dosent fold the dropdown
+                container.insertAdjacentHTML("beforeend", listItemHTML)
+                const li = container.lastElementChild
+                const box = li.querySelector(".li-checkbox")
+                li.addEventListener("click", (event) => {
+                    box.checked = !box.checked
+                    // Stop the propagation of the click event, so it doesn't fold the dropdown
                     event.stopPropagation()
                 })
-
-                list_item.appendChild(checkbox)
-                list_item.appendChild(document.createTextNode(htmlDecode(item.name)))
-                return list_item
             }
 
             function renderSelectedList(dom_el, list) {
-                var dom_ul = dom_el.querySelector('.pick-list-selected')
-                var dom_lis = dom_ul.querySelectorAll('.pick-list-item')
-                var is_empty = true
-                var total = 0
-                for (var li of dom_lis) {
-                    li.remove()
-                }
-                for (var item in list) {
-                    if (list[item].selected) {
-                        dom_ul.appendChild(renderSelectedListItem(list[item]))
-                        is_empty = false
-                        total ++
+                const dom_ul = dom_el.querySelector('.pick-list-selected')
+                dom_ul.querySelectorAll('.pick-list-item').forEach(li => li.remove())
+                let total = 0
+                 for (let item of list) {
+                    if (item.selected) {
+                        dom_ul.insertAdjacentHTML("beforeend", `
+                            <li class='list-group-item pick-list-item wake_change_events_link'>
+                                <span>
+                                    <a class="nav-link" href="/site/{{site_url}}/{{ target_section }}/${item.uid}">${htmlDecode(item.name)}</a>
+                                    ${renderHiddenInput(item.id)}
+                                    <button type="button" title="${text_remove}" class="btn btn-close"> </button>
+                                </span>
+                            </li>`
+                        )
+                        dom_ul.lastElementChild.querySelector(".btn-close:last-of-type").addEventListener("click",() => updateListHandler(item.id, false))
+                        total++
                     }
                 }
-                if (is_empty) {
-                    var empty_li = document.createElement('li')
-                    empty_li.className = 'list-group-item pick-list-item'
-                    empty_li.innerText = text_empty
-                    dom_ul.appendChild(empty_li)
+                if (total === 0) {
+                    dom_ul.insertAdjacentHTML("beforeend", `<li class="list-group-item pick-list-item">${text_empty}</li>`)
                 }
                 // Checks if the document has the element to display the total of elements
                 if (document.getElementById("total-{{ submit_name }}{{ unique_id }}")){
@@ -181,44 +141,28 @@
                 }
             }
 
+
             function renderAvailableList(dom_el, list) {
-                let dom_ul = dom_el.querySelector('.pick-list-available')
-                let is_empty = true
+                const dom_ul = dom_el.querySelector('.pick-list-available')
                 dom_ul.innerHTML = ''
-                for (var item in list) {
-                    if (!list[item].selected) {
-                        dom_ul.appendChild(renderAvailableListItem(list[item]))
-                        is_empty = false
+                for (const item of list) {
+                    if (!item.selected) {
+                        renderAvailableListItem(dom_ul, item)
                     }
                 }
-                if (is_empty) {
+                if (list.length === 0) {
                     let noOptionsElement = document.getElementById('no-options').cloneNode(true)
                     noOptionsElement.className = 'd-block text-center'
                     dom_ul.appendChild(noOptionsElement)
                 } else {
-                    // Div for the buttons "accept" and "cancel"
-                    let buttonDiv = document.createElement('div')
-                    buttonDiv.className = "dropdown-buttons d-flex justify-content-evenly mt-3 position-sticky"
-
-                    let acceptButton = document.createElement('button')
-                    acceptButton.type = 'button'
-                    acceptButton.className = 'btn btn-primary material-symbols-outlined'
-                    acceptButton.innerHTML = 'check'
-                    acceptButton.addEventListener('click', function() {
-                        addCheckedItemsToSelectedList()
-                    })
-                    buttonDiv.appendChild(acceptButton)
-
-                    let cancelButton = document.createElement('button')
-                    cancelButton.type = 'button'
-                    cancelButton.className = 'btn btn-secondary material-symbols-outlined' 
-                    cancelButton.innerHTML = 'close'
-                    cancelButton.addEventListener('click', function() {
-                        cancelChecksInList()
-                    })
-                    buttonDiv.appendChild(cancelButton)
-
-                    dom_ul.appendChild(buttonDiv)
+                    dom_ul.insertAdjacentHTML("beforeend", `
+                        <div class="dropdown-buttons d-flex justify-content-evenly mt-3 position-sticky">
+                            <button id="add-checked-items-btn" class="btn btn-primary material-symbols-outlined" type="button">check</button>
+                            <button id="remove-checked-items-btn" class="btn btn-secondary material-symbols-outlined" type="button">close</button>
+                        </div>
+                    `)
+                    dom_ul.querySelector("#add-checked-items-btn").addEventListener("click", addCheckedItemsToSelectedList)
+                    dom_ul.querySelector("#remove-checked-items-btn").addEventListener("click", cancelChecksInList)
                 }
             }
 
@@ -261,8 +205,6 @@
                 renderAvailableList(list_el, options)
                 renderSelectedList(list_el, options)
             }
-
-            // Initial setup
 
             // Render the list of selected items and the dropdown list of available items
             renderPickList()

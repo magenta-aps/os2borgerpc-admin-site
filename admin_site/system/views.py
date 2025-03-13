@@ -2251,6 +2251,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
         f = self.request.POST
         for day in ["monday","tuesday","wednesday", "thursday", "friday", "saturday", "sunday"]:
             if f.get(f"{day}_on") == f.get(f"{day}_off"):
+                print("ERROR: A day has the same on and off-time")
                 return self.form_invalid(form)
 
         # Capture a view of the groups and settings before the update
@@ -2409,9 +2410,9 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
 
         for day in ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]:
             for setting in ["on", "off"]:
-                if plan_post[f"{day}_open"] and plan_post[f"{day}_{setting}"] != plan_pre[f"{day}_{setting}"]:
+                if getattr(plan_post, f"{day}_open") and getattr(plan_post, f"{day}_{setting}") != getattr(plan_pre,f"{day}_{setting}"):
                     return True
-            if plan_post[f"{day}_open"] != plan_pre[f"{day}_open"]:
+            if getattr(plan_post, f"{day}_open") != getattr(plan_pre, f"{day}_open"):
                 return True
 
         return False

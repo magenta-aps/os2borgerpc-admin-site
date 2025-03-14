@@ -72,9 +72,7 @@ class PolicyList {
       this.scriptInputs = scriptInputs
       document.getElementById(id + "_new_entries").insertAdjacentHTML("beforebegin", itemHtml)
       this.updateNew(id)
-      $("#addpolicyscriptdialog").modal("hide")
     }
-
 
     updateNew(id) {
         let num = 0

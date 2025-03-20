@@ -1,5 +1,7 @@
 {% load i18n %}
 
+{# Renders the existing list of policy scripts loaded from the db #}
+
 <div id="group_policies">
   <table class="table">
     <thead>
@@ -12,7 +14,7 @@
     </thead>
     <tbody class="sortable">
       {% for ps in entries %}
-        {% include 'system/pcgroups/policy_list/item.html' with ps_pk=ps.pk script_pk=ps.script.pk script_id=ps.script.id name=ps.script.name params=ps.ordered_parameters %}
+        {% include 'system/pcgroups/policy_list/item.html' with ps_pk=ps.pk script_pk=ps.script.pk name=ps.script.name params=ps.ordered_parameters %}
       {% endfor %}
       <input type="hidden" name="group_policies_new_entries" id="group_policies_new_entries" value="0">
     </tbody>

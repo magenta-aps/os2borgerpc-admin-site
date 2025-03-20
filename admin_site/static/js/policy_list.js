@@ -66,7 +66,6 @@
           script_pk: scriptPk,
           name: scriptName,
           position: "new_" + num_new,
-          submit_name: id,
         }),
       )
       this.scriptInputs = scriptInputs
@@ -91,13 +90,13 @@
         $("#" + id + "_new_entries").val(num)
       })
     },
-    renderScriptFields: function (pk, scriptPk, submitName) {
+    renderScriptFields: function (pk, scriptPk) {
       // If we come directly from adding a new script, django template variable "params" will only be #PARAMS#, so we need to render the fields dynamically
       var param_fields = ""
 
       // generate the hidden input fields and divs to render the parameters for the selected script
       for (var i = 0; i < BibOS.PolicyList.scriptInputs.length; i++) {
-        paramName = submitName + "_" + scriptPk + "_param_" + i
+        paramName = "group_policies" + "_" + scriptPk + "_param_" + i
         param_fields += this.hiddenParamField(
           paramName,
           BibOS.PolicyList.scriptInputs[i].type,

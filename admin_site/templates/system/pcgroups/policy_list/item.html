@@ -4,7 +4,7 @@
 <tr>
   {% if script_id %}
     <td class="sortable-handle" style="min-width: 6.2rem; width: 5%; cursor: pointer;">
-      <input type="hidden" class="position-field" name="{{ submit_name|default:'policy' }}_{{ ps_pk }}_position" value="{{ ps.position }}">
+      <input type="hidden" class="position-field" name="group_policies_{{ ps_pk }}_position" value="{{ ps.position }}">
       <span class="material-symbols-outlined disable-select">&#xf101;</span>
     </td>
     <td class="policy-script-print-key" style="width: 35%;">
@@ -14,26 +14,26 @@
     <td class="sortable-handle" style="width: 5%; cursor: pointer;">
       <span class="material-symbols-outlined disable-select">&#xf101;</span>
     </td>
-    <input type="hidden" class="position-field" name="{{ submit_name|default:'policy' }}_{{ ps_pk }}_position" value="{{ ps.position }}">
+    <input type="hidden" class="position-field" name="group_policies_{{ ps_pk }}_position" value="{{ ps.position }}">
     <td class="policy-script-print-key" style="width: 35%;">
       <a href="/site/{{site.uid}}/scripts/{{script_pk}}/">{{ name }}</a>
     </td>
   {% endif %}
   <td class="pe-0 js-match" style="width: 40%;">
     <div data-name="policy-script-{{ name }}" data-pk="policy-script-{{ script_pk }}">
-      <input class="policy-script-pos" type="hidden" name="{{ submit_name|default:'policy' }}" value="{{ ps_pk }}">
-      <input class="policy-script-name" type="hidden" name="{{ submit_name|default:'policy' }}_{{ ps_pk }}" value="{{ script_pk }}">
+      <input class="policy-script-pos" type="hidden" name="group_policies" value="{{ ps_pk }}">
+      <input class="policy-script-name" type="hidden" name="group_policies_{{ ps_pk }}" value="{{ script_pk }}">
       {% if params != '#PARAMS#' %}
         {% for param in params %}
           {% if param.input.value_type != 'FILE' %}
             {# Even though it looks complicated, the logic for mandatory parameters is simple enough: The browser won't enforce the non-emptiness check for mandatory passwords or files if a value is stored in the database #}
             {% if param.input.value_type != 'PASSWORD' %}
-              <input class="policy-script-param" type="hidden" name="{{ submit_name|default:'policy' }}_{{ ps_pk }}_param_{{ param.input.position }}" value="{{ param.string_value }}{{ param.file_value }}" data-inputtype="{{ param.input.value_type }}" {% if param.input.mandatory %} required="required" {% endif %}>
+              <input class="policy-script-param" type="hidden" name="group_policies_{{ ps_pk }}_param_{{ param.input.position }}" value="{{ param.string_value }}{{ param.file_value }}" data-inputtype="{{ param.input.value_type }}" {% if param.input.mandatory %} required="required" {% endif %}>
             {% else %}
-              <input class="policy-script-param" type="hidden" name="{{ submit_name|default:'policy' }}_{{ ps_pk }}_param_{{ param.input.position }}" data-inputtype="{{ param.input.value_type }}" {% if not param.string_value and param.input.mandatory %} required="required" {% endif %}>
+              <input class="policy-script-param" type="hidden" name="group_policies_{{ ps_pk }}_param_{{ param.input.position }}" data-inputtype="{{ param.input.value_type }}" {% if not param.string_value and param.input.mandatory %} required="required" {% endif %}>
             {% endif %}
           {% else %}
-            <input class="policy-script-param phantom form-control" type="file" name="{{ submit_name|default:'policy' }}_{{ ps_pk }}_param_{{ param.input.position }}" data-inputtype="FILE" {% if not param.file_value and param.input.mandatory %} required="required" {% endif %}>
+            <input class="policy-script-param phantom form-control" type="file" name="group_policies_{{ ps_pk }}_param_{{ param.input.position }}" data-inputtype="FILE" {% if not param.file_value and param.input.mandatory %} required="required" {% endif %}>
           {% endif %}
           <div class="policy-script-print">
             <strong class="policy-script-print-name">
@@ -65,7 +65,7 @@
       {% else %}
         <script>
           $(function(){
-            BibOS.PolicyList.renderScriptFields('{{ script_pk }}', '{{ ps_pk }}', '{{ submit_name|default:'policy' }}')
+            BibOS.PolicyList.renderScriptFields('{{ script_pk }}', '{{ ps_pk }}')
           })
         </script>
       {% endif %}
@@ -83,7 +83,7 @@
 
         <span class='material-symbols-outlined'>edit</span>{% translate "Edit" %}
       </a>
-      <button type="button" class="btn btn-sm ps-3" onclick="removeItem(this, '{{ submit_name }}')">
+      <button type="button" class="btn btn-sm ps-3" onclick="removeItem(this, 'group_policies')">
         <span class='material-symbols-outlined'>delete</span>{% translate "Remove" %}
       </button>
     </p>

@@ -169,36 +169,23 @@ active
 
       </div>
 
-      <div class="gray-box mt-0 pt-0" style="border-radius: 0 0 .33rem .33rem;">
-        <button class="btn btn-primary" type="submit">{% translate "Save changes" %}</button>
-        <button class="btn btn-secondary ms-3" type="reset" onclick="window.location.reload();">{% translate "Cancel" %}</button>
-        {# Only show the button to duplicate a group if you're updating an existing entry - not creating a new one #}
-        {% if selected_group.id %}
-          <a class="btn btn-secondary ms-3" href="{% url 'group_duplicate' site.uid selected_group.id %}">{% translate "Duplicate group" %}</a>
-        {% endif %}
-      </div>
+
+        <div class="gray-box position-sticky bottom-0 pt-0 mt-0" style="border-radius: 0 0 .33rem .33rem; z-index:1000;">
+            <div class="pt-3">
+                <button class="btn btn-primary" type="submit">{% translate "Save changes" %}</button>
+                <button class="btn btn-secondary ms-3" type="reset"
+                        onclick="window.location.reload();">{% translate "Cancel" %}</button>
+                {# Only show the button to duplicate a group if you're updating an existing entry - not creating a new one #}
+                {% if selected_group.id %}
+                    <a class="btn btn-secondary ms-3"
+                       href="{% url 'group_duplicate' site.uid selected_group.id %}">{% translate "Duplicate group" %}</a>
+                {% endif %}
+            </div>
+        </div>
+
 
     </form>
 
-    <script>
-      function totalpcs(){
-        if (document.getElementById("empty-list") == undefined){
-          document.getElementById("totalpcs").innerHTML = document.getElementById("picked-pcs").childElementCount - 1
-        } else {
-          document.getElementById("totalpcs").innerHTML = 0
-        }
-      }
-      function updateScriptPositions(){
-        fields = document.getElementsByClassName("position-field")
-
-        let i = 0
-        for (let item of fields) {
-          item.value = i
-          i++
-        }
-      }
-
-    </script>
     {% else %}
       <p>{% translate "No groups were found" %}</p>
       <p>{% translate "Click the 'Add new group' button in the menu to the left to create a group" %}</p>

@@ -335,3 +335,14 @@ function removeItem(clickedElem, id) {
 
   updateNew(id)
 }
+
+
+function updateScriptPositions(){
+    let fields = document.getElementsByClassName("position-field")
+
+    let i = 0
+    for (let item of fields) {
+      item.value = i
+      i++
+    }
+}

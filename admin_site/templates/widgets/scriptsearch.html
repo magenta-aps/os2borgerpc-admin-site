@@ -19,7 +19,7 @@
         }
     </style>
 
-    <div class="filtersearch" id="filtersearch-{{ id }}">
+    <div class="filtersearch" id="filtersearch-group_policies">
         <div class="input-group">
             <input class="form-control filtersearchinput" type="search" placeholder="{{ placeholder }}">
             <span class="input-group-text bg-white">
@@ -35,8 +35,8 @@
 
         (function() {
 
-            var input_el = document.querySelector('#filtersearch-{{ id }} input[type="search"]')
-            var list_ul = document.querySelector('#filtersearch-{{ id }} .filtersearchlist')
+            var input_el = document.querySelector('#filtersearch-group_policies input[type="search"]')
+            var list_ul = document.querySelector('#filtersearch-group_policies .filtersearchlist')
             var list = [
                 {% for item in list %}
                     {
@@ -131,7 +131,7 @@
             input_el.addEventListener('click', displayAllScripts)
             input_el.addEventListener('input', displayOptions)
             input_el.addEventListener('blur', removeSearchResults)
-            document.querySelector('#filtersearch-{{ id }} .btn-close').addEventListener('click', clearHandler)
+            document.querySelector('#filtersearch-group_policies .btn-close').addEventListener('click', clearHandler)
 
         })()
 

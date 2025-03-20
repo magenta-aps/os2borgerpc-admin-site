@@ -1,35 +1,31 @@
 {% load i18n %}
 
-{% if policy_id %}
-  <div id="{{ policy_id }}">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>{% translate "Position" %}</th>
-          <th>{% translate "Script" %}</th>
-          <th>{% translate "Arguments" %}</th>
-          <th>{% translate "Actions" %}</th>
-        </tr>
-      </thead>
-      <tbody class="sortable">
-        {% for ps in entries %}
-          {% include 'system/pcgroups/policy_list/item.html' with ps_pk=ps.pk script_pk=ps.script.pk script_id=ps.script.id name=ps.script.name params=ps.ordered_parameters %}
-        {% endfor %}
-        <input type="hidden" name="{{ policy_id }}_new_entries" id="{{ policy_id }}_new_entries" value="0">
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="4">
-            {% translate "Add script" as add_script %}
-            {% include 'widgets/scriptsearch.html' with id=policy_id list=all_scripts placeholder=add_script %}
-          </td>
-        </tr>
-      </tfoot>
-    </table>
-  </div>
-{% else %}
-  <p>{% translate "You must specify a" %} <em>policy_id</em> {% translate "when inserting a policy list" %}</p>
-{% endif %}
+<div id="group_policies">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>{% translate "Position" %}</th>
+        <th>{% translate "Script" %}</th>
+        <th>{% translate "Arguments" %}</th>
+        <th>{% translate "Actions" %}</th>
+      </tr>
+    </thead>
+    <tbody class="sortable">
+      {% for ps in entries %}
+        {% include 'system/pcgroups/policy_list/item.html' with ps_pk=ps.pk script_pk=ps.script.pk script_id=ps.script.id name=ps.script.name params=ps.ordered_parameters %}
+      {% endfor %}
+      <input type="hidden" name="group_policies_new_entries" id="group_policies_new_entries" value="0">
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4">
+          {% translate "Add script" as add_script %}
+          {% include 'widgets/scriptsearch.html' with id="group_policies" list=all_scripts placeholder=add_script %}
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
 
 <script>
 
@@ -44,7 +40,7 @@
   });
 
   // Catch bubbling click event from scriptsearch.html include
-  document.getElementById('{{ policy_id }}').addEventListener('click', function(ev) {
+  document.getElementById('group_policies').addEventListener('click', function(ev) {
     /* Did they click on the li or the child element badge? */
     let tg;
     if (ev.target.dataset.script) {
@@ -56,7 +52,7 @@
 
     if (tg && tg.dataset.script) {
       let script_data = JSON.parse(tg.dataset.script)
-      BibOS.PolicyList.addToPolicy('{{ policy_id }}', script_data.id, script_data.name, script_data.pk, script_data.inputs)
+      BibOS.PolicyList.addToPolicy('group_policies', script_data.id, script_data.name, script_data.pk, script_data.inputs)
     }
   })
 </script>

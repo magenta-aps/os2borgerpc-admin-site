@@ -5256,10 +5256,9 @@ msgstr "Startad"
 msgid "Finished"
 msgstr "Avslutad"
 
-#: templates/system/jobs/site_jobs.html
-#: templates/system/security_events/site_security_events.html
-msgid "Loading data..."
-msgstr "Hämta data..."
+#: templates/system/jobs/site_jobs.html templates/system/scripts/run_base.html
+msgid "Loading..."
+msgstr "Laddar..."
 
 #: templates/system/pcgroups/confirm_delete.html
 msgid "Delete group: "
@@ -5605,10 +5604,6 @@ msgstr "Globala skript"
 msgid "Delete script"
 msgstr "Ta bort skript"
 
-#: templates/system/scripts/run_base.html
-msgid "Loading..."
-msgstr "Laddar..."
-
 #: templates/system/scripts/run_step1.html
 #: templates/system/scripts/run_step2.html templates/system/scripts/update.html
 msgid "Run script"
@@ -5784,6 +5779,10 @@ msgstr ""
 #: templates/system/site_dashboard.html
 msgid "since all updates were last run"
 msgstr "sedan alla uppdateringar senast kördes"
+
+#: templates/system/security_events/site_security_events.html
+msgid "Loading data..."
+msgstr "Hämta data..."
 
 #: templates/system/site_images.html
 msgid "Most recent version of"

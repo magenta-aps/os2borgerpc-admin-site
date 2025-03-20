@@ -5265,10 +5265,9 @@ msgstr "Startet"
 msgid "Finished"
 msgstr "Sluttet"
 
-#: templates/system/jobs/site_jobs.html
-#: templates/system/security_events/site_security_events.html
-msgid "Loading data..."
-msgstr "Henter data..."
+#: templates/system/jobs/site_jobs.html templates/system/scripts/run_base.html
+msgid "Loading..."
+msgstr "Indlæser..."
 
 #: templates/system/pcgroups/confirm_delete.html
 msgid "Delete group: "
@@ -5612,10 +5611,6 @@ msgstr "Globale scripts"
 msgid "Delete script"
 msgstr "Slet script"
 
-#: templates/system/scripts/run_base.html
-msgid "Loading..."
-msgstr "Loading..."
-
 #: templates/system/scripts/run_step1.html
 #: templates/system/scripts/run_step2.html templates/system/scripts/update.html
 msgid "Run script"
@@ -5792,6 +5787,11 @@ msgstr ""
 #: templates/system/site_dashboard.html
 msgid "since all updates were last run"
 msgstr "siden alle opdateringer sidst blev kørt"
+
+#: templates/system/security_events/site_security_events.html
+msgid "Loading data..."
+msgstr "Henter data..."
+
 
 #: templates/system/site_images.html
 msgid "Most recent version of"

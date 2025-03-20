@@ -1,12 +1,4 @@
 ;(function (BibOS, $) {
-  if (!document.getElementById("policylist-templates")) {
-    alert(
-      "policy_list.js loaded without templates present" +
-        "\n" +
-        "Did you forget to include system/policy_list/templates.html?",
-    )
-    return
-  }
 
   var PolicyList = function () {
     this.scriptInputs = []
@@ -91,7 +83,7 @@
       })
     },
     renderScriptFields: function (pk, scriptPk) {
-      // If we come directly from adding a new script, django template variable "params" will only be #PARAMS#, so we need to render the fields dynamically
+      // When we add a new script, its fields have to be rendered dynamically
       var param_fields = ""
 
       // generate the hidden input fields and divs to render the parameters for the selected script
@@ -142,9 +134,7 @@ function scriptEdit(clickedElement, defaultValues) {
       if (paramType == "textfield") {
         newElement = document.createElement("select")
 
-        /* defaultValues will be 'None' if we come directly from adding a new script.
-         This is because the values are taken from django template variable "params",
-         which will only be #PARAMS# when we come directly from adding a new script */
+        /* defaultValues will be 'None' if we come directly from adding a new script. */
         let options
         if (defaultValues != "None") {
           options = defaultValues[index].split(",")
@@ -334,7 +324,6 @@ function removeItem(clickedElem, id) {
 
   updateNew(id)
 }
-
 
 function updateScriptPositions(){
     let fields = document.getElementsByClassName("position-field")

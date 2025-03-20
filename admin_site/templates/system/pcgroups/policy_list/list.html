@@ -33,15 +33,15 @@
 
 <script>
 
-    // this is the only spot jquery-ui is used, consider refactoring to HTML5 Drag and Drop API
-  $( function() {
-    $( ".sortable" ).sortable({
-      containment: document.getElementById("updategroupform"),
-      handle: ".sortable-handle",
-      forcePlaceholderSize: true,
-      cursor: "move",
-    })
-  })
+    // using sortablejs to sort associated scripts in groups
+  document.addEventListener("DOMContentLoaded", function () {
+    var sortableList = document.querySelector(".sortable");
+
+    new Sortable(sortableList, {
+      animation: 150, // Smooth movement
+      ghostClass: "sortable-ghost", // CSS class for ghost item
+    });
+  });
 
   // Catch bubbling click event from scriptsearch.html include
   document.getElementById('{{ policy_id }}').addEventListener('click', function(ev) {

@@ -2,15 +2,15 @@
 {% load i18n %}
 
 <tr>
-  {% if script_id %}
+  {% if script_pk > 0 %} {# Included by list.html: policy scripts loaded from db #}
     <td class="sortable-handle" style="min-width: 6.2rem; width: 5%; cursor: pointer;">
       <input type="hidden" class="position-field" name="group_policies_{{ ps_pk }}_position" value="{{ ps.position }}">
       <span class="material-symbols-outlined disable-select">&#xf101;</span>
     </td>
     <td class="policy-script-print-key" style="width: 35%;">
-      <a href="{% url 'script' site.uid script_id %}">{{ name }}</a>
+      <a href="{% url 'script' site.uid script_pk %}">{{ name }}</a>
     </td>
-  {% else %}
+  {% else %} {# Included by templates.html #}
     <td class="sortable-handle" style="width: 5%; cursor: pointer;">
       <span class="material-symbols-outlined disable-select">&#xf101;</span>
     </td>

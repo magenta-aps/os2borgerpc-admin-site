@@ -90,6 +90,8 @@ li.addusertrigger {position: relative;}
 li.addusertrigger:hover ul.adduserlist {display: block}
 li.selected {background-color: var(--bs-gray);}
 
+#job-pagination li.selected { background-color: initial };
+
 /* Picklist.html */
 
 /* checkbox */

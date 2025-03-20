@@ -947,7 +947,7 @@ class JobsView(SiteView):
                 "name": name,
                 "value": value,
                 "label": Job.STATUS_TO_LABEL[value],
-                "checked": 'checked="checked' if value in preselected else "",
+                "checked": "checked" if value in preselected else "",
             }
             for (value, name) in Job.STATUS_CHOICES
         ]
@@ -1057,13 +1057,13 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
             "num_pages": paginator.num_pages,
             "page": page_obj.number,
             "page_numbers": page_numbers,
-            "has_next": page_obj.has_next(),
-            "next_page_number": (
-                page_obj.next_page_number() if page_obj.has_next() else None
-            ),
             "has_previous": page_obj.has_previous(),
             "previous_page_number": (
                 page_obj.previous_page_number() if page_obj.has_previous() else None
+            ),
+            "has_next": page_obj.has_next(),
+            "next_page_number": (
+                page_obj.next_page_number() if page_obj.has_next() else None
             ),
             "results": [
                 {

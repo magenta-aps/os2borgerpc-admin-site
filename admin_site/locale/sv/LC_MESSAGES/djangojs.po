@@ -27,8 +27,8 @@ msgid "Error: Another configuration has the name \"%s\" already"
 msgstr "Fel: En annan konfiguration har redan namnet \"%s\""
 
 #: static/js/jobs_list.js
-msgid "No user"
-msgstr "Ingen användare"
+msgid "Job info"
+msgstr "Jobb info"
 
 #: static/js/jobs_list.js
 msgid "First"
@@ -45,6 +45,10 @@ msgstr "Nästa"
 #: static/js/jobs_list.js
 msgid "Last"
 msgstr "Sista"
+
+#: static/js/jobs_list.js
+msgid "of"
+msgstr "av"
 
 #: static/js/security_events_list.js
 msgid "Note set during handling:"

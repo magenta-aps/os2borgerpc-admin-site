@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 17:29+0100\n"
+"POT-Creation-Date: 2025-03-20 12:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,10 +45,6 @@ msgstr "Næste"
 #: static/js/jobs_list.js
 msgid "Last"
 msgstr "Sidste"
-
-#: static/js/jobs_list.js
-msgid "of"
-msgstr "af"
 
 #: static/js/security_events_list.js
 msgid "Note set during handling:"

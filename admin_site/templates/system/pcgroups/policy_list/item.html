@@ -1,87 +1,67 @@
-{# Remember that this template must be able to be called both from templates.html and from list.html #}
 {% load i18n %}
 
 <tr>
-  {% if script_pk > 0 %} {# Included by list.html: policy scripts loaded from db #}
-    <td class="sortable-handle" style="min-width: 6.2rem; width: 5%; cursor: pointer;">
-      <input type="hidden" class="position-field" name="group_policies_{{ ps_pk }}_position" value="{{ ps.position }}">
-      <span class="material-symbols-outlined disable-select">&#xf101;</span>
-    </td>
-    <td class="policy-script-print-key" style="width: 35%;">
-      <a href="{% url 'script' site.uid script_pk %}">{{ name }}</a>
-    </td>
-  {% else %} {# Included by templates.html #}
-    <td class="sortable-handle" style="width: 5%; cursor: pointer;">
-      <span class="material-symbols-outlined disable-select">&#xf101;</span>
-    </td>
+  <td class="sortable-handle" style="min-width: 6.2rem; width: 5%; cursor: pointer;">
     <input type="hidden" class="position-field" name="group_policies_{{ ps_pk }}_position" value="{{ ps.position }}">
-    <td class="policy-script-print-key" style="width: 35%;">
-      <a href="/site/{{site.uid}}/scripts/{{script_pk}}/">{{ name }}</a>
-    </td>
-  {% endif %}
+    <span class="material-symbols-outlined disable-select">&#xf101;</span>
+  </td>
+  <td class="policy-script-print-key" style="width: 35%;">
+    <a href="{% url 'script' site.uid script_pk %}">{{ name }}</a>
+  </td>
+
   <td class="pe-0 js-match" style="width: 40%;">
     <div data-name="policy-script-{{ name }}" data-pk="policy-script-{{ script_pk }}">
       <input class="policy-script-pos" type="hidden" name="group_policies" value="{{ ps_pk }}">
       <input class="policy-script-name" type="hidden" name="group_policies_{{ ps_pk }}" value="{{ script_pk }}">
-      {% if params != '#PARAMS#' %}
-        {% for param in params %}
-          {% if param.input.value_type != 'FILE' %}
-            {# Even though it looks complicated, the logic for mandatory parameters is simple enough: The browser won't enforce the non-emptiness check for mandatory passwords or files if a value is stored in the database #}
-            {% if param.input.value_type != 'PASSWORD' %}
-              <input class="policy-script-param" type="hidden" name="group_policies_{{ ps_pk }}_param_{{ param.input.position }}" value="{{ param.string_value }}{{ param.file_value }}" data-inputtype="{{ param.input.value_type }}" {% if param.input.mandatory %} required="required" {% endif %}>
-            {% else %}
-              <input class="policy-script-param" type="hidden" name="group_policies_{{ ps_pk }}_param_{{ param.input.position }}" data-inputtype="{{ param.input.value_type }}" {% if not param.string_value and param.input.mandatory %} required="required" {% endif %}>
-            {% endif %}
+      {% for param in params %}
+        {% if param.input.value_type != 'FILE' %}
+          {# Even though it looks complicated, the logic for mandatory parameters is simple enough: The browser won't enforce the non-emptiness check for mandatory passwords or files if a value is stored in the database #}
+          {% if param.input.value_type != 'PASSWORD' %}
+            <input class="policy-script-param" type="hidden" name="group_policies_{{ ps_pk }}_param_{{ param.input.position }}" value="{{ param.string_value }}{{ param.file_value }}" data-inputtype="{{ param.input.value_type }}" {% if param.input.mandatory %} required="required" {% endif %}>
           {% else %}
-            <input class="policy-script-param phantom form-control" type="file" name="group_policies_{{ ps_pk }}_param_{{ param.input.position }}" data-inputtype="FILE" {% if not param.file_value and param.input.mandatory %} required="required" {% endif %}>
+            <input class="policy-script-param" type="hidden" name="group_policies_{{ ps_pk }}_param_{{ param.input.position }}" data-inputtype="{{ param.input.value_type }}" {% if not param.string_value and param.input.mandatory %} required="required" {% endif %}>
           {% endif %}
-          <div class="policy-script-print">
-            <strong class="policy-script-print-name">
-              {{ param.input.name }}:
-            </strong>
-            <span class="policy-script-print-value">
-              {% if param.input.value_type == 'FILE' %}
-                {% if param.file_value %}
-                  <a href="{{param.file_value.url}}" target="_blank">
-                    {{ param.file_value|file_basename }}
-                  </a>
-                {% else %}
-                {% translate "None selected" %}
-                {% endif %}
-              {% elif param.input.value_type == 'PASSWORD' %}
-                •••••
-              {% elif param.input.value_type == 'BOOLEAN' %}
-                {% if param.string_value == 'True' %}
-                  <input type="checkbox" class="form-check-input" disabled checked>
-                {% else %}
-                  <input type="checkbox" class="form-check-input" disabled unchecked>
-                {% endif %}
+        {% else %}
+          <input class="policy-script-param phantom form-control" type="file" name="group_policies_{{ ps_pk }}_param_{{ param.input.position }}" data-inputtype="FILE" {% if not param.file_value and param.input.mandatory %} required="required" {% endif %}>
+        {% endif %}
+        <div class="policy-script-print">
+          <strong class="policy-script-print-name">
+            {{ param.input.name }}:
+          </strong>
+          <span class="policy-script-print-value">
+            {% if param.input.value_type == 'FILE' %}
+              {% if param.file_value %}
+                <a href="{{param.file_value.url}}" target="_blank">
+                  {{ param.file_value|file_basename }}
+                </a>
               {% else %}
-                {{ param.string_value }}
+              {% translate "None selected" %}
               {% endif %}
-            </span>
-          </div>
-        {% endfor %}
-      {% else %}
-        <script>
-          $(function(){
-            BibOS.PolicyList.renderScriptFields('{{ script_pk }}', '{{ ps_pk }}')
-          })
-        </script>
-      {% endif %}
+            {% elif param.input.value_type == 'PASSWORD' %}
+              •••••
+            {% elif param.input.value_type == 'BOOLEAN' %}
+              {% if param.string_value == 'True' %}
+                <input type="checkbox" class="form-check-input" disabled checked>
+              {% else %}
+                <input type="checkbox" class="form-check-input" disabled unchecked>
+              {% endif %}
+            {% else %}
+              {{ param.string_value }}
+            {% endif %}
+          </span>
+        </div>
+      {% endfor %}
     </div>
   </td>
   <td style="min-width: 6.2rem; width: 20%;">
     <p class="mb-0" style="margin-left: -.5rem;">
-     <a class="mb-1 mt-1 btn btn-sm {% if not params %} invisible {% endif %}" onclick="scriptEdit(this, {% if params != '#PARAMS#' %}
+     <a class="mb-1 mt-1 btn btn-sm {% if not params %} invisible {% endif %}" onclick="scriptEdit(this,
       [{% for param in params %}
       '{{ param.input.default_value }}',
       {% endfor %}]
-      {% else %}
-      'None'
-      {% endif %})">
+      )">
 
-        <span class='material-symbols-outlined'>edit</span>{% translate "Edit" %}
+        <span class="material-symbols-outlined">edit</span>{% translate "Edit" %}
       </a>
       <button type="button" class="btn btn-sm ps-3" onclick="removeItem(this, 'group_policies')">
         <span class='material-symbols-outlined'>delete</span>{% translate "Remove" %}

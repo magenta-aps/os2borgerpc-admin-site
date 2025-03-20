@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 18:19+0100\n"
+"POT-Creation-Date: 2025-03-20 12:57+0100\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -1471,7 +1471,6 @@ msgstr ""
 
 #: docs/templates/groups/scripts.html
 #: templates/system/pcgroups/policy_list/list.html
-#: templates/system/pcgroups/policy_list/templates.html
 msgid "Add script"
 msgstr "Tilføj script"
 
@@ -5266,8 +5265,9 @@ msgid "Finished"
 msgstr "Sluttet"
 
 #: templates/system/jobs/site_jobs.html templates/system/scripts/run_base.html
-msgid "Loading..."
-msgstr "Indlæser..."
+#: templates/system/security_events/site_security_events.html
+msgid "Loading data..."
+msgstr "Henter data..."
 
 #: templates/system/pcgroups/confirm_delete.html
 msgid "Delete group: "
@@ -5327,10 +5327,6 @@ msgstr "når der indsættes i en liste af tilknyttede scripts"
 #: templates/system/pcgroups/policy_list/templates.html
 msgid "Edit script"
 msgstr "Redigér script"
-
-#: templates/system/pcgroups/policy_list/templates.html
-msgid "Add script to group"
-msgstr "Tilføj script til gruppe"
 
 #: templates/system/pcgroups/site_groups.html
 msgid "Add new group"
@@ -5787,11 +5783,6 @@ msgstr ""
 #: templates/system/site_dashboard.html
 msgid "since all updates were last run"
 msgstr "siden alle opdateringer sidst blev kørt"
-
-#: templates/system/security_events/site_security_events.html
-msgid "Loading data..."
-msgstr "Henter data..."
-
 
 #: templates/system/site_images.html
 msgid "Most recent version of"

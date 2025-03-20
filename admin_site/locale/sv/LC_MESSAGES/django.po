@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 18:19+0100\n"
+"POT-Creation-Date: 2025-03-20 12:57+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -1466,7 +1466,6 @@ msgstr ""
 
 #: docs/templates/groups/scripts.html
 #: templates/system/pcgroups/policy_list/list.html
-#: templates/system/pcgroups/policy_list/templates.html
 msgid "Add script"
 msgstr "Lägg till skript"
 
@@ -5257,8 +5256,9 @@ msgid "Finished"
 msgstr "Avslutad"
 
 #: templates/system/jobs/site_jobs.html templates/system/scripts/run_base.html
-msgid "Loading..."
-msgstr "Laddar..."
+#: templates/system/security_events/site_security_events.html
+msgid "Loading data..."
+msgstr "Hämta data..."
 
 #: templates/system/pcgroups/confirm_delete.html
 msgid "Delete group: "
@@ -5318,10 +5318,6 @@ msgstr "när den infogas i en lista med tillhörande manuskript"
 #: templates/system/pcgroups/policy_list/templates.html
 msgid "Edit script"
 msgstr "Redigera skript"
-
-#: templates/system/pcgroups/policy_list/templates.html
-msgid "Add script to group"
-msgstr "Lägg till skript till grupp"
 
 #: templates/system/pcgroups/site_groups.html
 msgid "Add new group"
@@ -5779,10 +5775,6 @@ msgstr ""
 #: templates/system/site_dashboard.html
 msgid "since all updates were last run"
 msgstr "sedan alla uppdateringar senast kördes"
-
-#: templates/system/security_events/site_security_events.html
-msgid "Loading data..."
-msgstr "Hämta data..."
 
 #: templates/system/site_images.html
 msgid "Most recent version of"

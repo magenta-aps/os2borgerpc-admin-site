@@ -23,10 +23,10 @@
           <input type="checkbox" name="script-input-mandatory" value="#MANDATORY#" class="mandatory-input form-check-input">
         </td>
         <td class="delete_script_parameter" style="vertical-align: middle;">
-          <a class="btn btn-sm p-0" href="javascript:void(0)" onclick="BibOS.ScriptEdit.removeInput($(this).parent().parent())">
+          <button type="button" class="btn btn-sm p-0" onclick="BibOS.ScriptEdit.removeInput($(this).parent().parent())">
             <span  class="material-symbols-outlined">delete</span>
             {% translate "Delete" %}
-          </a>
+          </button>
         </td>
       </tr>
     </tbody>

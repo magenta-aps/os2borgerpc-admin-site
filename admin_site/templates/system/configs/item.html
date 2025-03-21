@@ -12,15 +12,15 @@
   <td>
     {% if not read_only %}
     <p class="mb-0" style="margin-left: -.5rem;">
-      <a class="btn btn-sm" href="javascript:void(0)" onclick="BibOS.ConfigList.startEdit(this, '{{ submit_name }}')">
+      <button type="button" class="btn btn-sm" onclick="BibOS.ConfigList.startEdit(this, '{{ submit_name }}')">
         <span class='material-symbols-outlined'>edit</span>{% translate "Edit" %}
-      </a>
-      <a class="btn btn-sm ps-3" href="javascript:void(0)" onclick="BibOS.ConfigList.removeItem(this)">
+      </button>
+      <button type="button" class="btn btn-sm ps-3" onclick="BibOS.ConfigList.removeItem(this)">
         <span class='material-symbols-outlined'>delete</span>{% translate "Delete" %}
-      </a>
+      </button>
     </p>
     {% else %}
-    {% translate "This configuration cannot be changed here" %}
+      {% translate "This configuration cannot be changed here" %}
     {% endif %}
   </td>
 </tr>

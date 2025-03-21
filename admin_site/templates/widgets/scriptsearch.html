@@ -88,19 +88,14 @@
                 }
                 list_ul.innerHTML = ''
                 for (var listitem in new_list) {
-                    var new_node = document.createElement('li')
-                    new_node.className = 'dropdown-item'
-                    new_node.setAttribute('data-script', createItemData(new_list[listitem]))
-                    new_node.innerHTML = new_list[listitem].name
-                    if (new_list[listitem].is_global) {
-                        new_node.innerHTML += " <span class='badge bg-primary'>Globalt</span>"
-                    }
-                    else {
-                        new_node.innerHTML += " <span class='badge bg-info'>Lokalt</span>"
-                    }
-                    new_node.addEventListener('click', selectOption)
-                    list_ul.appendChild(new_node)
+                    search_result = `
+                       <li class="dropdown-item" data-script='${createItemData(new_list[listitem])}'>
+                            ${new_list[listitem].name}
+                            ${new_list[listitem].is_global ? "<span class='badge bg-primary'>Globalt</span>" : "<span class='badge bg-info'>Lokalt</span>"}
+                       </li>`
+                    list_ul.innerHTML += search_result
                 }
+                list_ul.querySelectorAll('.dropdown-item').forEach(i => i.addEventListener("click", selectOption))
             }
 
             function createItemData(item) {
@@ -137,7 +132,7 @@
             input_el.addEventListener('input', displayOptions)
             input_el.addEventListener('blur', removeSearchResults)
             document.querySelector('#filtersearch-{{ id }} .btn-close').addEventListener('click', clearHandler)
-            
+
         })()
 
     </script>

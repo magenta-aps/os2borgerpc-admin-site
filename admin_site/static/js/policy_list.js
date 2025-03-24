@@ -6,7 +6,7 @@
     this.hiddenParamField = function (name, type, required, default_value) {
       return (
         '<input class="policy-script-param' +
-        (type == "FILE" ? " phantom" : "") +
+        (type == "FILE" ? " d-none" : "") +
         '" type="' +
         (type == "FILE" ? "file" : "hidden") +
         '" name="' +

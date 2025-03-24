@@ -22,7 +22,7 @@
             <input class="policy-script-param" type="hidden" name="group_policies_{{ ps_pk }}_param_{{ param.input.position }}" data-inputtype="{{ param.input.value_type }}" {% if not param.string_value and param.input.mandatory %} required="required" {% endif %}>
           {% endif %}
         {% else %}
-          <input class="policy-script-param phantom form-control" type="file" name="group_policies_{{ ps_pk }}_param_{{ param.input.position }}" data-inputtype="FILE" {% if not param.file_value and param.input.mandatory %} required="required" {% endif %}>
+          <input class="policy-script-param d-none form-control" type="file" name="group_policies_{{ ps.pk }}_param_{{ param.input.position }}" data-inputtype="FILE" {% if not param.file_value and param.input.mandatory %} required="required" {% endif %}>
         {% endif %}
         <div class="policy-script-print">
           <strong class="policy-script-print-name">

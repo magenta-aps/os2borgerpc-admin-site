@@ -1,3 +1,5 @@
+import logging
+
 from django import template
 from django.utils.safestring import mark_safe
 from django.utils.timesince import timesince
@@ -49,7 +51,20 @@ def file_basename(value):
     Print out the file name without the full path.
     Used to show file input parameters in policies to the user.
     """
-    return os.path.basename(value.file.name)
+    try:
+        if not value:
+            return "No file"
+
+        file_path = value.file.name
+        if not os.path.exists(file_path) or not os.path.isfile(
+            file_path
+        ):  # Check if file exists
+            return "File not found"
+
+        return os.path.basename(file_path)
+    except Exception as e:
+        logging.error(e)
+        return "File not found"
 
 
 # Useful for investigating what's in the {{context}}

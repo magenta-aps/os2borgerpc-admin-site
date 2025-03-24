@@ -1,11 +1,8 @@
 {# Used when adding a new policy script via JS, whereas list.html + item.html generates the list of already added policy scripts #}
 
 {% load i18n %}
-
-{# It should technically be possible to remove table and tbody as it really just needs to add a new row #}
-<table class="table">
-  <tbody id="policy-item-template" class="template-container">
-
+{# policy-item-template is the id that BibOS needs in order to read the html file. If we move over to JS creating all of the HTML, this can go #}
+<table id="policy-item-template" class="template-container">
     <tr>
       <td class="sortable-handle" style="width: 5%; cursor: pointer;">
         <span class="material-symbols-outlined disable-select">&#xf101;</span>
@@ -18,44 +15,17 @@
         <div data-name="policy-script-#NAME#" data-pk="policy-script-#SCRIPT_PK#">
           <input class="policy-script-pos" type="hidden" name="group_policies" value="#PS_PK#">
           <input class="policy-script-name" type="hidden" name="group_policies_#PS_PK#" value="#SCRIPT_PK#">
-          <script>
-            $(function(){
-              BibOS.PolicyList.renderScriptFields('#SCRIPT_PK#', '#PS_PK#')
-            })
-          </script>
         </div>
       </td>
       <td style="min-width: 6.2rem; width: 20%;">
         <p class="mb-0" style="margin-left: -.5rem;">
-          {# TODO: Find a js way to make the edit button invisible for scripts that don't have parameters #}
-          <a class="mb-1 mt-1 btn btn-sm" onclick="scriptEdit(this, 'None')">
-
+          <button type="button" class="edit-policy-btn mb-1 mt-1 btn btn-sm" onclick="policyListHandler.scriptEdit(this, 'None')">
             <span class="material-symbols-outlined">edit</span>{% translate "Edit" %}
-          </a>
-          <a class="btn btn-sm ps-3" href="javascript:void(0)" onclick="removeItem(this, 'group_policies')">
+          </button>
+          <button type="button" class="btn btn-sm ps-3" onclick="policyListHandler.removeItem(this, 'group_policies')">
             <span class="material-symbols-outlined">delete</span>{% translate "Remove" %}
-          </a>
+          </button>
         </p>
       </td>
     </tr>
-
-  </tbody>
 </table>
-
-{# Can this block be removed after some refactoring? #}
-<div id="editpolicyscriptdialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">{% translate "Edit script" %}</h3>
-        <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-      </div>
-      <div class="modal-footer">
-        <button onclick="submitEditDialog('group_policies')" class="btn btn-primary">{% translate "Save" %}</button>
-        <button class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
-      </div>
-    </div>
-  </div>
-</div>

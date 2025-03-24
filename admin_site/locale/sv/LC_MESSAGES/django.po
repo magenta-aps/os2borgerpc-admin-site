@@ -82,7 +82,6 @@ msgstr "Lägg till en kommentar"
 #: templates/system/event_rules/site_event_rules_server.html
 #: templates/system/event_rules/site_security_problems.html
 #: templates/system/pcgroups/confirm_delete.html
-#: templates/system/pcgroups/policy_list/templates.html
 #: templates/system/pcgroups/site_groups.html
 #: templates/system/pcs/confirm_delete.html templates/system/pcs/update.html
 #: templates/system/scripts/confirm_delete.html
@@ -4890,7 +4889,7 @@ msgid "Handle configuration"
 msgstr "Hantera konfiguration"
 
 #: templates/system/configs/templates.html
-#: templates/system/pcgroups/policy_list/templates.html
+#: templates/system/pcgroups/site_groups.html
 msgid "Save"
 msgstr "Spara"
 
@@ -5311,10 +5310,6 @@ msgstr "Position"
 msgid "Arguments"
 msgstr "Inputparametrar"
 
-#: templates/system/pcgroups/policy_list/templates.html
-msgid "Edit script"
-msgstr "Redigera skript"
-
 #: templates/system/pcgroups/site_groups.html
 msgid "Add new group"
 msgstr "Lägg till ny grupp"
@@ -5437,6 +5432,10 @@ msgstr ""
 #: templates/system/pcgroups/site_groups.html
 msgid "Create group"
 msgstr "Skapa en grupp"
+
+#: templates/system/pcgroups/site_groups.html
+msgid "Edit script"
+msgstr "Redigera skript"
 
 #: templates/system/pcs/confirm_delete.html templates/system/pcs/update.html
 msgid "Delete computer"

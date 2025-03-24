@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-20 12:52+0100\n"
+"POT-Creation-Date: 2025-03-26 09:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,6 +25,10 @@ msgstr "Fel: Du måste ange ett namn"
 #, javascript-format
 msgid "Error: Another configuration has the name \"%s\" already"
 msgstr "Fel: En annan konfiguration har redan namnet \"%s\""
+
+#: static/js/customvanilla.js
+msgid "af"
+msgstr "av"
 
 #: static/js/jobs_list.js
 msgid "Job info"
@@ -45,6 +49,18 @@ msgstr "Nästa"
 #: static/js/jobs_list.js
 msgid "Last"
 msgstr "Sista"
+
+#: static/js/policy_list.js
+msgid "Unknown script"
+msgstr "Okänt skript"
+
+#: static/js/policy_list.js
+msgid "Has required input fields"
+msgstr "Har obligatoriska inmatningsfält"
+
+#: static/js/policy_list.js
+msgid "Please fill out this field"
+msgstr "Vänligen fyll i detta fält"
 
 #: static/js/security_events_list.js
 msgid "Note set during handling:"

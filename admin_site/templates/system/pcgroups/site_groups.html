@@ -160,7 +160,7 @@ active
             <li>{% translate "Removing a script from the Group will NOT remove the effect of the script from the Computers in the Group" %}.</li>
             </ul>
           </div>
-          {% include 'system/pcgroups/policy_list/list.html' with entries=selected_group.ordered_policy policy_id='group_policies' %}
+          {% include 'system/pcgroups/policy_list/list.html' with entries=selected_group.ordered_policy %}
         </div>
 
         <div id="configs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="configs-tab">
@@ -212,7 +212,7 @@ active
     </div>
 
     {% include 'system/configs/templates.html' %}
-    {% include 'system/pcgroups/policy_list/templates.html' with policy_id='group_policies' %}
+    {% include 'system/pcgroups/policy_list/templates.html' %}
 
   </div>
 {% endblock %}

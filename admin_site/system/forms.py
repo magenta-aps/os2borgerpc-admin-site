@@ -290,6 +290,7 @@ class UserFormSSO(forms.ModelForm):
         fields = ("language",)
 
 
+# Only used by script run, not associated scripts
 class ParameterForm(forms.Form):
     def __init__(self, *args, **kwargs):
         script = kwargs.pop("script")

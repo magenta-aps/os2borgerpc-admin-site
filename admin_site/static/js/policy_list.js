@@ -1,12 +1,4 @@
 ;(function (BibOS, $) {
-  if (!document.getElementById("policylist-templates")) {
-    alert(
-      "policy_list.js loaded without templates present" +
-        "\n" +
-        "Did you forget to include system/policy_list/templates.html?",
-    )
-    return
-  }
 
   var PolicyList = function () {
     this.scriptInputs = []
@@ -14,7 +6,7 @@
     this.hiddenParamField = function (name, type, required, default_value) {
       return (
         '<input class="policy-script-param' +
-        (type == "FILE" ? " phantom" : "") +
+        (type == "FILE" ? " d-none" : "") +
         '" type="' +
         (type == "FILE" ? "file" : "hidden") +
         '" name="' +
@@ -66,7 +58,6 @@
           script_pk: scriptPk,
           name: scriptName,
           position: "new_" + num_new,
-          submit_name: id,
         }),
       )
       this.scriptInputs = scriptInputs
@@ -91,13 +82,13 @@
         $("#" + id + "_new_entries").val(num)
       })
     },
-    renderScriptFields: function (pk, scriptPk, submitName) {
-      // If we come directly from adding a new script, django template variable "params" will only be #PARAMS#, so we need to render the fields dynamically
+    renderScriptFields: function (pk, scriptPk) {
+      // When we add a new script, its fields have to be rendered dynamically
       var param_fields = ""
 
       // generate the hidden input fields and divs to render the parameters for the selected script
       for (var i = 0; i < BibOS.PolicyList.scriptInputs.length; i++) {
-        paramName = submitName + "_" + scriptPk + "_param_" + i
+        paramName = "group_policies" + "_" + scriptPk + "_param_" + i
         param_fields += this.hiddenParamField(
           paramName,
           BibOS.PolicyList.scriptInputs[i].type,
@@ -143,9 +134,7 @@ function scriptEdit(clickedElement, defaultValues) {
       if (paramType == "textfield") {
         newElement = document.createElement("select")
 
-        /* defaultValues will be 'None' if we come directly from adding a new script.
-         This is because the values are taken from django template variable "params",
-         which will only be #PARAMS# when we come directly from adding a new script */
+        /* defaultValues will be 'None' if we come directly from adding a new script. */
         let options
         if (defaultValues != "None") {
           options = defaultValues[index].split(",")
@@ -335,7 +324,6 @@ function removeItem(clickedElem, id) {
 
   updateNew(id)
 }
-
 
 function updateScriptPositions(){
     let fields = document.getElementsByClassName("position-field")

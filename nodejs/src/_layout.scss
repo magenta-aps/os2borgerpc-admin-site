@@ -12,20 +12,21 @@ header {
         margin: 0;
         padding: 0;
         font-size: 1.25rem;
+
         em {
             color: $white;
-            font-style: normal; 
+            font-style: normal;
         }
     }
 
 }
 
-.actionpage #adm-header > header {
-    padding: $spacer $spacer*2 $spacer $spacer;
+#adm-header>header {
+    padding: $spacer*0.75 $spacer*2 $spacer*0.75 $spacer*2;
 }
 
 .divideheader {
-    background: $primary; 
+    background: $primary;
     padding: $spacer*.5 $spacer;
     margin: 0 0 $spacer;
     font-size: 1.25rem;
@@ -33,7 +34,7 @@ header {
 
     em {
         color: $white;
-        font-style: normal; 
+        font-style: normal;
     }
 }
 
@@ -81,7 +82,7 @@ header {
     padding: $spacer*1.75 $spacer*2;
     background-color: $white;
 
-    & > table {
+    &>table {
         margin: 0;
     }
 }
@@ -105,7 +106,7 @@ header {
 }
 
 // Documentation pages
-.documentationpage #adm-header > header {
+.documentationpage #adm-header>header {
     padding: $spacer $spacer*2;
 }
 
@@ -116,18 +117,18 @@ header {
 }
 
 .documentationpage img {
-  margin: auto;
-  display: block;
-  padding: 30px 0px;
+    margin: auto;
+    display: block;
+    padding: 30px 0px;
 }
 
 .documentationpage #adm-body {
-  overflow: scroll;
+    overflow: scroll;
 }
 
 // Popup page
-.popup-page { 
-    padding: $spacer*2; 
+.popup-page {
+    padding: $spacer*2;
     min-height: 100%;
     margin: $spacer auto;
 }

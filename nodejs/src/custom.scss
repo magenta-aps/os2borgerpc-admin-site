@@ -176,3 +176,19 @@ input[type="checkbox"] {
     background: $danger;
   }
 }
+
+.header-additional-content {
+  width: 100%;
+  display: flex;
+  row-gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 1.1em !important;
+}
+
+.borgerPC-news {
+  width: inherit;
+}
+
+.current-user-icon {
+  top: 0.5px
+}

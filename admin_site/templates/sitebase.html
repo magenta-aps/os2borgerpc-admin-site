@@ -2,9 +2,10 @@
 {% load i18n %}
 
 {% block header %}
-  <header class="d-flex justify-content-between {% block header_class %}{% endblock %}">
+  <header class="d-flex justify-content-center w-100 {% block header_class %}{% endblock %}">
 
-    <h1 class="siteheader w-100">{% block header_title %}{% endblock %}</h1>
+    <h1 class="siteheader d-flex gap-1" >{% block header_title %} {% endblock %}</h1>
+    <section class="header-additional-content w-100 d-flex justify-content-center justify-items-center ">{% block header_additional_content %}{% endblock %}</section>
 
     {% if user.is_authenticated %}
 

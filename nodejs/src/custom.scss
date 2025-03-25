@@ -180,11 +180,15 @@ input[type="checkbox"] {
 .header-additional-content {
   width: 100%;
   display: flex;
-  flex-wrap: nowrap;
-  height: fit-content;
-  font-size: large;
+  row-gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 1.1em !important;
 }
 
 .borgerPC-news {
   width: inherit;
+}
+
+.current-user-icon {
+  top: 0.5px
 }

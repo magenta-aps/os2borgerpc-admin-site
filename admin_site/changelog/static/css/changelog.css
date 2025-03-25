@@ -1,5 +1,6 @@
 .siteheader {
   margin-left: 20px;
+  width: inherit;
 }
 
 #changelog-container header h1, .card-title {

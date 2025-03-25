@@ -5,30 +5,32 @@
 {% block page_type_class%}sites{% endblock %}
 
 {% block header_title %}
+    {% translate "Administrate" %} <em>{% translate "Sites" %}</em>
+{% endblock %}
+
+{% block header_additional_content %}
   {% translate "Total number of BorgerPC's" as total_bpc_str %}
   {% translate "Total number of Kiosk PC's" as total_kiosk_str %}
   {% translate "Total number of" as total_release_before_str %}
   {% translate "Computers" as computers_str %}
   {% translate "Computers total" as computers_total_str %}
-  {% translate "Administrate" %} <em>{% translate "Sites" %}</em>
-  {% if user.is_superuser %}
-    <span class="ms-3 badge bg-secondary text-dark">{% translate "Version" %}: {{version}}</span>
-  {% endif %}
-  <div class="mt-2">
+
     {% if user.is_superuser %}
-      <span class="badge me-3 bg-secondary text-dark">{% translate "Customers" %}: {{total_customers}}</span>
+      <span class="ms-3 badge bg-secondary text-dark">{% translate "Customers" %}: {{total_customers}}</span>
     {% endif %}
-    <span class="badge bg-secondary text-dark">{{computers_total_str}}: {{total_pcs_count}}</span>
-    <span class="ms-3 badge bg-secondary text-dark">{% translate "Activated:" %} {{total_activated_pcs_count}}</span>
+    <span class="ms-3 badge bg-secondary text-dark">{{computers_total_str}}: {{total_pcs_count}}</span>
     <span class="ms-3 badge bg-secondary text-dark">{% translate "Online" %}: {{total_online_pcs_count}}</span>
-    <span class="ms-3 badge bg-secondary text-dark" title="{{total_bpc_str}}">{% translate "OS2borgerPC" %}: {{borgerpc_count}}</span>
-    <span class="ms-3 badge bg-secondary text-dark" title="{{total_kiosk_str}}">{% translate "OS2borgerPC Kiosk" %}: {{borgerpc_kiosk_count}}</span>
+    {# TODO: Make this dynamically fetch products #}
+    <span class="ms-3 badge bg-secondary text-dark" title="{{total_bpc_str}}">{% translate "BorgerPC" %}: {{borgerpc_count}}</span>
+    <span class="ms-3 badge bg-secondary text-dark" title="{{total_kiosk_str}}">{% translate "Kiosk" %}: {{borgerpc_kiosk_count}}</span>
     {% for release, release_count in releases %}
       {% if release_count > 0 %}
         <span class="ms-3 badge bg-secondary text-dark" title="{{total_release_before_str}} {{release}} {{computers_str}}">{{release}}: {{release_count}}</span>
       {% endif %}
     {% endfor %}
-  </div>
+    {% if user.is_superuser %}
+      <span class="me-3 badge bg-secondary text-dark float-end ms-3">{% translate "Version" %}: {{version}}</span>
+    {% endif %}
 {% endblock %}
 
 {% block header_class %}container-fluid{% endblock %}

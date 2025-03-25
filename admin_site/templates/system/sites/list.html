@@ -29,11 +29,10 @@
       {% endif %}
     {% endfor %}
     {% if user.is_superuser %}
-      <span class="me-3 badge bg-secondary text-dark float-end ms-3">{% translate "Version" %}: {{version}}</span>
+      <span class="badge bg-secondary text-dark float-end ms-3">{% translate "Version" %}: {{version}}</span>
     {% endif %}
 {% endblock %}
 
-{% block header_class %}container-fluid{% endblock %}
 
 {% block specific_content %}
 {% include 'notification.html' %}

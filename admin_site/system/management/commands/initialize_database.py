@@ -2,17 +2,14 @@
 # Contact: info@magenta.dk.
 
 import os
-import glob
+from pathlib import Path
 
 from django.core.management.base import BaseCommand
 from django.conf import settings
 from django.core.management import call_command
 from os2borgerpc_admin.settings import INSTALL_DIR
 
-fixtures_dirs = [
-    os.path.join(INSTALL_DIR, "system/fixtures"),
-    os.path.join(INSTALL_DIR, "changelog/fixtures"),
-]
+fixtures_base_dir = os.path.join(INSTALL_DIR, "fixtures")
 
 
 class Command(BaseCommand):
@@ -51,11 +48,9 @@ class Command(BaseCommand):
 
             print("Populate database with (static) basic data:")
 
-            for dir in fixtures_dirs:
-                if os.path.exists(dir) and os.path.isdir(dir):
-                    for file in sorted(glob.glob(os.path.join(dir, "*.json"))):
-                        if os.path.isfile(file):
-                            call_command("loaddata", file)
+            for file in sorted(Path(fixtures_base_dir).rglob("*.json")):
+                if os.path.isfile(file):
+                    call_command("loaddata", file)
 
             # Inform user that the operation is complete
             # Assuming that if any of the underlying functions fail

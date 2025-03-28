@@ -282,9 +282,15 @@ class SiteMixin(View):
 class SiteUIDAvailableCheck(LoginRequiredMixin):
 
     def dispatch(self, *args, **kwargs):
-        uid = self.request.GET["uid"]
-        uid = Site.objects.filter(uid=uid)
-        if uid:
+        site_prefix = self.request.user.user_profile.sites.first().customer.site_prefix
+        uid_postfix = self.request.GET["uid"]
+        # Allow creating a site with only the prefix in case they don't already have one
+        if not uid_postfix:
+            requested_uid = site_prefix
+        else:
+            requested_uid = f"{site_prefix}-{uid_postfix}"
+        existing_uid_match = Site.objects.filter(uid=requested_uid)
+        if existing_uid_match:
             return HttpResponse(
                 _("The specified UID is unavailable. Please choose another.")
                 + "<script>document.getElementById('create_site_save_button').disabled = true</script>"
@@ -388,19 +394,22 @@ class SiteCreate(CreateView, LoginRequiredMixin):
 
     def form_valid(self, form):
         # Only allow customer admins to use this functionality
-        if self.request.user.user_profile.sitemembership_set.filter(
-            site_user_type=SiteMembership.CUSTOMER_ADMIN
-        ):
+        site_membership = self.request.user.user_profile.sitemembership_set.first()
+        if site_membership.site_user_type == SiteMembership.CUSTOMER_ADMIN:
             self.object = form.save(commit=False)
             # This doesn't seem totally ideal. Maybe if user or user_profile had a direct relation to customer, or??
-            customer = (
-                self.request.user.user_profile.sitemembership_set.filter(
-                    site_user_type=SiteMembership.CUSTOMER_ADMIN
-                )
-                .first()
-                .site.customer
-            )
+            customer = site_membership.site.customer
             self.object.customer = customer
+
+            site_prefix = customer.site_prefix
+
+            if not form.data["uid"]:
+                self.object.uid = site_prefix
+            else:
+                self.object.uid = site_prefix + "-" + form.data["uid"]
+
+            if Site.objects.filter(uid=self.object.uid).count():
+                return self.form_invalid(form)
 
             response = super().form_valid(form)
 

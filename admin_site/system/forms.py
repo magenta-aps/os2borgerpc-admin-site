@@ -74,10 +74,8 @@ class SiteForm(forms.ModelForm):
 class SiteCreateForm(forms.ModelForm):
     class Meta:
         model = Site
-        fields = ("name", "uid")
-        widgets = {
-            "uid": forms.widgets.TextInput(attrs={"pattern": "[\-a-z0-9]{2,40}"}),
-        }
+        # uid is added manually in the template to allow for an empty value which then gets created as the site-prefix only
+        fields = ("name",)
 
 
 class PCGroupForm(forms.ModelForm):

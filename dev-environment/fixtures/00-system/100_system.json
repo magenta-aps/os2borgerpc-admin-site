@@ -2014,6 +2014,7 @@
     "fields": {
         "name": "Magenta",
         "country": 1,
+        "site_prefix": "magenta",
         "paid_for_access_until": null,
         "is_test": false,
         "using_sso": false
@@ -2025,6 +2026,7 @@
     "fields": {
         "name": "Kunde Sverige",
         "country": 2,
+        "site_prefix": "kunde-sverige",
         "paid_for_access_until": null,
         "is_test": false,
         "using_sso": false
@@ -2036,6 +2038,7 @@
     "fields": {
         "name": "Test Kunde Danmark",
         "country": 1,
+        "site_prefix": "test-kunde-danmark",
         "paid_for_access_until": null,
         "is_test": true,
         "using_sso": false
@@ -2047,6 +2050,7 @@
     "fields": {
         "name": "SSO kunde",
         "country": 1,
+        "site_prefix": "sso-kunde",
         "paid_for_access_until": null,
         "is_test": false,
         "using_sso": true

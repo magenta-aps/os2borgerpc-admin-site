@@ -166,6 +166,9 @@ class Customer(models.Model):
     country = models.ForeignKey(
         Country, related_name="customers", on_delete=models.PROTECT, null=True
     )
+    site_prefix = models.CharField(
+        verbose_name=_("site prefix"), max_length=40, null=True
+    )  # TODO: Remove null=True
     paid_for_access_until = models.DateField(
         verbose_name=_("Paid for access until this date"), null=True, blank=True
     )
@@ -198,7 +201,6 @@ class Site(models.Model):
                 "invalid",
             )
         ],
-        help_text=_("This UID is used when registering a PC with the admin site."),
     )
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     customer = models.ForeignKey(

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-20 12:57+0100\n"
+"POT-Creation-Date: 2025-03-31 15:58+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -136,7 +136,6 @@ msgstr "Kommentarer"
 
 #: changelog/templates/list.html docs/templates/om_os2borgerpc_admin.html
 #: docs/templates/sites_overview/index.html docs/views.py
-#: templates/system/pcs/pcs.html templates/system/sites/list.html
 msgid "OS2borgerPC"
 msgstr "OS2borgerPC"
 
@@ -958,6 +957,7 @@ msgstr ""
 #: docs/templates/configuration/index.html docs/templates/groups/scripts.html
 #: templates/system/configs/item.html
 #: templates/system/pcgroups/policy_list/item.html
+#: templates/system/pcgroups/policy_list/templates.html
 #: templates/system/scripts/update.html
 msgid "Edit"
 msgstr "Redigér"
@@ -2807,7 +2807,6 @@ msgstr ""
 "adgang til"
 
 #: docs/templates/sites_overview/index.html docs/views.py
-#: templates/system/pcs/pcs.html templates/system/sites/list.html
 msgid "OS2borgerPC Kiosk"
 msgstr "OS2borgerPC Kiosk"
 
@@ -4095,6 +4094,10 @@ msgid "customer name"
 msgstr "kundenavn"
 
 #: system/models.py
+msgid "site prefix"
+msgstr "site-præfiks"
+
+#: system/models.py
 msgid "Paid for access until this date"
 msgstr "Betalt for adgang indtil denne dato"
 
@@ -4106,13 +4109,9 @@ msgstr "Er en test kunde"
 msgid "Enable to require SSO"
 msgstr "Aktiver for at kræve SSO"
 
-#: system/models.py
+#: system/models.py templates/system/sites/list.html
 msgid "UID"
 msgstr "UID"
-
-#: system/models.py
-msgid "This UID is used when registering a PC with the admin site."
-msgstr "Dette UID bruges ifm. registrering på admin-portalen."
 
 #: system/models.py
 msgid "ISIL/NCIP"
@@ -4848,10 +4847,6 @@ msgid "Read the documentation ..."
 msgstr "Læs dokumentation ..."
 
 #: templates/sitebase.html
-msgid "Welcome"
-msgstr "Velkommen"
-
-#: templates/sitebase.html
 msgid "Edit my user"
 msgstr "Redigér min bruger"
 
@@ -4887,7 +4882,6 @@ msgid "Add configuration"
 msgstr "Tilføj konfiguration"
 
 #: templates/system/configs/list.html
-#: templates/system/pcgroups/policy_list/list.html
 msgid "You must specify a"
 msgstr "Du skal angive en"
 
@@ -5308,6 +5302,7 @@ msgid "None selected"
 msgstr "Ingen valgt"
 
 #: templates/system/pcgroups/policy_list/item.html
+#: templates/system/pcgroups/policy_list/templates.html
 msgid "Remove"
 msgstr "Fjern"
 
@@ -5319,10 +5314,6 @@ msgstr "Position"
 #: templates/system/scripts/update_form.html
 msgid "Arguments"
 msgstr "Inputparametre"
-
-#: templates/system/pcgroups/policy_list/list.html
-msgid "when inserting a policy list"
-msgstr "når der indsættes i en liste af tilknyttede scripts"
 
 #: templates/system/pcgroups/policy_list/templates.html
 msgid "Edit script"
@@ -5477,9 +5468,19 @@ msgstr "Totalt antal BorgerPC'er"
 msgid "Total number of Kiosk PC's"
 msgstr "Totalt antal Kiosk PC'er"
 
-#: templates/system/pcs/pcs.html templates/system/sites/list.html
+#: templates/system/pcs/pcs.html
 msgid "Activated:"
 msgstr "Aktiverede:"
+
+#: templates/system/pcs/pcs.html templates/system/scripts/run_step1.html
+#: templates/system/sites/list.html
+msgid "BorgerPC"
+msgstr "BorgerPC"
+
+#: templates/system/pcs/pcs.html templates/system/scripts/run_step1.html
+#: templates/system/sites/list.html
+msgid "Kiosk"
+msgstr "Kiosk"
 
 #: templates/system/pcs/pcs.html
 msgid "Activated"
@@ -5623,14 +5624,6 @@ msgid ""
 msgstr ""
 "Bemærk: Der kan kun køres scripts på computere, der er aktiverede, og på "
 "grupper, der har tilknyttet minimum 1 computer."
-
-#: templates/system/scripts/run_step1.html
-msgid "BorgerPC"
-msgstr "BorgerPC"
-
-#: templates/system/scripts/run_step1.html
-msgid "Kiosk"
-msgstr "Kiosk"
 
 #: templates/system/scripts/run_step2.html
 msgid "Specify parameters"
@@ -5995,14 +5988,16 @@ msgid "Add new site"
 msgstr "Tilføj nyt site"
 
 #: templates/system/sites/list.html
+msgid "This UID is used when registering a PC with the admin site."
+msgstr "Dette UID bruges ifm. registrering på admin-portalen."
+
+#: templates/system/sites/list.html
 msgid ""
 "Must be unique. Valid characters are a-z (lower-case only), 0-9 and dashes, "
-"and the length must be between 2-40 characters. We suggest values like "
-"'organisation' or 'organisation-location' (without quotes)."
+"and the maximum length is 40 characters."
 msgstr ""
 "Skal være unikt. Gyldige tegn er a-z (kun små bogstaver), 0-9 og "
-"bindestreger, og længden skal være mellem 2-40 tegn. Vi foreslår værdier som "
-"'organisation' eller 'organisation-lokation' (uden citationstegn)"
+"bindestreger, og den maksimale længde er 40 tegn."
 
 #: templates/system/sites/list.html
 msgid "Create site"

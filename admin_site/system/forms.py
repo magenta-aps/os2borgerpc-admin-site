@@ -57,6 +57,18 @@ class SiteForm(forms.ModelForm):
         instance = getattr(self, "instance", None)
         if instance and instance.pk:
             self.fields["uid"].widget.attrs["readonly"] = True
+            # Add placeholder if a value exists
+            for field_name in [
+                "booking_api_key",
+                "citizen_login_api_key",
+                "citizen_login_api_password",
+            ]:
+                if getattr(instance, field_name, None):
+                    self.fields[field_name].widget.attrs["placeholder"] = (
+                        (_("Fill out if you want to update the current password"))
+                        if field_name == "citizen_login_api_password"
+                        else _("Fill out if you want to update the current value")
+                    )
 
     class Meta:
         model = Site

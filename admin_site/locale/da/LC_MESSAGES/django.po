@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-31 15:58+0200\n"
+"POT-Creation-Date: 2025-04-04 10:32+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -4019,6 +4019,10 @@ msgid ""
 msgstr ""
 "Nødvendigt for kunder der ønsker at autentificere login på BorgerPC gennem "
 "et API, der kræver en API-nøgle (f.eks. Quria)"
+
+#: system/forms.py
+msgid "Fill out if you want to update the current value"
+msgstr "Udfyldes hvis du ønsker at opdatere den nuværende værdi"
 
 #: system/forms.py
 msgid "Select users to be added to this site"

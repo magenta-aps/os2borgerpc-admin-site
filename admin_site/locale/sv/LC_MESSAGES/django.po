@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-31 15:58+0200\n"
+"POT-Creation-Date: 2025-04-04 10:32+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -4004,6 +4004,11 @@ msgid ""
 msgstr ""
 "Nödvändigt för kunder som vill autentisera MedborgarPC-inloggningar via ett "
 "API som kräver en API-nyckel (t.ex. Quria)"
+
+#: system/forms.py
+#: system/forms.py
+msgid "Fill out if you want to update the current value"
+msgstr "Fyll i om du vill uppdatera det aktuella värdet"
 
 #: system/forms.py
 msgid "Select users to be added to this site"

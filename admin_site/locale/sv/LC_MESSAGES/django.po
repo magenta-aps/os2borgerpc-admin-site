@@ -4296,10 +4296,10 @@ msgstr "MAC"
 
 #: system/models.py
 msgid ""
-"Valid characters are a-z, A-Z, 0-9 and hyphen (-). The length must be 1-63 "
+"Valid characters are a-z, A-Z, 0-9 and hyphen (-). The length must be 1-40 "
 "characters"
 msgstr ""
-"Giltiga tecken är a-z, A-Z, 0-9 och bindestreck (-). Längden måste vara 1-63 "
+"Giltiga tecken är a-z, A-Z, 0-9 och bindestreck (-). Längden måste vara 1-40 "
 "tecken"
 
 #: system/models.py

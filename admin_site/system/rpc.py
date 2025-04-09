@@ -41,6 +41,13 @@ def register_new_computer_v2(mac, name, site, configuration):
             "and then restart the registration."
         )
     # If we are here then no matching PC object exists
+    # Check if the chosen name is too long to prevent old clients
+    # from setting names that are too long
+    if len(name) > 40:
+        raise Exception(
+            f"The chosen name {name} has a length of {len(name)} characters. "
+            "The name must have a length of 1-40 characters."
+        )
     new_pc = PC(name=name, uid=uid)
     try:
         new_pc.site = Site.objects.get(uid=site)

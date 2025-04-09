@@ -729,7 +729,7 @@ class PC(models.Model):
         verbose_name=_("name"),
         max_length=255,
         help_text=_(
-            "Valid characters are a-z, A-Z, 0-9 and hyphen (-). The length must be 1-63 characters"
+            "Valid characters are a-z, A-Z, 0-9 and hyphen (-). The length must be 1-40 characters"
         ),
     )
     uid = models.CharField(

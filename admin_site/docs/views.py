@@ -34,7 +34,9 @@ class DocView(TemplateView, LoginRequiredMixin):
         if find(file_path):
             return file_path
         else:
-            return file_path.replace(user_lang + extension, fallback_language + extension)
+            return file_path.replace(
+                user_lang + extension, fallback_language + extension
+            )
 
     def get_context_data(self, **kwargs):  # noqa
 
@@ -55,16 +57,18 @@ class DocView(TemplateView, LoginRequiredMixin):
             ("changelogs", _("The News site")),
             ("api", "API"),
             (
-                self.get_doc_user_lang("docs/OS2BorgerPC_security_rules", ".pdf"),
+                self.get_doc_user_lang("docs/OS2borgerPC_security_rules", ".pdf"),
                 _("Setting up security surveillance (PDF)"),
             ),
             ("", _("OS2borgerPC")),
             (
-                self.get_doc_user_lang("docs/OS2BorgerPC_installation_guide", ".pdf"),
+                self.get_doc_user_lang("docs/OS2borgerPC_installation_guide", ".pdf"),
                 _("Installation Guide (PDF)"),
             ),
             (
-                self.get_doc_user_lang("docs/OS2BorgerPC_installation_guide_old", ".pdf"),
+                self.get_doc_user_lang(
+                    "docs/OS2borgerPC_installation_guide_old", ".pdf"
+                ),
                 _("Old installation guide (PDF)"),
             ),
             ("", _("OS2borgerPC Kiosk")),

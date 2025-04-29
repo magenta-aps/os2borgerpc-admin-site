@@ -9,7 +9,6 @@
 - Rewrite jobs list from jquery to js
 - Refactor jquery-ui to html5 drag-n-drop
 - Simplify templates used for policies
-- Make the PCGroup form handlers sticky to prevent "save changes" from being far down
 - Cleanup CI pipeline
 
 ## Version 6.7.0, March 7, 2025

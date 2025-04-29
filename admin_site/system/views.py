@@ -444,7 +444,7 @@ class SiteCreate(CreateView, LoginRequiredMixin):
                 "The Site could not be created because the chosen UID "
                 "%s was invalid or not unique"
             )
-            % form.data["uid"],
+            % self.object.uid,
             error=True,
         )
 

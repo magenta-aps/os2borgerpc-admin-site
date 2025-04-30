@@ -21,15 +21,17 @@
     <li class="{% if pc == selected_pc %}active{% endif %}">
       <a class="item-list-link pc-status-list-link" id="{{pc.uid}}" href="{% url "computer" site.url pc.uid %}">
           {% if pc.is_activated %}
-            <span>{{ pc.name }}</span>
-            <span class="badge bg-{{ pc.badgeclass }} ms-5">{% if multiple_products %}{{ pc.product.short_name }}{% endif %}</span>
+                <span>{{ pc.name }}</span>
+                <span class="ms-auto badge bg-{{ pc.badgeclass }}">{% if multiple_products %}{{ pc.product.short_name }}{% endif %}</span>
           {% else %}
             <span>
               {{ pc.name }}
-              <br>
-              <span class="badge bg-{{ pc.badgeclass }}">{% if multiple_products %}{{ pc.product.short_name }}{% endif %}</span>
-              <span class="badge bg-danger">{% translate "Not activated" %}</span>
             </span>
+              <br>
+              <div class="ms-auto">
+                  <span class="badge bg-danger">{% translate "Not activated" %}</span>
+                  <span class="badge bg-{{ pc.badgeclass }}">{% if multiple_products %}{{ pc.product.short_name }}{% endif %}</span>
+              </div>
           {% endif %}
       </a>
       {% if pc == selected_pc %}
@@ -120,7 +122,7 @@
               {{ form.pc_groups.errors }}
               <div class="clearfix">
                 <label class="mb-2">{% translate "Groups the computer is a member of" %}</label>
-                <span class="badge bg-secondary pick-list-counter-badge" style="float: right;">
+                <span class="badge bg-secondary pick-list-counter-badge float-end">
                   <span class="material-symbols-outlined px-1">queue</span>
                   <span id="total-pc_groups"></span>
                 </span>

@@ -1,3 +1,16 @@
+## Version 6.8.0, April 29, 2025
+
+- Readd OIDC middleware because we found the real cause of the previously mentioned errors
+- Update installation guides
+- Default to danish pdfs if no pdf exists for the users chosen language
+- Limit pc names to 40 characters to simplify UI/UX handling
+- Add site-prefix on customer objects that are prepended to the UID of all sites created by customer admins
+- Improve layout of pc list and site overview
+- Rewrite jobs list from jquery to js
+- Refactor jquery-ui to html5 drag-n-drop
+- Simplify templates used for policies
+- Cleanup CI pipeline
+
 ## Version 6.7.0, March 7, 2025
 
 - Fix SSO role validation

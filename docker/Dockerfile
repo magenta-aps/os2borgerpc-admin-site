@@ -86,8 +86,12 @@ COPY --from=frontend \
 COPY --from=frontend \
   /code/nodejs/dist/css/bootstrap.* \
   /code/nodejs/node_modules/bootstrap-table/dist/bootstrap-table.min.css \
+  /code/nodejs/node_modules/@highlightjs/cdn-assets/styles/foundation.min.css \
   /frontend/css/
 COPY --from=frontend \
+  /code/nodejs/node_modules/@highlightjs/cdn-assets/highlight.min.js \
+  /code/nodejs/node_modules/htmx.org/dist/htmx.min.js \
+  /code/nodejs/node_modules/sortablejs/Sortable.min.js \
   /code/nodejs/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js* \
   /code/nodejs/node_modules/jquery/dist/jquery.min.js \
   /code/nodejs/node_modules/qrcodejs/qrcode.min.js \

@@ -15,11 +15,14 @@
   "author": "Magenta ApS",
   "license": "MPL-2.0",
   "dependencies": {
+    "@highlightjs/cdn-assets": "^11.11.1",
     "bootstrap": "~5.0.2",
     "bootstrap-table": "^1.19.1",
     "jquery": "^3.5.1",
+    "material-symbols": "0.28.2",
     "qrcodejs": "1.0.0",
     "sass": "^1.35.1",
-    "material-symbols": "0.28.2"
+    "htmx.org": "^1.9.12",
+    "sortablejs": "^1.15.6"
   }
 }

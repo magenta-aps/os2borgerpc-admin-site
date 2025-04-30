@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 18:19+0100\n"
+"POT-Creation-Date: 2025-03-31 15:58+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -136,7 +136,6 @@ msgstr "Kommentarer"
 
 #: changelog/templates/list.html docs/templates/om_os2borgerpc_admin.html
 #: docs/templates/sites_overview/index.html docs/views.py
-#: templates/system/pcs/pcs.html templates/system/sites/list.html
 msgid "OS2borgerPC"
 msgstr "Sambruk MedborgarPC"
 
@@ -953,6 +952,7 @@ msgstr ""
 #: docs/templates/configuration/index.html docs/templates/groups/scripts.html
 #: templates/system/configs/item.html
 #: templates/system/pcgroups/policy_list/item.html
+#: templates/system/pcgroups/policy_list/templates.html
 #: templates/system/scripts/update.html
 msgid "Edit"
 msgstr "Redigera"
@@ -1466,7 +1466,6 @@ msgstr ""
 
 #: docs/templates/groups/scripts.html
 #: templates/system/pcgroups/policy_list/list.html
-#: templates/system/pcgroups/policy_list/templates.html
 msgid "Add script"
 msgstr "Lägg till skript"
 
@@ -2798,7 +2797,6 @@ msgstr ""
 "tillgång till"
 
 #: docs/templates/sites_overview/index.html docs/views.py
-#: templates/system/pcs/pcs.html templates/system/sites/list.html
 msgid "OS2borgerPC Kiosk"
 msgstr "Sambruk MedborgarPC Kiosk"
 
@@ -4081,6 +4079,10 @@ msgid "customer name"
 msgstr "kundnamn"
 
 #: system/models.py
+msgid "site prefix"
+msgstr "site prefix"
+
+#: system/models.py
 msgid "Paid for access until this date"
 msgstr "Betalat för tillträde fram till detta datum"
 
@@ -4092,13 +4094,9 @@ msgstr "Är en test kund"
 msgid "Enable to require SSO"
 msgstr "Aktivera för att kräva sso"
 
-#: system/models.py
+#: system/models.py templates/system/sites/list.html
 msgid "UID"
 msgstr "UID"
-
-#: system/models.py
-msgid "This UID is used when registering a PC with the admin site."
-msgstr "Detta UID används när du registrerar en PC med adminsidan."
 
 #: system/models.py
 msgid "ISIL/NCIP"
@@ -4298,10 +4296,10 @@ msgstr "MAC"
 
 #: system/models.py
 msgid ""
-"Valid characters are a-z, A-Z, 0-9 and hyphen (-). The length must be 1-63 "
+"Valid characters are a-z, A-Z, 0-9 and hyphen (-). The length must be 1-40 "
 "characters"
 msgstr ""
-"Giltiga tecken är a-z, A-Z, 0-9 och bindestreck (-). Längden måste vara 1-63 "
+"Giltiga tecken är a-z, A-Z, 0-9 och bindestreck (-). Längden måste vara 1-40 "
 "tecken"
 
 #: system/models.py
@@ -4840,10 +4838,6 @@ msgid "Read the documentation ..."
 msgstr "Läs dokumentation..."
 
 #: templates/sitebase.html
-msgid "Welcome"
-msgstr "Välkommen"
-
-#: templates/sitebase.html
 msgid "Edit my user"
 msgstr "Redigera min användara"
 
@@ -4879,7 +4873,6 @@ msgid "Add configuration"
 msgstr "Lägg till konfiguration"
 
 #: templates/system/configs/list.html
-#: templates/system/pcgroups/policy_list/list.html
 msgid "You must specify a"
 msgstr "Du måste ange ett"
 
@@ -5256,7 +5249,7 @@ msgstr "Startad"
 msgid "Finished"
 msgstr "Avslutad"
 
-#: templates/system/jobs/site_jobs.html
+#: templates/system/jobs/site_jobs.html templates/system/scripts/run_base.html
 #: templates/system/security_events/site_security_events.html
 msgid "Loading data..."
 msgstr "Hämta data..."
@@ -5300,6 +5293,7 @@ msgid "None selected"
 msgstr "Ingen vald"
 
 #: templates/system/pcgroups/policy_list/item.html
+#: templates/system/pcgroups/policy_list/templates.html
 msgid "Remove"
 msgstr "Ta bort"
 
@@ -5312,17 +5306,9 @@ msgstr "Position"
 msgid "Arguments"
 msgstr "Inputparametrar"
 
-#: templates/system/pcgroups/policy_list/list.html
-msgid "when inserting a policy list"
-msgstr "när den infogas i en lista med tillhörande manuskript"
-
 #: templates/system/pcgroups/policy_list/templates.html
 msgid "Edit script"
 msgstr "Redigera skript"
-
-#: templates/system/pcgroups/policy_list/templates.html
-msgid "Add script to group"
-msgstr "Lägg till skript till grupp"
 
 #: templates/system/pcgroups/site_groups.html
 msgid "Add new group"
@@ -5438,7 +5424,7 @@ msgstr "Inga grupper hittades"
 
 #: templates/system/pcgroups/site_groups.html
 msgid ""
-"Clik the 'Add new group' button in the menu to the left to create a group"
+"Click the 'Add new group' button in the menu to the left to create a group"
 msgstr ""
 "Klicka på knappen 'Lägg till ny grupp' i menyn till vänster för att skapa en "
 "grupp"
@@ -5475,9 +5461,19 @@ msgstr "Totalt antal MedborgarPC'er"
 msgid "Total number of Kiosk PC's"
 msgstr "Totalt antal Kiosk PC'er"
 
-#: templates/system/pcs/pcs.html templates/system/sites/list.html
+#: templates/system/pcs/pcs.html
 msgid "Activated:"
 msgstr "Aktiverade:"
+
+#: templates/system/pcs/pcs.html templates/system/scripts/run_step1.html
+#: templates/system/sites/list.html
+msgid "BorgerPC"
+msgstr "MedborgarPC"
+
+#: templates/system/pcs/pcs.html templates/system/scripts/run_step1.html
+#: templates/system/sites/list.html
+msgid "Kiosk"
+msgstr "Kiosk"
 
 #: templates/system/pcs/pcs.html
 msgid "Activated"
@@ -5605,10 +5601,6 @@ msgstr "Globala skript"
 msgid "Delete script"
 msgstr "Ta bort skript"
 
-#: templates/system/scripts/run_base.html
-msgid "Loading..."
-msgstr "Laddar..."
-
 #: templates/system/scripts/run_step1.html
 #: templates/system/scripts/run_step2.html templates/system/scripts/update.html
 msgid "Run script"
@@ -5625,14 +5617,6 @@ msgid ""
 msgstr ""
 "Observera: Skript kan endast köras på datorer som är aktiverade och på "
 "Grupper som har minst 1 dator ansluten.."
-
-#: templates/system/scripts/run_step1.html
-msgid "BorgerPC"
-msgstr "MedborgarPC"
-
-#: templates/system/scripts/run_step1.html
-msgid "Kiosk"
-msgstr "Kiosk"
 
 #: templates/system/scripts/run_step2.html
 msgid "Specify parameters"
@@ -5789,7 +5773,7 @@ msgstr "sedan alla uppdateringar senast kördes"
 msgid "Most recent version of"
 msgstr "Senaste upplagan av"
 
-#: templates/system/site_images.html
+#: templates/system/site_images.html templates/system/sites/list.html
 msgid "Version"
 msgstr "Version"
 
@@ -5989,22 +5973,24 @@ msgid "Administrate"
 msgstr "Hantera"
 
 #: templates/system/sites/list.html
-msgid "Admin site version"
-msgstr "Adminsida-version"
+msgid "Customers"
+msgstr "Kunder"
 
 #: templates/system/sites/list.html
 msgid "Add new site"
 msgstr "Lägg till nyt site"
 
 #: templates/system/sites/list.html
+msgid "This UID is used when registering a PC with the admin site."
+msgstr "Detta UID används när du registrerar en PC med adminsidan."
+
+#: templates/system/sites/list.html
 msgid ""
 "Must be unique. Valid characters are a-z (lower-case only), 0-9 and dashes, "
-"and the length must be between 2-40 characters. We suggest values like "
-"'organisation' or 'organisation-location' (without quotes)."
+"and the maximum length is 40 characters."
 msgstr ""
 "Måste vara unik. Giltiga tecken är a-z (endast små bokstäver), 0-9 och "
-"bindestreck, och längden måste vara mellan 2-40 tecken. Vi föreslår värden "
-"som 'organisation' eller 'organisation-plats' (utan citattecken)"
+"bindestreck, och den maximala längden är 40 tecken."
 
 #: templates/system/sites/list.html
 msgid "Create site"

@@ -267,6 +267,7 @@ var BibOS
 
       if (!inserted) lastInsert(elem)
     },
+    // Only used by the computer job list
     setupJobInfoButtons: function (rootElem) {
       // initialize all job info popovers.
       var popoverTriggerList = [].slice.call(
@@ -312,8 +313,8 @@ var BibOS
           })
         })
     },
+    // Only used by the computer job list
     showJobInfo: function (triggerElem) {
-      var t = this
       var popover = bootstrap.Popover.getInstance(triggerElem)
       triggerElem = $(triggerElem)
       var id = triggerElem.attr("data-pk")
@@ -332,8 +333,9 @@ var BibOS
           triggerElem.attr("data-bs-content", data)
           popover.setContent()
 
-          const parser = new DOMParser()
-          const dataHTML = parser.parseFromString(data, "text/html")
+          // TODO: Only used by computers job list - rewrite to use the general copy button instead
+          const parser = new DOMParser();
+          const dataHTML = parser.parseFromString(data, 'text/html');
 
           const jobLog = dataHTML.getElementById("job-log").innerText
 
@@ -379,15 +381,16 @@ function getCookie(name) {
   if (parts.length === 2) return parts.pop().split(";").shift()
 }
 
-/* Currently only used by the job log copy button */
+/* Currently only used by the computer job log copy button */
 function addEventListenerForClipBoardButton(log) {
   let btn = document.getElementById("clipboard-button")
 
-  btn.addEventListener("click", () => {
+  btn.addEventListener('click', () => {
+
     navigator.clipboard.writeText(log)
 
-    btn.getElementsByClassName("copy-btn-text-orig")[0].classList.add("d-none")
-    btn.lastElementChild.classList.remove("d-none")
+    btn.getElementsByClassName("copy-btn-text-orig")[0].classList.add('d-none')
+    btn.lastElementChild.classList.remove('d-none')
   })
 }
 

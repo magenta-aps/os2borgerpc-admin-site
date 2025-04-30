@@ -74,10 +74,8 @@ class SiteForm(forms.ModelForm):
 class SiteCreateForm(forms.ModelForm):
     class Meta:
         model = Site
-        fields = ("name", "uid")
-        widgets = {
-            "uid": forms.widgets.TextInput(attrs={"pattern": "[\-a-z0-9]{2,40}"}),
-        }
+        # uid is added manually in the template to allow for an empty value which then gets created as the site-prefix only
+        fields = ("name",)
 
 
 class PCGroupForm(forms.ModelForm):
@@ -290,6 +288,7 @@ class UserFormSSO(forms.ModelForm):
         fields = ("language",)
 
 
+# Only used by script run, not associated scripts
 class ParameterForm(forms.Form):
     def __init__(self, *args, **kwargs):
         script = kwargs.pop("script")
@@ -350,7 +349,7 @@ class PCForm(forms.ModelForm):
         model = PC
         exclude = ("configuration", "site", "created", "last_seen", "product")
         widgets = {
-            "name": forms.widgets.TextInput(attrs={"pattern": "[\-a-z0-9A-Z]{1,63}"}),
+            "name": forms.widgets.TextInput(attrs={"pattern": "[\-a-z0-9A-Z]{1,40}"}),
         }
 
 

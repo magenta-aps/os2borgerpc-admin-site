@@ -17,7 +17,7 @@
                 <button class="btn btn-link d-flex align-items-center pick-list-dropdown-btn" type="button" id="pick-list-{{ submit_name }}-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="material-symbols-outlined">add</span>
                 </button>
-                <ul class="pick-list-available dropdown-menu" aria-labelledby="pick-list-{{ submit_name }}-dropdown"></ul>
+                <ul class="pick-list-available dropdown-menu" style="z-index: 10;" aria-labelledby="pick-list-{{ submit_name }}-dropdown"></ul>
             </li>
         </ul>
 
@@ -137,7 +137,7 @@
 
                 let checkbox = document.createElement('input')
                 checkbox.type = 'checkbox'
-                checkbox.className = 'li-checkbox'
+                checkbox.className = 'li-checkbox me-2'
                 checkbox.value = item.uid
 
                 list_item.addEventListener('click', function(event) {

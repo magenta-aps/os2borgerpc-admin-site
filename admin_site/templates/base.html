@@ -9,12 +9,12 @@
   <link href="/static/css/bootstrap-table.min.css" rel="stylesheet" media="screen">
   <link href="/static/css/bootstrap.css" rel="stylesheet" media="screen">
   <!-- Syntax highlighting via highlight.js -->
-  <link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/foundation.min.css" rel="stylesheet" >
+  <link href="/static/css/foundation.min.css" rel="stylesheet">
   <link href="/static/css/custom.css" rel="stylesheet" media="screen">
   {% block stylesheets %}{% endblock %}
   <script src="/static/js/jquery.min.js"></script>
   <script src="/static/js/custom.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <script src="/static/js/Sortable.min.js"></script>
   <script src="{% url 'javascript-catalog' %}"></script>
   {% block head_javascripts %}{% endblock %}
 </head>
@@ -45,9 +45,9 @@
   <script src="/static/js/bootstrap-table-da-DK.min.js"></script>
   <script src="/static/js/bootstrap.bundle.min.js"></script>
   <!-- Syntax highlighting via highlight.js -->
-  <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+   <script src="/static/js/highlight.min.js"></script>
   <!-- HTMX -->
-  <script src="https://unpkg.com/htmx.org@1.9.4"></script>
+  <script src="/static/js/htmx.min.js"></script>
   {% block javascripts %}{% endblock %}
 </body>
 </html>

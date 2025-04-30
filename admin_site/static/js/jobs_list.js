@@ -1,219 +1,174 @@
-$(function () {
-  var JobList = function (container_elem, template_container_id) {
-    this.elem = $(container_elem)
-    this.searchConditions = {}
-    this.searchUrl = window.bibos_job_search_url || "./search/"
-    this.statusSelectors = []
-    BibOS.addTemplate("job-entry", template_container_id)
-  }
-  $.extend(JobList.prototype, {
-    init: function () {
-      var jobsearch = this
-      $("#jobsearch-status-selectors input:checkbox").on("change", function () {
-        jobsearch.search()
-      })
-      jobsearch.search()
-    },
+let currentPage = 1;
+let defaultFilters = [];
+// State object to track selected filters and sorting order
+const state = {
+    selectedBatch: "", selectedPc: "", selectedGroup: "", orderBy: "",
+};
 
-    appendEntries: function (dataList) {
-      var container = this.elem
-      $.each(dataList.results, function () {
-        var info_button = ""
-        if (this.has_info) {
-          info_button =
-            "<button " +
-            'class="btn jobinfobutton p-0" ' +
-            'data-bs-title="Job-info" ' +
-            'data-bs-toggle="popover" ' +
-            'data-bs-content="Loading..." ' +
-            "data-bs-html=true " +
-            "data-bs-placement=left " +
-            'data-bs-trigger="click" ' +
-            'data-bs-animation="true" ' +
-            'data-pk="' +
-            this.pk +
-            '"' +
-            '><span class="material-symbols-outlined fs-3">info</span></button>'
-        }
-        var script_link =
-          '<a href="' + this.script_url + '">' + this.script_name + "</a>"
-        var pc_link = '<a href="' + this.pc_url + '">' + this.pc_name + "</a>"
-        var user_link =
-          this.user != ""
-            ? '<a href="' + this.user_url + '">' + this.user + "</a>"
-            : gettext("No user")
-        var item = $(
-          BibOS.expandTemplate(
-            "job-entry",
-            $.extend(this, {
-              jobinfobutton: info_button,
-              script_link: script_link,
-              pc_link: pc_link,
-              user_link: user_link,
-            }),
-          ),
-        )
-        item.find("input:checkbox").on("click", function () {
-          $(this).parents("tr").toggleClass("marked")
+// Function to update the job table content based on current filters and page
+const updateJobTable = async (page = 1) => {
+    currentPage = page;
+    try {
+        const data = await fetchJobData(page);
+        renderJobTable(data.results);
+        updatePagination(data);
+    } catch (error) {
+        const errMsg = `Error fetching job data: ${error.message || error}`;
+        console.error(errMsg);
+        alert(errMsg);  // Display error if data fetch fails
+    }
+};
+
+// Fetch job data based on the current page and filter settings
+const fetchJobData = (page) => fetch(`${JOBS_SEARCH_URL}?page=${page}&${getQueryString()}`)
+    .then(response => response.json());
+
+// Render job rows dynamically in the table body
+const renderJobTable = (jobs) => {
+    const tableBody = document.getElementById('jobTableBody');
+    tableBody.innerHTML = jobs.map(createJobRow).join('');  // Create HTML rows for each job
+};
+
+// Create a single job row for the table
+const createJobRow = (job) => `
+    <tr class="align-middle">
+        <td><strong><a href="${job.script_url}">${job.script_name}</a>${job.batch_name ? `<a> (${job.batch_name})</a>` : ""}</strong></td>
+        <td>${job.user ? `<a href="${job.user_url}">${job.user}</a>` : ""}</td>
+        <td>${job.created}</td>
+        <td>${job.started}</td>
+        <td>${job.finished}</td>
+        <td><span class="badge bg-${job.label}">${job.status}</span></td>
+        <td><strong><a href="${job.pc_url}">${job.pc_name}</a></strong></td>
+        <td>
+            <a type="button" onclick="getPopoverHtml(${job.pk})">
+                <span class="material-symbols-outlined fs-3">info</span>
+            </a>
+        </td>
+    </tr>`;
+
+/* TODO: Rewrite the template so the generic copy_button from custom.js is be used instead */
+function joblog_copy() {
+  let btn = document.getElementById("clipboard-button")
+  let log = document.getElementById("job-log").innerText
+
+  navigator.clipboard.writeText(log)
+
+  btn.getElementsByClassName("copy-btn-text-orig")[0].classList.add('d-none')
+  btn.lastElementChild.classList.remove('d-none')
+}
+
+function closeAllPopovers() {
+    document.querySelectorAll(".popover").forEach(pop=>bootstrap.Popover.getInstance(pop).hide())
+}
+
+// Function to handle displaying popover for job details
+function getPopoverHtml(jobPk) {
+    closeAllPopovers()
+    const triggerElement = document.querySelector(`a[onclick="getPopoverHtml(${jobPk})"]`);
+
+    fetch(`${JOBS_BASE_URL}${jobPk}/info/`)  // Fetch popover content
+        .then(response => response.text())
+        .then(data => {
+            const popover = new bootstrap.Popover(triggerElement, {
+                title: gettext("Job info"), content: data, html: true, placement: 'right', trigger: 'manual'
+            });
+
+            popover.show();  // Show the popover
+
+            // Hide popover when clicking outside
+            document.addEventListener('click', function handleClickOutside(e) {
+                const popoverElement = document.querySelector('.popover');
+
+                if (!triggerElement.contains(e.target) && !popoverElement.contains(e.target)) {
+                    popover.hide();
+                    document.removeEventListener('click', handleClickOutside);
+                }
+            });
+            Array.from(document.getElementsByClassName('clipboard-btn')).forEach(btn=>btn.addEventListener('click', joblog_copy))
         })
-        item.appendTo(container)
-      })
-      BibOS.setupJobInfoButtons(container)
-    },
+        .catch(error => {
+            console.error('Error:', error);  // Log error if popover fetch fails
+        });
+}
 
-    replaceEntries: function (dataList) {
-      this.elem.find("tr").remove()
-      this.appendEntries(dataList)
-    },
+// Update pagination controls based on the current page and total pages
+const updatePagination = (data) => {
+    const paginationContainer = document.getElementById("job-pagination");
+    const paginationInfo = document.getElementById("pagination-info");
 
-    selectFilter: function (field, elem, val) {
-      var e = $(elem)
-      e.parents("ul").find("button").removeClass("active")
-      if (e.hasClass("active")) {
-        val = ""
-      } else {
-        e.addClass("active")
-      }
-      $("#jobsearch-filterform input[name=" + field + "]").val(val)
-      this.search()
-    },
+    // Build pagination buttons dynamically
+    paginationContainer.innerHTML = `
+        ${data.has_previous ? `<li class="page-item"><a class="page-link" onclick="updateJobTable(1)"><span class="material-symbols-outlined">first_page</span> ${gettext("First")}</a></li>` : ''}
+        ${data.has_previous ? `<li class="page-item"><a class="page-link" onclick="updateJobTable(${currentPage - 1})"><span class="material-symbols-outlined">navigate_before</span> ${gettext("Previous")}</a></li>` : ''}
+        ${data.page_numbers.map(pageNum => `
+            <li class="page-item ${pageNum === currentPage ? 'selected' : ''}">
+                <a class="page-link" onclick="updateJobTable(${pageNum})">${pageNum}</a>
+            </li>`).join('')}
+        ${data.has_next ? `<li class="page-item"><a class="page-link" onclick="updateJobTable(${currentPage + 1})">${gettext("Next")} <span class="material-symbols-outlined">navigate_next</span></a></li>` : ''}
+        ${data.has_next ? `<li class="page-item"><a class="page-link" onclick="updateJobTable(${data.num_pages})">${gettext("Last")}<span class="material-symbols-outlined ms-1">last_page</span></a></li>` : ''}
+    `;
 
-    selectBatch: function (elem, val) {
-      this.selectFilter("batch", elem, val)
-    },
+    paginationInfo.innerText = calcPaginationRange(data, 20);  // Display page info
+};
 
-    selectPC: function (elem, val) {
-      this.selectFilter("pc", elem, val)
-    },
+// Function to reset all filters (status, batch, computer, group)
+const resetFilters = () => {
+    Object.assign(state, {
+        selectedPc: "", selectedBatch: "", selectedGroup: "", orderBy: ""  // Clear all selected filters
+    });
 
-    selectGroup: function (elem, val) {
-      this.selectFilter("group", elem, val)
-    },
+    // Reset the status checkboxes to default state (checked for first four)
+    for (const filter of defaultFilters) {
+        document.getElementById(filter.id).checked = filter.checked;
+    }
 
-    orderby: function (order) {
-      var input = $("#jobsearch-filterform input[name=orderby]")
-      input.val(BibOS.getOrderBy(input.val(), order))
-      this.search()
-    },
-    setUpPaginationCount: function (data) {
-      $("div#pagination-count").text(calcPaginationRange(data, 20))
-    },
-    setUpPaginationLinks: function (data) {
-      var pagination = $("ul.pagination")
-      pagination.empty()
-      var jobsearch = this
+    // Update UI: deactivate all filter buttons
+    document.querySelectorAll(`#jobsearchnav button`).forEach(btn => btn.classList.remove('active'));
 
-      // Go to Start button (First Page)
-      var start_item = $(
-        '<li class="page-item"><a class="page-link d-flex justify-content-center align-items-center"><span class="material-symbols-outlined">first_page</span>' +
-          gettext("First") +
-          "</a></li>",
-      )
-      start_item.find("a").on("click", function () {
-        var input = $("#jobsearch-filterform input[name=page]")
-        input.val(1) // Set page to 1
-        jobsearch.search()
-      })
-      start_item.appendTo(pagination)
+    updateJobTable(1);  // Refresh the job table
+};
 
-      // Previous button
-      var previous_item = $(
-        '<li class="page-item pagination-btn-muted"><a class="page-link d-flex justify-content-center align-items-center"><span class="material-symbols-outlined">navigate_before</span> ' +
-          gettext("Previous") +
-          "</a></li>",
-      )
-      if (data.has_previous) {
-        previous_item.removeClass("pagination-btn-muted")
-        previous_item.find("a").on("click", function () {
-          var input = $("#jobsearch-filterform input[name=page]")
-          input.val(data.previous_page_number)
-          jobsearch.search()
-        })
-      }
-      previous_item.appendTo(pagination)
+// Function to handle filtering by batch, computer, or group
+const selectFilter = (type, pk, targetDiv) => {
+    const button = document.getElementById(`${type}-${pk}`);
+    const isActive = button.classList.contains("active");  // Check if the filter is active
+    const stateKey = `selected${type.charAt(0).toUpperCase() + type.slice(1)}`;
 
-      // Page numbers
-      data.page_numbers.forEach(function (page) {
-        var item
-        if (data.page == page) {
-          item = $(
-            '<li class="page-item active"><a class="page-link d-flex justify-content-center align-items-center"><strong><u>' +
-              page +
-              "</u></strong></a></li>",
-          )
-        } else {
-          item = $(
-            '<li class="page-item"><a class="page-link d-flex justify-content-center align-items-center">' +
-              page +
-              "</a></li>",
-          )
-        }
-        item.find("a").on("click", function () {
-          var input = $("#jobsearch-filterform input[name=page]")
-          input.val(page)
-          jobsearch.search()
-        })
-        item.appendTo(pagination)
-      })
+    state[stateKey] = isActive ? "" : pk;  // Update state based on selected filter
 
-      // Next button
-      var next_item = $(
-        '<li class="page-item disabled"><a class="page-link d-flex justify-content-center align-items-center">' +
-          gettext("Next") +
-          '&nbsp;<span class="material-symbols-outlined">navigate_next</span></a></li>',
-      )
-      if (data.has_next) {
-        next_item.removeClass("disabled")
-        next_item.find("a").on("click", function () {
-          var input = $("#jobsearch-filterform input[name=page]")
-          input.val(data.next_page_number)
-          jobsearch.search()
-        })
-      }
-      next_item.appendTo(pagination)
+    // Update UI: deactivate all buttons, activate the selected one
+    document.querySelectorAll(`#${targetDiv} button`).forEach(btn => btn.classList.remove('active'));
+    if (!isActive) button.classList.add("active");
 
-      // Go to End button (Last Page)
-      var end_item = $(
-        '<li class="page-item"><a class="page-link d-flex justify-content-center align-items-center"> ' +
-          gettext("Last") +
-          '&nbsp;&nbsp;<span class="material-symbols-outlined">last_page</span></a></li>',
-      )
-      end_item.find("a").on("click", function () {
-        var input = $("#jobsearch-filterform input[name=page]")
-        input.val(data.num_pages) // Set page to the last page
-        jobsearch.search()
-      })
-      end_item.appendTo(pagination)
-    },
-    search: function () {
-      var js = this
-      js.searchConditions = $("#jobsearch-filterform").serialize()
-      $.ajax({
-        type: "GET",
-        url: js.searchUrl,
-        data: js.searchConditions,
-        success: function (data) {
-          js.replaceEntries(data)
-          js.setUpPaginationCount(data)
-          js.setUpPaginationLinks(data)
-        },
-        dataType: "json",
-      })
-    },
+    updateJobTable(1);  // Refresh the job table with the new filter
+};
 
-    reset: function () {
-      $("#jobsearch-filterform")[0].reset()
-      $("#jobsearch-filterform li.selected").removeClass("selected")
-      $("#jobsearch-filterform input[name=batch]").val("")
-      $("#jobsearch-filterform input[name=created]").val("")
-      $("#jobsearch-filterform input[name=pc]").val("")
-      $("#jobsearch-filterform input[name=group]").val("")
-      $("#jobsearch-filterform input[name=page]").val("1")
-      this.search()
-    },
-  })
-  BibOS.JobList = new JobList("#job-list", "#jobitem-template")
-  $(function () {
-    BibOS.JobList.init()
-  })
-})
+// Function to set the sorting field (column) and direction (ascending/descending)
+const orderBy = (query) => {
+    const sortArrow = document.getElementById(`${query}-sort-arrow`);
+    const orderDirection = state.orderBy === query ? `-${query}` : query;  // Toggle sort direction
+
+    state.orderBy = orderDirection;  // Update sorting field in state
+
+    // Reset all sort arrows and update the current one
+    document.querySelectorAll('#job-table-head i').forEach(iTag => {
+        iTag.innerHTML = "unfold_more";  // Reset all arrows
+    });
+    sortArrow.innerHTML = orderDirection.startsWith('-') ? "arrow_downward" : "arrow_upward";  // Set the current arrow
+
+    updateJobTable(1);  // Refresh the job table with the new sort order
+};
+
+// Function to build the query string based on the selected filters (status, batch, pc, group, and orderBy)
+const getQueryString = () => `${Array.from(document.querySelectorAll('input[name="status"]:checked'))
+    .map(cb => `status=${encodeURIComponent(cb.value)}`)  // Encode checked status values
+    .join('&')}&batch=${state.selectedBatch}&pc=${state.selectedPc}&group=${state.selectedGroup}&orderby=${state.orderBy}`;
+
+// Initialize the job table on page load
+addEventListener("DOMContentLoaded", (event) => {
+    defaultFilters = Array.from(document.querySelectorAll('input[name="status"]'))
+        .map(filter => ({
+            id: filter.id, checked: filter.checked
+        }));
+    updateJobTable(currentPage);
+});

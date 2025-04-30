@@ -160,7 +160,7 @@ active
             <li>{% translate "Removing a script from the Group will NOT remove the effect of the script from the Computers in the Group" %}.</li>
             </ul>
           </div>
-          {% include 'system/pcgroups/policy_list/list.html' with entries=selected_group.ordered_policy policy_id='group_policies' %}
+          {% include 'system/pcgroups/policy_list/list.html' with entries=selected_group.ordered_policy %}
         </div>
 
         <div id="configs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="configs-tab">
@@ -169,40 +169,26 @@ active
 
       </div>
 
-      <div class="gray-box mt-0 pt-0" style="border-radius: 0 0 .33rem .33rem;">
-        <button class="btn btn-primary" type="submit">{% translate "Save changes" %}</button>
-        <button class="btn btn-secondary ms-3" type="reset" onclick="window.location.reload();">{% translate "Cancel" %}</button>
-        {# Only show the button to duplicate a group if you're updating an existing entry - not creating a new one #}
-        {% if selected_group.id %}
-          <a class="btn btn-secondary ms-3" href="{% url 'group_duplicate' site.uid selected_group.id %}">{% translate "Duplicate group" %}</a>
-        {% endif %}
-      </div>
+
+        <div class="gray-box bottom-0 pt-0 mt-0" style="border-radius: 0 0 .33rem .33rem; z-index: 5;">
+            <div class="pt-3">
+                <button class="btn btn-primary" type="submit">{% translate "Save changes" %}</button>
+                <button class="btn btn-secondary ms-3" type="reset"
+                        onclick="window.location.reload();">{% translate "Cancel" %}</button>
+                {# Only show the button to duplicate a group if you're updating an existing entry - not creating a new one #}
+                {% if selected_group.id %}
+                    <a class="btn btn-secondary ms-3"
+                       href="{% url 'group_duplicate' site.uid selected_group.id %}">{% translate "Duplicate group" %}</a>
+                {% endif %}
+            </div>
+        </div>
+
 
     </form>
 
-    <script>
-      function totalpcs(){
-        if (document.getElementById("empty-list") == undefined){
-          document.getElementById("totalpcs").innerHTML = document.getElementById("picked-pcs").childElementCount - 1
-        } else {
-          document.getElementById("totalpcs").innerHTML = 0
-        }
-      }
-      function updateScriptPositions(){
-        fields = document.getElementsByClassName("position-field")
-
-        let i = 0
-        for (let item of fields) {
-          item.value = i
-          i++
-        }
-      }
-
-    </script>
     {% else %}
-      <h2 class="divideheader">{% translate "Groups" %}</h2>
       <p>{% translate "No groups were found" %}</p>
-      <p>{% translate "Clik the 'Add new group' button in the menu to the left to create a group" %}</p>
+      <p>{% translate "Click the 'Add new group' button in the menu to the left to create a group" %}</p>
     {% endif %}
     <div id="addNewGroup" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -226,7 +212,7 @@ active
     </div>
 
     {% include 'system/configs/templates.html' %}
-    {% include 'system/pcgroups/policy_list/templates.html' with policy_id='group_policies' %}
+    {% include 'system/pcgroups/policy_list/templates.html' %}
 
   </div>
 {% endblock %}

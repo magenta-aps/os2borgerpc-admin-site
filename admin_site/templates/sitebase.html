@@ -2,21 +2,23 @@
 {% load i18n %}
 
 {% block header %}
-  <header class="d-flex justify-content-between {% block header_class %}{% endblock %}">
+  <header class="d-flex justify-content-center w-100 align-items-center text-nowrap {% block header_class %}{% endblock %}">
 
-    <h1 class="siteheader w-100">{% block header_title %}{% endblock %}</h1>
+    <h1 class="siteheader gap-1 fs-4" >{% block header_title %} {% endblock %}</h1>
+    <section class="header-additional-content w-100 d-flex justify-content-center justify-items-center align-items-center">{% block header_additional_content %}{% endblock %}</section>
 
     {% if user.is_authenticated %}
 
-      <div class="d-flex align-items-center">
-        <span>{% translate "Welcome" %}</span>
+      <div>
+
         <div class="dropdown">
-          <button class="btn btn-primary text-white dropdown-toggle px-1"
+          <button class="btn btn-primary text-white dropdown-toggle px-1 fs-5"
             style="box-shadow: none;"
             type="button"
             id="userActionDropdown"
             data-bs-toggle="dropdown"
             aria-expanded="false">
+              <span class="current-user-icon ms-1 material-symbols-outlined fs-4 ">person</span>
             {{ user }}
           </button>
           <ul class="dropdown-menu" aria-labelledby="userActionDropdown">

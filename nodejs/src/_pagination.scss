@@ -36,6 +36,11 @@
     border-color: #ddd;
 }
 
+.page-item.selected .page-link{
+    font-weight: bolder;
+    text-decoration: underline;
+}
+
   li.page-item.disabled {
     visibility: hidden;
   }

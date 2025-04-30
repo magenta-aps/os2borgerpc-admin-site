@@ -1,15 +1,48 @@
-{# Seemingly used for adding a new policy script via JS, whereas list.html generates the list of already added policy scripts? #}
+{# Used when adding a new policy script via JS, whereas list.html + item.html generates the list of already added policy scripts #}
 
 {% load i18n %}
 
-<div id="policylist-templates">
-  <table class="table">
-    <tbody id="policy-item-template" class="template-container">
-      {% include 'system/pcgroups/policy_list/item.html' with ps_pk='#PS_PK#' script_pk='#SCRIPT_PK#' name='#NAME#' params='#PARAMS#' submit_name='#SUBMIT_NAME#' %}
-    </tbody>
-  </table>
-</div>
+{# It should technically be possible to remove table and tbody as it really just needs to add a new row #}
+<table class="table">
+  <tbody id="policy-item-template" class="template-container">
 
+    <tr>
+      <td class="sortable-handle" style="width: 5%; cursor: pointer;">
+        <span class="material-symbols-outlined disable-select">&#xf101;</span>
+      </td>
+      <input type="hidden" class="position-field" name="group_policies_#PS_PK#_position" value="">
+      <td class="policy-script-print-key" style="width: 35%;">
+        <a href="/site/{{site.uid}}/scripts/#SCRIPT_PK#/">#NAME#</a>
+      </td>
+      <td class="pe-0 js-match" style="width: 40%;">
+        <div data-name="policy-script-#NAME#" data-pk="policy-script-#SCRIPT_PK#">
+          <input class="policy-script-pos" type="hidden" name="group_policies" value="#PS_PK#">
+          <input class="policy-script-name" type="hidden" name="group_policies_#PS_PK#" value="#SCRIPT_PK#">
+          <script>
+            $(function(){
+              BibOS.PolicyList.renderScriptFields('#SCRIPT_PK#', '#PS_PK#')
+            })
+          </script>
+        </div>
+      </td>
+      <td style="min-width: 6.2rem; width: 20%;">
+        <p class="mb-0" style="margin-left: -.5rem;">
+          {# TODO: Find a js way to make the edit button invisible for scripts that don't have parameters #}
+          <a class="mb-1 mt-1 btn btn-sm" onclick="scriptEdit(this, 'None')">
+
+            <span class="material-symbols-outlined">edit</span>{% translate "Edit" %}
+          </a>
+          <a class="btn btn-sm ps-3" href="javascript:void(0)" onclick="removeItem(this, 'group_policies')">
+            <span class="material-symbols-outlined">delete</span>{% translate "Remove" %}
+          </a>
+        </p>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+{# Can this block be removed after some refactoring? #}
 <div id="editpolicyscriptdialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -20,42 +53,8 @@
       <div class="modal-body">
       </div>
       <div class="modal-footer">
-        <button onclick="submitEditDialog('{{ policy_id }}')" class="btn btn-primary">{% translate "Save" %}</button>
+        <button onclick="submitEditDialog('group_policies')" class="btn btn-primary">{% translate "Save" %}</button>
         <button class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="addpolicyscriptdialog" class="modal hide fade" tabindex="-1" role="dialog" aria-label="{% translate "Add script to group" %}" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">{% translate "Add script" %}</h3>
-        <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <ul class="list-group">
-          {% for script in all_scripts %}
-            <li class="list-group-item list-group-item-action"
-              style="cursor: pointer;"
-              onclick="BibOS.PolicyList.addToPolicy('{{ policy_id }}', '{{ script.id }}', '{{ script.name }}', '{{ script.pk }}', [{% for input in script.ordered_inputs %}
-                {
-                  name: '{{ input.name }}',
-                  type: '{{ input.value_type }}',
-                  position: '{{ input.position }}',
-                  required: '{{ input.mandatory }}'
-                },
-              {% endfor %}])">
-              <strong>{{ script.name }}</strong>
-              {% if script.ordered_inputs %}({% endif %}
-                {% for input in script.ordered_inputs %}
-                  <span>{% if forloop.counter0 != 0 %}, {% endif %}{{ input.name }}</span>
-                {% endfor %}
-              {% if script.ordered_inputs %}){% endif %}
-            </li>
-          {% endfor %}
-        </ul>
       </div>
     </div>
   </div>

@@ -1,191 +1,165 @@
 {% extends "site_with_navigation.html" %}
-
 {% load i18n %}
-
 {% block specific_title %}
-{% translate "Jobs" %}
+    {% translate "Jobs" %}
 {% endblock %}
-
 {% block head_javascripts %}
-  <script type="text/javascript">
-    var bibos_job_search_url = "{% url 'jobsearch' site.uid %}"
-  </script>
-  <script type="text/javascript" src="/static/js/jobs_list.js"></script>
+    <script type="text/javascript">
+        const JOBS_BASE_URL = "{% url 'jobs' site.uid %}"
+        const JOBS_SEARCH_URL = "{% url 'jobsearch' site.uid %}"
+    </script>
+    <script type="text/javascript" src="/static/js/jobs_list.js"></script>
 {% endblock %}
-
 {% block subnav %}
-<div id="jobsearchnav" class="sublevelnav">
-
-  <div class="d-flex justify-content-between align-items-center px-3 py-1">
-    <h3 class="nav-header">{% translate "Filters" %}</h3>
-    <button class="btn btn-link" type="button" onclick="BibOS.JobList.reset()">{% translate "Reset filters" %}</button>
-  </div>
-
-  <hr class="mt-0">
-
-  <form id="jobsearch-filterform" name="filterform" action="./" method="post">
-
-    <input type="hidden" name="batch" value="{{ selected_batch }}">
-    <input type="hidden" name="pc" value="{{ selected_pc }}">
-    <input type="hidden" name="group" value="{{ selected_group }}">
-    <input type="hidden" name="orderby" value="-pk">
-    <input type="hidden" name="page" value="1">
-
-    <div id="jobsearch-status-selectors" class="px-3 pt-2">
-      <h3 class="mb-3">{% translate "Status" %}</h3>
-      {% for s in status_choices%}
-        <div class="form-check mb-3">
-          <input class="form-check-input"
-            id="id_{{ s.value }}_chkbx"
-            type="checkbox"
-            value="{{ s.value }}"
-            name="status"
-            {{ s.checked }}>
-          <label for="id_{{ s.value }}_chkbx" class="form-check-label">
-            <span class="badge bg-{{ s.label }}">{{ s.name }}</span>
-          </label>
+    <!-- Filter Section -->
+    <div id="jobsearchnav" class="sublevelnav">
+        <!-- Filters and Reset Button -->
+        <div class="d-flex justify-content-between align-items-center px-3 py-1">
+            <h3 class="nav-header">{% translate "Filters" %}</h3>
+            <button onclick="resetFilters()" class="btn btn-link" type="button">{% translate "Reset filters" %}</button>
         </div>
-      {% endfor %}
+        <hr class="mt-0">
+        <!-- Status Filter Checkboxes -->
+        <div id="jobsearch-status-selectors" class="px-3 pt-2">
+            <h3 class="mb-3">{% translate "Status" %}</h3>
+            {% for s in status_choices %}
+                <div id="status-filters" class="form-check mb-3">
+                    <input onclick="updateJobTable(1)"
+                           class="form-check-input"
+                           id="id_{{ s.value }}_chkbx"
+                           type="checkbox"
+                           value="{{ s.value }}"
+                           name="status"
+                           {{ s.checked }}>
+                    <label for="id_{{ s.value }}_chkbx" class="form-check-label">
+                        <span class="badge bg-{{ s.label }}">{{ s.name }}</span>
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+        <hr class="mb-0">
+        <!-- Collapsible Lists for filtering by Batches, Computers, and Groups -->
+        <div class="list-collapsible">
+            <!-- Batches filter -->
+            <a data-bs-toggle="collapse"
+               href="#batches"
+               role="button"
+               aria-expanded="false"
+               aria-controls="batches">
+                <span class="material-symbols-outlined">folder</span>
+                <span class="collapse-label">{% translate "Batches" %}</span>
+                <span class="material-symbols-outlined collapse-arrow">arrow_drop_down</span>
+            </a>
+            <div id="batches" class="collapse collapse-content">
+                <ul class="item-list">
+                    {% for batch in batches %}
+                        <li>
+                            <button id="batch-{{ batch.pk }}"
+                                    type="button"
+                                    class="btn btn-link item-list-link"
+                                    onclick="selectFilter('batch',{{ batch.pk }},'batches')">{{ batch.name }}</button>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <!-- Computers filter -->
+            <a data-bs-toggle="collapse"
+               href="#computers"
+               role="button"
+               aria-expanded="false"
+               aria-controls="computers">
+                <span class="material-symbols-outlined">folder</span>
+                <span class="collapse-label">{% translate "Computers" %}</span>
+                <span class="material-symbols-outlined collapse-arrow">arrow_drop_down</span>
+            </a>
+            <div id="computers" class="collapse collapse-content">
+                <ul class="item-list">
+                    {% for pc in pcs %}
+                        <li>
+                            <button id="pc-{{ pc.pk }}"
+                                    type="button"
+                                    class="btn btn-link item-list-link"
+                                    onclick="selectFilter('pc',{{ pc.pk }},'computers')">{{ pc.name }}</button>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <!-- Groups filter -->
+            <a data-bs-toggle="collapse"
+               href="#groups"
+               role="button"
+               aria-expanded="false"
+               aria-controls="groups">
+                <span class="material-symbols-outlined">folder</span>
+                <span class="collapse-label">{% translate "Groups" %}</span>
+                <span class="material-symbols-outlined collapse-arrow">arrow_drop_down</span>
+            </a>
+            <div id="groups" class="collapse collapse-content">
+                <ul class="item-list">
+                    {% for group in groups %}
+                        <li>
+                            <button id="group-{{ group.pk }}"
+                                    type="button"
+                                    class="btn btn-link item-list-link"
+                                    onclick="selectFilter('group',{{ group.pk }},'groups')">{{ group.name }}</button>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
-
-    <hr class="mb-0">
-
-    <div class="list-collapsible">
-
-      <a data-bs-toggle="collapse" href="#batches" role="button" aria-expanded="false" aria-controls="batches">
-        <span class="material-symbols-outlined">folder</span>
-        <span class="collapse-label">
-          {% translate "Batches" %}
-        </span>
-        <span class="material-symbols-outlined collapse-arrow">arrow_drop_down</span>
-      </a>
-
-      <div id="batches" class="collapse collapse-content {% if selected_batch %}show{% endif %}">
-        <ul class="item-list">
-          {% for batch in batches %}
-          <li>
-            <button
-              type="button"
-              class="btn btn-link item-list-link {% if batch.pk == selected_batch %}active{% endif %}"
-              onclick="BibOS.JobList.selectBatch(this, '{{ batch.pk }}')">
-              {{ batch.name }}
-            </button>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-
-      <a data-bs-toggle="collapse" href="#computers" role="button" aria-expanded="false" aria-controls="computers">
-        <span class="material-symbols-outlined">folder</span>
-        <span class="collapse-label">
-          {% translate "Computers" %}
-        </span>
-        <span class="material-symbols-outlined collapse-arrow">arrow_drop_down</span>
-      </a>
-
-      <div id="computers" class="collapse collapse-content {% if selected_pc %}show{% endif %}">
-        <ul class="item-list">
-          {% for pc in pcs %}
-            <li>
-              <button
-                type="button"
-                class="btn btn-link item-list-link {% if pc.pk == selected_pc %}active{% endif %}"
-                onclick="BibOS.JobList.selectPC(this, '{{ pc.pk }}')">
-                {{ pc.name }}
-              </button>
-            </li>
-          {% endfor %}
-        </ul>
-      </div>
-
-      <a data-bs-toggle="collapse" href="#groups" role="button" aria-expanded="false" aria-controls="groups">
-        <span class="material-symbols-outlined">folder</span>
-        <span class="collapse-label">
-          {% translate "Groups" %}
-        </span>
-        <span class="material-symbols-outlined collapse-arrow">arrow_drop_down</span>
-      </a>
-
-      <div id="groups" class="collapse collapse-content {% if selected_group %}show{% endif %}">
-        <ul class="item-list">
-          {% for group in groups %}
-            <li>
-              <button
-                type="button"
-                class="btn btn-link item-list-link {% if group.pk == selected_group %}active{% endif %}"
-                onclick="BibOS.JobList.selectGroup(this, '{{ group.pk }}')">
-                {{ group.name }}
-              </button>
-            </li>
-          {% endfor %}
-        </ul>
-      </div>
-
-    </div>
-
-  </form>
-</div>
 {% endblock %}
-
 {% block specific_content %}
-  {# Note: This is the table body, and the table header is below. Please rewrite to HTMX in the future. #}
-  <div class="template-container">
-   <table class="table">
-    <tbody id="jobitem-template">
-      <tr>
-        <td><strong>#SCRIPT_LINK# <span class="batch">#BATCH_NAME#</span></strong></td>
-        <td>#USER_LINK#</td>
-        <td>#CREATED#</td>
-        <td>#STARTED#</td>
-        <td>#FINISHED#</td>
-        <td><span class="badge bg-#LABEL#">#STATUS#</span></td>
-        <td><strong>#PC_LINK#</strong></td>
-
-        <td>#JOBINFOBUTTON#</td>
-      </tr>
-    </tbody>
-   </table>
-  </div>
-
-  <div class="container-fluid main">
-    {% include 'notification.html' %}
-    <div style="overflow-x: scroll">
-      <table class="table jobtable table-extendable">
-        <thead>
-          <tr>
-            {% translate "Script" as script_label %}
-            {% translate "User" as user_label %}
-            {% translate "Created" as create_label %}
-            {% translate "Started" as start_label %}
-            {% translate "Finished" as finish_label %}
-            {% translate "Status" as status_label %}
-            {% translate "Computer" as computer_label %}
-            {% include 'widgets/orderby_th_ajax.html' with label=script_label action="BibOS.JobList.orderby('batch__script__name')" slug='script' %}
-            {% include 'widgets/orderby_th_ajax.html' with label=user_label action="BibOS.JobList.orderby('user__username')" slug='user' %}
-            {% include 'widgets/orderby_th_ajax.html' with label=create_label action="BibOS.JobList.orderby('created')" slug='created' %}
-            {% include 'widgets/orderby_th_ajax.html' with label=start_label action="BibOS.JobList.orderby('started')" slug='started' %}
-            {% include 'widgets/orderby_th_ajax.html' with label=finish_label action="BibOS.JobList.orderby('finished')" slug='finished' %}
-            {% include 'widgets/orderby_th_ajax.html' with label=status_label action="BibOS.JobList.orderby('status')" slug='status' %}
-            {% include 'widgets/orderby_th_ajax.html' with label=computer_label action="BibOS.JobList.orderby('pc__name')" slug='computer' %}
-            <th></th> {# Job-info-button #}
-          </tr>
-        </thead>
-        <tbody id="job-list">
-          <tr class="muted">
-            <td colspan="8">{% translate "Loading data..." %}</td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="9">
-              <nav class="pagination-wrapper" aria-label="Job list page">
-                {% include 'widgets/pagination.html' %}
-              </nav>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
+    <!-- Job List Table -->
+    <div class="container-fluid main">
+        {% include 'notification.html' %}
+        <table class="table jobtable table-extendable">
+            <thead>
+                <tr id="job-table-head">
+                    <!-- Table Headers with Sorting Options -->
+                    <th role="button"
+                        class="text-nowrap active"
+                        onclick="orderBy('batch__script__name')">
+                        {% translate "Script" %}<i id="batch__script__name-sort-arrow" class="material-symbols-outlined mx-1">unfold_more</i>
+                    </th>
+                    <th role="button" class="text-nowrap" onclick="orderBy('user__username')">
+                        {% translate "User" %}<i id="user__username-sort-arrow" class="material-symbols-outlined mx-1">unfold_more</i>
+                    </th>
+                    <th role="button" class="text-nowrap" onclick="orderBy('created')">
+                        {% translate "Created" %}<i id="created-sort-arrow" class="material-symbols-outlined mx-1">unfold_more</i>
+                    </th>
+                    <th role="button" class="text-nowrap" onclick="orderBy('started')">
+                        {% translate "Started" %}<i id="started-sort-arrow" class="material-symbols-outlined mx-1">unfold_more</i>
+                    </th>
+                    <th role="button" class="text-nowrap" onclick="orderBy('finished')">
+                        {% translate "Finished" %}<i id="finished-sort-arrow" class="material-symbols-outlined mx-1">unfold_more</i>
+                    </th>
+                    <th role="button" class="text-nowrap" onclick="orderBy('status')">
+                        {% translate "Status" %}<i id="status-sort-arrow" class="material-symbols-outlined mx-1">unfold_more</i>
+                    </th>
+                    <th role="button" class="text-nowrap" onclick="orderBy('pc__name')">
+                        {% translate "Computer" %}<i id="pc__name-sort-arrow" class="material-symbols-outlined mx-1">unfold_more</i>
+                    </th>
+                    <th class="text-nowrap">Info</th>
+                </tr>
+            </thead>
+            <!-- Job Table Body -->
+            <tbody id="jobTableBody">
+            </tbody>
+            <tfoot>
+                <!-- Pagination -->
+                <tr>
+                    <td colspan="8">
+                        <nav class="pagination-wrapper">
+                            <div id="pagination-info">{% translate "Loading data..." %}</div>
+                            <nav aria-label="navigation">
+                                <ul id="job-pagination" class="pagination justify-content-end">
+                                </ul>
+                            </nav>
+                        </nav>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
     </div>
-  </div>
-
 {% endblock %}

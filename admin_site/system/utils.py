@@ -370,7 +370,7 @@ def cicero_validate(loaner_number, pincode, site, pc=None):
         return 0
     # We now have a valid session key.
     loaner_auth_url = (
-        f"{settings.CICERO_URL}/rest/external/{site.agency_id}/patrons/authenticate/v6"
+        f"{settings.CICERO_URL}/rest/external/{site.agency_id}/patrons/authenticate/v10"
     )
     response = requests.post(
         loaner_auth_url,
@@ -386,7 +386,7 @@ def cicero_validate(loaner_number, pincode, site, pc=None):
             # )
             return 0
         # Loaner has been successfully authenticated.
-        patron_id = result["patron"]["patronId"]
+        patron_id = result["patronId"]
         if pc:  # Logic related to age limits
             # If the age_limit config is missing or invalid, we default to not using
             # age_limit and granting access
@@ -396,7 +396,13 @@ def cicero_validate(loaner_number, pincode, site, pc=None):
                     age_limit = int(age_limit.value)
                 except ValueError:  # If the config has been changed to something NaN
                     return patron_id
-                patron_birthday = result["patron"]["birthday"]
+                # We need a separate request to get the patron details (birthday)
+                patron_url = f"{settings.CICERO_URL}/rest/external/{site.agency_id}/patrons/person/{patron_id}/v4"
+                response = requests.get(patron_url, headers={"X-session": session_key})
+                if response.ok:
+                    patron_birthday = response.json()["birthday"]
+                else:
+                    patron_birthday = None
                 # If the patron has a birthday listed and age_limit is non-zero
                 if patron_birthday and age_limit:
                     now = datetime.now()

@@ -69,7 +69,7 @@ from system.views import (
     UserLink,
     UserRedirect,
     UserRedirectSite,
-    UserUpdate,
+    UserUpdate, SettingsCategories,
 )
 
 
@@ -245,7 +245,10 @@ urlpatterns = [
         name="group_duplicate",
     ),
     path(
-        "site/<slug>/"
+        "site/<slug>/pc_settings",
+        SettingsCategories.as_view(),
+        name="pc_settings"
+
     ),
     # Wake Plans
     path(

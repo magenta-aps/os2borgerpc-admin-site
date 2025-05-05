@@ -84,9 +84,9 @@ detailpage
       <span class="material-symbols-outlined">queue</span> {% translate "Groups" %}
     </a>
 
-      {% set_css_class_active request.resolver_match.url_name "setting_category_list" as current_url_settings_category %}
-    <a class="nav-link link-light {{ current_url_settings_category }}" href="{% url 'setting_category_list' slug=site.url %}">
-      <span class="material-symbols-outlined">queue</span> {% translate "settings category" %}
+      {% set_css_class_active request.resolver_match.url_name "pc_settings" as current_url_settings_category %}
+    <a class="nav-link link-light {{ current_url_settings_category }}" href="{% url 'pc_settings' slug=site.url %}">
+      <span class="material-symbols-outlined">queue</span> {% translate "Settings categories" %}
     </a>
 
     {% set_css_class_active request.resolver_match.url_name "settings" as current_url_site_settings %}

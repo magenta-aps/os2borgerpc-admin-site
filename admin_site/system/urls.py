@@ -244,6 +244,9 @@ urlpatterns = [
         PCGroupDuplicate.as_view(),
         name="group_duplicate",
     ),
+    path(
+        "site/<slug>/"
+    ),
     # Wake Plans
     path(
         "site/<slug>/wake_plans/",

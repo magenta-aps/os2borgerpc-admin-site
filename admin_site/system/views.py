@@ -3678,6 +3678,8 @@ class PCGroupDuplicate(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
             kwargs={"slug": kwargs["slug"], "group_id": new_id},
         )
 
+class SettingsCategories():
+    def
 
 class EventRuleRedirect(RedirectView, SuperAdminOrThisSiteMixin):
     def get_redirect_url(self, **kwargs):

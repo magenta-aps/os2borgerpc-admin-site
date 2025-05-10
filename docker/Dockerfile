@@ -8,7 +8,8 @@ WORKDIR /code/nodejs
 COPY nodejs .
 RUN npm ci \
   && npm run build
-CMD ["/bin/sh", "-c", "npm run watch-sass"]
+CMD npm run watch-sass
+
 
 FROM python:3.9-slim AS os2borgerpc
 

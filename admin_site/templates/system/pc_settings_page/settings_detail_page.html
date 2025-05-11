@@ -1,13 +1,69 @@
-
 {% load i18n %}
 
 {% block settings_detail_page %}
 
-  <div>
-    <h1>Hello</h1>
-  </div>
+
+    <div class="browser-detail-container" id="chrome-container" style="display: none;">
+
+        <div>
+            <h1>Chrome</h1>
+        </div>
+
+        <div class="container-fluid main">
+            <h2>Settings</h2>
+            <div id="chrome">
+                <input type="checkbox" id="chrome-standard-page" name="standard-page" value="standard-page">
+                <label for="standard-page">Start Page</label><br>
+                <input type="checkbox" id="desktop-shortcut" name="desktop-shortcut" value="desktop-shortcut">
+                <label for="desktop-shortcut">Desktop Shortcut</label><br>
+                <input type="checkbox" id="autostart" name="autostart" value="autostart">
+                <label for="autostart">Autostart</label><br>
+                <input type="checkbox" id="autologin" name="autologin" value="autologin">
+                <label for="autologin">Autologin</label><br>
+            </div>
+        </div>
+    </div>
+
+    <div class="browser-detail-container" id="firefox-container" style="display: none;">
+        <div>
+            <h1>firefox</h1>
+        </div>
+        <div class="container-fluid main">
+            <h2>Settings</h2>
+            <div id="firefox">
+                <input type="checkbox" id="firefox-standard-page" name="standard-page" value="standard-page">
+                <label for="standard-page">Start Page</label><br>
+                <input type="checkbox" id="desktop-shortcut" name="desktop-shortcut" value="desktop-shortcut">
+                <label for="desktop-shortcut">Desktop Shortcut</label><br>
+                <input type="checkbox" id="autostart" name="autostart" value="autostart">
+                <label for="autostart">Autostart</label><br>
+                <input type="checkbox" id="autologin" name="autologin" value="autologin">
+                <label for="autologin">Autologin</label><br>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="browser-detail-container" id="safari-container" style="display: none;">
+        <div>
+            <h1>Safari</h1>
+        </div>
+
+        <div class="container-fluid main">
+            <h2>Settings</h2>
+            <div id="safari">
+                <input type="checkbox" id="safari-standard-page" name="standard-page" value="standard-page">
+                <label for="standard-page">Start Page</label><br>
+                <input type="checkbox" id="desktop-shortcut" name="desktop-shortcut" value="desktop-shortcut">
+                <label for="desktop-shortcut">Desktop Shortcut</label><br>
+                <input type="checkbox" id="autostart" name="autostart" value="autostart">
+                <label for="autostart">Autostart</label><br>
+                <input type="checkbox" id="autologin" name="autologin" value="autologin">
+                <label for="autologin">Autologin</label><br>
+            </div>
+        </div>
+
+    </div>
+
+
 {% endblock %}
-
-
-
-

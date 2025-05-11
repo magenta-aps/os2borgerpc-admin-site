@@ -3678,9 +3678,9 @@ class PCGroupDuplicate(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
             kwargs={"slug": kwargs["slug"], "group_id": new_id},
         )
 
+
 class SettingsCategories(SiteView, SiteMixin):
     template_name = "system/pc_settings_page/setting_category_list.html"
-
 
 
 class EventRuleRedirect(RedirectView, SuperAdminOrThisSiteMixin):

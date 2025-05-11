@@ -4,34 +4,83 @@
 {% load i18n %}
 
 {% block specific_title %}
-{% translate "PC Settings" %}
+    {% translate "PC Settings" %}
 {% endblock %}
+
 
 
 {% block subnav %}
-<div class="sublevelnav"> {# TODO: make new css class #}
-    <div class="listutils"> {# TODO: make new css class #}
-        <label class="select-label" {# TODO: make new css class #} for="select-group-or-pc">{% translate "Choose group or pc" %}</label>
-        <select  class="select2-dropdown" name="group-or-pc" id="select-group-or-pc">
-            <option value="Magenta-test">Magenta-test</option>
-            <option value="Magenta">Magenta</option>
-            <option value="Test">Test</option>
-        </select>
-  </div>
-    <ul id="settings-categories-list" class="item-list">
-        <li class="item-list-link">Browser</li>
-        <li class="item-list-link">Programs</li>
-        <li class="item-list-link">System</li>
-        <li class="item-list-link">Display</li>
-    </ul>
-</div>
+    <div class="sublevelnav"> {# TODO: make new css class #}
+        <div class="listutils"> {# TODO: make new css class #}
+            <label class="select-label" {# TODO: make new css class #}
+                   for="select-group-or-pc">{% translate "Choose group or pc" %}</label>
+            <select class="select2-dropdown" name="group-or-pc" id="select-group-or-pc">
+                <option value="Magenta-test">Magenta-test</option>
+                <option value="Magenta">Magenta</option>
+                <option value="Test">Test</option>
+            </select>
+        </div>
+        <ul id="settings-categories-list" class="item-list">
+            <li class="item-list-link">Browser</li>
+            <li class="item-list-link">Programs</li>
+            <li class="item-list-link">System</li>
+            <li class="item-list-link">Display</li>
+        </ul>
+    </div>
 
 
 {% endblock %}
 
- {% block specific_content %}
-     {% include 'system/pc_settings_page/settings_detail_page.html' %}
- {% endblock %}
+{% block specific_content %}
+    <div id="browser-list-container">
+        {% include 'system/pc_settings_page/settings_list.html' %}
+    </div>
+
+
+    <div id="browser-detail-container" style="display: none;">
+        {% include 'system/pc_settings_page/settings_detail_page.html' %}
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            console.log("js is triggered");
+
+            const listContainer = document.getElementById("browser-list-container");
+            const detailContainer = document.getElementById("browser-detail-container");
+            const allDetails = document.querySelectorAll(".browser-detail-container");
+
+            // Use event delegation for dynamically loaded content
+            listContainer.addEventListener("click", function (e) {
+                if (e.target && e.target.matches("a.browser-link")) {
+                    e.preventDefault();
+                    const browser = e.target.dataset.browser;
+                    console.log("browser", browser);
+
+                    // Hide the list
+                    listContainer.style.display = "none";
+                    // Show the detail section wrapper
+                    detailContainer.style.display = "block";
+
+                    // Hide all individual browser detail sections
+                    allDetails.forEach(container => {
+                        container.style.display = "none";
+                    });
+
+                    // Show only the clicked one
+                    const target = document.getElementById(`${browser}-container`);
+                    console.log("target", target);
+                    if (target) {
+                        target.style.display = "block";
+                    } else {
+                        console.log("No matching target found!");
+                    }
+                }
+            });
+        });
+
+    </script>
+{% endblock %}
 
 
 

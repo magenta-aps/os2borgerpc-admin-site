@@ -1,94 +1,102 @@
+{% extends "system/pc_settings_page/setting_category_list.html" %}
+
+
 {% load i18n %}
 
-{% block settings_list %}
-
-    <div>
-        <h1>Browser</h1>
-    </div>
+{% block specific_content %}
+    <div id="browser-list-container">
 
 
+        <div>
+            <h1>Browser</h1>
+        </div>
 
-    <div class="container-fluid main" style="overflow-x: auto;">
-        <table class="table caption-top" data-toggle="table" data-classes="table table-bordered" id="site-status-table">
-            <thead>
-            <tr>
-                <th data-sortable="true">
-                    {% translate 'Name' %}
-                </th>
-                <th data-sortable="true">
-                    {% translate 'Status' %}
-                </th>
-                <th data-sortable="true">
-                    {% translate 'Last Changed At' %}
-                </th>
-                <th data-sortable="true">
-                    {% translate 'Installed' %}
-                </th>
-                <th>
-                    {% translate 'See More' %}
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="click-list--item">
-                <td>
-                    <strong><a href="#" class="browser-link" data-browser="chrome">Chrome</a></strong>
-                </td>
-                <td>
-                    {% translate 'Success' %}
-                </td>
-                <td>
-                    {% translate '10-05-2025 11:06' %}
-                </td>
-                <td>
-                    {% translate 'Yes' %}
-                </td>
-                <td>
-                    <button>
+
+        <div class="container-fluid main" style="overflow-x: auto;">
+            <table class="table caption-top" data-toggle="table" data-classes="table table-bordered"
+                   id="site-status-table">
+                <thead>
+                <tr>
+                    <th data-sortable="true">
+                        {% translate 'Name' %}
+                    </th>
+                    <th data-sortable="true">
+                        {% translate 'Status' %}
+                    </th>
+                    <th data-sortable="true">
+                        {% translate 'Last Changed At' %}
+                    </th>
+                    <th data-sortable="true">
+                        {% translate 'Installed' %}
+                    </th>
+                    <th>
                         {% translate 'See More' %}
-                    </button>
-                </td>
-            </tr>
-            <tr class="click-list--item">
-                <td>
-                    <strong><a href="#" class="browser-link" data-browser="firefox">Firefox</a></strong>
-                </td>
-                <td>
-                    {% translate '--' %}
-                </td>
-                <td>
-                    {% translate 'Never' %}
-                </td>
-                <td>
-                    {% translate 'No' %}
-                </td>
-                <td>
-                    <button>
-                        {% translate 'See More' %}
-                    </button>
-                </td>
-            </tr>
-            <tr class="click-list--item">
-                <td>
-                    <strong><a href="#" class="browser-link" data-browser="safari">Safari</a></strong>
-                </td>
-                <td>
-                    {% translate '--' %}
-                </td>
-                <td>
-                    {% translate 'Never' %}
-                </td>
-                <td>
-                    {% translate 'No' %}
-                </td>
-                <td>
-                    <button>
-                        {% translate 'See More' %}
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="click-list--item">
+                    <td>
+                        <strong><a href="{% url "pc_setting_sub_category" "magenta" "browser" "chrome" %}"
+                                   class="browser-link" data-browser="chrome">Chrome</a></strong>
+                    </td>
+                    <td>
+                        {% translate 'Success' %}
+                    </td>
+                    <td>
+                        {% translate '10-05-2025 11:06' %}
+                    </td>
+                    <td>
+                        {% translate 'Yes' %}
+                    </td>
+                    <td>
+                        <button>
+                            {% translate 'See More' %}
+                        </button>
+                    </td>
+                </tr>
+                <tr class="click-list--item">
+                    <td>
+                        <strong><a href="#" class="browser-link" data-browser="firefox">Firefox</a></strong>
+                    </td>
+                    <td>
+                        {% translate '--' %}
+                    </td>
+                    <td>
+                        {% translate 'Never' %}
+                    </td>
+                    <td>
+                        {% translate 'No' %}
+                    </td>
+                    <td>
+                        <button>
+                            {% translate 'See More' %}
+                        </button>
+                    </td>
+                </tr>
+                <tr class="click-list--item">
+                    <td>
+                        <strong><a href="#" class="browser-link" data-browser="safari">Safari</a></strong>
+                    </td>
+                    <td>
+                        {% translate '--' %}
+                    </td>
+                    <td>
+                        {% translate 'Never' %}
+                    </td>
+                    <td>
+                        {% translate 'No' %}
+                    </td>
+                    <td>
+                        <button>
+                            {% translate 'See More' %}
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
 
     </div>
 

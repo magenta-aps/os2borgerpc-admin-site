@@ -1,9 +1,11 @@
+{% extends "system/pc_settings_page/setting_category_list.html" %}
+
 {% load i18n %}
 
-{% block settings_detail_page %}
+{% block specific_content %}
 
 
-    <div class="browser-detail-container" id="chrome-container" style="display: none;">
+    <div class="browser-detail-container" id="chrome-container">
 
         <div>
             <h1>Chrome</h1>
@@ -13,7 +15,7 @@
             <h2>Settings</h2>
             <div id="chrome">
                 <input type="checkbox" id="chrome-standard-page" name="standard-page" value="standard-page">
-                <label for="standard-page">Start Page</label><br>
+                <label for="chrome-standard-page">Start Page</label><br>
                 <input type="checkbox" id="desktop-shortcut" name="desktop-shortcut" value="desktop-shortcut">
                 <label for="desktop-shortcut">Desktop Shortcut</label><br>
                 <input type="checkbox" id="autostart" name="autostart" value="autostart">
@@ -32,7 +34,7 @@
             <h2>Settings</h2>
             <div id="firefox">
                 <input type="checkbox" id="firefox-standard-page" name="standard-page" value="standard-page">
-                <label for="standard-page">Start Page</label><br>
+                <label for="firefox-standard-page">Start Page</label><br>
                 <input type="checkbox" id="desktop-shortcut" name="desktop-shortcut" value="desktop-shortcut">
                 <label for="desktop-shortcut">Desktop Shortcut</label><br>
                 <input type="checkbox" id="autostart" name="autostart" value="autostart">
@@ -53,7 +55,7 @@
             <h2>Settings</h2>
             <div id="safari">
                 <input type="checkbox" id="safari-standard-page" name="standard-page" value="standard-page">
-                <label for="standard-page">Start Page</label><br>
+                <label for="safari-standard-page">Start Page</label><br>
                 <input type="checkbox" id="desktop-shortcut" name="desktop-shortcut" value="desktop-shortcut">
                 <label for="desktop-shortcut">Desktop Shortcut</label><br>
                 <input type="checkbox" id="autostart" name="autostart" value="autostart">

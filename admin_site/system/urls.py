@@ -70,7 +70,7 @@ from system.views import (
     UserRedirect,
     UserRedirectSite,
     UserUpdate,
-    SettingsCategories,
+    SettingsCategoriesRedirect, SettingsCategories, SettingsCategoriesSpecific,
 )
 
 
@@ -245,7 +245,10 @@ urlpatterns = [
         PCGroupDuplicate.as_view(),
         name="group_duplicate",
     ),
-    path("site/<slug>/pc_settings", SettingsCategories.as_view(), name="pc_settings"),
+    path("site/<slug>/pc_settings", SettingsCategoriesRedirect.as_view(), name="pc_setting"),
+    path("site/<slug>/pc_settings/<str:category>", SettingsCategories.as_view(), name="pc_setting_category"),
+    path("site/<slug>/pc_settings/<str:category>/<str:sub_category>", SettingsCategoriesSpecific.as_view(), name="pc_setting_sub_category"),
+
     # Wake Plans
     path(
         "site/<slug>/wake_plans/",

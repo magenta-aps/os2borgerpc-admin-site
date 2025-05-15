@@ -24,7 +24,7 @@ class GlobalAuth(HttpBearer):
 # Initialize, and require regular API key authentication to all endpoints except the docs endpoint, make docs endpoint
 # use regular django user authentication
 api = NinjaAPI(
-    auth=GlobalAuth(), docs_decorator=user_passes_test(lambda u: u.is_authenticated)
+    auth=GlobalAuth(), docs_decorator=user_passes_test(lambda u: u.is_authenticated), urls_namespace="user-api"
 )
 
 api.add_router("/system/", system_router)

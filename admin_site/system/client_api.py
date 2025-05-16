@@ -31,8 +31,7 @@ def push_security_events_route(request, data: PushSecurityEventsSchema):
 
 @router.post("/citizen_login")
 def citizen_login_route(request, data: CitizenLoginSchema):
-    time, citizen = citizen_login(**data.dict())
-    return {"time": time, "citizen": citizen}
+    return citizen_login(**data.dict())
 
 @router.post("/citizen_logout")
 def citizen_logout_route(request, data: CitizenLogoutSchema):
@@ -40,8 +39,7 @@ def citizen_logout_route(request, data: CitizenLogoutSchema):
 
 @router.post("/general_citizen_login")
 def general_citizen_login_route(request, data: GeneralCitizenLoginSchema):
-    time_allowed, citizen_hash, log_id = general_citizen_login(**data.dict())
-    return {"time_allowed": time_allowed, "citizen_hash": citizen_hash, "log_id": log_id}
+    return general_citizen_login(**data.dict())
 
 @router.post("/general_citizen_logout")
 def general_citizen_logout_route(request, data: GeneralCitizenLogoutSchema):
@@ -49,8 +47,7 @@ def general_citizen_logout_route(request, data: GeneralCitizenLogoutSchema):
 
 @router.post("/sms_login")
 def sms_login_route(request, data: SmsLoginSchema):
-    time_allowed, citizen_hash = sms_login(**data.dict())
-    return {"time_allowed": time_allowed, "citizen_hash": citizen_hash}
+    return sms_login(**data.dict())
 
 @router.post("/sms_login_finalize")
 def sms_login_finalize_route(request, data: SmsLoginFinalizeSchema):

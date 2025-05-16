@@ -902,7 +902,7 @@ def citizen_login(username, password, pc_uid, prevent_dual_login=False):
     if prevent_dual_login:
         return int(time_allowed), citizen_hash
     else:
-        return int(time_allowed)
+        return int(time_allowed),
 
 
 def citizen_logout(citizen_hash):

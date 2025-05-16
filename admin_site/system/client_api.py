@@ -18,7 +18,7 @@ def send_status_info_route(request, data: SendStatusInfoSchema):
     return send_status_info_v2(**data.dict())
 
 @router.post("/get_instructions")
-def get_instructions_route(request, data: SetInstructionsSchema):
+def get_instructions_route(request, data: GetInstructionsSchema):
     return get_instructions(**data.dict())
 
 @router.post("/push_config_keys")

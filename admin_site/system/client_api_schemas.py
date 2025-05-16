@@ -11,7 +11,7 @@ class SendStatusInfoSchema(Schema):
     pc_uid: str
     job_data: dict
 
-class SetInstructionsSchema(Schema):
+class GetInstructionsSchema(Schema):
     pc_uid: str
 
 class PushConfigKeysSchema(Schema):

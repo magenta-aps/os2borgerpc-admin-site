@@ -10,9 +10,8 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.core.validators import MinValueValidator, RegexValidator
-
-from system.mixins import AuditModelMixin
 from system.managers import SecurityEventQuerySet
+from system.mixins.models_mixins import AuditModelMixin
 
 """The following variables define states of objects like jobs or PCs. It is
 used for labeling in the GUI."""

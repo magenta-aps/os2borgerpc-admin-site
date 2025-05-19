@@ -1495,3 +1495,38 @@ class APIKey(models.Model):
 
     def __str__(self):
         return self.key
+
+
+class SettingsCategory(models.Model):
+    """A simple 'top level' category for the PC configurations page"""
+
+    title = models.CharField(max_length=20)
+
+
+class SubSettingsCategory(models.Model):
+    """Behaves almost like SettingsCategory, but one layer deeper for more nuance"""
+
+    title = models.CharField(max_length=20)
+    category = models.ForeignKey(
+        SettingsCategory, on_delete=models.SET_NULL, blank=True, null=True
+    )
+
+
+class ConfigSetting(models.Model):
+    """The actual, single configurations to be displayed under each SubSettingsCategory.
+    Upon change, an AssociatedScript will be either created, deleted or updated.
+    In many ways this is simply a bridge between AssociatedScript and the frontend.
+    The correct group for the AssociatedScript is inferred from the context upon changes to the ConfigSettings.
+    At the moment there's a redundancy regarding the 'position' field, but it makes sense to have there,
+    since this is the model that will actually be 'displayed' on the frontend.
+    """
+
+    title = models.CharField(max_length=50)
+    position = models.IntegerField()
+    depends_on = models.ForeignKey(
+        "self", on_delete=models.SET_NULL, blank=True, null=True
+    )
+    script = models.ForeignKey(Script, on_delete=models.CASCADE)
+    active_script = models.ForeignKey(
+        AssociatedScript, on_delete=models.SET_NULL, blank=True, null=True
+    )

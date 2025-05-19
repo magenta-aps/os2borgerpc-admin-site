@@ -4,75 +4,19 @@ from django.templatetags.static import static
 
 from django.views.i18n import JavaScriptCatalog
 
-from system.views import (
-    AdminIndex,
-    APIKeyCreate,
-    APIKeyDelete,
-    APIKeyUpdate,
-    ConfigurationEntryCreate,
-    ConfigurationEntryUpdate,
-    ImageVersionRedirect,
-    ImageVersionRedirectSite,
-    ImageVersionView,
-    JobInfo,
-    JobRestarter,
-    JobSearch,
-    JobsView,
-    PCGroupCreate,
-    PCGroupDelete,
-    PCGroupDuplicate,
-    PCGroupRedirect,
-    PCGroupUpdate,
-    PCsOverview,
-    PCUpdateRedirect,
-    PCUpdate,
-    PCDelete,
-    WakePlanCreate,
-    WakePlanDuplicate,
-    WakePlanDelete,
-    WakePlanRedirect,
-    WakePlanUpdate,
-    WakeChangeEventCreate,
-    WakeChangeEventDelete,
-    WakeChangeEventRedirect,
-    WakeChangeEventUpdate,
-    ScriptCreate,
-    ScriptDelete,
-    ScriptRedirect,
-    ScriptRun,
-    ScriptUpdate,
-    GlobalScriptRedirect,
-    SecurityEventSearch,
-    SecurityEventsUpdate,
-    SecurityEventsView,
-    SecurityProblemCreate,
-    SecurityProblemDelete,
-    SecurityProblemUpdate,
-    EventRuleRedirect,
-    EventRuleServerCreate,
-    EventRuleServerDelete,
-    EventRuleServerUpdate,
-    SiteDashboardJobListUpdate,
-    SiteDashboardView,
-    SiteList,
-    SiteCreate,
-    SiteUIDAvailableCheck,
-    SiteDelete,
-    SiteSettings,
-    TwoFactor,
-    AdminTwoFactorSetup,
-    AdminTwoFactorSetupComplete,
-    AdminTwoFactorDisable,
-    AdminTwoFactorBackupTokens,
-    UserCreate,
-    UserDelete,
-    UserLink,
-    UserRedirect,
-    UserRedirectSite,
-    UserUpdate,
-    SettingsCategoriesRedirect, SettingsCategories, SettingsCategoriesSpecific,
-)
-
+from system.views import SecurityEventsUpdate, SecurityEventSearch, SecurityEventsView, EventRuleRedirect, \
+    SecurityProblemCreate, SecurityProblemDelete, SecurityProblemUpdate, EventRuleServerCreate, EventRuleServerDelete, \
+    EventRuleServerUpdate, ScriptDelete, ScriptUpdate, ScriptCreate, ScriptRedirect, TwoFactor, AdminTwoFactorSetup, \
+    AdminTwoFactorSetupComplete, AdminTwoFactorDisable, AdminTwoFactorBackupTokens, AdminIndex, SiteList, SiteCreate, \
+    SiteDelete, SiteDashboardView, SiteSettings, ConfigurationEntryCreate, ConfigurationEntryUpdate, PCsOverview, \
+    PCUpdateRedirect, PCUpdate, PCGroupRedirect, PCDelete, PCGroupCreate, PCGroupUpdate, PCGroupDelete, \
+    PCGroupDuplicate, WakePlanRedirect, WakePlanCreate, WakePlanUpdate, WakePlanDelete, WakePlanDuplicate, \
+    WakeChangeEventRedirect, WakeChangeEventCreate, WakeChangeEventUpdate, WakeChangeEventDelete, JobSearch, \
+    JobRestarter, JobInfo, JobsView, ScriptRun, GlobalScriptRedirect, UserRedirect, UserRedirectSite, UserCreate, \
+    UserLink, UserUpdate, UserDelete, ImageVersionRedirect, ImageVersionRedirectSite, ImageVersionView, APIKeyUpdate, \
+    APIKeyCreate, APIKeyDelete, SiteDashboardJobListUpdate, SiteUIDAvailableCheck
+from system.views_dir.pc_group_management_view import SettingsCategoriesRedirect, SettingsCategories, \
+    SettingsCategoriesSpecific
 
 urlpatterns = [
     # TODO: Switch to using the django javascript translation system
@@ -154,7 +98,11 @@ urlpatterns = [
         name="security_scripts",
     ),
     # Two-factor for OS2borgerPC machines
-    path("site/<slug>/two-factor/", TwoFactor.as_view(), name="two_factor"),
+    path(
+        "site/<slug>/two-factor/",
+        TwoFactor.as_view(),
+        name="two_factor"
+    ),
     # Two-factor for admin-site
     path(
         "site/<slug>/admin-two-factor/<username>/setup/",
@@ -409,7 +357,7 @@ settings_configurations = [
 ]
 
 # Define HTMX URL Patterns here, and add them to the urlpatterns list
-# Basically these are views that only return partial HTML fragments rather than entire pages
+# Basically these are views_dir that only return partial HTML fragments rather than entire pages
 htmx_urlpatterns = [
     path(
         "site/<slug>/api-keys/new/",
@@ -440,5 +388,7 @@ htmx_urlpatterns = [
 
 urlpatterns += htmx_urlpatterns
 urlpatterns += settings_configurations
+
+
 
 

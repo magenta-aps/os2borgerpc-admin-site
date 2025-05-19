@@ -372,7 +372,7 @@ class EventRuleServerForm(forms.ModelForm):
         }
 
 
-# Used on the Create and Update views
+# Used on the Create and Update views_dir
 class WakePlanForm(forms.ModelForm):
     # Picklist related
     groups = forms.ModelMultipleChoiceField(

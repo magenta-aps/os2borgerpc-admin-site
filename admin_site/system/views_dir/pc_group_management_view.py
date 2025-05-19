@@ -3,7 +3,7 @@
 from django.urls import reverse
 
 from django.views.generic import RedirectView
-from system.views.utils.helper_views import SiteView
+from system.views_dir.utils.helper_views import SiteView
 from system.mixins.views_mixins import SiteMixin
 
 

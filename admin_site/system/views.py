@@ -93,10 +93,10 @@ from system.forms import (
     WakeChangeEventForm,
     WakePlanForm,
 )
-from system.views.utils.helper_views import SiteView
+from system.views_dir.utils.helper_views import SiteView
 from system.mixins.views_mixins import LoginRequiredMixin, SuperAdminOrThisSiteMixin, SiteMixin, JSONResponseMixin, \
     SelectionMixin
-from system.views.utils.helper_functions import site_pcs_stats, otp_check, run_wake_plan_script
+from system.views_dir.utils.helper_functions import site_pcs_stats, otp_check, run_wake_plan_script
 
 
 class SiteUIDAvailableCheck(LoginRequiredMixin):
@@ -730,7 +730,7 @@ class AdminTwoFactorBackupTokens(otp_views.BackupTokensView, SuperAdminOrThisSit
         return redirect(success_url)
 
 
-# Now follows all site-based views, i.e. subclasses of SiteView.
+# Now follows all site-based views_dir, i.e. subclasses of SiteView.
 class JobsView(SiteView):
     template_name = "system/jobs/site_jobs.html"
 

@@ -16,7 +16,7 @@ from system.models import (
 
 
 
-# Mixin class for CRUD views that use site_uid in URL
+# Mixin class for CRUD views_dir that use site_uid in URL
 # The "site_uid" slug is configurable, but please avoid clashes
 class SiteMixin(View):
     """Mixin class to extract site UID from URL"""
@@ -34,7 +34,7 @@ class SiteMixin(View):
 
 # Mixin class to require login
 class LoginRequiredMixin(View):
-    """Subclass in all views where login is required."""
+    """Subclass in all views_dir where login is required."""
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

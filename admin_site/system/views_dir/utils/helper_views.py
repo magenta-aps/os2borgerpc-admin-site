@@ -6,9 +6,9 @@ from system.models import (
 from system.mixins.views_mixins import SuperAdminOrThisSiteMixin
 
 
-# Base class for Site-based passive (non-form) views
+# Base class for Site-based passive (non-form) views_dir
 class SiteView(DetailView, SuperAdminOrThisSiteMixin):
-    """Base class for all views based on a single site."""
+    """Base class for all views_dir based on a single site."""
 
     model = Site
     slug_field = "uid"

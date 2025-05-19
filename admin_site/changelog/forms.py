@@ -1,4 +1,4 @@
-# TODO: This might actually be deleteable, because views doesn't use it it seems?!
+# TODO: This might actually be deleteable, because views_dir doesn't use it it seems?!
 from django import forms
 
 from changelog.models import (

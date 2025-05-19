@@ -31,6 +31,11 @@
                     <li class="item-list-link">{% translate "No categories available" %}</li>
                 {% endfor %}
             </ul>
+         <form method="post" url>
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit">Create</button>
+        </form>
     </div>
 
 

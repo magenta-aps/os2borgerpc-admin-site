@@ -730,7 +730,7 @@ class AdminTwoFactorBackupTokens(otp_views.BackupTokensView, SuperAdminOrThisSit
         return redirect(success_url)
 
 
-# Now follows all site-based views_dir, i.e. subclasses of SiteView.
+# Now follows all site-based views, i.e. subclasses of SiteView.
 class JobsView(SiteView):
     template_name = "system/jobs/site_jobs.html"
 

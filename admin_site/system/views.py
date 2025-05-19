@@ -94,9 +94,18 @@ from system.forms import (
     WakePlanForm,
 )
 from system.views_dir.utils.helper_views import SiteView
-from system.mixins.views_mixins import LoginRequiredMixin, SuperAdminOrThisSiteMixin, SiteMixin, JSONResponseMixin, \
-    SelectionMixin
-from system.views_dir.utils.helper_functions import site_pcs_stats, otp_check, run_wake_plan_script
+from system.mixins.views_mixins import (
+    LoginRequiredMixin,
+    SuperAdminOrThisSiteMixin,
+    SiteMixin,
+    JSONResponseMixin,
+    SelectionMixin,
+)
+from system.views_dir.utils.helper_functions import (
+    site_pcs_stats,
+    otp_check,
+    run_wake_plan_script,
+)
 
 
 class SiteUIDAvailableCheck(LoginRequiredMixin):
@@ -345,7 +354,6 @@ class SiteDelete(DeleteView, SuperAdminOrThisSiteMixin):
         set_notification_cookie(response, _("Site %s deleted") % site_name)
 
         return response
-
 
 
 class SiteDashboardView(SiteView):
@@ -3481,7 +3489,6 @@ class PCGroupDuplicate(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
             "group",
             kwargs={"slug": kwargs["slug"], "group_id": new_id},
         )
-
 
 
 class EventRuleRedirect(RedirectView, SuperAdminOrThisSiteMixin):

@@ -4,19 +4,80 @@ from django.templatetags.static import static
 
 from django.views.i18n import JavaScriptCatalog
 
-from system.views import SecurityEventsUpdate, SecurityEventSearch, SecurityEventsView, EventRuleRedirect, \
-    SecurityProblemCreate, SecurityProblemDelete, SecurityProblemUpdate, EventRuleServerCreate, EventRuleServerDelete, \
-    EventRuleServerUpdate, ScriptDelete, ScriptUpdate, ScriptCreate, ScriptRedirect, TwoFactor, AdminTwoFactorSetup, \
-    AdminTwoFactorSetupComplete, AdminTwoFactorDisable, AdminTwoFactorBackupTokens, AdminIndex, SiteList, SiteCreate, \
-    SiteDelete, SiteDashboardView, SiteSettings, ConfigurationEntryCreate, ConfigurationEntryUpdate, PCsOverview, \
-    PCUpdateRedirect, PCUpdate, PCGroupRedirect, PCDelete, PCGroupCreate, PCGroupUpdate, PCGroupDelete, \
-    PCGroupDuplicate, WakePlanRedirect, WakePlanCreate, WakePlanUpdate, WakePlanDelete, WakePlanDuplicate, \
-    WakeChangeEventRedirect, WakeChangeEventCreate, WakeChangeEventUpdate, WakeChangeEventDelete, JobSearch, \
-    JobRestarter, JobInfo, JobsView, ScriptRun, GlobalScriptRedirect, UserRedirect, UserRedirectSite, UserCreate, \
-    UserLink, UserUpdate, UserDelete, ImageVersionRedirect, ImageVersionRedirectSite, ImageVersionView, APIKeyUpdate, \
-    APIKeyCreate, APIKeyDelete, SiteDashboardJobListUpdate, SiteUIDAvailableCheck
-from system.views_dir.pc_group_management_view import SettingsCategoriesRedirect, SettingsCategories, \
-    SettingsCategoriesSpecific
+from system.views import (
+    SecurityEventsUpdate,
+    SecurityEventSearch,
+    SecurityEventsView,
+    EventRuleRedirect,
+    SecurityProblemCreate,
+    SecurityProblemDelete,
+    SecurityProblemUpdate,
+    EventRuleServerCreate,
+    EventRuleServerDelete,
+    EventRuleServerUpdate,
+    ScriptDelete,
+    ScriptUpdate,
+    ScriptCreate,
+    ScriptRedirect,
+    TwoFactor,
+    AdminTwoFactorSetup,
+    AdminTwoFactorSetupComplete,
+    AdminTwoFactorDisable,
+    AdminTwoFactorBackupTokens,
+    AdminIndex,
+    SiteList,
+    SiteCreate,
+    SiteDelete,
+    SiteDashboardView,
+    SiteSettings,
+    ConfigurationEntryCreate,
+    ConfigurationEntryUpdate,
+    PCsOverview,
+    PCUpdateRedirect,
+    PCUpdate,
+    PCGroupRedirect,
+    PCDelete,
+    PCGroupCreate,
+    PCGroupUpdate,
+    PCGroupDelete,
+    PCGroupDuplicate,
+    WakePlanRedirect,
+    WakePlanCreate,
+    WakePlanUpdate,
+    WakePlanDelete,
+    WakePlanDuplicate,
+    WakeChangeEventRedirect,
+    WakeChangeEventCreate,
+    WakeChangeEventUpdate,
+    WakeChangeEventDelete,
+    JobSearch,
+    JobRestarter,
+    JobInfo,
+    JobsView,
+    ScriptRun,
+    GlobalScriptRedirect,
+    UserRedirect,
+    UserRedirectSite,
+    UserCreate,
+    UserLink,
+    UserUpdate,
+    UserDelete,
+    ImageVersionRedirect,
+    ImageVersionRedirectSite,
+    ImageVersionView,
+    APIKeyUpdate,
+    APIKeyCreate,
+    APIKeyDelete,
+    SiteDashboardJobListUpdate,
+    SiteUIDAvailableCheck,
+)
+from system.views_dir.pc_group_management_view import (
+    SettingsCategoriesRedirect,
+    SettingsCategories,
+    SettingsCategoriesSpecific,
+    SettingsCategoryCreate,
+    SubSettingsCategoryCreate,
+)
 
 urlpatterns = [
     # TODO: Switch to using the django javascript translation system
@@ -189,7 +250,6 @@ urlpatterns = [
         PCGroupDuplicate.as_view(),
         name="group_duplicate",
     ),
-
     # Wake Plans
     path(
         "site/<slug>/wake_plans/",
@@ -338,17 +398,27 @@ settings_configurations = [
     path(
         "site/<slug>/pc_settings",
         SettingsCategoriesRedirect.as_view(),
-        name="pc_setting"
+        name="pc_setting",
     ),
     path(
         "site/<slug>/pc_settings/<str:category>",
         SettingsCategories.as_view(),
-        name="pc_setting_category"
+        name="pc_setting_category",
+    ),
+    path(
+        "site/<slug>/pc_settings/category/create/<str:category>",
+        SettingsCategoryCreate.as_view(),
+        name="pc_setting_category_create",
+    ),
+    path(
+        "site/<slug>/pc_settings/<str:category>/sub_category/create/",
+        SubSettingsCategoryCreate.as_view(),
+        name="pc_sub_setting_category_create",
     ),
     path(
         "site/<slug>/pc_settings/<str:category>/<str:sub_category>",
         SettingsCategoriesSpecific.as_view(),
-        name="pc_setting_sub_category"
+        name="pc_setting_sub_category",
     ),
 ]
 
@@ -384,5 +454,3 @@ htmx_urlpatterns = [
 
 urlpatterns += htmx_urlpatterns
 urlpatterns += settings_configurations
-
-

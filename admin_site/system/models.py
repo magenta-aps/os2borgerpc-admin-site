@@ -1499,16 +1499,20 @@ class APIKey(models.Model):
 class SettingsCategory(models.Model):
     """A simple 'top level' category for the PC configurations page"""
 
-    title = models.CharField(max_length=20)
+    title = models.CharField(max_length=20, unique=True)
+
+    def __str__(self):
+        return self.title
 
 
 class SubSettingsCategory(models.Model):
     """Behaves almost like SettingsCategory, but one layer deeper for more nuance"""
 
-    title = models.CharField(max_length=20)
-    category = models.ForeignKey(
-        SettingsCategory, on_delete=models.SET_NULL, blank=True, null=True
-    )
+    title = models.CharField(max_length=20, unique=True)
+    category = models.ForeignKey(SettingsCategory, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.title
 
 
 class ConfigSetting(models.Model):
@@ -1520,7 +1524,7 @@ class ConfigSetting(models.Model):
     since this is the model that will actually be 'displayed' on the frontend.
     """
 
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=50, unique=True)
     position = models.IntegerField()
     depends_on = models.ForeignKey(
         "self", on_delete=models.SET_NULL, blank=True, null=True
@@ -1529,3 +1533,6 @@ class ConfigSetting(models.Model):
     active_script = models.ForeignKey(
         AssociatedScript, on_delete=models.SET_NULL, blank=True, null=True
     )
+
+    def __str__(self):
+        return self.title

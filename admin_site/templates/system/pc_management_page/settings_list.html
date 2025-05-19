@@ -5,11 +5,13 @@
 
 {% block specific_content %}
     <div id="browser-list-container">
-        <form method="post" url>
-          {% csrf_token %}
-          {{ form.as_p }}
-          <button type="submit">Create</button>
-        </form>
+        {%  if sub_category_form %}
+            <form method="post" action="{% url 'pc_sub_setting_category_create' site.uid current_category %}">
+              {% csrf_token %}
+              {{ sub_category_form.as_p }}
+              <button type="submit">Create</button>
+            </form>
+        {% endif %}
 
 
         <div>
@@ -40,64 +42,72 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="click-list--item">
-                    <td>
-                        <strong><a href="{% url "pc_setting_sub_category" "magenta" "browser" "chrome" %}"
-                                   class="browser-link" data-browser="chrome">Chrome</a></strong>
-                    </td>
-                    <td>
-                        {% translate 'Success' %}
-                    </td>
-                    <td>
-                        {% translate '10-05-2025 11:06' %}
-                    </td>
-                    <td>
-                        {% translate 'Yes' %}
-                    </td>
-                    <td>
-                        <button>
-                            {% translate 'See More' %}
-                        </button>
-                    </td>
-                </tr>
-                <tr class="click-list--item">
-                    <td>
-                        <strong><a href="#" class="browser-link" data-browser="firefox">Firefox</a></strong>
-                    </td>
-                    <td>
-                        {% translate '--' %}
-                    </td>
-                    <td>
-                        {% translate 'Never' %}
-                    </td>
-                    <td>
-                        {% translate 'No' %}
-                    </td>
-                    <td>
-                        <button>
-                            {% translate 'See More' %}
-                        </button>
-                    </td>
-                </tr>
-                <tr class="click-list--item">
-                    <td>
-                        <strong><a href="#" class="browser-link" data-browser="safari">Safari</a></strong>
-                    </td>
-                    <td>
-                        {% translate '--' %}
-                    </td>
-                    <td>
-                        {% translate 'Never' %}
-                    </td>
-                    <td>
-                        {% translate 'No' %}
-                    </td>
-                    <td>
-                        <button>
-                            {% translate 'See More' %}
-                        </button>
-                    </td>
-                </tr>
+                  {% for sub in sub_categories %}
+
+                      <tr>
+                          <td>
+                              <a href="#">{{ sub.title }}</a>
+                          </td>
+                      </tr>
+                  {% endfor %}
+{#                <tr class="click-list--item">#}
+{#                    <td>#}
+{#                        <strong><a href="{% url "pc_setting_sub_category" "magenta" "browser" "chrome" %}"#}
+{#                                   class="browser-link" data-browser="chrome">Chrome</a></strong>#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        {% translate 'Success' %}#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        {% translate '10-05-2025 11:06' %}#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        {% translate 'Yes' %}#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        <button>#}
+{#                            {% translate 'See More' %}#}
+{#                        </button>#}
+{#                    </td>#}
+{#                </tr>#}
+{#                <tr class="click-list--item">#}
+{#                    <td>#}
+{#                        <strong><a href="#" class="browser-link" data-browser="firefox">Firefox</a></strong>#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        {% translate '--' %}#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        {% translate 'Never' %}#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        {% translate 'No' %}#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        <button>#}
+{#                            {% translate 'See More' %}#}
+{#                        </button>#}
+{#                    </td>#}
+{#                </tr>#}
+{#                <tr class="click-list--item">#}
+{#                    <td>#}
+{#                        <strong><a href="#" class="browser-link" data-browser="safari">Safari</a></strong>#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        {% translate '--' %}#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        {% translate 'Never' %}#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        {% translate 'No' %}#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        <button>#}
+{#                            {% translate 'See More' %}#}
+{#                        </button>#}
+{#                    </td>#}
+{#                </tr>#}
                 </tbody>
             </table>
 

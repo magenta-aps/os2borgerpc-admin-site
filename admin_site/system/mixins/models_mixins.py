@@ -1,6 +1,7 @@
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 
+
 class AuditModelMixin(models.Model):
     """Mixin for tracking created/modified datetime and user."""
 
@@ -26,4 +27,3 @@ class AuditModelMixin(models.Model):
 
     class Meta:
         abstract = True
-

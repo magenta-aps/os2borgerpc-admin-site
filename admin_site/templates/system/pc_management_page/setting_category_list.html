@@ -31,11 +31,13 @@
                     <li class="item-list-link">{% translate "No categories available" %}</li>
                 {% endfor %}
             </ul>
-         <form method="post" url>
+        {% if category_form %}
+         <form method="post" action="{% url 'pc_setting_category_create' site.uid current_category %}">
           {% csrf_token %}
-          {{ form.as_p }}
+          {{ category_form.as_p }}
           <button type="submit">Create</button>
         </form>
+        {% endif %}
     </div>
 
 

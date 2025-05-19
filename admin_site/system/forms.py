@@ -13,7 +13,10 @@ from system.models import (
     Script,
     SecurityEvent,
     EventRuleServer,
-    Site, SettingsCategory, SubSettingsCategory, ConfigSetting,
+    Site,
+    SettingsCategory,
+    SubSettingsCategory,
+    ConfigSetting,
 )
 from account.models import SiteMembership, UserProfile
 
@@ -437,15 +440,18 @@ class WakeChangeEventForm(forms.ModelForm):
             "time_end": time_format,
         }
 
+
 class SettingsCategoryForm(forms.ModelForm):
     class Meta:
         model = SettingsCategory
         fields = "__all__"
 
+
 class SubSettingsCategoryForm(forms.ModelForm):
     class Meta:
         model = SubSettingsCategory
-        fields = "__all__"
+        exclude = ("category",)
+
 
 class ConfigSettingForm(forms.ModelForm):
     class Meta:

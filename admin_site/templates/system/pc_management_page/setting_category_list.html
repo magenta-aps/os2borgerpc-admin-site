@@ -20,12 +20,17 @@
                 <option value="Test">Test</option>
             </select>
         </div>
-        <ul id="settings-categories-list" class="item-list">
-            <li class="item-list-link">Browser</li>
-            <li class="item-list-link">Programs</li>
-            <li class="item-list-link">System</li>
-            <li class="item-list-link">Display</li>
-        </ul>
+            <ul id="settings-categories-list" class="item-list">
+                {% for category in categories %}
+                    <li class="item-list-link">
+                        <a href="{% url 'pc_setting_category' slug=slug category=category.title %}">
+                            {{ category.title }}
+                        </a>
+                    </li>
+                {% empty %}
+                    <li class="item-list-link">{% translate "No categories available" %}</li>
+                {% endfor %}
+            </ul>
     </div>
 
 

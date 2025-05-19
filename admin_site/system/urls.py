@@ -78,7 +78,7 @@ urlpatterns = [
     ),
     # Security scripts
     path(
-        "site/<slug>/security_scripts/<int:script_pk>)/delete/",
+        "site/<slug>/security_scripts/<int:script_pk>/delete/",
         ScriptDelete.as_view(is_security=True),
         name="security_script_delete",
     ),
@@ -339,6 +339,7 @@ urlpatterns = [
 
 # Settings configuration
 settings_configurations = [
+
     path(
         "site/<slug>/pc_settings",
         SettingsCategoriesRedirect.as_view(),

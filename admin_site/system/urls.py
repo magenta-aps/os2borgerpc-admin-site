@@ -78,7 +78,7 @@ urlpatterns = [
     ),
     # Security scripts
     path(
-        "site/<slug>/security_scripts/<int:script_pk>/delete/",
+        "site/<slug>/security_scripts/<int:script_pk>)/delete/",
         ScriptDelete.as_view(is_security=True),
         name="security_script_delete",
     ),
@@ -98,11 +98,7 @@ urlpatterns = [
         name="security_scripts",
     ),
     # Two-factor for OS2borgerPC machines
-    path(
-        "site/<slug>/two-factor/",
-        TwoFactor.as_view(),
-        name="two_factor"
-    ),
+    path("site/<slug>/two-factor/", TwoFactor.as_view(), name="two_factor"),
     # Two-factor for admin-site
     path(
         "site/<slug>/admin-two-factor/<username>/setup/",
@@ -339,7 +335,6 @@ urlpatterns = [
 
 # Settings configuration
 settings_configurations = [
-
     path(
         "site/<slug>/pc_settings",
         SettingsCategoriesRedirect.as_view(),
@@ -358,7 +353,7 @@ settings_configurations = [
 ]
 
 # Define HTMX URL Patterns here, and add them to the urlpatterns list
-# Basically these are views_dir that only return partial HTML fragments rather than entire pages
+# Basically these are views that only return partial HTML fragments rather than entire pages
 htmx_urlpatterns = [
     path(
         "site/<slug>/api-keys/new/",
@@ -389,7 +384,5 @@ htmx_urlpatterns = [
 
 urlpatterns += htmx_urlpatterns
 urlpatterns += settings_configurations
-
-
 
 

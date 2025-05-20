@@ -1,0 +1,45 @@
+{% extends "site_with_navigation.html" %}
+{% load crispy_forms_tags %}
+
+{% load i18n %}
+
+{% block specific_title %}
+    {% translate "PC Settings" %}
+{% endblock %}
+
+
+
+{% block subnav %}
+    <div class="sublevelnav"> {# TODO: make new css class #}
+        <div class="listutils"> {# TODO: make new css class #}
+            <label class="select-label" {# TODO: make new css class #}
+                   for="select-group-or-pc">{% translate "Choose group or pc" %}</label>
+            <select class="select2-dropdown" name="group-or-pc" id="select-group-or-pc">
+                <option value="Magenta-test">Magenta-test</option>
+                <option value="Magenta">Magenta</option>
+                <option value="Test">Test</option>
+            </select>
+        </div>
+            <ul id="settings-categories-list" class="item-list">
+                {% for category in categories %}
+                    <li class="item-list-link">
+                        <a href="{% url 'pc_setting_category' slug=slug category=category.title %}">
+                            {{ category.title }}
+                        </a>
+                    </li>
+                {% empty %}
+                    <li class="item-list-link">{% translate "No categories available" %}</li>
+                {% endfor %}
+            </ul>
+        {% if category_form %}
+         <form method="post" action="{% url 'pc_setting_category_create' site.uid current_category %}">
+          {% csrf_token %}
+          {{ category_form.as_p }}
+          <button type="submit">Create</button>
+        </form>
+        {% endif %}
+    </div>
+
+
+{% endblock %}
+

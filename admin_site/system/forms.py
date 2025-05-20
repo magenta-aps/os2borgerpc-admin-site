@@ -14,6 +14,9 @@ from system.models import (
     SecurityEvent,
     EventRuleServer,
     Site,
+    SettingsCategory,
+    SubSettingsCategory,
+    ConfigSetting,
 )
 from account.models import SiteMembership, UserProfile
 
@@ -372,7 +375,7 @@ class EventRuleServerForm(forms.ModelForm):
         }
 
 
-# Used on the Create and Update views
+# Used on the Create and Update views_dir
 class WakePlanForm(forms.ModelForm):
     # Picklist related
     groups = forms.ModelMultipleChoiceField(
@@ -436,3 +439,21 @@ class WakeChangeEventForm(forms.ModelForm):
             "date_end": date_format,
             "time_end": time_format,
         }
+
+
+class SettingsCategoryForm(forms.ModelForm):
+    class Meta:
+        model = SettingsCategory
+        fields = "__all__"
+
+
+class SubSettingsCategoryForm(forms.ModelForm):
+    class Meta:
+        model = SubSettingsCategory
+        exclude = ("category",)
+
+
+class ConfigSettingForm(forms.ModelForm):
+    class Meta:
+        model = ConfigSetting
+        fields = "__all__"

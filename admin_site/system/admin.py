@@ -674,3 +674,13 @@ class WakeChangeEventAdmin(admin.ModelAdmin):
     )
     inlines = [WakeWeekPlanInline]
     list_filter = ("site",)
+
+
+@admin.register(m.SettingsCategory)
+class SettingsCategoryAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(m.SubSettingsCategory)
+class SubSettingsCategoryAdmin(admin.ModelAdmin):
+    pass

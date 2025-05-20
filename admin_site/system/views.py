@@ -2,9 +2,8 @@
 import json
 import secrets
 
-from django.http import Http404, JsonResponse, HttpResponse
+from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.utils.html import escape
@@ -18,7 +17,7 @@ from django.views.generic.edit import (
     UpdateView,
     DeleteView,
 )
-from django.views.generic import View, ListView, DetailView, RedirectView, TemplateView
+from django.views.generic import ListView, DetailView, RedirectView, TemplateView
 from django.views.generic.list import BaseListView
 
 from django.db import transaction
@@ -32,7 +31,7 @@ from two_factor.utils import default_device
 from two_factor import views as otp_views
 from two_factor.plugins.phonenumber.utils import get_available_phone_methods
 from django_otp.decorators import otp_required
-from django_otp import devices_for_user, user_has_device
+from django_otp import devices_for_user
 from django_otp.plugins.otp_static.models import StaticToken
 from django.forms import Form
 
@@ -94,189 +93,19 @@ from system.forms import (
     WakeChangeEventForm,
     WakePlanForm,
 )
-
-
-def run_wake_plan_script(site, pcs, args, user, type="remove"):
-    if type == "set":
-        script = Script.objects.get(uid="wake_plan_set")
-    else:
-        script = Script.objects.get(uid="wake_plan_remove")
-    script.run_on(site, pcs, *args, user=user)
-
-
-def otp_check(
-    view=None, redirect_field_name="next", login_url=None, if_configured=False
-):
-    """
-    Modfied version of otp_required that redirects to site root if you do not have a device configured
-    The normal version redirects to the login page, which results in a loop of logging in,
-    hitting a url that requires otp and being redirected back to login
-    """
-    if login_url is None:
-        login_url = "/"
-
-    def test(user):
-        return user.is_verified() or (
-            if_configured and user.is_authenticated and not user_has_device(user)
-        )
-
-    decorator = user_passes_test(
-        test, login_url=login_url, redirect_field_name=redirect_field_name
-    )
-
-    return decorator if (view is None) else decorator(view)
-
-
-def site_pcs_stats(context, site_list):
-    context["borgerpc_count"] = PC.objects.filter(
-        site__in=site_list,
-        configuration__entries__key="os2_product",
-        configuration__entries__value="os2borgerpc",
-    ).count()
-    context["borgerpc_kiosk_count"] = PC.objects.filter(
-        site__in=site_list,
-        configuration__entries__key="os2_product",
-        configuration__entries__value="os2borgerpc kiosk",
-    ).count()
-    # Add counts for each _os_release
-    context["releases"] = []
-    for release in (
-        ConfigurationEntry.objects.filter(key="_os_release")
-        .order_by("value")
-        .distinct("value")
-        .values("value")
-    ):
-        context["releases"].append(
-            (
-                release["value"],
-                PC.objects.filter(
-                    site__in=site_list,
-                    configuration__entries__key="_os_release",
-                    configuration__entries__value=release["value"],
-                ).count(),
-            )
-        )
-    return context
-
-
-# Mixin class to require login
-class LoginRequiredMixin(View):
-    """Subclass in all views where login is required."""
-
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
-
-
-class SuperAdminOnlyMixin(LoginRequiredMixin):
-    """Only allows access to super admins."""
-
-    check_function = user_passes_test(lambda u: u.is_superuser, login_url="/")
-
-    @method_decorator(login_required)
-    @method_decorator(check_function)
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
-
-
-class SuperAdminOrThisSiteMixin(LoginRequiredMixin):
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        """Limit access to super users or users belonging to THIS site."""
-        site = None
-        slug_field = None
-        # Check if a site slug is included in the url
-        if "slug" in kwargs:
-            slug_field = "slug"
-        # If none given, give up
-        if slug_field:
-            try:
-                site = Site.objects.get(uid=kwargs["slug"])
-            except Site.DoesNotExist:
-                return redirect("/")
-        check_function = user_passes_test(
-            lambda u: (u.is_superuser) or (site and site in u.user_profile.sites.all()),
-            login_url="/",
-        )
-        wrapped_super = check_function(super().dispatch)
-        return wrapped_super(*args, **kwargs)
-
-
-# Mixin class for list selection (single select).
-class SelectionMixin(View):
-    """This supplies the ability to highlight a selected object of a given
-    class. This is useful if a Detail view contains a list of children which
-    the user is allowed to select."""
-
-    # The Python class of the Django model corresponding to the objects you
-    # want to be able to select. MUST be specified in subclass.
-    selection_class = None
-    # A callable which will return a list of objects which SHOULD belong to the
-    # class specified by selection_class. MUST be specified in subclass.
-    get_list = None
-    # The field which is used to look up the selected object.
-    lookup_field = "uid"
-    # Overrides the default class name in context.
-    class_display_name = None
-
-    def get_context_data(self, **kwargs):
-        # First, call superclass
-        context = super().get_context_data(**kwargs)
-        # Then get selected object, if any
-        if self.lookup_field in self.kwargs:
-            lookup_val = self.kwargs[self.lookup_field]
-            lookup_params = {self.lookup_field: lookup_val}
-            selected = get_object_or_404(self.selection_class, **lookup_params)
-        else:
-            selected = self.get_list()[0] if self.get_list() else None
-
-        display_name = (
-            self.class_display_name
-            if self.class_display_name
-            else self.selection_class.__name__.lower()
-        )
-        if selected is not None:
-            context["selected_{0}".format(display_name)] = selected
-        context["{0}_list".format(display_name)] = self.get_list()
-        return context
-
-
-class JSONResponseMixin:
-    """
-    A mixin that can be used to render a JSON response.
-    """
-
-    def render_to_json_response(self, context, **response_kwargs):
-        """
-        Returns a JSON response, transforming 'context' to make the payload.
-        """
-        return JsonResponse(self.get_data(context), **response_kwargs)
-
-    def get_data(self, context):
-        """
-        Returns an object that will be serialized as JSON by json.dumps().
-        """
-        # Note: This is *EXTREMELY* naive; in reality, you'll need
-        # to do much more complex handling to ensure that arbitrary
-        # objects -- such as Django model instances or querysets
-        # -- can be serialized as JSON.
-        return context
-
-
-# Mixin class for CRUD views that use site_uid in URL
-# The "site_uid" slug is configurable, but please avoid clashes
-class SiteMixin(View):
-    """Mixin class to extract site UID from URL"""
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        context["site"] = site
-        # Add information about outstanding security events.
-        no_of_sec_events = SecurityEvent.objects.priority_events_for_site(site).count()
-        context["sec_events"] = no_of_sec_events
-
-        return context
+from system.views_dir.utils.helper_views import SiteView
+from system.mixins.views_mixins import (
+    LoginRequiredMixin,
+    SuperAdminOrThisSiteMixin,
+    SiteMixin,
+    JSONResponseMixin,
+    SelectionMixin,
+)
+from system.views_dir.utils.helper_functions import (
+    site_pcs_stats,
+    otp_check,
+    run_wake_plan_script,
+)
 
 
 class SiteUIDAvailableCheck(LoginRequiredMixin):
@@ -525,23 +354,6 @@ class SiteDelete(DeleteView, SuperAdminOrThisSiteMixin):
         set_notification_cookie(response, _("Site %s deleted") % site_name)
 
         return response
-
-
-# Base class for Site-based passive (non-form) views
-class SiteView(DetailView, SuperAdminOrThisSiteMixin):
-    """Base class for all views based on a single site."""
-
-    model = Site
-    slug_field = "uid"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        site = self.get_object()
-        # Add information about outstanding security events.
-        no_of_sec_events = SecurityEvent.objects.priority_events_for_site(site).count()
-        context["sec_events"] = no_of_sec_events
-
-        return context
 
 
 class SiteDashboardView(SiteView):

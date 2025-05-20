@@ -20,7 +20,7 @@ from django.urls import reverse
 
 # Mixin class to require login - copied from system app
 class LoginRequiredMixin(View):
-    """Subclass in all views_dir where login is required."""
+    """Subclass in all views where login is required."""
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

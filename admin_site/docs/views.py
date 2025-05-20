@@ -11,7 +11,7 @@ from django.contrib.staticfiles.finders import find
 
 # Mixin class to require login
 class LoginRequiredMixin(View):
-    """Subclass in all views_dir where login is required."""
+    """Subclass in all views where login is required."""
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

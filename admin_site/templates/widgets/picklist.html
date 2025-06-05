@@ -120,7 +120,7 @@
                  for (let item of list) {
                     if (item.selected) {
                         dom_ul.insertAdjacentHTML("beforeend", `
-                            <li class='list-group-item pick-list-item wake_change_events_link'>
+                            <li class='list-group-item pick-list-item'>
                                 <span>
                                     <a class="nav-link" href="/site/{{site_url}}/{{ target_section }}/${item.uid}">${htmlDecode(item.name)}</a>
                                     ${renderHiddenInput(item.id)}

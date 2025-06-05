@@ -469,7 +469,7 @@
     "pk": 38,
     "fields": {
         "key": "hostname",
-        "value": "5",
+        "value": "pc54",
         "read_only": false,
         "owner_configuration": 9
     }
@@ -2349,8 +2349,7 @@
         "sunday_open": true,
         "site": 1,
         "wake_change_events": [
-            3,
-            2
+            3
         ]
     }
 },
@@ -3220,10 +3219,7 @@
         "last_seen": "2021-01-28T12:50:03",
         "location": "beskrivelse 2",
         "product": 3,
-        "pc_groups": [
-            10,
-            3
-        ]
+        "pc_groups": []
     }
 },
 {
@@ -3241,10 +3237,7 @@
         "last_seen": "2021-01-28T12:50:03",
         "location": "beskrivelse 2",
         "product": 4,
-        "pc_groups": [
-            10,
-            3
-        ]
+        "pc_groups": []
     }
 },
 {
@@ -3262,10 +3255,7 @@
         "last_seen": "2021-01-28T12:50:03",
         "location": "beskrivelse 2",
         "product": 5,
-        "pc_groups": [
-            10,
-            3
-        ]
+        "pc_groups": []
     }
 },
 {
@@ -3283,10 +3273,7 @@
         "last_seen": "2021-01-28T12:50:03",
         "location": "beskrivelse 2",
         "product": 6,
-        "pc_groups": [
-            10,
-            3
-        ]
+        "pc_groups": []
     }
 },
 {
@@ -3304,10 +3291,7 @@
         "last_seen": "2021-01-28T12:50:03",
         "location": "beskrivelse 2",
         "product": 7,
-        "pc_groups": [
-            10,
-            3
-        ]
+        "pc_groups": []
     }
 },
 {

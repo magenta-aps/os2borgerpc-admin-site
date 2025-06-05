@@ -2247,7 +2247,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
     def form_valid(self, form):
         if not self.object.site.customer.feature_permission.filter(uid="wake_plan"):
             raise PermissionDenied
-        # Ensure that if a start time has been set, so has the end time - or vice versa
+        # Ensure that no weekday has the same on and off time
         f = self.request.POST
         for day in [
             "monday",
@@ -2259,8 +2259,13 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
             "sunday",
         ]:
             if f.get(f"{day}_on") == f.get(f"{day}_off"):
-                print("ERROR: A day has the same on and off-time")
-                return self.form_invalid(form)
+                response = self.form_invalid(form)
+                set_notification_cookie(
+                    response,
+                    _("One or more week days has the same on and off time %s") % "",
+                    error=True,
+                )
+                return response
 
         # Capture a view of the groups and settings before the update
         groups_pre = set(self.object.groups.all())

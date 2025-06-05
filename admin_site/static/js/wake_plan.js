@@ -116,6 +116,9 @@ function runWhenReturnedToPage() {
   nodes.forEach(element => {
     if (element.type === "checkbox"){
       element.checked = wakePlanSettingsAsJSON[element.name ?? element.id]
+      if (element.className.includes("checkbox")){
+        weekDayOn(element, wakePlanSettingsAsJSON[element.name ?? element.id])
+      }
     }
     else if (element.nodeName === "SPAN"){
      element.textContent =  wakePlanSettingsAsJSON[element.name ?? element.id]
@@ -136,7 +139,7 @@ sessionStorage.setItem("going_to_wake_change_events", "false")
 
 document.querySelectorAll(".wake_change_events_link").forEach(element =>  element.addEventListener("click", saveInputStates))
 
-document.addEventListener("beforeunload", (evt) => {
+addEventListener("beforeunload", (evt) => {
   if (sessionStorage.getItem("going_to_wake_change_events") !== "true") {
     removeDataFromSessionStorage()
   }

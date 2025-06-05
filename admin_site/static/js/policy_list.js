@@ -45,8 +45,7 @@ class PolicyList {
         function displayError(inputField, row) {
             const message = `Script:\n
                     ${inputField.parentElement.getAttribute("data-name") || gettext("Unknown script")}
-                    \n${gettext("Has required input fields")}`
-            console.log("message:", message)
+                    \n${gettext("has empty required input fields")}`
             displayToast(message, "error")
             if (row) {
                 row.classList.add("table-danger")
@@ -64,7 +63,7 @@ class PolicyList {
                 value="${type === "BOOLEAN" ? 'True" checked' : type === "TEXT_FIELD" ? default_value.split(",")[0] : default_value}"
                 ${type === "TEXT_FIELD" ? `default_value="${default_value}"` : ""}
                 data-inputtype="${type}"
-                ${required ? "data-isrequired='true'" : ""}                
+                ${required == "True" ? "data-isrequired='true'" : ""}
             />
         `;
 
@@ -127,7 +126,6 @@ class PolicyList {
         // generate the hidden input fields and divs to render the parameters for the selected script
         for (let i = 0; i < scriptInputs.length; i++) {
             const paramName = `group_policies_${scriptPk}_param_${i}`
-            console.log("Script input", i, scriptInputs[i])
             param_fields += this.hiddenParamField(
                 paramName,
                 scriptInputs[i].type,
@@ -136,7 +134,6 @@ class PolicyList {
             )
             param_fields += this.visibleParamField(scriptInputs[i])
         }
-        console.log("param fields:",param_fields)
 
         rowNode.querySelector(`[data-pk="policy-script-${pk}"]`)?.insertAdjacentHTML("beforeend", param_fields)
     }
@@ -153,9 +150,6 @@ class PolicyList {
             let inputName = inputElement.getAttribute("name").substring(5)
             let inputField = wrapper.querySelector('input[name="' + inputName + '"]')
             if (inputField.getAttribute("data-isrequired")) {
-                console.log("input field:",inputField)
-                console.log("input element:",inputElement)
-                console.log("input element type:",inputElement.type)
                 if (
                     inputElement.type === "file" &&
                     inputElement.files.length === 0 &&

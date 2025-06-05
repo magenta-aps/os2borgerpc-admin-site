@@ -1,5 +1,3 @@
-import logging
-
 from django import template
 from django.utils.safestring import mark_safe
 from django.utils.timesince import timesince
@@ -63,7 +61,6 @@ def file_basename(value):
 
         return os.path.basename(file_path)
     except Exception as e:
-        logging.error(e)
         return "File not found"
 
 

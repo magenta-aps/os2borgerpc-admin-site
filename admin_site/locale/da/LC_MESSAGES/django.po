@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-04 10:32+0200\n"
+"POT-Creation-Date: 2025-06-05 15:24+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -4019,6 +4019,10 @@ msgstr ""
 "Nødvendigt for kunder der ønsker at autentificere login på BorgerPC gennem "
 "et API, der kræver en API-nøgle (f.eks. Quria)"
 
+#: system/forms.py templates/system/users/form.html
+msgid "Fill out if you want to update the current password"
+msgstr "Udfyldes hvis du ønsker at opdatere det nuværende kodeord"
+
 #: system/forms.py
 msgid "Fill out if you want to update the current value"
 msgstr "Udfyldes hvis du ønsker at opdatere den nuværende værdi"
@@ -6018,10 +6022,6 @@ msgstr "Er du sikker på, at du vil fjerne denne bruger fra sitet "
 #: templates/system/users/confirm_delete.html
 msgid "Are you sure you want to delete the user"
 msgstr "Er du sikker på, at du vil slette brugeren"
-
-#: templates/system/users/form.html
-msgid "Fill out if you want to update the current password"
-msgstr "Udfyldes hvis du ønsker at opdatere det nuværende kodeord"
 
 #: templates/system/users/form.html
 msgid "Show Password"

@@ -436,3 +436,22 @@ function htmlDecode(input) {
   let doc = parser.parseFromString(input, "text/html")
   return doc.documentElement.textContent
 }
+
+function displayToast(message, type, autoHide = true) {
+    const toastElement = document.getElementById("toast")
+    const toastBody = document.getElementById("toast-body")
+
+    let toast_color = "bg-success"
+    // if autoHide is set to true, the toast will disappear automatically, default is 5 seconds
+
+    // Reset the toast color if the message type is error
+    if (type === "error") {
+        toast_color = "bg-danger"
+    }
+
+    toastElement.classList.add(toast_color)
+    toastBody.innerText = message
+
+    const toast = new bootstrap.Toast(toastElement, {autohide: autoHide})
+    toast.show()
+}

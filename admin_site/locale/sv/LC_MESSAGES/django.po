@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-04 10:32+0200\n"
+"POT-Creation-Date: 2025-06-05 15:29+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -82,7 +82,6 @@ msgstr "Lägg till en kommentar"
 #: templates/system/event_rules/site_event_rules_server.html
 #: templates/system/event_rules/site_security_problems.html
 #: templates/system/pcgroups/confirm_delete.html
-#: templates/system/pcgroups/policy_list/templates.html
 #: templates/system/pcgroups/site_groups.html
 #: templates/system/pcs/confirm_delete.html templates/system/pcs/update.html
 #: templates/system/scripts/confirm_delete.html
@@ -4005,7 +4004,10 @@ msgstr ""
 "Nödvändigt för kunder som vill autentisera MedborgarPC-inloggningar via ett "
 "API som kräver en API-nyckel (t.ex. Quria)"
 
-#: system/forms.py
+#: system/forms.py templates/system/users/form.html
+msgid "Fill out if you want to update the current password"
+msgstr "Utfylles om du vill uppdatera den nuvarande koden"
+
 #: system/forms.py
 msgid "Fill out if you want to update the current value"
 msgstr "Fyll i om du vill uppdatera det aktuella värdet"
@@ -4890,7 +4892,7 @@ msgid "Handle configuration"
 msgstr "Hantera konfiguration"
 
 #: templates/system/configs/templates.html
-#: templates/system/pcgroups/policy_list/templates.html
+#: templates/system/pcgroups/site_groups.html
 msgid "Save"
 msgstr "Spara"
 
@@ -5311,10 +5313,6 @@ msgstr "Position"
 msgid "Arguments"
 msgstr "Inputparametrar"
 
-#: templates/system/pcgroups/policy_list/templates.html
-msgid "Edit script"
-msgstr "Redigera skript"
-
 #: templates/system/pcgroups/site_groups.html
 msgid "Add new group"
 msgstr "Lägg till ny grupp"
@@ -5437,6 +5435,10 @@ msgstr ""
 #: templates/system/pcgroups/site_groups.html
 msgid "Create group"
 msgstr "Skapa en grupp"
+
+#: templates/system/pcgroups/site_groups.html
+msgid "Edit script"
+msgstr "Redigera skript"
 
 #: templates/system/pcs/confirm_delete.html templates/system/pcs/update.html
 msgid "Delete computer"
@@ -6013,10 +6015,6 @@ msgstr "Är du säker på att du vill ta bort den här användaren från sitet "
 #: templates/system/users/confirm_delete.html
 msgid "Are you sure you want to delete the user"
 msgstr "Är du säker på att du vill ta bort användaren"
-
-#: templates/system/users/form.html
-msgid "Fill out if you want to update the current password"
-msgstr "Utfylles om du vill uppdatera den nuvarande koden"
 
 #: templates/system/users/form.html
 msgid "Show Password"

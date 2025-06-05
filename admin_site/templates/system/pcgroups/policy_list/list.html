@@ -12,11 +12,10 @@
         <th>{% translate "Actions" %}</th>
       </tr>
     </thead>
-    <tbody class="sortable">
+    <tbody class="sortable" id="policy-table-body">
       {% for ps in entries %}
         {% include 'system/pcgroups/policy_list/item.html' with ps_pk=ps.pk script_pk=ps.script.pk name=ps.script.name params=ps.ordered_parameters %}
       {% endfor %}
-      <input type="hidden" name="group_policies_new_entries" id="group_policies_new_entries" value="0">
     </tbody>
     <tfoot>
       <tr>
@@ -54,7 +53,7 @@
 
     if (tg && tg.dataset.script) {
       let script_data = JSON.parse(tg.dataset.script)
-      BibOS.PolicyList.addToPolicy('group_policies', script_data.id, script_data.name, script_data.pk, script_data.inputs)
+      policyListHandler.addToPolicy( script_data.id, script_data.name, script_data.pk, script_data.inputs)
     }
   })
 </script>

@@ -5,7 +5,7 @@ from django.views.generic import RedirectView
 
 from django.contrib import admin
 
-from .api import api as user_api
+from .user_api import api as user_api
 from .client_api import api as client_api
 
 from django_xmlrpc.views import handle_xmlrpc
@@ -33,7 +33,7 @@ urlpatterns = [
     # Django admin:
     path("admin/", admin.site.urls),
     # API
-    # API effectively has its own urls specified in api.py, besides its builtin docs
+    # API effectively has its own urls specified in user_api.py, besides its builtin docs
     # Redirect /api/ to the docs just for convenience?
     path("api/", RedirectView.as_view(url="/api/docs")),
     path("api/", user_api.urls),

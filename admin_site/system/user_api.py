@@ -15,7 +15,7 @@ from .models import (
     PC,
     SecurityEvent,
 )
-from .api_schemas import (
+from .user_api_schemas import (
     ConfigurationEntrySchema,
     JobSchema,
     PCSchema,

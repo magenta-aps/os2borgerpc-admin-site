@@ -73,8 +73,12 @@ class DocView(TemplateView, LoginRequiredMixin):
             ),
             ("", _("OS2borgerPC Kiosk")),
             (
-                "https://os2borgerpc-server-image.readthedocs.io/en/latest/install_setup.html",
-                _("Installation Guide"),
+                "https://os2borgerpc-server-image.readthedocs.io/en/latest/install_setup_x64.html",
+                _("Installation Guide for x64"),
+            ),
+            (
+                "https://os2borgerpc-server-image.readthedocs.io/en/latest/install_setup_rpi.html",
+                _("Installation Guide for Raspberry Pi"),
             ),
             ("os2borgerpc_kiosk_wifi_guide", _("Updating Wi-Fi setup")),
             ("", _("Audit")),

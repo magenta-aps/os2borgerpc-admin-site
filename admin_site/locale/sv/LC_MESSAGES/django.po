@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-17 09:05+0200\n"
+"POT-Creation-Date: 2025-07-28 11:05+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -1690,32 +1690,26 @@ msgid "Jobs run by Magenta"
 msgstr "Jobs drevet af Magenta"
 
 #: docs/templates/jobs/index.html
+msgid "Sometimes we run jobs on all or some computers."
+msgstr "Ibland kör vi jobb på alla eller vissa datorer."
+
+#: docs/templates/jobs/index.html
+msgid "This is generally done for the following reasons"
+msgstr "Detta görs vanligtvis av följande skäl"
+
+#: docs/templates/jobs/index.html
 msgid ""
-"If the user for a job is listed as \"Magenta\", it means that the job was "
-"started by the OS2borgerPC team at Magenta."
+"Maintenance, including dealing with changes that aren't backwards compatible"
 msgstr ""
-"Om användaren för ett jobb är listad som \"Magenta\" betyder det att jobbet "
-"startades av Sambruk MedborgarPC-teamet på Magenta."
+"Underhåll, inklusive hantering av ändringar som inte är bakåtkompatibla"
 
 #: docs/templates/jobs/index.html
-msgid "This is used for e.g."
-msgstr "Den används till exempel för"
-
-#: docs/templates/jobs/index.html
-msgid "Maintenance"
-msgstr "Underhåll"
-
-#: docs/templates/jobs/index.html
-msgid "Updates"
-msgstr "Uppdateringar"
+msgid "Patching security issues, such as CVE's identified in Ubuntu"
+msgstr "Åtgärda säkerhetsproblem, såsom CVE:er som identifierats i Ubuntu"
 
 #: docs/templates/jobs/index.html
 msgid "Troubleshooting and error correction"
 msgstr "Felsökning och rättning"
-
-#: docs/templates/jobs/index.html
-msgid "Patching security issues (CVE's identified in Ubuntu)"
-msgstr "Lappa säkerhetshål (CVE'er identificeret i Ubuntu)"
 
 #: docs/templates/notifications/index.html docs/views.py
 msgid "Notifications and offline rules"
@@ -4328,10 +4322,6 @@ msgstr "säkerhetsskript"
 #: system/models.py
 msgid "hidden script"
 msgstr "dolt skript"
-
-#: system/models.py
-msgid "maintained by Magenta"
-msgstr "underhålls av Magenta"
 
 #: system/models.py
 msgid "position"

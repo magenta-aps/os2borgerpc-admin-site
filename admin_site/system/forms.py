@@ -134,11 +134,8 @@ class ScriptForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         instance = getattr(self, "instance", None)
-        if not instance or not instance.pk:
-            self.fields["maintained_by_magenta"].widget = forms.HiddenInput()
 
         self.fields["tags"].disabled = True
-        self.fields["maintained_by_magenta"].widget.attrs["disabled"] = True
 
     class Meta:
         model = Script

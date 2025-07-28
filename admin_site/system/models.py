@@ -877,12 +877,6 @@ class Script(AuditModelMixin):
     is_hidden = models.BooleanField(
         verbose_name=_("hidden script"), default=False, null=False
     )
-
-    maintained_by_magenta = models.BooleanField(
-        verbose_name=_("maintained by Magenta"),
-        default=False,
-        null=False,
-    )
     tags = models.ManyToManyField(ScriptTag, related_name="scripts", blank=True)
     feature_permission = models.ForeignKey(
         FeaturePermission,

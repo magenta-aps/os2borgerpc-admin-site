@@ -1031,17 +1031,14 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
 
         return queryset
 
-    # for admin users the user_url is a redirect to our job docs
-    # explaining scripts run as "Magenta"
     def get_username(self, user):
         if user:
-            if user and user.is_superuser:
-                return "Magenta"
-            else:
-                return user.username
+            return user.username
         else:
             return ""
 
+    # for admin users the user_url is a redirect to our job docs
+    # explaining scripts run as "Magenta"
     def get_user_url(self, user, uid):
         if user:
             if user.is_superuser:

@@ -49,8 +49,6 @@ RUN set -ex \
 VOLUME /log
 VOLUME /media
 
-WORKDIR /code/
-
 COPY VERSION /code/VERSION
 
 # Install requirements.

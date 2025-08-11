@@ -1702,7 +1702,7 @@ msgstr "Vi kører i enkelte tilfælde scripts på alle eller nogle computere."
 
 #: docs/templates/jobs/index.html
 msgid "This is generally done for the following reasons"
-msgstr "Det gør vi typisk af følgende årsager:"
+msgstr "Det gør vi typisk af følgende årsager"
 
 #: docs/templates/jobs/index.html
 msgid ""

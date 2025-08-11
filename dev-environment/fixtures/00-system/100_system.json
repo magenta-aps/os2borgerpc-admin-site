@@ -5371,7 +5371,7 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 37,
+        "user": 36,
         "batch": 8,
         "pc": 9,
         "dashboard_hidden": false
@@ -5382,11 +5382,11 @@
     "pk": 3,
     "fields": {
         "status": "NEW",
-        "log_output": "The moon stands still.\n on blueberry hill",
+        "log_output": "The moon stands still.\r\n on blueberry hill",
         "created": null,
         "started": null,
         "finished": null,
-        "user": 38,
+        "user": 36,
         "batch": 8,
         "pc": 1,
         "dashboard_hidden": false
@@ -5401,7 +5401,7 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 38,
+        "user": 36,
         "batch": 8,
         "pc": 6,
         "dashboard_hidden": false
@@ -5416,7 +5416,7 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 38,
+        "user": 36,
         "batch": 9,
         "pc": 8,
         "dashboard_hidden": false
@@ -5431,7 +5431,7 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 39,
+        "user": 36,
         "batch": 9,
         "pc": 9,
         "dashboard_hidden": false
@@ -5446,7 +5446,7 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 39,
+        "user": 36,
         "batch": 9,
         "pc": 1,
         "dashboard_hidden": false
@@ -5461,7 +5461,7 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 39,
+        "user": 36,
         "batch": 9,
         "pc": 6,
         "dashboard_hidden": false
@@ -5476,7 +5476,7 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 39,
+        "user": 36,
         "batch": 10,
         "pc": 8,
         "dashboard_hidden": false
@@ -5506,7 +5506,7 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 37,
+        "user": 36,
         "batch": 10,
         "pc": 1,
         "dashboard_hidden": false
@@ -6946,7 +6946,7 @@
         "created": null,
         "started": "2020-11-30T18:15:43.997",
         "finished": "2020-11-30T18:15:45.997",
-        "user": 38,
+        "user": 36,
         "batch": 20,
         "pc": 23,
         "dashboard_hidden": false
@@ -6961,7 +6961,7 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 37,
+        "user": 36,
         "batch": 20,
         "pc": 24,
         "dashboard_hidden": false
@@ -6991,7 +6991,7 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 39,
+        "user": 36,
         "batch": 20,
         "pc": 28,
         "dashboard_hidden": false
@@ -7021,7 +7021,7 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 38,
+        "user": 36,
         "batch": 21,
         "pc": 1,
         "dashboard_hidden": false
@@ -7036,7 +7036,7 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 38,
+        "user": 36,
         "batch": 21,
         "pc": 6,
         "dashboard_hidden": false
@@ -7066,7 +7066,7 @@
         "created": null,
         "started": "2020-11-30T18:15:43.997",
         "finished": "2020-11-30T18:15:45.997",
-        "user": 38,
+        "user": 36,
         "batch": 21,
         "pc": 9,
         "dashboard_hidden": false
@@ -7081,7 +7081,7 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 37,
+        "user": 36,
         "batch": 21,
         "pc": 12,
         "dashboard_hidden": false
@@ -7096,7 +7096,7 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 38,
+        "user": 36,
         "batch": 21,
         "pc": 16,
         "dashboard_hidden": false
@@ -7111,7 +7111,7 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 39,
+        "user": 36,
         "batch": 21,
         "pc": 18,
         "dashboard_hidden": false
@@ -7126,7 +7126,7 @@
         "created": null,
         "started": "2020-11-30T18:15:43.997",
         "finished": "2020-11-30T18:15:45.997",
-        "user": 37,
+        "user": 36,
         "batch": 21,
         "pc": 22,
         "dashboard_hidden": false
@@ -7141,7 +7141,7 @@
         "created": null,
         "started": "2020-11-30T18:15:43.997",
         "finished": "2020-11-30T18:15:45.997",
-        "user": 39,
+        "user": 36,
         "batch": 21,
         "pc": 23,
         "dashboard_hidden": false
@@ -7156,7 +7156,7 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 38,
+        "user": 36,
         "batch": 21,
         "pc": 24,
         "dashboard_hidden": false
@@ -7171,7 +7171,7 @@
         "created": null,
         "started": "2020-11-30T18:15:43.997",
         "finished": "2020-11-30T18:15:45.997",
-        "user": 37,
+        "user": 36,
         "batch": 21,
         "pc": 25,
         "dashboard_hidden": false

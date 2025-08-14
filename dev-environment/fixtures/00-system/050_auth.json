@@ -3352,7 +3352,7 @@
     "pk": 35,
     "fields": {
         "password": "pbkdf2_sha256$600000$XLry6j5bFIEHNhyuWM1NsT$k29r/18L33xeSmAkMsFGbKmlBMiU8MnaYfcUVIlWBMM=",
-        "last_login": "2025-06-16T16:32:52.472",
+        "last_login": "2025-08-11T16:15:52.862",
         "is_superuser": true,
         "username": "magenta",
         "first_name": "",

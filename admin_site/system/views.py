@@ -998,7 +998,10 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
 
     def get_queryset(self):
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        if not self.request.user.is_superuser:
+        if (
+            not self.request.user.is_superuser
+            and not self.request.user.user_profile.is_hidden
+        ):
             queryset = Job.objects.filter(
                 Q(batch__script__is_hidden=False)
                 | Q(
@@ -1031,20 +1034,17 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
 
         return queryset
 
-    # for admin users the user_url is a redirect to our job docs
-    # explaining scripts run as "Magenta"
     def get_username(self, user):
         if user:
-            if user and user.is_superuser:
-                return "Magenta"
-            else:
-                return user.username
+            return user.username
         else:
             return ""
 
+    # for admin users the user_url is a redirect to our job docs
+    # explaining scripts run as "Magenta"
     def get_user_url(self, user, uid):
         if user:
-            if user.is_superuser:
+            if user.is_superuser or user.user_profile.is_hidden:
                 return reverse("doc", kwargs={"name": "jobs"})
             else:
                 return (reverse("user", args=[uid, user.username]),)
@@ -1218,7 +1218,7 @@ class ScriptMixin(object):
         context["site"] = self.site
         context["script_tags"] = ScriptTag.objects.all()
 
-        if self.request.user.is_superuser:
+        if self.request.user.is_superuser or self.request.user.user_profile.is_hidden:
             scripts = self.scripts.all()
         else:
             scripts = self.scripts.filter(is_hidden=False)
@@ -1466,6 +1466,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         if (
             self.script.is_hidden
             and not self.request.user.is_superuser
+            and not self.request.user.user_profile.is_hidden
             and not (
                 self.script.feature_permission
                 in self.site.customer.feature_permission.all()
@@ -1793,7 +1794,10 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         orderby = params.get("orderby", "-pk")
         if orderby not in JobSearch.VALID_ORDER_BY:
             orderby = "-pk"
-        if not self.request.user.is_superuser:
+        if (
+            not self.request.user.is_superuser
+            and not self.request.user.user_profile.is_hidden
+        ):
             visible_jobs = pc.jobs.filter(
                 Q(batch__script__is_hidden=False)
                 | Q(
@@ -2796,7 +2800,7 @@ class UsersMixin(object):
     def add_userlist_to_context(self, context):
         if "site" not in context:
             self.add_site_to_context(context)
-        if self.request.user.is_superuser:
+        if self.request.user.is_superuser or self.request.user.user_profile.is_hidden:
             context["user_list"] = context["site"].users
         else:
             context["user_list"] = context["site"].users.filter(

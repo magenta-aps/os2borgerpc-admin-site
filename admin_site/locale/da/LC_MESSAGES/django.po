@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-17 09:05+0200\n"
+"POT-Creation-Date: 2025-07-28 11:05+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -1697,32 +1697,27 @@ msgid "Jobs run by Magenta"
 msgstr "Jobs kørt af Magenta"
 
 #: docs/templates/jobs/index.html
+msgid "Sometimes we run jobs on all or some computers."
+msgstr "Vi kører i enkelte tilfælde scripts på alle eller nogle computere."
+
+#: docs/templates/jobs/index.html
+msgid "This is generally done for the following reasons"
+msgstr "Det gør vi typisk af følgende årsager"
+
+#: docs/templates/jobs/index.html
 msgid ""
-"If the user for a job is listed as \"Magenta\", it means that the job was "
-"started by the OS2borgerPC team at Magenta."
+"Maintenance, including dealing with changes that aren't backwards compatible"
 msgstr ""
-"Hvis brugeren for et job er angivet som \"Magenta\", betyder det at jobbet "
-"blev startet af OS2borgerPC-teamet hos Magenta."
+"Vedligeholdelse, inklusiv håndtering af ændringer, der ikke er "
+"bagudkompatible"
 
 #: docs/templates/jobs/index.html
-msgid "This is used for e.g."
-msgstr "Det bruges eksempelvis til"
-
-#: docs/templates/jobs/index.html
-msgid "Maintenance"
-msgstr "Vedligeholdelse"
-
-#: docs/templates/jobs/index.html
-msgid "Updates"
-msgstr "Opdateringer"
+msgid "Patching security issues, such as CVE's identified in Ubuntu"
+msgstr "Lapning af sikkerhedshuller, såsom CVE'er identificeret i Ubuntu"
 
 #: docs/templates/jobs/index.html
 msgid "Troubleshooting and error correction"
 msgstr "Fejlfinding og -retning"
-
-#: docs/templates/jobs/index.html
-msgid "Patching security issues (CVE's identified in Ubuntu)"
-msgstr "Lapning af sikkerhedshuller (CVE'er identificeret i Ubuntu)"
 
 #: docs/templates/notifications/index.html docs/views.py
 msgid "Notifications and offline rules"
@@ -4340,10 +4335,6 @@ msgstr "sikkerhedsscript"
 #: system/models.py
 msgid "hidden script"
 msgstr "skjult script"
-
-#: system/models.py
-msgid "maintained by Magenta"
-msgstr "vedligeholdt af Magenta"
 
 #: system/models.py
 msgid "position"

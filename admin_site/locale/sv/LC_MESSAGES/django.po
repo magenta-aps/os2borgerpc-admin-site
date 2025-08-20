@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-28 11:05+0200\n"
+"POT-Creation-Date: 2025-08-20 15:10+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -3898,8 +3898,12 @@ msgid "Old installation guide (PDF)"
 msgstr "Gammal installationsguide (PDF)"
 
 #: docs/views.py
-msgid "Installation Guide"
-msgstr "Installationsguide"
+msgid "Installation Guide for x64"
+msgstr "Installationsguide för x64"
+
+#: docs/views.py
+msgid "Installation Guide for Raspberry Pi"
+msgstr "Installationsguide för Raspberry Pi"
 
 #: docs/views.py
 msgid "Updating Wi-Fi setup"

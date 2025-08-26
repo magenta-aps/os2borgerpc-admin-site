@@ -53,6 +53,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+# Used by the builtin django sites app, at least affecting logouts. Remove this when that app is removed.
+SITE_ID = 1
 
 # Template settings
 TEMPLATES = [

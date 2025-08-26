@@ -4,10 +4,6 @@ from django.views.generic import RedirectView
 from django.views.i18n import JavaScriptCatalog
 from system.views import (
     AdminIndex,
-    AdminTwoFactorBackupTokens,
-    AdminTwoFactorDisable,
-    AdminTwoFactorSetup,
-    AdminTwoFactorSetupComplete,
     APIKeyCreate,
     APIKeyDelete,
     APIKeyUpdate,
@@ -163,27 +159,6 @@ urlpatterns = [
     ),
     # Two-factor for OS2borgerPC machines
     path("site/<slug>/two-factor/", TwoFactor.as_view(), name="two_factor"),
-    # Two-factor for admin-site
-    path(
-        "site/<slug>/admin-two-factor/<username>/setup/",
-        AdminTwoFactorSetup.as_view(),
-        name="admin_otp_setup",
-    ),
-    path(
-        "site/<slug>/admin-two-factor/<username>/setup-complete/",
-        AdminTwoFactorSetupComplete.as_view(),
-        name="admin_otp_setup_complete",
-    ),
-    path(
-        "site/<slug>/admin-two-factor/<username>/disable/",
-        AdminTwoFactorDisable.as_view(),
-        name="admin_otp_disable",
-    ),
-    path(
-        "site/<slug>/admin-two-factor/<username>/backup-tokens/",
-        AdminTwoFactorBackupTokens.as_view(),
-        name="admin_otp_backup",
-    ),
     # Sites
     path("", AdminIndex.as_view(), name="index"),
     path("sites/", SiteList.as_view(), name="sites"),

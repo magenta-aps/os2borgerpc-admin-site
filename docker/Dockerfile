@@ -1,5 +1,7 @@
 # Copyright (C) 2021 Magenta ApS, http://magenta.dk.
 # Contact: info@magenta.dk.
+#
+# NOTE: Be CAREFUL with what you add here. It should be production ready.
 
 FROM node:22-alpine AS frontend
 
@@ -43,8 +45,7 @@ RUN set -ex \
   && apt-get clean \
   && rm -rf "/var/lib/apt/lists/*"  "/tmp/*"  "/var/tmp/*"  "/usr/share/man/??"  "/usr/share/man/??_*" \
   # create folders at easily mountable paths for output from django
-  && install -o bpc -g bpc -d /log \
-  && install -o bpc -g bpc -d /media
+  && install -o bpc -g bpc -d /log /media
 
 VOLUME /log
 VOLUME /media

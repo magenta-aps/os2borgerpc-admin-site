@@ -33,8 +33,8 @@ services:
         # Open PR to make --reload-extra-file recursive:
         # https://github.com/benoitc/gunicorn/pull/1846
         command:
-            sh -c "python manage.py initialize_database &&
-                   python manage.py compilemessages &&
+            sh -c "./manage.py initialize_database &&
+                   ./manage.py compilemessages &&
                    gunicorn --reload --workers 1 --max-requests 1
                    --reload-extra-file /code/admin_site/locale/da/LC_MESSAGES/django.mo
                    --reload-extra-file /code/admin_site/locale/da/LC_MESSAGES/djangojs.mo

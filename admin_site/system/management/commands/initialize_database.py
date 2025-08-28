@@ -7,9 +7,8 @@ from pathlib import Path
 from django.core.management.base import BaseCommand
 from django.conf import settings
 from django.core.management import call_command
-from os2borgerpc_admin.settings import INSTALL_DIR
 
-fixtures_base_dir = os.path.join(INSTALL_DIR, "fixtures")
+fixtures_base_dir = os.path.join(settings.INSTALL_DIR, "fixtures")
 
 
 class Command(BaseCommand):

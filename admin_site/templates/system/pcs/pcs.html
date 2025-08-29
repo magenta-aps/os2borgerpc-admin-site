@@ -48,9 +48,6 @@
           <th data-sortable="true">
             {% translate 'Latest check-in' %}
           </th>
-          <th data-sortable="true">
-            {% translate 'Latest event received' %}
-          </th>
         </tr>
       </thead>
       <tbody>
@@ -88,13 +85,6 @@
                 <span style="display: none;">{{ pc.last_seen|date:'U' }}</span> <!-- Used to ensure that datetimes are sorted correctly -->
                 {{ pc.last_seen|timesince }} {% translate 'ago' %}<br/>
                 {{ pc.last_seen }}
-              {% else %}
-                {% translate 'Never' %}
-              {% endif %}
-            </td>
-            <td>
-              {% if pc.security_events.latest_event %}
-                {{ pc.security_events.latest_event.reported_time }}
               {% else %}
                 {% translate 'Never' %}
               {% endif %}

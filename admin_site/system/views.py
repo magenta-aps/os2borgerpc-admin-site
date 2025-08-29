@@ -1822,14 +1822,6 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         context["selected_pc"] = pc
         context["os_release"] = pc.get_config_value("_os_release")
 
-        context["security_event"] = pc.security_events.latest_event()
-        context["has_security_events"] = (
-            pc.security_events.exclude(status=SecurityEvent.RESOLVED)
-            .exclude(problem__level=EventLevels.NORMAL)
-            .count()
-            > 0
-        )
-
         return context
 
     def form_valid(self, form):

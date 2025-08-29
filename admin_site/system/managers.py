@@ -2,9 +2,6 @@ from django.db import models
 
 
 class SecurityEventQuerySet(models.QuerySet):
-    def latest_event(self):
-        """Get latest security event for pc."""
-        return self.order_by("-reported_time").first()
 
     def priority_events_for_site(self, site):
         """Get priority events for a site."""

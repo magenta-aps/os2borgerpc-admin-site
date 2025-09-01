@@ -69,14 +69,6 @@
           {% endif %}
         </span>
         <span class="me-5">
-          {% translate "Last event received" %}:
-          {% if security_event %}
-            {{ security_event.reported_time|timesince }} {% translate "ago" %}
-          {% else %}
-            {% translate "Never" %}
-          {% endif %}
-        </span>
-        <span class="me-5">
           {% translate "Ubuntu version" %}:
           {{ os_release }}
         </span>

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-20 15:10+0200\n"
+"POT-Creation-Date: 2025-09-01 13:58+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -5497,10 +5497,6 @@ msgstr "Placering"
 msgid "Latest check-in"
 msgstr "Senaste incheckning"
 
-#: templates/system/pcs/pcs.html
-msgid "Latest event received"
-msgstr "Senaste incidenten har tagits emot"
-
 #: templates/system/pcs/pcs.html templates/system/pcs/update.html
 msgid "Not activated"
 msgstr "Inte aktiverad"
@@ -5529,10 +5525,6 @@ msgstr "Registrerad"
 #: templates/system/pcs/update.html
 msgid "Last check-in"
 msgstr "Senaste incheckning"
-
-#: templates/system/pcs/update.html
-msgid "Last event received"
-msgstr "Senaste incidenten har tagits emot"
 
 #: templates/system/pcs/update.html
 msgid "Ubuntu version"

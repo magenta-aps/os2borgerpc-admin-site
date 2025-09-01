@@ -35,8 +35,6 @@ class Command(BaseCommand):
         Should be able to be run multiple times over without
         generating duplicates.
         """
-        if not settings.INITIALIZE_DATABASE:
-            return
 
         # Create a file in the container when the database is initialized so it only happens once, when a given container is created. We want it in the container as opposed to the host so its rerun when the container is recreated.
         # Otherwise it attempts to read in fixtures every time the container starts, which can cause issues (e.g. integrity errors) if you've made changes to the db

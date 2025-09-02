@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-01 13:58+0200\n"
+"POT-Creation-Date: 2025-09-02 13:04+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -5493,6 +5493,10 @@ msgstr "Beskrivning"
 msgid "Location"
 msgstr "Placering"
 
+#: templates/system/pcs/pcs.html templates/system/pcs/update.html
+msgid "Ubuntu version"
+msgstr "Ubuntu version"
+
 #: templates/system/pcs/pcs.html
 msgid "Latest check-in"
 msgstr "Senaste incheckning"
@@ -5525,10 +5529,6 @@ msgstr "Registrerad"
 #: templates/system/pcs/update.html
 msgid "Last check-in"
 msgstr "Senaste incheckning"
-
-#: templates/system/pcs/update.html
-msgid "Ubuntu version"
-msgstr "Ubuntu version"
 
 #: templates/system/pcs/update.html
 msgid "Groups the computer is a member of"

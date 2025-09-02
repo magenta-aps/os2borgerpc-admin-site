@@ -1820,7 +1820,6 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         context["orderby_base_url"] = pc.get_absolute_url() + "?"
 
         context["selected_pc"] = pc
-        context["os_release"] = pc.get_config_value("_os_release")
 
         return context
 

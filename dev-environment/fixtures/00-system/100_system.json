@@ -205,6 +205,11 @@
     "fields": {}
 },
 {
+    "model": "system.configuration",
+    "pk": 42,
+    "fields": {}
+},
+{
     "model": "system.configurationentry",
     "pk": 1,
     "fields": {
@@ -2642,6 +2647,18 @@
     }
 },
 {
+    "model": "system.pcgroup",
+    "pk": 18,
+    "fields": {
+        "name": "Gruppe6",
+        "description": "",
+        "site": 1,
+        "configuration": 42,
+        "wake_week_plan": null,
+        "supervisors": []
+    }
+},
+{
     "model": "system.product",
     "pk": 1,
     "fields": {
@@ -4529,6 +4546,26 @@
     }
 },
 {
+    "model": "system.script",
+    "pk": 87,
+    "fields": {
+        "created": "2025-09-02T16:38:59.261",
+        "modified": "2025-09-02T16:41:03.902",
+        "user_created": "magenta",
+        "user_modified": "magenta",
+        "name": "filscript",
+        "uid": null,
+        "description": "-",
+        "site": 1,
+        "executable_code": "script_uploads/buffy.txt",
+        "is_security_script": false,
+        "is_hidden": false,
+        "feature_permission": null,
+        "tags": [],
+        "products": []
+    }
+},
+{
     "model": "system.batch",
     "pk": 1,
     "fields": {
@@ -5345,6 +5382,15 @@
         "group": 10,
         "script": 86,
         "position": 1
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 39,
+    "fields": {
+        "group": 18,
+        "script": 87,
+        "position": 0
     }
 },
 {
@@ -8180,6 +8226,42 @@
     }
 },
 {
+    "model": "system.input",
+    "pk": 107,
+    "fields": {
+        "name": "Påkrævet fil",
+        "value_type": "FILE",
+        "default_value": "",
+        "position": 0,
+        "mandatory": true,
+        "script": 87
+    }
+},
+{
+    "model": "system.input",
+    "pk": 108,
+    "fields": {
+        "name": "Valgmuligheder",
+        "value_type": "TEXT_FIELD",
+        "default_value": "one,two,three",
+        "position": 1,
+        "mandatory": false,
+        "script": 87
+    }
+},
+{
+    "model": "system.input",
+    "pk": 109,
+    "fields": {
+        "name": "Valgfri fil",
+        "value_type": "FILE",
+        "default_value": "",
+        "position": 2,
+        "mandatory": false,
+        "script": 87
+    }
+},
+{
     "model": "system.batchparameter",
     "pk": 1,
     "fields": {
@@ -8587,6 +8669,36 @@
         "file_value": "",
         "input": 106,
         "associated_script": 38
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 23,
+    "fields": {
+        "string_value": "",
+        "file_value": "parameter_uploads/u7ebjcspgqy5fejzx95g1kodwwtdzp35/buffy.txt",
+        "input": 107,
+        "associated_script": 39
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 24,
+    "fields": {
+        "string_value": "one",
+        "file_value": "",
+        "input": 108,
+        "associated_script": 39
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 25,
+    "fields": {
+        "string_value": "",
+        "file_value": "",
+        "input": 109,
+        "associated_script": 39
     }
 },
 {

@@ -7,10 +7,11 @@ import django
 
 from google.oauth2 import service_account
 from datetime import datetime
+from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Our customized user profile.
 AUTH_PROFILE_MODULE = "account.UserProfile"
@@ -79,9 +80,6 @@ TEMPLATES = [
         },
     },
 ]
-
-
-SOURCE_DIR = os.path.abspath(os.path.join(BASE_DIR, ".."))
 
 DATABASES = {
     "default": {

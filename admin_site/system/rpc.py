@@ -25,7 +25,7 @@ from system.utils import (
 logger = logging.getLogger(__name__)
 
 
-def register_new_computer_v2(mac, name, site, configuration):
+def register_new_computer_v2(mac, name, site, configuration, api_call=False):
     """Register a new computer with the admin system - after registration, the
     computer will be submitted for approval."""
 
@@ -34,28 +34,46 @@ def register_new_computer_v2(mac, name, site, configuration):
 
     if PC.objects.filter(uid=uid).count():
         name = PC.objects.get(uid=uid).name
-        raise Exception(
+        error_string = (
             "A computer with the same MAC address as this computer is already "
             f"registered with the chosen admin portal under the name {name}. "
             "Start by deleting the computer on the computer list on your site "
             "and then restart the registration."
         )
+        # If we simply raise an exception here when using the API, the user
+        # will get a message containing the full traceback, which is more confusing.
+        # To avoid this, we return the error message and make the client itself
+        # raise an exception with that message
+        if api_call:
+            return 400, error_string
+        else:
+            raise Exception(error_string)
     # If we are here then no matching PC object exists
     # Check if the chosen name is too long to prevent old clients
     # from setting names that are too long
     if len(name) > 40:
-        raise Exception(
+        error_string = (
             f"The chosen name {name} has a length of {len(name)} characters. "
             "The name must have a length of 1-40 characters."
         )
+        # See comment at the previous use of api_call
+        if api_call:
+            return 400, error_string
+        else:
+            raise Exception(error_string)
     new_pc = PC(name=name, uid=uid)
     try:
         new_pc.site = Site.objects.get(uid=site)
     except Site.DoesNotExist:
-        raise Exception(
+        error_string = (
             "The chosen site UID does not match any sites on the "
             "chosen admin portal."
         )
+        # See comment at the first use of api_call
+        if api_call:
+            return 400, error_string
+        else:
+            raise Exception(error_string)
 
     new_pc.is_activated = False
     new_pc.mac = mac
@@ -833,7 +851,10 @@ def sms_logout(citizen_hash, log_id):
     return val
 
 
-def citizen_login(username, password, pc_uid, prevent_dual_login=False):
+# This function is deprecated and only exists because one customer still has old
+# computers that call it. The newer versions of the Cicero integration
+# use general_citizen_login instead.
+def citizen_login(username, password, pc_uid, prevent_dual_login=True):
     """Check if user is allowed to log in and give the go-ahead if so.
 
     Return values:
@@ -847,11 +868,11 @@ def citizen_login(username, password, pc_uid, prevent_dual_login=False):
         pc = PC.objects.get(uid=pc_uid)
         if not pc.is_activated:
             # Fail silently
-            return time_allowed
+            return int(time_allowed), ""
         site = pc.site
     except PC.DoesNotExist:
         # Fail silently
-        return time_allowed
+        return int(time_allowed), ""
     login_validator = get_citizen_login_api_validator()
     citizen_id = login_validator(username, password, site)
     citizen_hash = ""
@@ -875,14 +896,12 @@ def citizen_login(username, password, pc_uid, prevent_dual_login=False):
                     time_allowed
                     - (now - citizen.last_successful_login).total_seconds() // 60
                 )
-                if prevent_dual_login:
-                    citizen.logged_in = True
+                citizen.logged_in = True
             elif now < quarantined_from and citizen.logged_in:
                 citizen_hash = "logged_in"
             elif (now - quarantined_from) >= quarantine_duration:
                 citizen.last_successful_login = now
-                if prevent_dual_login:
-                    citizen.logged_in = True
+                citizen.logged_in = True
             else:
                 # (now - quarantined_from) < quarantine_duration:
                 time_allowed = (
@@ -899,12 +918,12 @@ def citizen_login(username, password, pc_uid, prevent_dual_login=False):
             )
         citizen.save()
 
-    if prevent_dual_login:
-        return int(time_allowed), citizen_hash
-    else:
-        return int(time_allowed)
+    return int(time_allowed), citizen_hash
 
 
+# This function is deprecated and only exists because one customer still has old
+# computers that call it. The newer versions of the Cicero integration
+# use general_citizen_logout instead.
 def citizen_logout(citizen_hash):
     val = general_citizen_logout(citizen_hash, "")
     return val

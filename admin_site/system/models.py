@@ -783,6 +783,10 @@ class PC(models.Model):
             else:
                 return self.Status(OK, None)
 
+    @property
+    def os_release(self):
+        return self.get_config_value("_os_release")
+
     def get_list_of_configurations(self):
         configs = [self.site.configuration]
         configs.extend([g.configuration for g in self.pc_groups.all()])

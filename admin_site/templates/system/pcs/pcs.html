@@ -43,6 +43,9 @@
             {% translate 'Location' %}
           </th>
           <th data-sortable="true">
+            {% translate 'Ubuntu version' %}
+          </th>
+          <th data-sortable="true">
             {% translate 'Status' %}
           </th>
           <th data-sortable="true">
@@ -73,6 +76,7 @@
             {% endif %}
             <td>{{ pc.description }}</td>
             <td>{{ pc.location }}</td>
+            <td>{{ pc.os_release|default:"" }}</td>
             <td>
               {% if pc.online %}
                 <span class="badge bg-success">{% translate 'Online' %}</span>

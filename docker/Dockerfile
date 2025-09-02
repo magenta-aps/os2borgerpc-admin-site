@@ -40,16 +40,16 @@ RUN set -ex \
   # automatic ranges of UID_MAX/GID_MAX used by useradd/groupadd. See
   # `/etc/login.defs`. Hopefully there will be no conflicts with users of the
   # host system or users of other docker containers.
-  && groupadd -g $GROUP_ID -r $GROUP_NAME \
-  && useradd -u $USER_ID --no-log-init -r -g $GROUP_NAME $USER_NAME \
+  && groupadd --gid $GROUP_ID --system $GROUP_NAME \
+  && useradd --uid $USER_ID --no-log-init --system --gid $GROUP_NAME $USER_NAME \
   # Install system dependencies from file.
-  && apt-get -y update \
-  && apt-get -y install --no-install-recommends $(grep -o '^[^#][[:alnum:].-]*' sys-requirements.txt) \
+  && apt-get --assume-yes update \
+  && apt-get --assume-yes install --no-install-recommends $(grep --only-matching '^[^#][[:alnum:].-]*' sys-requirements.txt) \
   # clean up after apt-get and man-pages
   && apt-get clean \
   && rm -rf "/var/lib/apt/lists/*"  "/tmp/*"  "/var/tmp/*"  "/usr/share/man/??"  "/usr/share/man/??_*" \
   # create folders at easily mountable paths for output from django
-  && install -o $USER_NAME -g $GROUP_NAME -d /log /media
+  && install --owner $USER_NAME --group $GROUP_NAME --directory /log /media
 
 VOLUME /log
 VOLUME /media

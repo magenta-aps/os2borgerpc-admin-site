@@ -70,7 +70,7 @@
         </span>
         <span class="me-5">
           {% translate "Ubuntu version" %}:
-          {{ os_release }}
+          {{ selected_pc.os_release|default:"" }}
         </span>
       </div>
 

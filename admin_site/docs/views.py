@@ -22,7 +22,7 @@ class DocView(TemplateView, LoginRequiredMixin):
     docname = "status"
 
     def template_exists(self, subpath):
-        fullpath = os.path.join(settings.INSTALL_DIR + "/docs/templates/", subpath)
+        fullpath = os.path.join(settings.BASE_DIR + "/docs/templates/", subpath)
         return os.path.isfile(fullpath)
 
     def get_doc_user_lang(self, file_path, extension):

@@ -1,3 +1,15 @@
+## Version 6.9.0, September 4, 2025
+
+- Add client-api meant to replace xmlrpc
+- Indicate more clearly when API-keys or passwords have already been set under site settings
+- Remove latest event timestamp from pc overview and status
+- Add Ubuntu version to pc overview and status
+- Add separate link to installation guide for Kiosk RPi
+- Remove unused "maintained by Magenta" value from scripts
+- Refactor files related to on/off schedules
+- Rewrite policy list from jquery to js
+- Cleanup settings and Dockerfile
+
 ## Version 6.8.0, April 29, 2025
 
 - Readd OIDC middleware because we found the real cause of the previously mentioned errors

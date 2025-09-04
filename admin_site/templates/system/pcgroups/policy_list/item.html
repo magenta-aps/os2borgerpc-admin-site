@@ -17,12 +17,12 @@
         {% if param.input.value_type != 'FILE' %}
           {# Even though it looks complicated, the logic for mandatory parameters is simple enough: The browser won't enforce the non-emptiness check for mandatory passwords or files if a value is stored in the database #}
           {% if param.input.value_type != 'PASSWORD' %}
-            <input class="policy-script-param" type="hidden" name="group_policies_{{ ps_pk }}_param_{{ param.input.position }}" value="{{ param.string_value }}{{ param.file_value }}" data-inputtype="{{ param.input.value_type }}" {% if param.input.mandatory %} required="required" {% endif %}>
+            <input class="policy-script-param" type="hidden" name="group_policies_{{ ps_pk }}_param_{{ param.input.position }}" value="{{ param.string_value }}{{ param.file_value }}" data-inputtype="{{ param.input.value_type }}" {% if param.input.mandatory %} data-isrequired="true" {% endif %}>
           {% else %}
-            <input class="policy-script-param" type="hidden" name="group_policies_{{ ps_pk }}_param_{{ param.input.position }}" data-inputtype="{{ param.input.value_type }}" {% if not param.string_value and param.input.mandatory %} required="required" {% endif %}>
+            <input class="policy-script-param" type="hidden" name="group_policies_{{ ps_pk }}_param_{{ param.input.position }}" data-inputtype="{{ param.input.value_type }}" {% if not param.string_value and param.input.mandatory %} data-isrequired="true" {% endif %}>
           {% endif %}
         {% else %}
-          <input class="policy-script-param d-none form-control" type="file" name="group_policies_{{ ps.pk }}_param_{{ param.input.position }}" data-inputtype="FILE" {% if not param.file_value and param.input.mandatory %} required="required" {% endif %}>
+          <input class="policy-script-param d-none form-control" type="file" name="group_policies_{{ ps.pk }}_param_{{ param.input.position }}" data-inputtype="FILE" {% if not param.file_value and param.input.mandatory %} data-isrequired="true" {% endif %}>
         {% endif %}
         <div class="policy-script-print">
           <strong class="policy-script-print-name">
@@ -43,7 +43,7 @@
               {% if param.string_value == 'True' %}
                 <input type="checkbox" class="form-check-input" disabled checked>
               {% else %}
-                <input type="checkbox" class="form-check-input" disabled unchecked>
+                <input type="checkbox" class="form-check-input" disabled>
               {% endif %}
             {% else %}
               {{ param.string_value }}
@@ -55,7 +55,7 @@
   </td>
   <td style="min-width: 6.2rem; width: 20%;">
     <p class="mb-0" style="margin-left: -.5rem;">
-     <a class="mb-1 mt-1 btn btn-sm {% if not params %} invisible {% endif %}" onclick="scriptEdit(this,
+     <a class="mb-1 mt-1 btn btn-sm {% if not params %} invisible {% endif %}" onclick="policyListHandler.scriptEdit(this,
       [{% for param in params %}
       '{{ param.input.default_value }}',
       {% endfor %}]
@@ -63,7 +63,7 @@
 
         <span class="material-symbols-outlined">edit</span>{% translate "Edit" %}
       </a>
-      <button type="button" class="btn btn-sm ps-3" onclick="removeItem(this, 'group_policies')">
+      <button type="button" class="btn btn-sm ps-3" onclick="policyListHandler.removeItem(this, 'group_policies')">
         <span class='material-symbols-outlined'>delete</span>{% translate "Remove" %}
       </button>
     </p>

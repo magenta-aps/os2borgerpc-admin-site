@@ -1,9 +1,10 @@
 services:
-    frontend:
+    frontend-reloader:
         build:
             context: .
             dockerfile: docker/Dockerfile
             target: frontend
+        container_name: bpc-frontend-reloader
         command: npm run watch-sass
         volumes:
             - .:/code/
@@ -11,12 +12,14 @@ services:
             # create an additional volume for it. It is important this anonymous
             # volume comes after the above bind to work.
             - /code/nodejs/node_modules/
-    os2borgerpc-admin:
+    application:
         build:
             context: .
             dockerfile: docker/Dockerfile
             target: os2borgerpc
-        image: os2borgerpcadmin
+        image: bpc
+        pull_policy: never
+        container_name: bpc-application
         # NOTE: --workers 1 and --max-requests 1 makes gunicorn run with only
         # one worker + respawn it after each request to reload on changes
         # to templates/CSS + avoid issues where different workers have cached
@@ -30,8 +33,8 @@ services:
         # Open PR to make --reload-extra-file recursive:
         # https://github.com/benoitc/gunicorn/pull/1846
         command:
-            sh -c "python manage.py initialize_database &&
-                   python manage.py compilemessages &&
+            sh -c "./manage.py initialize_database &&
+                   ./manage.py compilemessages &&
                    gunicorn --reload --workers 1 --max-requests 1
                    --reload-extra-file /code/admin_site/locale/da/LC_MESSAGES/django.mo
                    --reload-extra-file /code/admin_site/locale/da/LC_MESSAGES/djangojs.mo
@@ -49,17 +52,20 @@ services:
         stdin_open: true
         tty: true
         privileged: true
-    cron-service:
-        image: os2borgerpcadmin
+    cron:
+        image: bpc
+        pull_policy: never
+        container_name: bpc-cron
         volumes:
             - .:/code/
             - ./dev-environment/dev-settings.ini:/user-settings.ini
         command: [ "supercronic", "/crontab" ]
         entrypoint: []
         depends_on:
-            - os2borgerpc-admin
+            - application
     db:
-        image: postgres:latest
+        image: postgres:13
+        container_name: bpc-db
         restart: always
         environment:
             # NOTE: These values are only used in the local development

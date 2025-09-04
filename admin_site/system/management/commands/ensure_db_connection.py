@@ -1,4 +1,4 @@
-# Copyright (C) 2019 Magenta ApS, http://magenta.dk.
+# Copyright (C) 2019 Magenta ApS, https://magenta.dk.
 # Contact: info@magenta.dk.
 #
 

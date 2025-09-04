@@ -50,15 +50,13 @@
   <h2>{% translate "Jobs run by Magenta" %}</h2>
   <p>
     {% blocktranslate trimmed %}
-    If the user for a job is listed as "Magenta", it means that the job was
-    started by the OS2borgerPC team at Magenta.
+    Sometimes we run jobs on all or some computers.
     {% endblocktranslate %}
   </p>
-    <p>{% translate "This is used for e.g." %}:</p>
+    <p>{% translate "This is generally done for the following reasons" %}:</p>
   <ul>
-    <li>{% translate "Maintenance" %}</li>
-    <li>{% translate "Updates" %}</li>
+    <li>{% translate "Maintenance, including dealing with changes that aren't backwards compatible" %}</li>
+    <li>{% translate "Patching security issues, such as CVE's identified in Ubuntu" %}</li>
     <li>{% translate "Troubleshooting and error correction" %}</li>
-    <li>{% translate "Patching security issues (CVE's identified in Ubuntu)" %}</li>
   </ul>
 {% endblock %}

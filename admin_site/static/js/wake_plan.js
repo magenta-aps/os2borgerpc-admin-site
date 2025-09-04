@@ -75,12 +75,8 @@ if (CHECKBOX_ENABLED) {
 // TODO: If a new wakechangeevent is saved, set a cookie with its ID and name, and then this page could have a focus listener that add it to the picklist as an option?
 
 // Store current plan_id in SessionStorage
-sessionStorage.setItem(WAKE_PLAN_FROM_URL_KEY, $(location).attr("href"))
+sessionStorage.setItem(WAKE_PLAN_FROM_URL_KEY, location.href)
 
-// Store the state of the wake plan if clicking any of the wake change events buttons (except the picklist which isn't handled here)
-$("#custom-wake-plans").click(function () {
-  saveInputStates()
-})
 
 // Serialize current wake plan, save it to session storage
 function saveInputStates() {
@@ -95,55 +91,17 @@ function saveInputStates() {
 // This does not handle saving the picklists
 function getWakePlanSettingsAsJSON() {
   const wakePlanSettingsAsJSON = {}
-  wakePlanSettingsAsJSON.activated =
-    document.getElementById("id_enabled").checked
-  wakePlanSettingsAsJSON.activated_label =
-    document.getElementById("id_enabled_label").textContent
-  wakePlanSettingsAsJSON.name = document.getElementById("id_name").value
-  wakePlanSettingsAsJSON.sleep_state =
-    document.getElementById("id_sleep_state").value
-  wakePlanSettingsAsJSON.monday_open =
-    document.getElementById("id_monday_open").checked
-  wakePlanSettingsAsJSON.monday_on =
-    document.getElementById("id_monday_on").value
-  wakePlanSettingsAsJSON.monday_off =
-    document.getElementById("id_monday_off").value
-  wakePlanSettingsAsJSON.tuesday_open =
-    document.getElementById("id_tuesday_open").checked
-  wakePlanSettingsAsJSON.tuesday_on =
-    document.getElementById("id_tuesday_on").value
-  wakePlanSettingsAsJSON.tuesday_off =
-    document.getElementById("id_tuesday_off").value
-  wakePlanSettingsAsJSON.wednesday_open =
-    document.getElementById("id_wednesday_open").checked
-  wakePlanSettingsAsJSON.wednesday_on =
-    document.getElementById("id_wednesday_on").value
-  wakePlanSettingsAsJSON.wednesday_off =
-    document.getElementById("id_wednesday_off").value
-  wakePlanSettingsAsJSON.thursday_open =
-    document.getElementById("id_thursday_open").checked
-  wakePlanSettingsAsJSON.thursday_on =
-    document.getElementById("id_thursday_on").value
-  wakePlanSettingsAsJSON.thursday_off =
-    document.getElementById("id_thursday_off").value
-  wakePlanSettingsAsJSON.friday_open =
-    document.getElementById("id_friday_open").checked
-  wakePlanSettingsAsJSON.friday_on =
-    document.getElementById("id_friday_on").value
-  wakePlanSettingsAsJSON.friday_off =
-    document.getElementById("id_friday_off").value
-  wakePlanSettingsAsJSON.saturday_open =
-    document.getElementById("id_saturday_open").checked
-  wakePlanSettingsAsJSON.saturday_on =
-    document.getElementById("id_saturday_on").value
-  wakePlanSettingsAsJSON.saturday_off =
-    document.getElementById("id_saturday_off").value
-  wakePlanSettingsAsJSON.sunday_open =
-    document.getElementById("id_sunday_open").checked
-  wakePlanSettingsAsJSON.sunday_on =
-    document.getElementById("id_sunday_on").value
-  wakePlanSettingsAsJSON.sunday_off =
-    document.getElementById("id_sunday_off").value
+  document.querySelectorAll(".json-input").forEach(element => {
+    if (element.type === "checkbox"){
+      wakePlanSettingsAsJSON[element.name ?? element.id] = element.checked
+    }
+    else if (element.nodeName === "SPAN"){
+      wakePlanSettingsAsJSON[element.name ?? element.id] = element.textContent
+    }
+    else {
+      wakePlanSettingsAsJSON[element.name ?? element.id] = element.value
+    }
+  })
 
   return wakePlanSettingsAsJSON
 }
@@ -154,135 +112,36 @@ function runWhenReturnedToPage() {
     sessionStorage.getItem("wake_plan_settings"),
   )
 
-  document.getElementById("id_enabled").checked =
-    wakePlanSettingsAsJSON.activated
-  document.getElementById("id_enabled_label").textContent =
-    wakePlanSettingsAsJSON.activated_label
-  document.getElementById("id_name").value = wakePlanSettingsAsJSON.name
-  document.getElementById("id_sleep_state").value =
-    wakePlanSettingsAsJSON.sleep_state
-  document.getElementById("id_monday_open").checked =
-    wakePlanSettingsAsJSON.monday_open
-  weekDayOn(
-    document.getElementById("id_monday_open"),
-    wakePlanSettingsAsJSON.monday_open,
-  )
-  document.getElementById("id_monday_on").value =
-    wakePlanSettingsAsJSON.monday_on
-  document.getElementById("id_monday_off").value =
-    wakePlanSettingsAsJSON.monday_off
-  document.getElementById("id_tuesday_open").checked =
-    wakePlanSettingsAsJSON.tuesday_open
-  weekDayOn(
-    document.getElementById("id_tuesday_open"),
-    wakePlanSettingsAsJSON.tuesday_open,
-  )
-  document.getElementById("id_tuesday_on").value =
-    wakePlanSettingsAsJSON.tuesday_on
-  document.getElementById("id_tuesday_off").value =
-    wakePlanSettingsAsJSON.tuesday_off
-  document.getElementById("id_wednesday_open").checked =
-    wakePlanSettingsAsJSON.wednesday_open
-  weekDayOn(
-    document.getElementById("id_wednesday_open"),
-    wakePlanSettingsAsJSON.wednesday_open,
-  )
-  document.getElementById("id_wednesday_on").value =
-    wakePlanSettingsAsJSON.wednesday_on
-  document.getElementById("id_wednesday_off").value =
-    wakePlanSettingsAsJSON.wednesday_off
-  document.getElementById("id_thursday_open").checked =
-    wakePlanSettingsAsJSON.thursday_open
-  weekDayOn(
-    document.getElementById("id_thursday_open"),
-    wakePlanSettingsAsJSON.thursday_open,
-  )
-  document.getElementById("id_thursday_on").value =
-    wakePlanSettingsAsJSON.thursday_on
-  document.getElementById("id_thursday_off").value =
-    wakePlanSettingsAsJSON.thursday_off
-  document.getElementById("id_friday_open").checked =
-    wakePlanSettingsAsJSON.friday_open
-  weekDayOn(
-    document.getElementById("id_friday_open"),
-    wakePlanSettingsAsJSON.friday_open,
-  )
-  document.getElementById("id_friday_on").value =
-    wakePlanSettingsAsJSON.friday_on
-  document.getElementById("id_friday_off").value =
-    wakePlanSettingsAsJSON.friday_off
-  document.getElementById("id_saturday_open").checked =
-    wakePlanSettingsAsJSON.saturday_open
-  weekDayOn(
-    document.getElementById("id_saturday_open"),
-    wakePlanSettingsAsJSON.saturday_open,
-  )
-  document.getElementById("id_saturday_on").value =
-    wakePlanSettingsAsJSON.saturday_on
-  document.getElementById("id_saturday_off").value =
-    wakePlanSettingsAsJSON.saturday_off
-  document.getElementById("id_sunday_open").checked =
-    wakePlanSettingsAsJSON.sunday_open
-  weekDayOn(
-    document.getElementById("id_sunday_open"),
-    wakePlanSettingsAsJSON.sunday_open,
-  )
-  document.getElementById("id_sunday_on").value =
-    wakePlanSettingsAsJSON.sunday_on
-  document.getElementById("id_sunday_off").value =
-    wakePlanSettingsAsJSON.sunday_off
+  const nodes =   document.querySelectorAll(".json-input")
+  nodes.forEach(element => {
+    if (element.type === "checkbox"){
+      element.checked = wakePlanSettingsAsJSON[element.name ?? element.id]
+      if (element.className.includes("checkbox")){
+        weekDayOn(element, wakePlanSettingsAsJSON[element.name ?? element.id])
+      }
+    }
+    else if (element.nodeName === "SPAN"){
+     element.textContent =  wakePlanSettingsAsJSON[element.name ?? element.id]
+    }
+    else {
+       element.value = wakePlanSettingsAsJSON[element.name ?? element.id]
+    }
+  })
 }
 
-// ???
-let going_back_to_wake_plan_string = sessionStorage.getItem(
-  "going_back_to_wake_plan",
-)
-
-let going_back_to_wake_plan_boolean = going_back_to_wake_plan_string === "true"
-
 // When returning to the wake plan restore the state and ...?
-if (going_back_to_wake_plan_boolean) {
+if (sessionStorage.getItem("going_back_to_wake_plan") === "true") {
   sessionStorage.setItem("going_back_to_wake_plan", "false")
   runWhenReturnedToPage()
 }
 
 sessionStorage.setItem("going_to_wake_change_events", "false")
 
-// When a link is clicked in the wake_change_event picklist it must save the wake plan state
-addEventListener("click", (evt) => {
-  let classString = evt.target.getAttribute("class")
-  if (!(classString === null)) {
-    let wake_change_events_link_clicked = classString.includes(
-      "wake_change_events_link",
-    )
-    if (wake_change_events_link_clicked) {
-      saveInputStates()
-    }
-  }
-})
+document.querySelectorAll(".wake_change_events_link").forEach(element =>  element.addEventListener("click", saveInputStates))
 
-// ???
 addEventListener("beforeunload", (evt) => {
-  let going_to_wake_change_events_string = sessionStorage.getItem(
-    "going_to_wake_change_events",
-  )
-
-  let going_to_wake_change_events_boolean =
-    going_to_wake_change_events_string === "true"
-
-  if (!going_to_wake_change_events_boolean) {
+  if (sessionStorage.getItem("going_to_wake_change_events") !== "true") {
     removeDataFromSessionStorage()
-  }
-})
-
-// When pressing F5 please clear the stored wake plan
-// Even with reload it remembers the toggle switches settings state even though it should be reset to what it is from the database
-// Another limitation is that the user can refresh with Ctrl-f5 or pressing the button to refresh
-// TODO: fix the above
-addEventListener("keydown", (evt) => {
-  if (evt.key === "F5") {
-    removeDataFromSessionStorage()
-    location.reload(true)
   }
 })
 
@@ -310,13 +169,13 @@ function removeDataFromSessionStorage() {
 
 document
   .getElementById("submit-button")
-  .addEventListener("click", function (event) {
+  .addEventListener("click", () => {
     removeDataFromSessionStorage()
   })
 
 document
   .getElementById("cancel-button")
-  .addEventListener("click", function (event) {
+  .addEventListener("click", () => {
     removeDataFromSessionStorage()
     location.reload(true) // true means it reloads from server, false will reload from cache
   })

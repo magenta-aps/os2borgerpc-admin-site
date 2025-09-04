@@ -57,6 +57,18 @@ class SiteForm(forms.ModelForm):
         instance = getattr(self, "instance", None)
         if instance and instance.pk:
             self.fields["uid"].widget.attrs["readonly"] = True
+            # Add placeholder if a value exists
+            for field_name in [
+                "booking_api_key",
+                "citizen_login_api_key",
+                "citizen_login_api_password",
+            ]:
+                if getattr(instance, field_name, None):
+                    self.fields[field_name].widget.attrs["placeholder"] = (
+                        (_("Fill out if you want to update the current password"))
+                        if field_name == "citizen_login_api_password"
+                        else _("Fill out if you want to update the current value")
+                    )
 
     class Meta:
         model = Site
@@ -122,11 +134,8 @@ class ScriptForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         instance = getattr(self, "instance", None)
-        if not instance or not instance.pk:
-            self.fields["maintained_by_magenta"].widget = forms.HiddenInput()
 
         self.fields["tags"].disabled = True
-        self.fields["maintained_by_magenta"].widget.attrs["disabled"] = True
 
     class Meta:
         model = Script
@@ -392,6 +401,10 @@ class WakePlanForm(forms.ModelForm):
             ]
 
         super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs["class"] = (
+                field.widget.attrs.get("class", "") + " json-input"
+            )
 
     class Meta:
         model = WakeWeekPlan

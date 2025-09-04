@@ -22,7 +22,7 @@ class DocView(TemplateView, LoginRequiredMixin):
     docname = "status"
 
     def template_exists(self, subpath):
-        fullpath = os.path.join(settings.INSTALL_DIR + "/docs/templates/", subpath)
+        fullpath = settings.BASE_DIR / "docs/templates" / subpath
         return os.path.isfile(fullpath)
 
     def get_doc_user_lang(self, file_path, extension):
@@ -73,8 +73,12 @@ class DocView(TemplateView, LoginRequiredMixin):
             ),
             ("", _("OS2borgerPC Kiosk")),
             (
-                "https://os2borgerpc-server-image.readthedocs.io/en/latest/install_setup.html",
-                _("Installation Guide"),
+                "https://os2borgerpc-server-image.readthedocs.io/en/latest/install_setup_x64.html",
+                _("Installation Guide for x64"),
+            ),
+            (
+                "https://os2borgerpc-server-image.readthedocs.io/en/latest/install_setup_rpi.html",
+                _("Installation Guide for Raspberry Pi"),
             ),
             ("os2borgerpc_kiosk_wifi_guide", _("Updating Wi-Fi setup")),
             ("", _("Audit")),

@@ -7,10 +7,11 @@ import django
 
 from google.oauth2 import service_account
 from datetime import datetime
+from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
-INSTALL_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Our customized user profile.
 AUTH_PROFILE_MODULE = "account.UserProfile"
@@ -53,13 +54,15 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+# Used by the builtin django sites app, at least affecting logouts. Remove this when that app is removed.
+SITE_ID = 1
 
 # Template settings
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            os.path.join(INSTALL_DIR, "templates/"),
+            BASE_DIR / "templates/",
             # Can this one be deleted?:
             django.__path__[0] + "/forms/templates",
         ],
@@ -77,9 +80,6 @@ TEMPLATES = [
         },
     },
 ]
-
-
-SOURCE_DIR = os.path.abspath(os.path.join(INSTALL_DIR, ".."))
 
 DATABASES = {
     "default": {
@@ -121,9 +121,7 @@ TIME_ZONE = settings["TIME_ZONE"]
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = settings["LANGUAGE_CODE"]
 
-LOCALE_PATHS = [os.path.join(INSTALL_DIR, "locale")]
-
-SITE_ID = 1
+LOCALE_PATHS = [BASE_DIR / "locale"]
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -160,7 +158,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(INSTALL_DIR, "static"),
+    BASE_DIR / "static",
     "/frontend",
 )
 
@@ -304,8 +302,6 @@ LOGGING = {
         "level": settings.get("LOG_LEVEL", fallback="ERROR"),
     },
 }
-
-INITIALIZE_DATABASE = settings.getboolean("INITIALIZE_DATABASE", False)
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 

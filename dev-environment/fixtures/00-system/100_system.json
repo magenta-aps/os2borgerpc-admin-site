@@ -205,6 +205,11 @@
     "fields": {}
 },
 {
+    "model": "system.configuration",
+    "pk": 42,
+    "fields": {}
+},
+{
     "model": "system.configurationentry",
     "pk": 1,
     "fields": {
@@ -469,7 +474,7 @@
     "pk": 38,
     "fields": {
         "key": "hostname",
-        "value": "5",
+        "value": "pc54",
         "read_only": false,
         "owner_configuration": 9
     }
@@ -2229,287 +2234,27 @@
 },
 {
     "model": "system.wakechangeevent",
-    "pk": 4,
-    "fields": {
-        "name": "Helligdag2",
-        "date_start": "2022-10-12",
-        "time_start": "12:04:30",
-        "date_end": "2022-10-12",
-        "time_end": "18:04:34",
-        "type": "ALTERED_HOURS",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 5,
-    "fields": {
-        "name": "Efterårsferie2",
-        "date_start": "2022-09-12",
-        "time_start": null,
-        "date_end": "2022-10-12",
-        "time_end": null,
-        "type": "CLOSED",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 6,
-    "fields": {
-        "name": "Vinterferie2",
-        "date_start": "2022-10-12",
-        "time_start": "12:03:35",
-        "date_end": "2022-12-12",
-        "time_end": "20:03:36",
-        "type": "ALTERED_HOURS",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 7,
-    "fields": {
-        "name": "Helligdag3",
-        "date_start": "2022-10-12",
-        "time_start": null,
-        "date_end": "2022-10-12",
-        "time_end": null,
-        "type": "CLOSED",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 8,
-    "fields": {
-        "name": "Efterårsferie3",
-        "date_start": "2022-09-12",
-        "time_start": "12:04:15",
-        "date_end": "2022-10-12",
-        "time_end": "20:04:16",
-        "type": "ALTERED_HOURS",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 9,
-    "fields": {
-        "name": "Vinterferie3",
-        "date_start": "2022-10-12",
-        "time_start": null,
-        "date_end": "2022-12-12",
-        "time_end": null,
-        "type": "CLOSED",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 10,
-    "fields": {
-        "name": "Helligdag4",
-        "date_start": "2022-10-12",
-        "time_start": "12:04:06",
-        "date_end": "2022-10-12",
-        "time_end": "17:04:07",
-        "type": "ALTERED_HOURS",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 11,
-    "fields": {
-        "name": "Efterårsferie4",
-        "date_start": "2022-09-12",
-        "time_start": null,
-        "date_end": "2022-10-12",
-        "time_end": null,
-        "type": "CLOSED",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 12,
-    "fields": {
-        "name": "Vinterferie4",
-        "date_start": "2022-10-12",
-        "time_start": "12:03:35",
-        "date_end": "2022-12-12",
-        "time_end": "20:03:36",
-        "type": "ALTERED_HOURS",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 13,
-    "fields": {
-        "name": "Helligdag5",
-        "date_start": "2022-10-12",
-        "time_start": "12:04:06",
-        "date_end": "2022-10-12",
-        "time_end": "17:04:07",
-        "type": "CLOSED",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 14,
-    "fields": {
-        "name": "Efterårsferie5",
-        "date_start": "2022-09-12",
-        "time_start": "12:04:15",
-        "date_end": "2022-10-12",
-        "time_end": "20:04:16",
-        "type": "ALTERED_HOURS",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
     "pk": 15,
     "fields": {
-        "name": "Vinterferie5",
-        "date_start": "2022-10-12",
-        "time_start": "12:03:35",
-        "date_end": "2022-12-12",
-        "time_end": "20:03:36",
-        "type": "CLOSED",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 16,
-    "fields": {
-        "name": "Helligdag6",
-        "date_start": "2022-10-12",
-        "time_start": "12:04:06",
-        "date_end": "2022-10-12",
-        "time_end": "17:04:07",
-        "type": "ALTERED_HOURS",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 17,
-    "fields": {
-        "name": "Efterårsferie6",
-        "date_start": "2022-09-12",
-        "time_start": "12:04:15",
-        "date_end": "2022-10-12",
-        "time_end": "20:04:16",
-        "type": "CLOSED",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 18,
-    "fields": {
-        "name": "Vinterferie6",
-        "date_start": "2022-10-12",
-        "time_start": "12:03:35",
-        "date_end": "2022-12-12",
-        "time_end": "20:03:36",
-        "type": "ALTERED_HOURS",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 19,
-    "fields": {
-        "name": "Helligdag7",
-        "date_start": "2022-10-12",
-        "time_start": "12:04:06",
-        "date_end": "2022-10-12",
-        "time_end": "17:04:07",
-        "type": "CLOSED",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 20,
-    "fields": {
-        "name": "Efterårsferie7",
-        "date_start": "2022-09-12",
-        "time_start": "12:04:15",
-        "date_end": "2022-10-12",
-        "time_end": "20:04:16",
-        "type": "ALTERED_HOURS",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 21,
-    "fields": {
-        "name": "Vinterferie7",
-        "date_start": "2022-10-12",
-        "time_start": "12:03:35",
-        "date_end": "2022-12-12",
-        "time_end": "20:03:36",
-        "type": "CLOSED",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 22,
-    "fields": {
-        "name": "Helligdag8",
-        "date_start": "2022-10-12",
-        "time_start": "12:04:06",
-        "date_end": "2022-10-12",
-        "time_end": "17:04:07",
-        "type": "ALTERED_HOURS",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 23,
-    "fields": {
-        "name": "Efterårsferie8",
-        "date_start": "2022-09-12",
-        "time_start": "12:04:15",
-        "date_end": "2022-10-12",
-        "time_end": "20:04:16",
-        "type": "CLOSED",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 24,
-    "fields": {
-        "name": "Vinterferie8",
-        "date_start": "2022-10-12",
-        "time_start": "12:03:35",
-        "date_end": "2022-12-12",
-        "time_end": "20:03:36",
-        "type": "ALTERED_HOURS",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 25,
-    "fields": {
-        "name": "Helligdag9",
+        "name": "Vinterferie",
         "date_start": "2022-10-12",
         "time_start": null,
-        "date_end": "2022-10-12",
+        "date_end": "2022-12-12",
         "time_end": null,
         "type": "CLOSED",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 26,
+    "fields": {
+        "name": "Påske",
+        "date_start": "2025-04-08",
+        "time_start": "10:00:00",
+        "date_end": "2025-04-14",
+        "time_end": "16:00:00",
+        "type": "ALTERED_HOURS",
         "site": 1
     }
 },
@@ -2609,8 +2354,7 @@
         "sunday_open": true,
         "site": 1,
         "wake_change_events": [
-            3,
-            2
+            3
         ]
     }
 },
@@ -2644,8 +2388,7 @@
         "sunday_open": true,
         "site": 1,
         "wake_change_events": [
-            3,
-            4
+            3
         ]
     }
 },
@@ -2678,11 +2421,7 @@
         "sunday_off": "20:00:00",
         "sunday_open": true,
         "site": 1,
-        "wake_change_events": [
-            5,
-            4,
-            6
-        ]
+        "wake_change_events": []
     }
 },
 {
@@ -2714,12 +2453,7 @@
         "sunday_off": "20:00:00",
         "sunday_open": true,
         "site": 1,
-        "wake_change_events": [
-            5,
-            8,
-            6,
-            7
-        ]
+        "wake_change_events": []
     }
 },
 {
@@ -2751,9 +2485,7 @@
         "sunday_off": "20:00:00",
         "sunday_open": true,
         "site": 1,
-        "wake_change_events": [
-            6
-        ]
+        "wake_change_events": []
     }
 },
 {
@@ -2769,25 +2501,23 @@
         "tuesday_on": "08:00:00",
         "tuesday_off": "20:00:00",
         "tuesday_open": false,
-        "wednesday_on": null,
-        "wednesday_off": null,
+        "wednesday_on": "08:00:00",
+        "wednesday_off": "20:00:00",
         "wednesday_open": false,
-        "thursday_on": null,
-        "thursday_off": null,
+        "thursday_on": "08:00:00",
+        "thursday_off": "20:00:00",
         "thursday_open": false,
         "friday_on": "08:00:00",
         "friday_off": "20:00:00",
         "friday_open": true,
-        "saturday_on": null,
-        "saturday_off": null,
+        "saturday_on": "08:00:00",
+        "saturday_off": "20:00:00",
         "saturday_open": false,
         "sunday_on": "08:00:00",
         "sunday_off": "20:00:00",
         "sunday_open": true,
         "site": 1,
-        "wake_change_events": [
-            7
-        ]
+        "wake_change_events": []
     }
 },
 {
@@ -2806,8 +2536,8 @@
         "wednesday_on": "08:00:00",
         "wednesday_off": "20:00:00",
         "wednesday_open": true,
-        "thursday_on": null,
-        "thursday_off": null,
+        "thursday_on": "08:00:00",
+        "thursday_off": "20:00:00",
         "thursday_open": false,
         "friday_on": "08:00:00",
         "friday_off": "20:00:00",
@@ -2820,11 +2550,7 @@
         "sunday_open": true,
         "site": 1,
         "wake_change_events": [
-            8,
-            11,
-            1,
-            9,
-            10
+            1
         ]
     }
 },
@@ -2916,6 +2642,18 @@
         "description": "-",
         "site": 1,
         "configuration": 35,
+        "wake_week_plan": null,
+        "supervisors": []
+    }
+},
+{
+    "model": "system.pcgroup",
+    "pk": 18,
+    "fields": {
+        "name": "Gruppe6",
+        "description": "",
+        "site": 1,
+        "configuration": 42,
         "wake_week_plan": null,
         "supervisors": []
     }
@@ -3498,10 +3236,7 @@
         "last_seen": "2021-01-28T12:50:03",
         "location": "beskrivelse 2",
         "product": 3,
-        "pc_groups": [
-            10,
-            3
-        ]
+        "pc_groups": []
     }
 },
 {
@@ -3519,10 +3254,7 @@
         "last_seen": "2021-01-28T12:50:03",
         "location": "beskrivelse 2",
         "product": 4,
-        "pc_groups": [
-            10,
-            3
-        ]
+        "pc_groups": []
     }
 },
 {
@@ -3540,10 +3272,7 @@
         "last_seen": "2021-01-28T12:50:03",
         "location": "beskrivelse 2",
         "product": 5,
-        "pc_groups": [
-            10,
-            3
-        ]
+        "pc_groups": []
     }
 },
 {
@@ -3561,10 +3290,7 @@
         "last_seen": "2021-01-28T12:50:03",
         "location": "beskrivelse 2",
         "product": 6,
-        "pc_groups": [
-            10,
-            3
-        ]
+        "pc_groups": []
     }
 },
 {
@@ -3582,10 +3308,7 @@
         "last_seen": "2021-01-28T12:50:03",
         "location": "beskrivelse 2",
         "product": 7,
-        "pc_groups": [
-            10,
-            3
-        ]
+        "pc_groups": []
     }
 },
 {
@@ -3645,7 +3368,6 @@
         "executable_code": "script_uploads/sudo_event.py",
         "is_security_script": true,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [],
         "products": []
@@ -3666,7 +3388,6 @@
         "executable_code": "script_uploads/keyboard_event.py",
         "is_security_script": true,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [],
         "products": []
@@ -3687,7 +3408,6 @@
         "executable_code": "script_uploads/remove_bluetooth_applet_GFCSe0M.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [],
         "products": []
@@ -3708,7 +3428,6 @@
         "executable_code": "script_uploads/chrome_autostart_cP5Rsu2.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             3
@@ -3731,7 +3450,6 @@
         "executable_code": "script_uploads/chrome_policy_deactivate_login_m0TvmUo.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             3
@@ -3754,7 +3472,6 @@
         "executable_code": "script_uploads/chrome_disable_keyring.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             3
@@ -3777,7 +3494,6 @@
         "executable_code": "script_uploads/chrome_install_KDwvq0C.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             3
@@ -3800,7 +3516,6 @@
         "executable_code": "script_uploads/chrome_policy_homepage_hd2Rmxs.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             3
@@ -3823,7 +3538,6 @@
         "executable_code": "script_uploads/chrome_policy_default_browser.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             3
@@ -3846,7 +3560,6 @@
         "executable_code": "script_uploads/polkit_policy_shutdown_R6uMvd2.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             4
@@ -3869,7 +3582,6 @@
         "executable_code": "script_uploads/remove_new_release_message.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             4
@@ -3892,7 +3604,6 @@
         "executable_code": "script_uploads/dconf_policy_desktop.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             4
@@ -3915,7 +3626,6 @@
         "executable_code": "script_uploads/dconf_policy.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             4
@@ -3938,7 +3648,6 @@
         "executable_code": "script_uploads/randomize_jobmanager.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             2
@@ -3961,7 +3670,6 @@
         "executable_code": "script_uploads/chromium_install.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             2
@@ -3984,7 +3692,6 @@
         "executable_code": "script_uploads/vnc_and_ssh_install_7Q7CazQ.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             2
@@ -4007,7 +3714,6 @@
         "executable_code": "script_uploads/chromium_setup_ocWvyJg.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             2
@@ -4030,7 +3736,6 @@
         "executable_code": "script_uploads/user_automatic_login.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             1
@@ -4053,7 +3758,6 @@
         "executable_code": "script_uploads/apt_periodic_control_qqYafra.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             1
@@ -4076,7 +3780,6 @@
         "executable_code": "script_uploads/reboot_after_time_aG4Gjkw.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             1
@@ -4099,7 +3802,6 @@
         "executable_code": "script_uploads/reboot_now.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             1
@@ -4122,7 +3824,6 @@
         "executable_code": "script_uploads/grub_set_password_HdoIPiZ.py",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             1
@@ -4145,7 +3846,6 @@
         "executable_code": "script_uploads/always_logout_after_time.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             1
@@ -4168,7 +3868,6 @@
         "executable_code": "script_uploads/setup_inactive_logout.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             1
@@ -4191,7 +3890,6 @@
         "executable_code": "script_uploads/logout_user.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             1
@@ -4214,7 +3912,6 @@
         "executable_code": "script_uploads/shutdown_at_time.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             1
@@ -4237,7 +3934,6 @@
         "executable_code": "script_uploads/shutdown_and_wakeup_R3wRh69.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             1
@@ -4260,7 +3956,6 @@
         "executable_code": "script_uploads/update_all_7LM3G3y.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             1
@@ -4283,7 +3978,6 @@
         "executable_code": "script_uploads/rotate_display_6g79WvQ.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             1
@@ -4306,7 +4000,6 @@
         "executable_code": "script_uploads/set_local_time_from_bios.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             1
@@ -4329,7 +4022,6 @@
         "executable_code": "script_uploads/pulse_policy_profile.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             1
@@ -4352,7 +4044,6 @@
         "executable_code": "script_uploads/change_computer_name1.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             1
@@ -4375,7 +4066,6 @@
         "executable_code": "script_uploads/change_user_password_bO697ab.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             1
@@ -4398,7 +4088,6 @@
         "executable_code": "script_uploads/change_superuser_password_6zL696e.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             1
@@ -4421,7 +4110,6 @@
         "executable_code": "script_uploads/Exfat_enable_qCyiT2z.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             1
@@ -4444,7 +4132,6 @@
         "executable_code": "script_uploads/pingevent.py",
         "is_security_script": true,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [],
         "products": []
@@ -4465,7 +4152,6 @@
         "executable_code": "script_uploads/diagnostic_logfiles_b649s9e.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [],
         "products": []
@@ -4486,7 +4172,6 @@
         "executable_code": "script_uploads/test-script_xKItgpL.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [],
         "products": []
@@ -4507,7 +4192,6 @@
         "executable_code": "script_uploads/dbus-address.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [],
         "products": []
@@ -4528,7 +4212,6 @@
         "executable_code": "script_uploads/emptyish.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [],
         "products": []
@@ -4549,7 +4232,6 @@
         "executable_code": "script_uploads/test.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             1
@@ -4572,7 +4254,6 @@
         "executable_code": "script_uploads/desktop_logout_button_icon_W0J3c67.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             4
@@ -4595,7 +4276,6 @@
         "executable_code": "script_uploads/desktop_activate_shortcuts.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [],
         "products": []
@@ -4616,7 +4296,6 @@
         "executable_code": "script_uploads/always_logout_after_time_visual_WRE7ERj.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [],
         "products": []
@@ -4637,7 +4316,6 @@
         "executable_code": "script_uploads/cicero_install_pam_gsMTFne.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [],
         "products": []
@@ -4658,7 +4336,6 @@
         "executable_code": "script_uploads/update_client_yanked.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [],
         "products": []
@@ -4679,7 +4356,6 @@
         "executable_code": "script_uploads/chromium_change_homepage.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [],
         "products": []
@@ -4700,7 +4376,6 @@
         "executable_code": "script_uploads/setup_two_factor_superuser_BAk1AH4.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             1
@@ -4723,7 +4398,6 @@
         "executable_code": "script_uploads/test_sHq1sWl.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [],
         "products": []
@@ -4744,7 +4418,6 @@
         "executable_code": "script_uploads/desktop_toggle_writable_uD7ggxo.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [],
         "products": []
@@ -4765,7 +4438,6 @@
         "executable_code": "script_uploads/detect_user_expired_event.py",
         "is_security_script": true,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [],
         "products": []
@@ -4786,7 +4458,6 @@
         "executable_code": "script_uploads/on_off_schedule_set.sh",
         "is_security_script": false,
         "is_hidden": true,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [],
         "products": []
@@ -4807,7 +4478,6 @@
         "executable_code": "script_uploads/on_off_schedule_remove.sh",
         "is_security_script": false,
         "is_hidden": true,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [],
         "products": []
@@ -4828,7 +4498,6 @@
         "executable_code": "script_uploads/emptyish.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [],
         "products": []
@@ -4849,7 +4518,6 @@
         "executable_code": "script_uploads/setup_two_factor_superuser.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
         "feature_permission": null,
         "tags": [
             5
@@ -4872,7 +4540,26 @@
         "executable_code": "script_uploads/emptyish.sh",
         "is_security_script": false,
         "is_hidden": false,
-        "maintained_by_magenta": false,
+        "feature_permission": null,
+        "tags": [],
+        "products": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 87,
+    "fields": {
+        "created": "2025-09-02T16:38:59.261",
+        "modified": "2025-09-02T16:41:03.902",
+        "user_created": "magenta",
+        "user_modified": "magenta",
+        "name": "filscript",
+        "uid": null,
+        "description": "-",
+        "site": 1,
+        "executable_code": "script_uploads/buffy.txt",
+        "is_security_script": false,
+        "is_hidden": false,
         "feature_permission": null,
         "tags": [],
         "products": []
@@ -5698,6 +5385,15 @@
     }
 },
 {
+    "model": "system.associatedscript",
+    "pk": 39,
+    "fields": {
+        "group": 18,
+        "script": 87,
+        "position": 0
+    }
+},
+{
     "model": "system.job",
     "pk": 1,
     "fields": {
@@ -5708,7 +5404,8 @@
         "finished": null,
         "user": 35,
         "batch": 8,
-        "pc": 8
+        "pc": 8,
+        "dashboard_hidden": false
     }
 },
 {
@@ -5720,9 +5417,10 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 37,
+        "user": 36,
         "batch": 8,
-        "pc": 9
+        "pc": 9,
+        "dashboard_hidden": false
     }
 },
 {
@@ -5730,13 +5428,14 @@
     "pk": 3,
     "fields": {
         "status": "NEW",
-        "log_output": "The moon stands still.\n on blueberry hill",
+        "log_output": "The moon stands still.\r\n on blueberry hill",
         "created": null,
         "started": null,
         "finished": null,
-        "user": 38,
+        "user": 36,
         "batch": 8,
-        "pc": 1
+        "pc": 1,
+        "dashboard_hidden": false
     }
 },
 {
@@ -5748,9 +5447,10 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 38,
+        "user": 36,
         "batch": 8,
-        "pc": 6
+        "pc": 6,
+        "dashboard_hidden": false
     }
 },
 {
@@ -5762,9 +5462,10 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 38,
+        "user": 36,
         "batch": 9,
-        "pc": 8
+        "pc": 8,
+        "dashboard_hidden": false
     }
 },
 {
@@ -5776,9 +5477,10 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 39,
+        "user": 36,
         "batch": 9,
-        "pc": 9
+        "pc": 9,
+        "dashboard_hidden": false
     }
 },
 {
@@ -5790,9 +5492,10 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 39,
+        "user": 36,
         "batch": 9,
-        "pc": 1
+        "pc": 1,
+        "dashboard_hidden": false
     }
 },
 {
@@ -5804,9 +5507,10 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 39,
+        "user": 36,
         "batch": 9,
-        "pc": 6
+        "pc": 6,
+        "dashboard_hidden": false
     }
 },
 {
@@ -5818,9 +5522,10 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 39,
+        "user": 36,
         "batch": 10,
-        "pc": 8
+        "pc": 8,
+        "dashboard_hidden": false
     }
 },
 {
@@ -5834,7 +5539,8 @@
         "finished": null,
         "user": 35,
         "batch": 10,
-        "pc": 9
+        "pc": 9,
+        "dashboard_hidden": false
     }
 },
 {
@@ -5846,9 +5552,10 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 37,
+        "user": 36,
         "batch": 10,
-        "pc": 1
+        "pc": 1,
+        "dashboard_hidden": false
     }
 },
 {
@@ -5862,7 +5569,8 @@
         "finished": null,
         "user": 35,
         "batch": 10,
-        "pc": 6
+        "pc": 6,
+        "dashboard_hidden": false
     }
 },
 {
@@ -5876,7 +5584,8 @@
         "finished": null,
         "user": 35,
         "batch": 11,
-        "pc": 8
+        "pc": 8,
+        "dashboard_hidden": false
     }
 },
 {
@@ -5890,7 +5599,8 @@
         "finished": null,
         "user": 35,
         "batch": 11,
-        "pc": 9
+        "pc": 9,
+        "dashboard_hidden": false
     }
 },
 {
@@ -5904,7 +5614,8 @@
         "finished": null,
         "user": 35,
         "batch": 11,
-        "pc": 1
+        "pc": 1,
+        "dashboard_hidden": false
     }
 },
 {
@@ -5918,7 +5629,8 @@
         "finished": null,
         "user": 35,
         "batch": 11,
-        "pc": 6
+        "pc": 6,
+        "dashboard_hidden": false
     }
 },
 {
@@ -5932,7 +5644,8 @@
         "finished": null,
         "user": 35,
         "batch": 12,
-        "pc": 8
+        "pc": 8,
+        "dashboard_hidden": false
     }
 },
 {
@@ -5946,7 +5659,8 @@
         "finished": null,
         "user": 35,
         "batch": 12,
-        "pc": 9
+        "pc": 9,
+        "dashboard_hidden": false
     }
 },
 {
@@ -5960,7 +5674,8 @@
         "finished": null,
         "user": 35,
         "batch": 12,
-        "pc": 1
+        "pc": 1,
+        "dashboard_hidden": false
     }
 },
 {
@@ -5974,7 +5689,8 @@
         "finished": null,
         "user": 35,
         "batch": 12,
-        "pc": 6
+        "pc": 6,
+        "dashboard_hidden": false
     }
 },
 {
@@ -5988,7 +5704,8 @@
         "finished": null,
         "user": 35,
         "batch": 13,
-        "pc": 8
+        "pc": 8,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6002,7 +5719,8 @@
         "finished": null,
         "user": 35,
         "batch": 13,
-        "pc": 9
+        "pc": 9,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6016,7 +5734,8 @@
         "finished": null,
         "user": 35,
         "batch": 13,
-        "pc": 1
+        "pc": 1,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6030,7 +5749,8 @@
         "finished": null,
         "user": 35,
         "batch": 13,
-        "pc": 6
+        "pc": 6,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6044,7 +5764,8 @@
         "finished": null,
         "user": 35,
         "batch": 14,
-        "pc": 8
+        "pc": 8,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6058,7 +5779,8 @@
         "finished": null,
         "user": 35,
         "batch": 14,
-        "pc": 9
+        "pc": 9,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6072,7 +5794,8 @@
         "finished": null,
         "user": 35,
         "batch": 14,
-        "pc": 1
+        "pc": 1,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6086,7 +5809,8 @@
         "finished": null,
         "user": 35,
         "batch": 14,
-        "pc": 6
+        "pc": 6,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6100,7 +5824,8 @@
         "finished": null,
         "user": 35,
         "batch": 15,
-        "pc": 1
+        "pc": 1,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6114,7 +5839,8 @@
         "finished": null,
         "user": 35,
         "batch": 15,
-        "pc": 6
+        "pc": 6,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6128,7 +5854,8 @@
         "finished": null,
         "user": 35,
         "batch": 15,
-        "pc": 8
+        "pc": 8,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6142,7 +5869,8 @@
         "finished": null,
         "user": 35,
         "batch": 15,
-        "pc": 9
+        "pc": 9,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6156,7 +5884,8 @@
         "finished": null,
         "user": 35,
         "batch": 15,
-        "pc": 12
+        "pc": 12,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6170,7 +5899,8 @@
         "finished": null,
         "user": 35,
         "batch": 15,
-        "pc": 16
+        "pc": 16,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6184,7 +5914,8 @@
         "finished": null,
         "user": 35,
         "batch": 15,
-        "pc": 18
+        "pc": 18,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6198,7 +5929,8 @@
         "finished": null,
         "user": 35,
         "batch": 15,
-        "pc": 22
+        "pc": 22,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6212,7 +5944,8 @@
         "finished": null,
         "user": 35,
         "batch": 15,
-        "pc": 23
+        "pc": 23,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6226,7 +5959,8 @@
         "finished": null,
         "user": 35,
         "batch": 15,
-        "pc": 24
+        "pc": 24,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6240,7 +5974,8 @@
         "finished": null,
         "user": 35,
         "batch": 15,
-        "pc": 25
+        "pc": 25,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6254,7 +5989,8 @@
         "finished": null,
         "user": 35,
         "batch": 15,
-        "pc": 26
+        "pc": 26,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6268,7 +6004,8 @@
         "finished": null,
         "user": 35,
         "batch": 15,
-        "pc": 28
+        "pc": 28,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6282,7 +6019,8 @@
         "finished": null,
         "user": 35,
         "batch": 15,
-        "pc": 31
+        "pc": 31,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6296,7 +6034,8 @@
         "finished": null,
         "user": 35,
         "batch": 16,
-        "pc": 1
+        "pc": 1,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6310,7 +6049,8 @@
         "finished": null,
         "user": 35,
         "batch": 16,
-        "pc": 6
+        "pc": 6,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6324,7 +6064,8 @@
         "finished": null,
         "user": 35,
         "batch": 16,
-        "pc": 8
+        "pc": 8,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6338,7 +6079,8 @@
         "finished": null,
         "user": 35,
         "batch": 16,
-        "pc": 9
+        "pc": 9,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6352,7 +6094,8 @@
         "finished": null,
         "user": 35,
         "batch": 16,
-        "pc": 12
+        "pc": 12,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6366,7 +6109,8 @@
         "finished": null,
         "user": 35,
         "batch": 16,
-        "pc": 16
+        "pc": 16,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6380,7 +6124,8 @@
         "finished": null,
         "user": 35,
         "batch": 16,
-        "pc": 18
+        "pc": 18,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6394,7 +6139,8 @@
         "finished": null,
         "user": 35,
         "batch": 16,
-        "pc": 22
+        "pc": 22,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6408,7 +6154,8 @@
         "finished": null,
         "user": 35,
         "batch": 16,
-        "pc": 23
+        "pc": 23,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6422,7 +6169,8 @@
         "finished": null,
         "user": 35,
         "batch": 16,
-        "pc": 24
+        "pc": 24,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6436,7 +6184,8 @@
         "finished": null,
         "user": 35,
         "batch": 16,
-        "pc": 25
+        "pc": 25,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6450,7 +6199,8 @@
         "finished": null,
         "user": 35,
         "batch": 16,
-        "pc": 26
+        "pc": 26,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6464,7 +6214,8 @@
         "finished": null,
         "user": 35,
         "batch": 16,
-        "pc": 28
+        "pc": 28,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6478,7 +6229,8 @@
         "finished": null,
         "user": 35,
         "batch": 16,
-        "pc": 31
+        "pc": 31,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6492,7 +6244,8 @@
         "finished": null,
         "user": 35,
         "batch": 17,
-        "pc": 1
+        "pc": 1,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6506,7 +6259,8 @@
         "finished": null,
         "user": 35,
         "batch": 17,
-        "pc": 6
+        "pc": 6,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6520,7 +6274,8 @@
         "finished": null,
         "user": 35,
         "batch": 17,
-        "pc": 8
+        "pc": 8,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6534,7 +6289,8 @@
         "finished": null,
         "user": 35,
         "batch": 17,
-        "pc": 9
+        "pc": 9,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6548,7 +6304,8 @@
         "finished": null,
         "user": 35,
         "batch": 17,
-        "pc": 12
+        "pc": 12,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6562,7 +6319,8 @@
         "finished": null,
         "user": 35,
         "batch": 17,
-        "pc": 16
+        "pc": 16,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6576,7 +6334,8 @@
         "finished": null,
         "user": 35,
         "batch": 17,
-        "pc": 18
+        "pc": 18,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6590,7 +6349,8 @@
         "finished": null,
         "user": 35,
         "batch": 17,
-        "pc": 22
+        "pc": 22,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6604,7 +6364,8 @@
         "finished": null,
         "user": 35,
         "batch": 17,
-        "pc": 23
+        "pc": 23,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6618,7 +6379,8 @@
         "finished": null,
         "user": 35,
         "batch": 17,
-        "pc": 24
+        "pc": 24,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6632,7 +6394,8 @@
         "finished": null,
         "user": 35,
         "batch": 17,
-        "pc": 25
+        "pc": 25,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6646,7 +6409,8 @@
         "finished": null,
         "user": 35,
         "batch": 17,
-        "pc": 26
+        "pc": 26,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6660,7 +6424,8 @@
         "finished": null,
         "user": 35,
         "batch": 17,
-        "pc": 28
+        "pc": 28,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6674,7 +6439,8 @@
         "finished": null,
         "user": 35,
         "batch": 17,
-        "pc": 31
+        "pc": 31,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6688,7 +6454,8 @@
         "finished": null,
         "user": 35,
         "batch": 18,
-        "pc": 1
+        "pc": 1,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6702,7 +6469,8 @@
         "finished": null,
         "user": 35,
         "batch": 18,
-        "pc": 6
+        "pc": 6,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6716,7 +6484,8 @@
         "finished": null,
         "user": 35,
         "batch": 18,
-        "pc": 8
+        "pc": 8,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6730,7 +6499,8 @@
         "finished": null,
         "user": 35,
         "batch": 18,
-        "pc": 9
+        "pc": 9,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6744,7 +6514,8 @@
         "finished": null,
         "user": 35,
         "batch": 18,
-        "pc": 12
+        "pc": 12,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6758,7 +6529,8 @@
         "finished": null,
         "user": 35,
         "batch": 18,
-        "pc": 16
+        "pc": 16,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6772,7 +6544,8 @@
         "finished": null,
         "user": 35,
         "batch": 18,
-        "pc": 18
+        "pc": 18,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6786,7 +6559,8 @@
         "finished": null,
         "user": 35,
         "batch": 18,
-        "pc": 22
+        "pc": 22,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6800,7 +6574,8 @@
         "finished": null,
         "user": 35,
         "batch": 18,
-        "pc": 23
+        "pc": 23,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6814,7 +6589,8 @@
         "finished": null,
         "user": 35,
         "batch": 18,
-        "pc": 24
+        "pc": 24,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6828,7 +6604,8 @@
         "finished": null,
         "user": 35,
         "batch": 18,
-        "pc": 25
+        "pc": 25,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6842,7 +6619,8 @@
         "finished": null,
         "user": 35,
         "batch": 18,
-        "pc": 26
+        "pc": 26,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6856,7 +6634,8 @@
         "finished": null,
         "user": 35,
         "batch": 18,
-        "pc": 28
+        "pc": 28,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6870,7 +6649,8 @@
         "finished": null,
         "user": 35,
         "batch": 18,
-        "pc": 31
+        "pc": 31,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6884,7 +6664,8 @@
         "finished": null,
         "user": 35,
         "batch": 19,
-        "pc": 1
+        "pc": 1,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6898,7 +6679,8 @@
         "finished": null,
         "user": 35,
         "batch": 19,
-        "pc": 6
+        "pc": 6,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6912,7 +6694,8 @@
         "finished": null,
         "user": 35,
         "batch": 19,
-        "pc": 8
+        "pc": 8,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6926,7 +6709,8 @@
         "finished": null,
         "user": 35,
         "batch": 19,
-        "pc": 9
+        "pc": 9,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6940,7 +6724,8 @@
         "finished": null,
         "user": 35,
         "batch": 19,
-        "pc": 12
+        "pc": 12,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6954,7 +6739,8 @@
         "finished": null,
         "user": 35,
         "batch": 19,
-        "pc": 16
+        "pc": 16,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6968,7 +6754,8 @@
         "finished": null,
         "user": 35,
         "batch": 19,
-        "pc": 18
+        "pc": 18,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6982,7 +6769,8 @@
         "finished": null,
         "user": 35,
         "batch": 19,
-        "pc": 22
+        "pc": 22,
+        "dashboard_hidden": false
     }
 },
 {
@@ -6996,7 +6784,8 @@
         "finished": null,
         "user": 35,
         "batch": 19,
-        "pc": 23
+        "pc": 23,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7010,7 +6799,8 @@
         "finished": null,
         "user": 35,
         "batch": 19,
-        "pc": 24
+        "pc": 24,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7024,7 +6814,8 @@
         "finished": null,
         "user": 35,
         "batch": 19,
-        "pc": 25
+        "pc": 25,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7038,7 +6829,8 @@
         "finished": null,
         "user": 35,
         "batch": 19,
-        "pc": 26
+        "pc": 26,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7052,7 +6844,8 @@
         "finished": null,
         "user": 35,
         "batch": 19,
-        "pc": 28
+        "pc": 28,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7066,7 +6859,8 @@
         "finished": null,
         "user": 35,
         "batch": 19,
-        "pc": 31
+        "pc": 31,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7080,7 +6874,8 @@
         "finished": null,
         "user": 35,
         "batch": 20,
-        "pc": 1
+        "pc": 1,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7094,7 +6889,8 @@
         "finished": null,
         "user": 35,
         "batch": 20,
-        "pc": 6
+        "pc": 6,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7108,7 +6904,8 @@
         "finished": null,
         "user": 35,
         "batch": 20,
-        "pc": 8
+        "pc": 8,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7122,7 +6919,8 @@
         "finished": null,
         "user": 35,
         "batch": 20,
-        "pc": 9
+        "pc": 9,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7136,7 +6934,8 @@
         "finished": null,
         "user": 35,
         "batch": 20,
-        "pc": 12
+        "pc": 12,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7150,7 +6949,8 @@
         "finished": null,
         "user": 35,
         "batch": 20,
-        "pc": 16
+        "pc": 16,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7164,7 +6964,8 @@
         "finished": null,
         "user": 35,
         "batch": 20,
-        "pc": 18
+        "pc": 18,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7178,7 +6979,8 @@
         "finished": null,
         "user": 35,
         "batch": 20,
-        "pc": 22
+        "pc": 22,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7190,9 +6992,10 @@
         "created": null,
         "started": "2020-11-30T18:15:43.997",
         "finished": "2020-11-30T18:15:45.997",
-        "user": 38,
+        "user": 36,
         "batch": 20,
-        "pc": 23
+        "pc": 23,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7204,9 +7007,10 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 37,
+        "user": 36,
         "batch": 20,
-        "pc": 24
+        "pc": 24,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7220,7 +7024,8 @@
         "finished": null,
         "user": 35,
         "batch": 20,
-        "pc": 26
+        "pc": 26,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7232,9 +7037,10 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 39,
+        "user": 36,
         "batch": 20,
-        "pc": 28
+        "pc": 28,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7248,7 +7054,8 @@
         "finished": null,
         "user": 35,
         "batch": 20,
-        "pc": 31
+        "pc": 31,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7260,9 +7067,10 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 38,
+        "user": 36,
         "batch": 21,
-        "pc": 1
+        "pc": 1,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7274,9 +7082,10 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 38,
+        "user": 36,
         "batch": 21,
-        "pc": 6
+        "pc": 6,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7290,7 +7099,8 @@
         "finished": "2020-11-30T18:15:45.997",
         "user": 35,
         "batch": 21,
-        "pc": 8
+        "pc": 8,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7302,9 +7112,10 @@
         "created": null,
         "started": "2020-11-30T18:15:43.997",
         "finished": "2020-11-30T18:15:45.997",
-        "user": 38,
+        "user": 36,
         "batch": 21,
-        "pc": 9
+        "pc": 9,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7316,9 +7127,10 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 37,
+        "user": 36,
         "batch": 21,
-        "pc": 12
+        "pc": 12,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7330,9 +7142,10 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 38,
+        "user": 36,
         "batch": 21,
-        "pc": 16
+        "pc": 16,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7344,9 +7157,10 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 39,
+        "user": 36,
         "batch": 21,
-        "pc": 18
+        "pc": 18,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7358,9 +7172,10 @@
         "created": null,
         "started": "2020-11-30T18:15:43.997",
         "finished": "2020-11-30T18:15:45.997",
-        "user": 37,
+        "user": 36,
         "batch": 21,
-        "pc": 22
+        "pc": 22,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7372,9 +7187,10 @@
         "created": null,
         "started": "2020-11-30T18:15:43.997",
         "finished": "2020-11-30T18:15:45.997",
-        "user": 39,
+        "user": 36,
         "batch": 21,
-        "pc": 23
+        "pc": 23,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7386,9 +7202,10 @@
         "created": null,
         "started": null,
         "finished": null,
-        "user": 38,
+        "user": 36,
         "batch": 21,
-        "pc": 24
+        "pc": 24,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7400,9 +7217,10 @@
         "created": null,
         "started": "2020-11-30T18:15:43.997",
         "finished": "2020-11-30T18:15:45.997",
-        "user": 37,
+        "user": 36,
         "batch": 21,
-        "pc": 25
+        "pc": 25,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7416,7 +7234,8 @@
         "finished": null,
         "user": 35,
         "batch": 32,
-        "pc": 25
+        "pc": 25,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7430,7 +7249,8 @@
         "finished": null,
         "user": 35,
         "batch": 58,
-        "pc": 31
+        "pc": 31,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7444,7 +7264,8 @@
         "finished": null,
         "user": 35,
         "batch": 63,
-        "pc": 26
+        "pc": 26,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7458,7 +7279,8 @@
         "finished": "2024-04-16T15:25:00.565",
         "user": 35,
         "batch": 63,
-        "pc": 31
+        "pc": 31,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7472,7 +7294,8 @@
         "finished": null,
         "user": 35,
         "batch": 63,
-        "pc": 25
+        "pc": 25,
+        "dashboard_hidden": false
     }
 },
 {
@@ -7486,7 +7309,8 @@
         "finished": "2024-04-16T15:25:00.565",
         "user": 35,
         "batch": 63,
-        "pc": 16
+        "pc": 16,
+        "dashboard_hidden": false
     }
 },
 {
@@ -8402,6 +8226,42 @@
     }
 },
 {
+    "model": "system.input",
+    "pk": 107,
+    "fields": {
+        "name": "Påkrævet fil",
+        "value_type": "FILE",
+        "default_value": "",
+        "position": 0,
+        "mandatory": true,
+        "script": 87
+    }
+},
+{
+    "model": "system.input",
+    "pk": 108,
+    "fields": {
+        "name": "Valgmuligheder",
+        "value_type": "TEXT_FIELD",
+        "default_value": "one,two,three",
+        "position": 1,
+        "mandatory": false,
+        "script": 87
+    }
+},
+{
+    "model": "system.input",
+    "pk": 109,
+    "fields": {
+        "name": "Valgfri fil",
+        "value_type": "FILE",
+        "default_value": "",
+        "position": 2,
+        "mandatory": false,
+        "script": 87
+    }
+},
+{
     "model": "system.batchparameter",
     "pk": 1,
     "fields": {
@@ -8809,6 +8669,36 @@
         "file_value": "",
         "input": 106,
         "associated_script": 38
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 23,
+    "fields": {
+        "string_value": "",
+        "file_value": "parameter_uploads/u7ebjcspgqy5fejzx95g1kodwwtdzp35/buffy.txt",
+        "input": 107,
+        "associated_script": 39
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 24,
+    "fields": {
+        "string_value": "one",
+        "file_value": "",
+        "input": 108,
+        "associated_script": 39
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 25,
+    "fields": {
+        "string_value": "",
+        "file_value": "",
+        "input": 109,
+        "associated_script": 39
     }
 },
 {

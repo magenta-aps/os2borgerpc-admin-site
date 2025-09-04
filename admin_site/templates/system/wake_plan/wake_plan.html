@@ -11,7 +11,8 @@
   <h1 class="divideheader">{{selected_plan.name|default:new_text}}</h1>
   {% include 'notification.html' %}
 
-  <form method="post" class="gray-box">
+{# Autocomplete=off is required to guarantee that input fields' values aren't saved #}
+  <form method="post" class="gray-box" id="wake-plan-form" autocomplete="off">
 
     {% csrf_token %}
     <div class="container-fluid">
@@ -76,7 +77,7 @@
           <div class="d-table-cell">
               <label for="id_enabled">
                   {{ form.enabled }}
-                  <span id="id_enabled_label" style="vertical-align: middle;padding-top:0.25rem;">
+                  <span id="id_enabled_label" class="json-input" style="vertical-align: middle;padding-top:0.25rem;">
                       {% if selected_plan.enabled or not selected_plan %}
                           {% translate "Active" %}
                       {% else %}
@@ -116,7 +117,7 @@
                   <strong>{% translate "Monday" %}</strong>
                 </td>
                 <td class="checkbox-switch">
-                  <input style="float:right;" class="form-check-input  fs-5 checkbox" name="monday_open" type="checkbox" role="switch" id="id_monday_open" {% if selected_plan.monday_open %}checked{% endif %}>
+                  <input style="float:right;" class="form-check-input fs-5 checkbox json-input" name="monday_open" type="checkbox" role="switch" id="id_monday_open" {% if selected_plan.monday_open %}checked{% endif %}>
                 </td>
                 <td class="checkbox-text">
                   <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="id_monday_open">{% if selected_plan.monday_open %}{{On}}{% else %}{{Off}}{% endif %}</label>
@@ -134,7 +135,7 @@
                   <strong>{% translate "Tuesday" %}</strong>
                 </td>
                 <td class="checkbox-switch">
-                  <input style="float:right;" class="form-check-input fs-5 checkbox" name="tuesday_open" type="checkbox" role="switch" id="id_tuesday_open" {% if selected_plan.tuesday_open %}checked{% endif %}>
+                  <input style="float:right;" class="form-check-input fs-5 checkbox json-input" name="tuesday_open" type="checkbox" role="switch" id="id_tuesday_open" {% if selected_plan.tuesday_open %}checked{% endif %}>
                 </td>
                 <td class="checkbox-text">
                   <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="id_tuesday_open">{% if selected_plan.tuesday_open %}{{On}}{% else %}{{Off}}{% endif %}</label>
@@ -152,7 +153,7 @@
                   <strong>{% translate "Wednesday" %}</strong>
                 </td>
                 <td class="checkbox-switch">
-                  <input style="float:right;" class="form-check-input fs-5 checkbox" name="wednesday_open" type="checkbox" role="switch" id="id_wednesday_open" {% if selected_plan.wednesday_open %}checked{% endif %}>
+                  <input style="float:right;" class="form-check-input fs-5 checkbox json-input" name="wednesday_open" type="checkbox" role="switch" id="id_wednesday_open" {% if selected_plan.wednesday_open %}checked{% endif %}>
                 </td>
                 <td class="checkbox-text">
                   <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="id_wednesday_open">{% if selected_plan.wednesday_open %}{{On}}{% else %}{{Off}}{% endif %}</label>
@@ -170,7 +171,7 @@
                   <strong>{% translate "Thursday" %}</strong>
                 </td>
                 <td class="checkbox-switch">
-                  <input style="float:right;" class="form-check-input fs-5 checkbox" name="thursday_open"  type="checkbox" role="switch" id="id_thursday_open" {% if selected_plan.thursday_open %}checked{% endif %}>
+                  <input style="float:right;" class="form-check-input fs-5 checkbox json-input" name="thursday_open"  type="checkbox" role="switch" id="id_thursday_open" {% if selected_plan.thursday_open %}checked{% endif %}>
                 </td>
                 <td class="checkbox-text">
                   <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="id_thursday_open">{% if selected_plan.thursday_open %}{{On}}{% else %}{{Off}}{% endif %}</label>
@@ -188,7 +189,7 @@
                   <strong>{% translate "Friday" %}</strong>
                 </td>
                 <td class="checkbox-switch">
-                  <input style="float:right;" class="form-check-input fs-5 checkbox" name="friday_open" type="checkbox" role="switch" id="id_friday_open" {% if selected_plan.friday_open %}checked{% endif %}>
+                  <input style="float:right;" class="form-check-input fs-5 checkbox json-input" name="friday_open" type="checkbox" role="switch" id="id_friday_open" {% if selected_plan.friday_open %}checked{% endif %}>
                 </td>
                 <td class="checkbox-text">
                   <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="id_friday_open">{% if selected_plan.friday_open %}{{On}}{% else %}{{Off}}{% endif %}</label>
@@ -206,7 +207,7 @@
                   <strong>{% translate "Saturday" %}</strong>
                 </td>
                 <td class="checkbox-switch">
-                  <input style="float:right;" class="form-check-input fs-5 checkbox" name="saturday_open" type="checkbox" role="switch" id="id_saturday_open" {% if selected_plan.saturday_open %}checked{% endif %}>
+                  <input style="float:right;" class="form-check-input fs-5 checkbox json-input" name="saturday_open" type="checkbox" role="switch" id="id_saturday_open" {% if selected_plan.saturday_open %}checked{% endif %}>
                 </td>
                 <td class="checkbox-text">
                   <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="id_saturday_open">{% if selected_plan.saturday_open %}{{On}}{% else %}{{Off}}{% endif %}</label>
@@ -224,7 +225,7 @@
                   <strong>{% translate "Sunday" %}</strong>
                 </td>
                 <td class="checkbox-switch">
-                  <input style="float:right;" class="form-check-input fs-5 checkbox" name="sunday_open" type="checkbox" role="switch" id="id_sunday_open" {% if selected_plan.sunday_open %}checked{% endif %}>
+                  <input style="float:right;" class="form-check-input fs-5 checkbox json-input" name="sunday_open" type="checkbox" role="switch" id="id_sunday_open" {% if selected_plan.sunday_open %}checked{% endif %}>
                 </td>
                 <td class="checkbox-text">
                   <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="id_sunday_open">{% if selected_plan.sunday_open %}{{On}}{% else %}{{Off}}{% endif %}</label>
@@ -247,7 +248,7 @@
           <p>{% translate "Plan and create upcoming closed days and altered opening hours from the recurring week plan" %}</p>
 
           {# Wake change events #}
-          <fieldset id="custom-wake-plans">
+          <fieldset id="custom-wake-plans" class="wake_change_events_link">
             <a class="btn btn-secondary me-3 mb-3" href="{% url 'wake_change_event_new_closed' site.uid %}"><span class="material-symbols-outlined">door_front</span>{% translate "Create closed days" %}</a>
             <a class="btn btn-secondary me-3 mb-3" href="{% url 'wake_change_event_new_altered_hours' site.uid %}"><span class="material-symbols-outlined">meeting_room</span>{% translate "Create altered opening hours" %}</a>
             <a class="btn btn-secondary mb-3" href="{% url 'wake_change_events' site.uid %}"><span class="material-symbols-outlined">edit</span>{% translate "Edit exceptions" %}</a>

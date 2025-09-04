@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-31 15:58+0200\n"
+"POT-Creation-Date: 2025-09-02 13:04+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -82,7 +82,6 @@ msgstr "Tilføj kommentar"
 #: templates/system/event_rules/site_event_rules_server.html
 #: templates/system/event_rules/site_security_problems.html
 #: templates/system/pcgroups/confirm_delete.html
-#: templates/system/pcgroups/policy_list/templates.html
 #: templates/system/pcgroups/site_groups.html
 #: templates/system/pcs/confirm_delete.html templates/system/pcs/update.html
 #: templates/system/scripts/confirm_delete.html
@@ -1698,32 +1697,27 @@ msgid "Jobs run by Magenta"
 msgstr "Jobs kørt af Magenta"
 
 #: docs/templates/jobs/index.html
+msgid "Sometimes we run jobs on all or some computers."
+msgstr "Vi kører i enkelte tilfælde scripts på alle eller nogle computere."
+
+#: docs/templates/jobs/index.html
+msgid "This is generally done for the following reasons"
+msgstr "Det gør vi typisk af følgende årsager"
+
+#: docs/templates/jobs/index.html
 msgid ""
-"If the user for a job is listed as \"Magenta\", it means that the job was "
-"started by the OS2borgerPC team at Magenta."
+"Maintenance, including dealing with changes that aren't backwards compatible"
 msgstr ""
-"Hvis brugeren for et job er angivet som \"Magenta\", betyder det at jobbet "
-"blev startet af OS2borgerPC-teamet hos Magenta."
+"Vedligeholdelse, inklusiv håndtering af ændringer, der ikke er "
+"bagudkompatible"
 
 #: docs/templates/jobs/index.html
-msgid "This is used for e.g."
-msgstr "Det bruges eksempelvis til"
-
-#: docs/templates/jobs/index.html
-msgid "Maintenance"
-msgstr "Vedligeholdelse"
-
-#: docs/templates/jobs/index.html
-msgid "Updates"
-msgstr "Opdateringer"
+msgid "Patching security issues, such as CVE's identified in Ubuntu"
+msgstr "Lapning af sikkerhedshuller, såsom CVE'er identificeret i Ubuntu"
 
 #: docs/templates/jobs/index.html
 msgid "Troubleshooting and error correction"
 msgstr "Fejlfinding og -retning"
-
-#: docs/templates/jobs/index.html
-msgid "Patching security issues (CVE's identified in Ubuntu)"
-msgstr "Lapning af sikkerhedshuller (CVE'er identificeret i Ubuntu)"
 
 #: docs/templates/notifications/index.html docs/views.py
 msgid "Notifications and offline rules"
@@ -3919,8 +3913,12 @@ msgid "Old installation guide (PDF)"
 msgstr "Gammel installationsguide (PDF)"
 
 #: docs/views.py
-msgid "Installation Guide"
-msgstr "Installationsguide"
+msgid "Installation Guide for x64"
+msgstr "Installationsguide til x64"
+
+#: docs/views.py
+msgid "Installation Guide for Raspberry Pi"
+msgstr "Installationsguide til Raspberry Pi"
 
 #: docs/views.py
 msgid "Updating Wi-Fi setup"
@@ -4019,6 +4017,14 @@ msgid ""
 msgstr ""
 "Nødvendigt for kunder der ønsker at autentificere login på BorgerPC gennem "
 "et API, der kræver en API-nøgle (f.eks. Quria)"
+
+#: system/forms.py templates/system/users/form.html
+msgid "Fill out if you want to update the current password"
+msgstr "Udfyldes hvis du ønsker at opdatere det nuværende kodeord"
+
+#: system/forms.py
+msgid "Fill out if you want to update the current value"
+msgstr "Udfyldes hvis du ønsker at opdatere den nuværende værdi"
 
 #: system/forms.py
 msgid "Select users to be added to this site"
@@ -4335,10 +4341,6 @@ msgid "hidden script"
 msgstr "skjult script"
 
 #: system/models.py
-msgid "maintained by Magenta"
-msgstr "vedligeholdt af Magenta"
-
-#: system/models.py
 msgid "position"
 msgstr "position"
 
@@ -4587,6 +4589,11 @@ msgstr "Tænd/sluk tidsplan %s oprettet"
 #, python-format
 msgid "You have no schedule with the following ID: %s"
 msgstr "Du har ingen tidsplan med følgende ID: %s"
+
+#: system/views.py
+#, python-format
+msgid "One or more week days has the same on and off time %s"
+msgstr "En eller flere ugedage har samme tænd- og sluk-tidspunkt %s"
 
 #: system/views.py
 #, python-format
@@ -4894,7 +4901,7 @@ msgid "Handle configuration"
 msgstr "Håndter konfiguration"
 
 #: templates/system/configs/templates.html
-#: templates/system/pcgroups/policy_list/templates.html
+#: templates/system/pcgroups/site_groups.html
 msgid "Save"
 msgstr "Gem"
 
@@ -5315,10 +5322,6 @@ msgstr "Position"
 msgid "Arguments"
 msgstr "Inputparametre"
 
-#: templates/system/pcgroups/policy_list/templates.html
-msgid "Edit script"
-msgstr "Redigér script"
-
 #: templates/system/pcgroups/site_groups.html
 msgid "Add new group"
 msgstr "Tilføj ny gruppe"
@@ -5440,6 +5443,10 @@ msgstr ""
 msgid "Create group"
 msgstr "Opret gruppe"
 
+#: templates/system/pcgroups/site_groups.html
+msgid "Edit script"
+msgstr "Redigér script"
+
 #: templates/system/pcs/confirm_delete.html templates/system/pcs/update.html
 msgid "Delete computer"
 msgstr "Slet computer"
@@ -5494,13 +5501,13 @@ msgstr "Beskrivelse"
 msgid "Location"
 msgstr "Placering"
 
+#: templates/system/pcs/pcs.html templates/system/pcs/update.html
+msgid "Ubuntu version"
+msgstr "Ubuntu-version"
+
 #: templates/system/pcs/pcs.html
 msgid "Latest check-in"
 msgstr "Seneste tjek-ind"
-
-#: templates/system/pcs/pcs.html
-msgid "Latest event received"
-msgstr "Seneste hændelse modtaget"
 
 #: templates/system/pcs/pcs.html templates/system/pcs/update.html
 msgid "Not activated"
@@ -5530,14 +5537,6 @@ msgstr "Registreret"
 #: templates/system/pcs/update.html
 msgid "Last check-in"
 msgstr "Seneste tjek-ind"
-
-#: templates/system/pcs/update.html
-msgid "Last event received"
-msgstr "Seneste hændelse modtaget"
-
-#: templates/system/pcs/update.html
-msgid "Ubuntu version"
-msgstr "Ubuntu-version"
 
 #: templates/system/pcs/update.html
 msgid "Groups the computer is a member of"
@@ -6015,10 +6014,6 @@ msgstr "Er du sikker på, at du vil fjerne denne bruger fra sitet "
 #: templates/system/users/confirm_delete.html
 msgid "Are you sure you want to delete the user"
 msgstr "Er du sikker på, at du vil slette brugeren"
-
-#: templates/system/users/form.html
-msgid "Fill out if you want to update the current password"
-msgstr "Udfyldes hvis du ønsker at opdatere det nuværende kodeord"
 
 #: templates/system/users/form.html
 msgid "Show Password"

@@ -998,7 +998,10 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
 
     def get_queryset(self):
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        if not self.request.user.is_superuser:
+        if (
+            not self.request.user.is_superuser
+            and not self.request.user.user_profile.is_hidden
+        ):
             queryset = Job.objects.filter(
                 Q(batch__script__is_hidden=False)
                 | Q(
@@ -1031,20 +1034,17 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
 
         return queryset
 
-    # for admin users the user_url is a redirect to our job docs
-    # explaining scripts run as "Magenta"
     def get_username(self, user):
         if user:
-            if user and user.is_superuser:
-                return "Magenta"
-            else:
-                return user.username
+            return user.username
         else:
             return ""
 
+    # for admin users the user_url is a redirect to our job docs
+    # explaining scripts run as "Magenta"
     def get_user_url(self, user, uid):
         if user:
-            if user.is_superuser:
+            if user.is_superuser or user.user_profile.is_hidden:
                 return reverse("doc", kwargs={"name": "jobs"})
             else:
                 return (reverse("user", args=[uid, user.username]),)
@@ -1218,7 +1218,7 @@ class ScriptMixin(object):
         context["site"] = self.site
         context["script_tags"] = ScriptTag.objects.all()
 
-        if self.request.user.is_superuser:
+        if self.request.user.is_superuser or self.request.user.user_profile.is_hidden:
             scripts = self.scripts.all()
         else:
             scripts = self.scripts.filter(is_hidden=False)
@@ -1466,6 +1466,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         if (
             self.script.is_hidden
             and not self.request.user.is_superuser
+            and not self.request.user.user_profile.is_hidden
             and not (
                 self.script.feature_permission
                 in self.site.customer.feature_permission.all()
@@ -1793,7 +1794,10 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         orderby = params.get("orderby", "-pk")
         if orderby not in JobSearch.VALID_ORDER_BY:
             orderby = "-pk"
-        if not self.request.user.is_superuser:
+        if (
+            not self.request.user.is_superuser
+            and not self.request.user.user_profile.is_hidden
+        ):
             visible_jobs = pc.jobs.filter(
                 Q(batch__script__is_hidden=False)
                 | Q(
@@ -1816,15 +1820,6 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         context["orderby_base_url"] = pc.get_absolute_url() + "?"
 
         context["selected_pc"] = pc
-        context["os_release"] = pc.get_config_value("_os_release")
-
-        context["security_event"] = pc.security_events.latest_event()
-        context["has_security_events"] = (
-            pc.security_events.exclude(status=SecurityEvent.RESOLVED)
-            .exclude(problem__level=EventLevels.NORMAL)
-            .count()
-            > 0
-        )
 
         return context
 
@@ -2247,25 +2242,25 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
     def form_valid(self, form):
         if not self.object.site.customer.feature_permission.filter(uid="wake_plan"):
             raise PermissionDenied
-        # Ensure that if a start time has been set, so has the end time - or vice versa
+        # Ensure that no weekday has the same on and off time
         f = self.request.POST
-        if (
-            (f.get("monday_on") and not f.get("monday_off"))
-            or (not f.get("monday_on") and f.get("monday_off"))
-            or (f.get("tuesday_on") and not f.get("tuesday_off"))
-            or (not f.get("tuesday_on") and f.get("tuesday_off"))
-            or (f.get("wednesday_on") and not f.get("wednesday_off"))
-            or (not f.get("wednesday_on") and f.get("wednesday_off"))
-            or (f.get("thursday_on") and not f.get("thursday_off"))
-            or (not f.get("thursday_on") and f.get("thursday_off"))
-            or (f.get("friday_on") and not f.get("friday_off"))
-            or (not f.get("friday_on") and f.get("friday_off"))
-            or (f.get("saturday_on") and not f.get("saturday_off"))
-            or (not f.get("saturday_on") and f.get("saturday_off"))
-            or (f.get("sunday_on") and not f.get("sunday_off"))
-            or (not f.get("sunday_on") and f.get("sunday_off"))
-        ):
-            return self.form_invalid(form)
+        for day in [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday",
+        ]:
+            if f.get(f"{day}_on") == f.get(f"{day}_off"):
+                response = self.form_invalid(form)
+                set_notification_cookie(
+                    response,
+                    _("One or more week days has the same on and off time %s") % "",
+                    error=True,
+                )
+                return response
 
         # Capture a view of the groups and settings before the update
         groups_pre = set(self.object.groups.all())
@@ -2417,54 +2412,31 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
     def check_settings_updates(self, plan_pre, events_pre):
         """Helper function used to check if the plan settings have changed."""
         plan_post = self.object
+
         if (
-            plan_pre.sleep_state != plan_post.sleep_state
-            or plan_pre.monday_open != plan_post.monday_open
-            or (plan_post.monday_open and plan_pre.monday_on != plan_post.monday_on)
-            or (plan_post.monday_open and plan_pre.monday_off != plan_post.monday_off)
-            or plan_pre.tuesday_open != plan_post.tuesday_open
-            or (plan_post.tuesday_open and plan_pre.tuesday_on != plan_post.tuesday_on)
-            or (
-                plan_post.tuesday_open and plan_pre.tuesday_off != plan_post.tuesday_off
-            )
-            or plan_pre.wednesday_open != plan_post.wednesday_open
-            or (
-                plan_post.wednesday_open
-                and plan_pre.wednesday_on != plan_post.wednesday_on
-            )
-            or (
-                plan_post.wednesday_open
-                and plan_pre.wednesday_off != plan_post.wednesday_off
-            )
-            or plan_pre.thursday_open != plan_post.thursday_open
-            or (
-                plan_post.thursday_open
-                and plan_pre.thursday_on != plan_post.thursday_on
-            )
-            or (
-                plan_post.thursday_open
-                and plan_pre.thursday_off != plan_post.thursday_off
-            )
-            or plan_pre.friday_open != plan_post.friday_open
-            or (plan_post.friday_open and plan_pre.friday_on != plan_post.friday_on)
-            or (plan_post.friday_open and plan_pre.friday_off != plan_post.friday_off)
-            or plan_pre.saturday_open != plan_post.saturday_open
-            or (
-                plan_post.saturday_open
-                and plan_pre.saturday_on != plan_post.saturday_on
-            )
-            or (
-                plan_post.saturday_open
-                and plan_pre.saturday_off != plan_post.saturday_off
-            )
-            or plan_pre.sunday_open != plan_post.sunday_open
-            or (plan_post.sunday_open and plan_pre.sunday_on != plan_post.sunday_on)
-            or (plan_post.sunday_open and plan_pre.sunday_off != plan_post.sunday_off)
-            or events_pre != set(plan_post.wake_change_events.all())
+            events_pre != set(plan_post.wake_change_events.all())
+            or plan_pre.sleep_state != plan_post.sleep_state
         ):
             return True
-        else:
-            return False
+
+        for day in [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday",
+        ]:
+            for setting in ["on", "off"]:
+                if getattr(plan_post, f"{day}_open") and getattr(
+                    plan_post, f"{day}_{setting}"
+                ) != getattr(plan_pre, f"{day}_{setting}"):
+                    return True
+            if getattr(plan_post, f"{day}_open") != getattr(plan_pre, f"{day}_open"):
+                return True
+
+        return False
 
 
 class WakePlanDelete(WakePlanBaseMixin, DeleteView):
@@ -2522,23 +2494,15 @@ class WakePlanDuplicate(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
         if not object_to_copy.site.customer.feature_permission.filter(uid="wake_plan"):
             raise PermissionDenied
 
-        # Before we remove the pk we duplicate all the associated events, as they're precisely related through the pk
-        # TODO: For now we actually duplicate the events rather than refer to the same ones
-        # Which we'd like to change in the future, so WakeWeekPlans can generally share events
-        # ...and not only through copying
-        events = []
-        for event in object_to_copy.wake_change_events.all():
-            event.id = None
-            event.save()
-            events.append(event)
-
+        # Store a temporary copy
+        wake_events = object_to_copy.wake_change_events.all()
         # Remove its current pk so it gets a new one when saving
         object_to_copy.pk = None
         object_to_copy.name = _("Copy of") + f" {object_to_copy.name}"
         # Now save the copied object to get a new ID, which is also required to bind the duplicated events to it
         object_to_copy.save()
 
-        object_to_copy.wake_change_events.set(events)
+        object_to_copy.wake_change_events.set(wake_events)
 
         new_id = object_to_copy.pk
         return reverse(
@@ -2827,7 +2791,7 @@ class UsersMixin(object):
     def add_userlist_to_context(self, context):
         if "site" not in context:
             self.add_site_to_context(context)
-        if self.request.user.is_superuser:
+        if self.request.user.is_superuser or self.request.user.user_profile.is_hidden:
             context["user_list"] = context["site"].users
         else:
             context["user_list"] = context["site"].users.filter(

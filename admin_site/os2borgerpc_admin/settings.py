@@ -63,8 +63,6 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
             BASE_DIR / "templates/",
-            # Can this one be deleted?:
-            django.__path__[0] + "/forms/templates",
         ],
         "APP_DIRS": True,
         "OPTIONS": {

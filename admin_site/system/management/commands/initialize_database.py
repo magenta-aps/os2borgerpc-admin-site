@@ -8,7 +8,7 @@ from django.core.management.base import BaseCommand
 from django.conf import settings
 from django.core.management import call_command
 
-fixtures_base_dir = os.path.join(settings.BASE_DIR, "fixtures")
+fixtures_base_dir = settings.BASE_DIR / "fixtures"
 
 
 class Command(BaseCommand):
@@ -38,7 +38,7 @@ class Command(BaseCommand):
 
             print("Populate database with (static) basic data:")
 
-            for file in sorted(Path(fixtures_base_dir).rglob("*.json")):
+            for file in sorted(fixtures_base_dir.rglob("*.json")):
                 if os.path.isfile(file):
                     call_command("loaddata", file)
 

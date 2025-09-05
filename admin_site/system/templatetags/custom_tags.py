@@ -2,6 +2,8 @@ from django import template
 from django.utils.safestring import mark_safe
 from django.utils.timesince import timesince
 from datetime import datetime
+from django.core.files.storage import default_storage
+
 import os
 
 register = template.Library()
@@ -54,14 +56,12 @@ def file_basename(value):
             return "No file"
 
         file_path = value.file.name
-        if not os.path.exists(file_path) or not os.path.isfile(
-            file_path
-        ):  # Check if file exists
+        if not default_storage.exists(file_path):
             return "File not found"
 
         return os.path.basename(file_path)
     except Exception as e:
-        return "File not found"
+        return "Error: File not found"
 
 
 # Useful for investigating what's in the {{context}}

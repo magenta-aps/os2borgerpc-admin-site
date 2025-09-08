@@ -1,3 +1,7 @@
+## Version 6.9.1, September 8, 2025
+
+- Fix bug in display of name of file parameters for associated scripts
+
 ## Version 6.9.0, September 4, 2025
 
 - Add client-api meant to replace xmlrpc

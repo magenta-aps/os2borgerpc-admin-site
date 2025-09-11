@@ -245,9 +245,6 @@ DJANGO_APPS = (
     "django.contrib.staticfiles",
     # Uncomment the next line to enable the admin:
     "django.contrib.admin",
-    # Uncomment the next line to enable admin documentation:
-    "django.contrib.admindocs",
-    "django.forms",
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

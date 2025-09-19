@@ -37,11 +37,20 @@ class MyUserAdmin(UserAdmin):
     list_display = (
         "username",
         "email",
-        "last_login",
+        "customer",
         "sites",
-        "is_staff",
-        "is_active",
         "user_profile",
+        "language",
+        "totp_enabled",
+        "is_active",
+        "is_staff",
+        "last_login",
+    )
+    list_filter = (
+        "user_profile__sites",
+        "user_profile__sites__customer",
+        ("totpdevice", admin.EmptyFieldListFilter),
+        "is_active",
     )
     search_fields = ("username", "email")
 
@@ -51,16 +60,25 @@ class MyUserAdmin(UserAdmin):
         if not hasattr(obj, "user_profile"):
             m.UserProfile.objects.create(user=obj)
 
+    @admin.display(ordering="user_profile__sites__customer")
+    def customer(self, obj):
+        return obj.user_profile.sites.first().customer
+
+    @admin.display(ordering="user_profile__sites")
     def sites(self, obj):
         return list(obj.user_profile.sites.all())
+
+    @admin.display(description="2FA active", ordering="totpdevice", boolean=True)
+    def totp_enabled(self, obj):
+        return bool(obj.totpdevice_set.count())
+
+    @admin.display(ordering="user_profile.language")
+    def language(self, obj):
+        return obj.user_profile.get_language_display()
 
 
 @admin.register(m.UserProfile)
 class MyUserProfileAdmin(admin.ModelAdmin):
     inlines = [SiteMembershipInline]
-    list_display = ("user", "user_sites", "language")
-    list_filter = ("sites",)
+    list_display = ("user",)
     search_fields = ("user__username",)
-
-    def user_sites(self, obj):
-        return list(obj.sites.all())

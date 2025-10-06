@@ -393,7 +393,9 @@ def general_citizen_login(pc_uid, integration, value_dict):
             return int(time_allowed), citizen_hash, log_id
         site = pc.site
     except PC.DoesNotExist:
-        logger.error(f"PC {pc_uid} does not exist - unable to proceed.")
+        logger.error(
+            f"Citizen login: Denied login request from an unknown PC with the UID: {pc_uid}."
+        )
         return int(time_allowed), citizen_hash, log_id
 
     # Start by validating the credentials to obtain the citizen_hash, which

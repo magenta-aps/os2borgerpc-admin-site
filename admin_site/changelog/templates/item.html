@@ -6,7 +6,7 @@
             <div class="changelog-detail" id="entry-{{ entry.pk }}">
                 <div class="modal-header">
                     <h2 class="card-title">{{ entry.title }}</h2>
-                    <strong class="timestamp-created text-muted fs-4">{{ entry.created }}</strong>
+                    <span class="timestamp-created text-muted fs-5">{{ entry.created }}</span>
                 </div>
                 <section class="changelog-content">
                     <p>{{ entry.render_content | safe }}</p>

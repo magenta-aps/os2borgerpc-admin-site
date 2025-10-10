@@ -64,6 +64,7 @@
           {% translate "Last check-in" %}:
           {% if selected_pc.last_seen %}
             {{ selected_pc.last_seen|timesince }} {% translate "ago" %}
+            ({{ selected_pc.last_seen }})
           {% else %}
             {% translate "Never" %}
           {% endif %}

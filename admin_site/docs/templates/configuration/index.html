@@ -173,12 +173,11 @@
       <tr>
         <td>hostname</td>
         <td>{% translate "The computer's hostname" %}</td>
-        <td>{% translate "Is currently only set during the registration" %}</td>
+        <td>{% translate "It's set during the registration, and if you update the PC name on the admin-site" %}</td>
       </tr>
       <tr>
-      <tr>
         <td>job_timeout</td>
-        <td>{% translate "How long the client waits for a job to finish in seconds" %}</td>
+        <td>{% translate "How long the client waits for a job to finish, in seconds" %}</td>
         <td>{% blocktranslate trimmed %}
           If job_timeout is exceeded, the process is stopped.
           This is useful if something is stuck, such as a process futilely waiting for input
@@ -187,13 +186,13 @@
       </tr>
       <tr>
         <td>os2_product</td>
-        <td>{% translate "Indicates whether the computer is an OS2borgerPC or a OS2borgerPC Kiosk" %}</td>
+        <td>{% translate "Indicates whether the computer is a BorgerPC, Kiosk etc." %}</td>
         <td></td>
       </tr>
       <tr>
         <td>os2borgerpc_version</td>
-        <td>{% translate "The version of the OS2borgerPC-image that was installed" %}</td>
-        <td>{% translate "Unless the computer is reinstalled, this number does not change" %}</td>
+        <td>{% translate "The version of the original OS2borgerPC-image that was installed" %}</td>
+        <td>{% translate "This value never changes." %}</td>
       </tr>
     </tbody>
   </table>
@@ -205,7 +204,7 @@
   <h5>Site <span class='material-symbols-outlined'>arrow_right_alt</span> {% translate "Computer" %}</h5>
 
   <p>{% blocktranslate trimmed %}
-      You create a configuration value for a Site, a Group or a computer and it will automatically be transferred
+      You create a configuration for a Site, a Group or a computer and it will automatically be transferred
       to the relevant computer(s) during their next check-in with the admin-site.
       {% endblocktranslate %}<p>
 
@@ -219,15 +218,21 @@
     <tbody>
       <tr>
         <td>get_os2borgerpc_config</td>
-        <td>{% translate "Retrieves the value of a configuration value" %}</td>
+        <td>{% translate "Retrieves the value of a configuration" %}</td>
         <td>get_os2borgerpc_config admin_url<br/> <br/>
-          {% translate "Retrieves the address of the server where the computer is registered." %}</td>
+          {% translate "Retrieves the value of the configuration admin_url." %}</td>
       </tr>
       <tr>
         <td>set_os2borgerpc_config</td>
-        <td>{% translate "Sets the value of a configuration value" %}</td>
-        <td>set_os2borgerpc_config {% translate "citizen yes" %}<br/> <br/>
-          {% translate "Creates a new configuration value with the name citizen and the value 'yes'" %}</td>
+        <td>{% translate "Sets the value of a configuration" %}</td>
+        <td>set_os2borgerpc_config citizen yes<br/> <br/>
+          {% translate "Creates a new configuration with the name citizen and the value 'yes'" %}</td>
+      </tr>
+      <tr>
+        <td>os2borgerpc_push_config_keys</td>
+        <td>{% translate "Pushes a configuration to the admin-site" %}</td>
+        <td>os2borgerpc_push_config_keys serial_number<br/> <br/>
+          {% translate "Pushes the example configuration serial_number to the admin-site" %}</td>
       </tr>
     </tbody>
   </table>

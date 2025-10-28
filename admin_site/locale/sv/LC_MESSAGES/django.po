@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-28 14:43+0100\n"
+"POT-Creation-Date: 2025-10-28 15:24+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -1135,11 +1135,11 @@ msgstr "Datorns hostname"
 
 #: docs/templates/configuration/index.html
 msgid ""
-"It's set during the registration, and if you update the PC name on the admin "
-"portal"
+"It's set during the registration, and if you update the PC name on the admin-"
+"site"
 msgstr ""
 "Det ställs in under registreringen, och om du uppdaterar datorns namn på "
-"administratörsportalen portal"
+"adminsidan"
 
 #: docs/templates/configuration/index.html
 msgid "How long the client waits for a job to finish, in seconds"
@@ -1164,7 +1164,7 @@ msgstr ""
 "Den version av den ursprungliga Sambruk MedborgarPC-imaget som installerades"
 
 #: docs/templates/configuration/index.html
-msgid "This value never changes"
+msgid "This value never changes."
 msgstr "Detta värde förändras inte"
 
 #: docs/templates/configuration/index.html
@@ -1183,13 +1183,13 @@ msgstr "Dator"
 
 #: docs/templates/configuration/index.html
 msgid ""
-"You create a configuration value for a Site, a Group or a computer and it "
-"will automatically be transferred to the relevant computer(s) during their "
-"next check-in with the admin-site."
+"You create a configuration for a Site, a Group or a computer and it will "
+"automatically be transferred to the relevant computer(s) during their next "
+"check-in with the admin-site."
 msgstr ""
-"Du skapar ett konfigurationsvärde på en site, grupp eller dator, och det "
-"kommer automatiskt att överföras till den eller de relevanta datorerna nästa "
-"gång de checkar in på adminsidan."
+"Du skapar en konfiguration på en site, grupp eller dator, och det kommer "
+"automatiskt att överföras till den eller de relevanta datorerna nästa gång "
+"de checkar in på adminsidan."
 
 #: docs/templates/configuration/index.html
 msgid "From a terminal on the computer or a script, you can use these programs"
@@ -1206,32 +1206,29 @@ msgid "Usage example"
 msgstr "Användningsexempel"
 
 #: docs/templates/configuration/index.html
-msgid "Retrieves the value of a configuration value"
-msgstr "Hämtar värdet för ett konfigurationsvärde"
+msgid "Retrieves the value of a configuration"
+msgstr "Hämtar värdet för en konfiguration"
 
 #: docs/templates/configuration/index.html
-msgid "Retrieves the address of the server where the computer is registered."
-msgstr "Hämtar adressen till servern där datorn är registrerad."
+msgid "Retrieves the value of the configuration admin_url."
+msgstr "Hämtar värdet för konfigurationen admin_url"
 
 #: docs/templates/configuration/index.html
-msgid "Sets the value of a configuration value"
-msgstr "Anger värdet för ett konfigurationsvärde"
+msgid "Sets the value of a configuration"
+msgstr "Anger värdet för en konfiguration"
 
 #: docs/templates/configuration/index.html
-msgid ""
-"Creates a new configuration value with the name citizen and the value 'yes'"
+msgid "Creates a new configuration with the name citizen and the value 'yes'"
 msgstr ""
-"Skapar en ny konfiguration med namnet medborgare och ställer in den på 'ja'"
+"Skapar en ny konfiguration med namnet citizen och ställer in den på 'yes'"
 
 #: docs/templates/configuration/index.html
-msgid "Pushes a configuration to the admin portal"
-msgstr "Skickar en konfiguration till administratörsportalen"
+msgid "Pushes a configuration to the admin-site"
+msgstr "Skickar en konfiguration till adminsidan"
 
 #: docs/templates/configuration/index.html
-msgid ""
-"Pushes the example configuration value serial_number to the admin portal"
-msgstr ""
-"Skickar exempelkonfigurationsvärdet serial_number till administratörsportalen"
+msgid "Pushes the example configuration serial_number to the admin-site"
+msgstr "Skickar exempelkonfigurationen serial_number till adminsidan"
 
 #: docs/templates/configuration/index.html
 msgid "In practice, the above programs interact with the file"

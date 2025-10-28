@@ -173,7 +173,7 @@
       <tr>
         <td>hostname</td>
         <td>{% translate "The computer's hostname" %}</td>
-        <td>{% translate "It's set during the registration, and if you update the PC name on the admin portal" %}</td>
+        <td>{% translate "It's set during the registration, and if you update the PC name on the admin-site" %}</td>
       </tr>
       <tr>
         <td>job_timeout</td>
@@ -204,7 +204,7 @@
   <h5>Site <span class='material-symbols-outlined'>arrow_right_alt</span> {% translate "Computer" %}</h5>
 
   <p>{% blocktranslate trimmed %}
-      You create a configuration value for a Site, a Group or a computer and it will automatically be transferred
+      You create a configuration for a Site, a Group or a computer and it will automatically be transferred
       to the relevant computer(s) during their next check-in with the admin-site.
       {% endblocktranslate %}<p>
 
@@ -218,21 +218,21 @@
     <tbody>
       <tr>
         <td>get_os2borgerpc_config</td>
-        <td>{% translate "Retrieves the value of a configuration value" %}</td>
+        <td>{% translate "Retrieves the value of a configuration" %}</td>
         <td>get_os2borgerpc_config admin_url<br/> <br/>
-          {% translate "Retrieves the address of the server where the computer is registered." %}</td>
+          {% translate "Retrieves the value of the configuration admin_url." %}</td>
       </tr>
       <tr>
         <td>set_os2borgerpc_config</td>
-        <td>{% translate "Sets the value of a configuration value" %}</td>
+        <td>{% translate "Sets the value of a configuration" %}</td>
         <td>set_os2borgerpc_config citizen yes<br/> <br/>
-          {% translate "Creates a new configuration value with the name citizen and the value 'yes'" %}</td>
+          {% translate "Creates a new configuration with the name citizen and the value 'yes'" %}</td>
       </tr>
       <tr>
         <td>os2borgerpc_push_config_keys</td>
-        <td>{% translate "Pushes a configuration to the admin portal" %}</td>
+        <td>{% translate "Pushes a configuration to the admin-site" %}</td>
         <td>os2borgerpc_push_config_keys serial_number<br/> <br/>
-          {% translate "Pushes the example configuration value serial_number to the admin portal" %}</td>
+          {% translate "Pushes the example configuration serial_number to the admin-site" %}</td>
       </tr>
     </tbody>
   </table>

@@ -153,13 +153,16 @@ def get_pc_configuration(request, configuration_id):
     "/computers/logins-per-day",
     response={200: List[PCLoginsSchema], 204: None},
     url_name="computers-logins-per-day",
-    description="Fetch data on logins per day for all computers.",
 )
 def get_pcs_logins_per_day(
     request,
     from_date: date = date(1970, 1, 1),
     to_date: date = date.today(),
 ):
+    """
+    Fetch data on logins per day for all computers. Note: This information is not gathered and sent by default.
+    **Note:** This information is not gathered and sent by default. You will need need to run a script to activate it. See the main documentation for more info.
+    """
     site = get_site_from_request(request)
     pcs = PC.objects.filter(site=site, is_activated=True)
     pc_names_with_logins = []
@@ -184,7 +187,6 @@ def get_pcs_logins_per_day(
     "/computers/{int:pc_id}/logins-per-day",
     response={200: PCLoginsSchema, 204: None},
     url_name="computer-logins-per-day",
-    description="Fetch data on logins per day for a specific Computer, by its ID.",
 )
 def get_pc_logins_per_day(
     request,
@@ -192,6 +194,10 @@ def get_pc_logins_per_day(
     from_date: date = date(1970, 1, 1),
     to_date: date = date.today(),
 ):
+    """
+    Fetch data on logins per day for a specific Computer, by its ID.
+    **Note:** This information is not gathered and sent by default. You will need need to run a script to activate it. See the main documentation for more info.
+    """
     site = get_site_from_request(request)
     try:
         pc = PC.objects.get(site=site, id=pc_id)

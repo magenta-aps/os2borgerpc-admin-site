@@ -3354,6 +3354,13 @@
     }
 },
 {
+    "model": "system.scripttag",
+    "pk": 7,
+    "fields": {
+        "name": "Login"
+    }
+},
+{
     "model": "system.script",
     "pk": 1,
     "fields": {
@@ -4562,6 +4569,28 @@
         "is_hidden": false,
         "feature_permission": null,
         "tags": [],
+        "products": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 88,
+    "fields": {
+        "created": "2025-10-30T14:10:23.320",
+        "modified": "2025-10-30T14:22:31.794",
+        "user_created": "magenta",
+        "user_modified": "magenta",
+        "name": "Login - Send løbende antal login dagligt til adminsitet",
+        "uid": "logins_per_day",
+        "description": "-",
+        "site": null,
+        "executable_code": "script_uploads/get_daily_login_count.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "feature_permission": null,
+        "tags": [
+            7
+        ],
         "products": []
     }
 },
@@ -8259,6 +8288,18 @@
         "position": 2,
         "mandatory": false,
         "script": 87
+    }
+},
+{
+    "model": "system.input",
+    "pk": 110,
+    "fields": {
+        "name": "Aktiver?",
+        "value_type": "BOOLEAN",
+        "default_value": "",
+        "position": 0,
+        "mandatory": false,
+        "script": 88
     }
 },
 {

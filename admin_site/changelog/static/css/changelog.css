@@ -38,10 +38,6 @@
   padding: 1.5rem;
 }
 
-.changelog-detail {
-  padding: 1.5rem;
-}
-
 #changelog-container {
   padding: 1rem 2rem;
   margin: 0 auto;
@@ -72,11 +68,16 @@ nav.pagination-wrapper {
 }
 
 .modal-header {
+  align-items: start;
   padding: .75rem 0;
 }
 
+.modal-content {
+  padding: 1.5rem 7.0rem;
+}
+
 .comment-container {
-  padding: 1.5rem;
+  padding-top: 1.5rem;
 }
 
 .comment-card {
@@ -163,6 +164,7 @@ nav.pagination-wrapper {
 
 .card-title {
   padding-bottom: 0.5em;
+  max-width: 600px;
   color: black;
 }
 

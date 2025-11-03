@@ -11,7 +11,7 @@
 
 {% block specific_content %}
 <div class="container-fluid main">
-  <h2 class="divideheader">{% trans "Enable Two-Factor Authentication for" %} <em>{{ request.user.username }}</em></h2>
+  <h2 class="divideheader">{% trans "Enable Two-Factor Authentication for" %} <em>{{ user.username }}</em></h2>
   <div class="tab-content">
   {% if wizard.steps.current == 'welcome' %}
     <p>{% blocktrans trimmed %}You are about to take your account security to the

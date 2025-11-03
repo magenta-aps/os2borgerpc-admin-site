@@ -2063,7 +2063,7 @@
 },
 {
     "model": "system.site",
-    "pk": 1,
+    "pk": 9,
     "fields": {
         "name": "Magenta",
         "uid": "magenta",
@@ -2083,7 +2083,7 @@
 },
 {
     "model": "system.site",
-    "pk": 9,
+    "pk": 1,
     "fields": {
         "name": "Magenta Test",
         "uid": "magenta-test",

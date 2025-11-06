@@ -1,3 +1,16 @@
+## Version 6.10.0, November 10, 2025
+
+- Stop server error with the updated client when a computer that isn't
+  registered tries to interact with it
+- Update django two factor auth
+- Add a new favicon
+- Also show last seen in absolute time on the computer page
+- Updates to docs on configurations and API
+- Improve how users are displayed on the backend
+- Additional PC name validation
+- Changelogs (News): UI/UX improvements
+- Add support for markdown in script descriptions
+
 ## Version 6.9.1, September 8, 2025
 
 - Fix bug in display of name of file parameters for associated scripts

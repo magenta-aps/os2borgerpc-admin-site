@@ -324,6 +324,7 @@ class CustomerAdmin(admin.ModelAdmin):
     list_display = (
         "name",
         "is_test",
+        "created",
         "using_sso",
         "number_of_computers",
         "number_of_borgerpc_computers",
@@ -337,6 +338,7 @@ class CustomerAdmin(admin.ModelAdmin):
         SiteInlineForCustomerAdmin,
         FeaturePermissionInlineForCustomerAdmin,
     )
+    readonly_fields = ("created",)
 
     def sites(self, obj):
         return list(obj.sites.all())

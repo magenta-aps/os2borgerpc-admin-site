@@ -46,9 +46,9 @@ def get_instructions_route(request, data: GetInstructionsSchema):
     return get_instructions(**data.dict())
 
 
-@router.post("/push_config_keys")
+@router.post("/push_config_keys", response={200: str, 400: str})
 def push_config_keys_route(request, data: PushConfigKeysSchema):
-    return push_config_keys(**data.dict())
+    return push_config_keys(**data.dict(), api_call=True)
 
 
 @router.post("/push_security_events")

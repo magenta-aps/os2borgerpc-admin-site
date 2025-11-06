@@ -186,9 +186,8 @@ def get_instructions(pc_uid):
     try:
         pc = PC.objects.get(uid=pc_uid)
     except PC.DoesNotExist:
-        raise Exception(
-            "This Computer does not appear to be registered with the configured admin portal."
-        )
+        # Fail silently
+        return {}
 
     pc.last_seen = datetime.now()
     pc.save()
@@ -236,13 +235,17 @@ def get_instructions(pc_uid):
     return instructions
 
 
-def push_config_keys(pc_uid, config_dict, read_only=False):
+def push_config_keys(pc_uid, config_dict, read_only=False, api_call=False):
     try:
         pc = PC.objects.get(uid=pc_uid)
     except PC.DoesNotExist:
-        raise Exception(
-            "This Computer does not appear to be registered with the configured admin portal."
-        )
+        error_string = "This Computer does not appear to be registered with the configured admin portal."
+        # See comment at the first use of api_call
+        if api_call:
+            return 400, error_string
+        else:
+            raise Exception(error_string)
+
     if not pc.is_activated:
         return 0
 

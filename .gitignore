@@ -1,33 +1,27 @@
-/admin_site/*.db
-/python-env
-/admin_site/python-env
-/admin_site/etc/bibos-proxy.htpasswd
-/admin_site/site_media/script_uploads
-/admin_site/site_media/parameter_uploads
-/admin_site/site_media/site_media
-/admin_site/site_media/images/
-justfile
 /static/
 log/
 script-uploads/
 node_modules/
+.vim/
+.idea/
+dist/
+env/
+venv/
+
+/admin_site/*.db
 *.pyc
 *.swp
-.bash_history
-.viminfo
-.vim
-.ropeproject
-*.egg-info
-.idea
-Session.vim
 *.mo
+
 # These files are created when running "npm run build-for-dev"
 admin_site/static/css/bootstrap.css
 admin_site/static/css/bootstrap.css.map
 admin_site/static/js/bootstrap.bundle.min.js
 admin_site/static/js/bootstrap.bundle.min.js.map
-dist/
-venv
+justfile
+pyrightconfig.json
+Session.vim
+.viminfo
 
 # Temporary files created by just
 db-data.json

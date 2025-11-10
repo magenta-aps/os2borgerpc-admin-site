@@ -1,4 +1,3 @@
-
 #changelog-container header h1, .card-title {
   font-size: 2.4rem;
 }
@@ -13,6 +12,12 @@
 
 .changelog-content h2, .changelog-content h3 {
   margin-top: 1.6rem;
+  margin-bottom: 0.80rem;
+}
+
+.changelog-content p {
+  max-width: 750px;
+  line-height: 25px;
 }
 
 .changelog-content h1 {
@@ -23,13 +28,13 @@
   font-size: 1.6rem;
 }
 
+.changelog-content img {
+  margin: 10px;
+}
+
 .changelog-item {
   min-width: 10rem;
   border-top: solid 1px #aaa;
-  padding: 1.5rem;
-}
-
-.changelog-detail {
   padding: 1.5rem;
 }
 
@@ -62,8 +67,17 @@ nav.pagination-wrapper {
   font-size: 2.0rem;
 }
 
+.modal-header {
+  align-items: start;
+  padding: .75rem 0;
+}
+
+.modal-content {
+  padding: 1.5rem 7.0rem;
+}
+
 .comment-container {
-  padding: 1.5rem;
+  padding-top: 1.5rem;
 }
 
 .comment-card {
@@ -150,6 +164,7 @@ nav.pagination-wrapper {
 
 .card-title {
   padding-bottom: 0.5em;
+  max-width: 600px;
   color: black;
 }
 

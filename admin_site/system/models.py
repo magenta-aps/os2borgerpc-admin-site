@@ -162,6 +162,9 @@ class Country(models.Model):
 class Customer(models.Model):
     """A customer that can have one or more sites"""
 
+    created = models.DateTimeField(
+        verbose_name=_("created"), auto_now_add=True, null=True
+    )
     name = models.CharField(verbose_name=_("customer name"), max_length=255)
     country = models.ForeignKey(
         Country, related_name="customers", on_delete=models.PROTECT, null=True

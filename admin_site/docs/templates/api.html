@@ -44,7 +44,13 @@
       {% endblocktranslate %}
       </li>
       <li>{{pc}} {{logins}} {% blocktranslate trimmed %}which contains information about how many {{logins}} a single or
-        all computers have had on a given day{% endblocktranslate %}</li>
+        all computers have had on a given day{% endblocktranslate %}<br/>
+        {% url 'script_redirect_uid' 'logins_per_day' as url %}
+        {% blocktrans trimmed  %}
+        Note: This information is not collected and sent by default. You can run <a href="{{url}}">this script</a>
+          on the computers that should do so. Read the description of the script for more details.
+        {% endblocktrans %}
+      </li>
     </ul>
   </p>
   <p>

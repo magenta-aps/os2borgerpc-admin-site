@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 
 from django.conf import settings
 from django.db.models import Q
+from django.forms import ValidationError
 
 from system.models import PC, Site, Configuration, ConfigurationEntry
 from system.models import Job, SecurityProblem, SecurityEvent
@@ -51,7 +52,7 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
     # If we are here then no matching PC object exists
     # Check if the chosen name is too long to prevent old clients
     # from setting names that are too long
-    if len(name) > 40:
+    if len(name) < 1 or len(name) > 40:
         error_string = (
             f"The chosen name {name} has a length of {len(name)} characters. "
             "The name must have a length of 1-40 characters."
@@ -62,6 +63,18 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
         else:
             raise Exception(error_string)
     new_pc = PC(name=name, uid=uid)
+
+    # Run the model validators with a few exceptions for fields that are currently empty, as that's not done automatically
+    try:
+        new_pc.clean_fields(exclude=["configuration", "site"])
+    except ValidationError as e:
+        error_string = str(e)
+        # See comment at the first use of api_call
+        if api_call:
+            return 400, error_string
+        else:
+            raise Exception(error_string)
+
     try:
         new_pc.site = Site.objects.get(uid=site)
     except Site.DoesNotExist:
@@ -186,9 +199,8 @@ def get_instructions(pc_uid):
     try:
         pc = PC.objects.get(uid=pc_uid)
     except PC.DoesNotExist:
-        raise Exception(
-            "This Computer does not appear to be registered with the configured admin portal."
-        )
+        # Fail silently
+        return {}
 
     pc.last_seen = datetime.now()
     pc.save()
@@ -236,13 +248,17 @@ def get_instructions(pc_uid):
     return instructions
 
 
-def push_config_keys(pc_uid, config_dict, read_only=False):
+def push_config_keys(pc_uid, config_dict, read_only=False, api_call=False):
     try:
         pc = PC.objects.get(uid=pc_uid)
     except PC.DoesNotExist:
-        raise Exception(
-            "This Computer does not appear to be registered with the configured admin portal."
-        )
+        error_string = "This Computer does not appear to be registered with the configured admin portal."
+        # See comment at the first use of api_call
+        if api_call:
+            return 400, error_string
+        else:
+            raise Exception(error_string)
+
     if not pc.is_activated:
         return 0
 
@@ -393,7 +409,9 @@ def general_citizen_login(pc_uid, integration, value_dict):
             return int(time_allowed), citizen_hash, log_id
         site = pc.site
     except PC.DoesNotExist:
-        logger.error(f"PC {pc_uid} does not exist - unable to proceed.")
+        logger.error(
+            f"Citizen login: Denied login request from an unknown PC with the UID: {pc_uid}."
+        )
         return int(time_allowed), citizen_hash, log_id
 
     # Start by validating the credentials to obtain the citizen_hash, which

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-02 13:04+0200\n"
+"POT-Creation-Date: 2025-10-30 15:46+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -299,6 +299,17 @@ msgstr ""
 "datorer har haft en viss dag"
 
 #: docs/templates/api.html
+#, python-format
+msgid ""
+"Note: This information is not collected and sent by default. You can run <a "
+"href=\"%(url)s\">this script</a> on the computers that should do so. Read "
+"the description of the script for more details."
+msgstr ""
+"Obs: Denna information samlas inte in och skickas inte som standard. Du kan "
+"köra <a href=\"%(url)s\">detta skript</a> på de datorer som ska göra det. "
+"Läs skriptbeskrivningen för mer information."
+
+#: docs/templates/api.html
 msgid "HTTP header"
 msgstr "HTTP header"
 
@@ -545,8 +556,8 @@ msgid ""
 "e.g. try to get a specific PC and enter an id that does not match any PC on "
 "your site."
 msgstr ""
-"Statuskoden 204 betyder att ingen data returnerades. Detta kan hända om du t."
-"ex. försök att skaffa en specifik dator och ange ett id som inte matchar "
+"Statuskoden 204 betyder att ingen data returnerades. Detta kan hända om du "
+"t.ex. försök att skaffa en specifik dator och ange ett id som inte matchar "
 "någon dator på din Site."
 
 #: docs/templates/api.html
@@ -1134,11 +1145,15 @@ msgid "The computer's hostname"
 msgstr "Datorns hostname"
 
 #: docs/templates/configuration/index.html
-msgid "Is currently only set during the registration"
-msgstr "Är för närvarande endast inställt under registreringen"
+msgid ""
+"It's set during the registration, and if you update the PC name on the admin-"
+"site"
+msgstr ""
+"Det ställs in under registreringen, och om du uppdaterar datorns namn på "
+"adminsidan"
 
 #: docs/templates/configuration/index.html
-msgid "How long the client waits for a job to finish in seconds"
+msgid "How long the client waits for a job to finish, in seconds"
 msgstr "Hur länge klienten väntar på slutförandet av jobb, anges i sekunder"
 
 #: docs/templates/configuration/index.html
@@ -1151,18 +1166,17 @@ msgstr ""
 "försöker få input från användaren"
 
 #: docs/templates/configuration/index.html
-msgid "Indicates whether the computer is an OS2borgerPC or a OS2borgerPC Kiosk"
+msgid "Indicates whether the computer is a BorgerPC, Kiosk etc."
+msgstr "Identifierar om datorn är en MedborgarPC, Kiosk etc."
+
+#: docs/templates/configuration/index.html
+msgid "The version of the original OS2borgerPC-image that was installed"
 msgstr ""
-"Identifierar om datorn är en Sambruk MedborgarPC eller en Sambruk "
-"MedborgarPC Kiosk"
+"Den version av den ursprungliga Sambruk MedborgarPC-imaget som installerades"
 
 #: docs/templates/configuration/index.html
-msgid "The version of the OS2borgerPC-image that was installed"
-msgstr "Den version av Sambruk MedborgarPC-imaget som installerades"
-
-#: docs/templates/configuration/index.html
-msgid "Unless the computer is reinstalled, this number does not change"
-msgstr "Om inte datorn installeras om ändras inte detta nummer"
+msgid "This value never changes."
+msgstr "Detta värde förändras inte"
 
 #: docs/templates/configuration/index.html
 msgid "Technical information for script developers"
@@ -1180,13 +1194,13 @@ msgstr "Dator"
 
 #: docs/templates/configuration/index.html
 msgid ""
-"You create a configuration value for a Site, a Group or a computer and it "
-"will automatically be transferred to the relevant computer(s) during their "
-"next check-in with the admin-site."
+"You create a configuration for a Site, a Group or a computer and it will "
+"automatically be transferred to the relevant computer(s) during their next "
+"check-in with the admin-site."
 msgstr ""
-"Du skapar ett konfigurationsvärde på en site, grupp eller dator, och det "
-"kommer automatiskt att överföras till den eller de relevanta datorerna nästa "
-"gång de checkar in på adminsidan."
+"Du skapar en konfiguration på en site, grupp eller dator, och det kommer "
+"automatiskt att överföras till den eller de relevanta datorerna nästa gång "
+"de checkar in på adminsidan."
 
 #: docs/templates/configuration/index.html
 msgid "From a terminal on the computer or a script, you can use these programs"
@@ -1203,26 +1217,29 @@ msgid "Usage example"
 msgstr "Användningsexempel"
 
 #: docs/templates/configuration/index.html
-msgid "Retrieves the value of a configuration value"
-msgstr "Hämtar värdet för ett konfigurationsvärde"
+msgid "Retrieves the value of a configuration"
+msgstr "Hämtar värdet för en konfiguration"
 
 #: docs/templates/configuration/index.html
-msgid "Retrieves the address of the server where the computer is registered."
-msgstr "Hämtar adressen till servern där datorn är registrerad."
+msgid "Retrieves the value of the configuration admin_url."
+msgstr "Hämtar värdet för konfigurationen admin_url"
 
 #: docs/templates/configuration/index.html
-msgid "Sets the value of a configuration value"
-msgstr "Anger värdet för ett konfigurationsvärde"
+msgid "Sets the value of a configuration"
+msgstr "Anger värdet för en konfiguration"
 
 #: docs/templates/configuration/index.html
-msgid "citizen yes"
-msgstr "medborgare ja"
-
-#: docs/templates/configuration/index.html
-msgid ""
-"Creates a new configuration value with the name citizen and the value 'yes'"
+msgid "Creates a new configuration with the name citizen and the value 'yes'"
 msgstr ""
-"Skapar en ny konfiguration med namnet medborgare och ställer in den på 'ja'"
+"Skapar en ny konfiguration med namnet citizen och ställer in den på 'yes'"
+
+#: docs/templates/configuration/index.html
+msgid "Pushes a configuration to the admin-site"
+msgstr "Skickar en konfiguration till adminsidan"
+
+#: docs/templates/configuration/index.html
+msgid "Pushes the example configuration serial_number to the admin-site"
+msgstr "Skickar exempelkonfigurationen serial_number till adminsidan"
 
 #: docs/templates/configuration/index.html
 msgid "In practice, the above programs interact with the file"
@@ -1929,8 +1946,8 @@ msgid ""
 "Be aware that the entered password will not be shown in any way (e.g. stars "
 "as characters)."
 msgstr ""
-"Tänk på att det angivna lösenordet inte kommer att visas på något sätt (t."
-"ex. stjärnor som tecken)."
+"Tänk på att det angivna lösenordet inte kommer att visas på något sätt "
+"(t.ex. stjärnor som tecken)."
 
 #: docs/templates/os2borgerpc_kiosk_wifi_guide.html
 msgid "You will then be shown a \"prompt\":"
@@ -6278,9 +6295,9 @@ msgstr "Inaktiv"
 #: templates/system/wake_plan/wake_plan.html
 msgid ""
 "Some sleep states save more power than others, but some hardware does not "
-"support the most power saving states. We recommend starting with "
-"\"Off\" (which saves the most power), and if that does not work then try "
-"them in the order: mem, freeze"
+"support the most power saving states. We recommend starting with \"Off\" "
+"(which saves the most power), and if that does not work then try them in the "
+"order: mem, freeze"
 msgstr ""
 "Vissa vilolägen är mer energieffektiva än andra, men vissa datorer har inte "
 "stöd för de mest energisparande lägena. Vi föreslår att du börjar med "

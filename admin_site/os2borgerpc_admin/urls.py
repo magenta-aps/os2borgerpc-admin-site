@@ -28,8 +28,6 @@ urlpatterns = [
     # Include external apps' URLs
     path("markdownx/", include(markdownx)),
     path("", include(tf_urls)),
-    # Admin documentation:
-    path("admin/doc/", include("django.contrib.admindocs.urls")),
     # Django admin:
     path("admin/", admin.site.urls),
     # API

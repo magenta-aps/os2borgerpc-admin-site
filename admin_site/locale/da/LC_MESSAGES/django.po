@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-02 13:04+0200\n"
+"POT-Creation-Date: 2025-11-10 09:29+0100\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -298,6 +298,17 @@ msgstr ""
 "flere PC'er har haft på en given dag"
 
 #: docs/templates/api.html
+#, python-format
+msgid ""
+"Note: This information is not collected and sent by default. You can run <a "
+"href=\"%(url)s\">this script</a> on the computers that should do so. Read "
+"the description of the script for more details."
+msgstr ""
+"Bemærk: Denne information indsamles og sendes ikke som standard. Du kan køre "
+"<a href=\"%(url)s\">dette script</a> på de computere, der skal gøre dette. "
+"Læs scriptets beskrivelse for flere detaljer."
+
+#: docs/templates/api.html
 msgid "HTTP header"
 msgstr "HTTP header"
 
@@ -424,7 +435,7 @@ msgid ""
 "In order to visit and view the API documentation you have to be signed in to "
 "the admin site."
 msgstr ""
-"Du skal være logget ind på admin-sitet for at kunne besøge og se API "
+"Du skal være logget ind på adminsitet for at kunne besøge og se API "
 "Dokumentationen."
 
 #: docs/templates/api.html
@@ -701,7 +712,7 @@ msgid ""
 "admin site, it will show up on the list of new computers under"
 msgstr ""
 "Når du har installeret OS2borgerPC på en computer og registreret den på "
-"admin-sitet, vil den dukke op i listen over nye computere under"
+"adminsitet, vil den dukke op i listen over nye computere under"
 
 #: docs/templates/computers/activating.html
 msgid ""
@@ -869,7 +880,7 @@ msgid ""
 "Configurations are used to exchange information between the admin-site and "
 "the registered computers in both directions."
 msgstr ""
-"Konfigurationer bruges til at udveksle information mellem admin-sitet og de "
+"Konfigurationer bruges til at udveksle information mellem adminsitet og de "
 "tilknyttede computere, i begge retninger."
 
 #: docs/templates/configuration/index.html
@@ -1132,18 +1143,22 @@ msgstr "Hvis værdien er tom, kunne computeren ikke afgøre tidspunktet"
 
 #: docs/templates/configuration/index.html
 msgid "The address of the server where the computer checks in"
-msgstr "Adressen til serveren der tjekkes ind hos"
+msgstr "Adressen på serveren der tjekkes ind hos"
 
 #: docs/templates/configuration/index.html
 msgid "The computer's hostname"
 msgstr "Computerens hostname"
 
 #: docs/templates/configuration/index.html
-msgid "Is currently only set during the registration"
-msgstr "Sættes pt. kun ifm. registreringen"
+msgid ""
+"It's set during the registration, and if you update the PC name on the admin-"
+"site"
+msgstr ""
+"Sættes i løbet af registreringen, og hvis du opdaterer PC-navnet på "
+"adminsitet"
 
 #: docs/templates/configuration/index.html
-msgid "How long the client waits for a job to finish in seconds"
+msgid "How long the client waits for a job to finish, in seconds"
 msgstr ""
 "Hvor længe klienten venter på færdiggørelsen af jobs, angivet i sekunder"
 
@@ -1157,17 +1172,16 @@ msgstr ""
 "få input fra brugeren"
 
 #: docs/templates/configuration/index.html
-msgid "Indicates whether the computer is an OS2borgerPC or a OS2borgerPC Kiosk"
-msgstr ""
-"Identificerer om computeren er en OS2borgerPC eller en OS2borgerPC Kiosk"
+msgid "Indicates whether the computer is a BorgerPC, Kiosk etc."
+msgstr "Identificerer om computeren er en BorgerPC, Kiosk etc."
 
 #: docs/templates/configuration/index.html
-msgid "The version of the OS2borgerPC-image that was installed"
-msgstr "Versionen på det OS2borgerPC-image, som blev installeret"
+msgid "The version of the original OS2borgerPC-image that was installed"
+msgstr "Versionen på det oprindelige OS2borgerPC-image, som blev installeret"
 
 #: docs/templates/configuration/index.html
-msgid "Unless the computer is reinstalled, this number does not change"
-msgstr "Medmindre computeren geninstalleres, vil dette tal ikke ændre sig"
+msgid "This value never changes."
+msgstr "Denne værdi ændrer sig aldrig."
 
 #: docs/templates/configuration/index.html
 msgid "Technical information for script developers"
@@ -1185,13 +1199,13 @@ msgstr "Computer"
 
 #: docs/templates/configuration/index.html
 msgid ""
-"You create a configuration value for a Site, a Group or a computer and it "
-"will automatically be transferred to the relevant computer(s) during their "
-"next check-in with the admin-site."
+"You create a configuration for a Site, a Group or a computer and it will "
+"automatically be transferred to the relevant computer(s) during their next "
+"check-in with the admin-site."
 msgstr ""
-"Du opretter på et Site, en Gruppe eller en Computer en konfigurationsværdi, "
-"og den vil automatisk blive overført til de relevante computer(e), næste "
-"gang de tjekker ind på admin-sitet."
+"Du opretter på et Site, en Gruppe eller en Computer en konfiguration, og den "
+"vil automatisk blive overført til de relevante computer(e), næste gang de "
+"tjekker ind på adminsitet."
 
 #: docs/templates/configuration/index.html
 msgid "From a terminal on the computer or a script, you can use these programs"
@@ -1208,25 +1222,28 @@ msgid "Usage example"
 msgstr "Brugseksempel"
 
 #: docs/templates/configuration/index.html
-msgid "Retrieves the value of a configuration value"
-msgstr "Henter værdien af en konfigurationværdi"
+msgid "Retrieves the value of a configuration"
+msgstr "Henter værdien af en konfiguration"
 
 #: docs/templates/configuration/index.html
-msgid "Retrieves the address of the server where the computer is registered."
-msgstr "Får fat i adressen på den server, hvor computeren er registreret."
+msgid "Retrieves the value of the configuration admin_url."
+msgstr "Henter værdien af konfigurationen admin_url"
 
 #: docs/templates/configuration/index.html
-msgid "Sets the value of a configuration value"
-msgstr "Sætter værdien af en konfigurationværdi"
+msgid "Sets the value of a configuration"
+msgstr "Sætter værdien af en konfiguration"
 
 #: docs/templates/configuration/index.html
-msgid "citizen yes"
-msgstr "borger ja"
+msgid "Creates a new configuration with the name citizen and the value 'yes'"
+msgstr "Opretter en ny konfiguration kaldet citizen, og sætter den til 'yes'"
 
 #: docs/templates/configuration/index.html
-msgid ""
-"Creates a new configuration value with the name citizen and the value 'yes'"
-msgstr "Opretter en ny konfiguration kaldet borger, og sætter den til 'ja'"
+msgid "Pushes a configuration to the admin-site"
+msgstr "Sender en konfiguration til adminsitet"
+
+#: docs/templates/configuration/index.html
+msgid "Pushes the example configuration serial_number to the admin-site"
+msgstr "Sender eksempel-konfigurationen serial_number til adminsitet"
 
 #: docs/templates/configuration/index.html
 msgid "In practice, the above programs interact with the file"
@@ -2683,7 +2700,7 @@ msgid ""
 "computer checks in with the admin-site."
 msgstr ""
 "Sikkerhedsscript (påkrævet): Sikkerhedsscriptet afvikles hver gang en "
-"computer tjekker ind på admin-sitet."
+"computer tjekker ind på adminsitet."
 
 #: docs/templates/security_scripts/securityproblems.html
 msgid ""
@@ -2911,7 +2928,7 @@ msgid ""
 "screen for the site that your OS2borgerPC user is associated with. If you "
 "have access to multiple sites, you must first choose a site to access."
 msgstr ""
-"Når du logger ind på admin-sitet, bliver du præsenteret for status-billedet "
+"Når du logger ind på adminsitet, bliver du præsenteret for status-billedet "
 "for det site, som din OS2borgerPC-bruger er tilknyttet. Hvis du har adgang "
 "til flere sites, skal du først vælge det site, du vil ind på."
 
@@ -3505,11 +3522,11 @@ msgid ""
 "them and then click on the check mark beneath the list to add the "
 "exception(s) to the schedule."
 msgstr ""
-"Du tilføjer undtagelser ved at klikke på \"Tilknyt undtagelse til tidsplan\"."
-"Hvis der findes undtagelser, som endnu ikke er knyttet til tidsplanen, vil "
-"de blive vist i en liste. Klik på de undtagelser, som du ønsker at tilføje "
-"for at vælge dem og klik derefter på fluebenet under listen for at tilføje "
-"undtagelserne til tidsplanen."
+"Du tilføjer undtagelser ved at klikke på \"Tilknyt undtagelse til "
+"tidsplan\".Hvis der findes undtagelser, som endnu ikke er knyttet til "
+"tidsplanen, vil de blive vist i en liste. Klik på de undtagelser, som du "
+"ønsker at tilføje for at vælge dem og klik derefter på fluebenet under "
+"listen for at tilføje undtagelserne til tidsplanen."
 
 #: docs/templates/wake_plans/edit_settings.html
 msgid ""
@@ -5830,7 +5847,7 @@ msgstr "Derudover kan du besøge API'ets egne docs på"
 
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "as long as you are signed in to the admin site."
-msgstr "så længe du er logget ind på admin-sitet."
+msgstr "så længe du er logget ind på adminsitet."
 
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "Generate new API Key"
@@ -5988,7 +6005,7 @@ msgstr "Tilføj nyt site"
 
 #: templates/system/sites/list.html
 msgid "This UID is used when registering a PC with the admin site."
-msgstr "Dette UID bruges ifm. registrering på admin-portalen."
+msgstr "Dette UID bruges ifm. registrering på adminsitet."
 
 #: templates/system/sites/list.html
 msgid ""
@@ -6288,9 +6305,9 @@ msgstr "Inaktiv"
 #: templates/system/wake_plan/wake_plan.html
 msgid ""
 "Some sleep states save more power than others, but some hardware does not "
-"support the most power saving states. We recommend starting with "
-"\"Off\" (which saves the most power), and if that does not work then try "
-"them in the order: mem, freeze"
+"support the most power saving states. We recommend starting with \"Off\" "
+"(which saves the most power), and if that does not work then try them in the "
+"order: mem, freeze"
 msgstr ""
 "Nogle dvaletilstande er mere strømbesparende end andre, men noget hardware "
 "understøtter ikke de mest strømbesparende tilstande. Vi foreslår at starte "

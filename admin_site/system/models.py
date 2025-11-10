@@ -162,6 +162,9 @@ class Country(models.Model):
 class Customer(models.Model):
     """A customer that can have one or more sites"""
 
+    created = models.DateTimeField(
+        verbose_name=_("created"), auto_now_add=True, null=True
+    )
     name = models.CharField(verbose_name=_("customer name"), max_length=255)
     country = models.ForeignKey(
         Country, related_name="customers", on_delete=models.PROTECT, null=True
@@ -196,9 +199,8 @@ class Site(models.Model):
         # Essentially a slug_validator except uppercase and _ aren't allowed, for standardisation
         validators=[
             RegexValidator(
-                re.compile("^[-a-z0-9]+\\Z"),
+                re.compile("^[-a-z0-9]+$"),
                 "Enter a valid “UID” consisting of lowercase letters, numbers or hyphens.",
-                "invalid",
             )
         ],
     )
@@ -727,10 +729,16 @@ class PC(models.Model):
     mac = models.CharField(verbose_name=_("MAC"), max_length=255, blank=True)
     name = models.CharField(
         verbose_name=_("name"),
-        max_length=255,
+        max_length=40,
         help_text=_(
             "Valid characters are a-z, A-Z, 0-9 and hyphen (-). The length must be 1-40 characters"
         ),
+        validators=[
+            RegexValidator(
+                re.compile("^[-a-zA-Z0-9]+$"),
+                "Enter a valid name consisting of letters, numbers or hyphens.",
+            )
+        ],
     )
     uid = models.CharField(
         verbose_name=_("UID"), max_length=255, db_index=True, unique=True

@@ -7,7 +7,7 @@
 
 {% block specific_content %}
 <div class="container-fluid main">
-  <h2 class="divideheader">{% trans "Enable Two-Factor Authentication for" %} <em>{{ request.user.username }}</em></h2>
+  <h2 class="divideheader">{% trans "Enable Two-Factor Authentication for" %} <em>{{ user.username }}</em></h2>
   <div class="tab-content">
 
   <p>{% blocktrans trimmed %}Congratulations, you've successfully enabled two-factor

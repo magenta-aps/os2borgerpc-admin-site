@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-28 15:24+0100\n"
+"POT-Creation-Date: 2025-11-10 09:29+0100\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -296,6 +296,17 @@ msgid ""
 msgstr ""
 "som indeholder information omkring hvor mange %(logins)s en enkelt eller "
 "flere PC'er har haft på en given dag"
+
+#: docs/templates/api.html
+#, python-format
+msgid ""
+"Note: This information is not collected and sent by default. You can run <a "
+"href=\"%(url)s\">this script</a> on the computers that should do so. Read "
+"the description of the script for more details."
+msgstr ""
+"Bemærk: Denne information indsamles og sendes ikke som standard. Du kan køre "
+"<a href=\"%(url)s\">dette script</a> på de computere, der skal gøre dette. "
+"Læs scriptets beskrivelse for flere detaljer."
 
 #: docs/templates/api.html
 msgid "HTTP header"

@@ -160,8 +160,8 @@ def get_pcs_logins_per_day(
     to_date: date = date.today(),
 ):
     """
-    Fetch data on logins per day for all computers. Note: This information is not gathered and sent by default.
-    **Note:** This information is not gathered and sent by default. You will need need to run a script to activate it. See the main documentation for more info.
+    Fetch data on logins per day for all computers.
+    **Note:** This information is not gathered and sent by default. You will need to run a script to activate it. See the main documentation for more info.
     """
     site = get_site_from_request(request)
     pcs = PC.objects.filter(site=site, is_activated=True)
@@ -196,7 +196,7 @@ def get_pc_logins_per_day(
 ):
     """
     Fetch data on logins per day for a specific Computer, by its ID.
-    **Note:** This information is not gathered and sent by default. You will need need to run a script to activate it. See the main documentation for more info.
+    **Note:** This information is not gathered and sent by default. You will need to run a script to activate it. See the main documentation for more info.
     """
     site = get_site_from_request(request)
     try:

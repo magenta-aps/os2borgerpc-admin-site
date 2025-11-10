@@ -302,10 +302,12 @@ msgstr ""
 #, python-format
 msgid ""
 "Note: This information is not collected and sent by default. You can run <a "
-"href=\"%(url)s\">this script</a> on the computers that should do so."
+"href=\"%(url)s\">this script</a> on the computers that should do so. Read "
+"the description of the script for more details."
 msgstr ""
-"Note: Denna information samlas inte in och skickas inte som standard. Du kan köra <a "
-"href=\"%(url)s\">detta skript</a> på de datorer som ska göra det."
+"Obs: Denna information samlas inte in och skickas inte som standard. Du kan "
+"köra <a href=\"%(url)s\">detta skript</a> på de datorer som ska göra det. "
+"Läs skriptbeskrivningen för mer information."
 
 #: docs/templates/api.html
 msgid "HTTP header"

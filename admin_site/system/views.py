@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import secrets
+from markdownx.utils import markdownify
 
 from django.http import Http404, JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -1456,6 +1457,8 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         self.create_form.prefix = "create"
         context["create_form"] = self.create_form
         request_user = self.request.user
+        if not request_user.is_superuser and self.script.is_global:
+            self.script.description = markdownify(self.script.description)
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
         context["site_membership"] = (
             request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()

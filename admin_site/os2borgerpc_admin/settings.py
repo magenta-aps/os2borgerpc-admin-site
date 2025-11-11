@@ -317,7 +317,7 @@ CICERO_URL = settings.get("CICERO_URL")
 # Third-party extensions can also be imported and used, asuming they (and their
 # dependencies) are installed.
 MARKDOWNX_MARKDOWN_EXTENSIONS = [
-    "markdown.extensions.extra",
+    "extra",
 ]
 
 MARKDOWNX_IMAGE_MAX_SIZE = {"size": (800, 800), "quality": 90}

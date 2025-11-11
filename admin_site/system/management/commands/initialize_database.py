@@ -2,11 +2,10 @@
 # Contact: info@magenta.dk.
 
 import os
-from pathlib import Path
 
-from django.core.management.base import BaseCommand
 from django.conf import settings
 from django.core.management import call_command
+from django.core.management.base import BaseCommand
 
 fixtures_base_dir = settings.BASE_DIR / "fixtures"
 
@@ -18,10 +17,7 @@ class Command(BaseCommand):
 
     :Reference: :mod:`os2borgerpc_admin.initialize`
 
-    Example:
-
-                $ python manage.py initialize_database
-
+    Example: $ ./manage.py initialize_database
     """
 
     help = """Populate the database with initial data."""
@@ -34,15 +30,17 @@ class Command(BaseCommand):
         try:
             open("/tmp/initialized", "r")
         except FileNotFoundError:
-            open("/tmp/initialized", "w").close()
-
-            print("Populate database with (static) basic data:")
+            print(
+                f"Populate database with (static) basic data. Dir: f{fixtures_base_dir}"
+            )
 
             for file in sorted(fixtures_base_dir.rglob("*.json")):
                 if os.path.isfile(file):
-                    call_command("loaddata", file)
+                    call_command("loaddata", file, verbosity=3)
 
             # Inform user that the operation is complete
             # Assuming that if any of the underlying functions fail
             # the process is stopped/caught in place
             print("Database populated with (static) basic data")
+
+            open("/tmp/initialized", "w").close()

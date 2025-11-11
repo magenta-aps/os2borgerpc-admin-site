@@ -3668,6 +3668,19 @@ class EventRuleRedirect(RedirectView, SuperAdminOrThisSiteMixin):
             return reverse("event_rule_security_problem_new", args=[site.uid])
 
 
+class GlobalEventRuleRedirect(RedirectView, LoginRequiredMixin):
+    permanent = False
+    query_string = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        user = self.request.user
+
+        # If a user is a member of multiple sites, just randomly send them to the first one
+        first_slug = user.user_profile.sites.all().first().uid
+
+        return reverse("event_rules", args=[first_slug])
+
+
 class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

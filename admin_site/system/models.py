@@ -873,7 +873,7 @@ class Script(AuditModelMixin):
     uid = models.CharField(
         verbose_name=_("UID"), max_length=255, unique=True, blank=True, null=True
     )
-    description = models.TextField(verbose_name=_("description"), max_length=4096)
+    description = models.TextField(verbose_name=_("description"), max_length=8190)
     site = models.ForeignKey(
         Site, related_name="scripts", null=True, blank=True, on_delete=models.CASCADE
     )

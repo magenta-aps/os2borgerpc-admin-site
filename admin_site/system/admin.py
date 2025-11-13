@@ -425,9 +425,9 @@ class JobAdmin(admin.ModelAdmin):
 
 @admin.register(m.LoginLog)
 class LoginLogAdmin(admin.ModelAdmin):
-    list_display = ("identifier", "date", "login_time", "logout_time")
+    list_display = ("identifier", "pc_uid", "date", "login_time", "logout_time")
     list_filter = ("date",)
-    search_fields = ("identifier", "date")
+    search_fields = ("identifier", "date", "pc_uid")
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)

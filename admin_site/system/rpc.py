@@ -571,6 +571,7 @@ def general_citizen_login(pc_uid, integration, value_dict):
         login_log = LoginLog(
             identifier=value_dict["citizen_identifier"],
             site=site,
+            pc_uid=pc_uid,
             date=datetime.date(now),
             login_time=datetime.time(now),
             logout_time=datetime.time(now),
@@ -850,6 +851,7 @@ def sms_login_finalize(
         login_log = LoginLog(
             identifier=phone_number,
             site=site,
+            pc_uid=pc_uid,
             date=datetime.date(now),
             login_time=datetime.time(now),
             logout_time=datetime.time(now),

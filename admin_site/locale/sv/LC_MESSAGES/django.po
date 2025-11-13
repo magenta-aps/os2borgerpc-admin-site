@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-30 15:46+0100\n"
+"POT-Creation-Date: 2025-11-13 09:43+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -4163,6 +4163,10 @@ msgstr ""
 #: system/models.py
 msgid "identifier"
 msgstr "identifierare"
+
+#: system/models.py
+msgid "PC UID"
+msgstr "Dator UID"
 
 #: system/models.py
 msgid "Date of login"

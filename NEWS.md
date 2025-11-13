@@ -1,3 +1,14 @@
+## Version 6.11.0, November 13, 2025
+
+- Improve markdown styling
+- Add PC UID to login log
+- Add global redirect to event rules and jobs
+- Double maximum script description length
+- Send PC name to PC as config (preserves casing)
+- Fix the context sensitive links to PC and config docs from PC section
+- Handle exceptions related to login integrations
+- /admin cleanup, mostly related to scripts
+
 ## Version 6.10.0, November 10, 2025
 
 - Stop server error with the updated client when a computer that isn't

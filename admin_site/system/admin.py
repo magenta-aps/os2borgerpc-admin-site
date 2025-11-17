@@ -343,10 +343,12 @@ class CustomerAdmin(admin.ModelAdmin):
     def sites(self, obj):
         return list(obj.sites.all())
 
+    @admin.display(description=_("Number of computers"))
     def number_of_computers(self, obj):
         computers_count = m.PC.objects.filter(site__customer=obj).count()
         return computers_count
 
+    @admin.display(description=_("Number of BorgerPC computers"))
     def number_of_borgerpc_computers(self, obj):
         borgerpc_computers_count = (
             m.PC.objects.filter(site__in=obj.sites.all())
@@ -356,6 +358,7 @@ class CustomerAdmin(admin.ModelAdmin):
 
         return borgerpc_computers_count
 
+    @admin.display(description=_("Number of KioskPC computers"))
     def number_of_kioskpc_computers(self, obj):
         kioskpc_computers_count = (
             m.PC.objects.filter(site__in=obj.sites.all())
@@ -365,13 +368,9 @@ class CustomerAdmin(admin.ModelAdmin):
 
         return kioskpc_computers_count
 
+    @admin.display(description=_("Feature permissions"))
     def feature_permissions(self, obj):
         return list(obj.feature_permission.all())
-
-    number_of_computers.short_description = _("Number of computers")
-    feature_permissions.short_description = _("Feature permissions")
-    number_of_kioskpc_computers.short_description = _("Number of KioskPC computers")
-    number_of_borgerpc_computers.short_description = _("Number of BorgerPC computers")
 
 
 @admin.register(m.EventRuleServer)
@@ -388,6 +387,8 @@ class EventRuleServerAdmin(admin.ModelAdmin):
 
 @admin.register(m.FeaturePermission)
 class FeaturePermissionAdmin(admin.ModelAdmin):
+
+    @admin.display(description=_("customers with access"))
     def customers_with_access(self, obj):
         return list(obj.customers.all())
 
@@ -398,8 +399,6 @@ class FeaturePermissionAdmin(admin.ModelAdmin):
     )
     list_filter = ("name",)
     search_fields = ("name", "uid")
-
-    customers_with_access.short_description = _("customers with access")
 
 
 @admin.register(m.ImageVersion)
@@ -456,15 +455,13 @@ class PCAdmin(admin.ModelAdmin):
     search_fields = ("name", "uid")
     readonly_fields = ("created", "configuration")
 
+    @admin.display(description=_("Site"), ordering="site")
     def site_link(self, obj):
         link = reverse("admin:system_site_change", args=[obj.site_id])
         return mark_safe(f'<a href="{link}">{escape(obj.site.__str__())}</a>')
 
     def os2borgerpc_client_version(self, obj):
         return obj.configuration.get("_os2borgerpc.client_version")
-
-    site_link.short_description = _("Site")
-    site_link.admin_order_field = "site"
 
     def get_search_results(self, request, queryset, search_term):
         queryset, may_have_duplicates = super().get_search_results(
@@ -496,7 +493,7 @@ class ProductAdmin(admin.ModelAdmin):
 class ScriptAdmin(admin.ModelAdmin):
     list_display = (
         "name",
-        "is_global",
+        "_is_global",
         "is_security_script",
         "is_hidden",
         "site",
@@ -506,18 +503,21 @@ class ScriptAdmin(admin.ModelAdmin):
         "uid",
         "executable_code",
     )
-    filter_horizontal = ("tags",)
+    list_filter = [("site", admin.EmptyFieldListFilter),]
+    filter_horizontal = ("tags", "products")
     readonly_fields = ("user_created", "user_modified")
     search_fields = ("name", "executable_code")
     inlines = [InputInline]
 
-    def is_global(self, obj):
+
+    # Using is_global from the model, but also setting is as a boolean type so we get a checkmark instead
+    @admin.display(boolean=True, description=_("Global"), ordering="site")
+    def _is_global(self, obj):
         return obj.is_global
 
-    is_global.boolean = True
-    is_global.short_description = _("Global")
-    is_global.admin_order_field = "site"
+    #def is_global_filter(self)
 
+    @admin.display(description=_("Jobs per site"))
     def jobs_per_site(self, obj):
         sites = m.Site.objects.filter(batches__script=obj).annotate(
             num_jobs=Count("batches__jobs")
@@ -527,8 +527,7 @@ class ScriptAdmin(admin.ModelAdmin):
             "\n", "<p>{} - {}</p>", ([(site.name, site.num_jobs) for site in sites])
         )
 
-    jobs_per_site.short_description = _("Jobs per site")
-
+    @admin.display(description=_("Jobs per Site for the last year"))
     def jobs_per_site_for_the_last_year(self, obj):
         now = timezone.now()
         a_year_ago = now - timezone.timedelta(days=365)
@@ -540,10 +539,6 @@ class ScriptAdmin(admin.ModelAdmin):
         return format_html_join(
             "\n", "<p>{} - {}</p>", ([(site.name, site.num_jobs) for site in sites])
         )
-
-    jobs_per_site_for_the_last_year.short_description = _(
-        "Jobs per Site for the last year"
-    )
 
     def associations_to_groups_per_site(self, obj):
         sites = m.Site.objects.all()
@@ -629,10 +624,9 @@ class SiteAdmin(admin.ModelAdmin):
 
         return kioskpc_computers_count
 
+    @admin.display(description=_("Number of computers"))
     def number_of_computers(self, obj):
         return obj.pcs.count()
-
-    number_of_computers.short_description = _("Number of computers")
 
 
 @admin.register(m.WakeWeekPlan)

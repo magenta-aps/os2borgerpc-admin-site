@@ -7,7 +7,7 @@ services:
         container_name: bpc-frontend-reloader
         command: npm run watch-sass
         volumes:
-            - .:/code/
+            - .:/code/:Z
             # NOTE: We do not want node_modules on the host machine, so we
             # create an additional volume for it. It is important this anonymous
             # volume comes after the above bind to work.

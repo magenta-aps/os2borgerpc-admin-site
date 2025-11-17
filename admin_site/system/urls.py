@@ -18,6 +18,7 @@ from system.views import (
     JobRestarter,
     JobSearch,
     JobsView,
+    GlobalJobsViewRedirect,
     PCGroupCreate,
     PCGroupDelete,
     PCGroupDuplicate,
@@ -318,6 +319,7 @@ urlpatterns = [
         name="job_info",
     ),
     path("site/<slug>/jobs/", JobsView.as_view(), name="jobs"),
+    path("jobs/", GlobalJobsViewRedirect.as_view(), name="jobs_redirect"),
     # Scripts
     path(
         "site/<slug>/scripts/<int:script_pk>/delete/",

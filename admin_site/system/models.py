@@ -822,6 +822,7 @@ class PC(models.Model):
         if "mac" not in result.keys():
             result["mac"] = self.mac
         result["uid"] = self.uid
+        result["name"] = self.name
         return result
 
     def get_merged_config_list(self, key, default=None):

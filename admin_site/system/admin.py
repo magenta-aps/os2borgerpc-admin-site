@@ -497,48 +497,22 @@ class ScriptAdmin(admin.ModelAdmin):
         "is_security_script",
         "is_hidden",
         "site",
-        "jobs_per_site",
-        "jobs_per_site_for_the_last_year",
         "associations_to_groups_per_site",
         "uid",
         "executable_code",
     )
-    list_filter = [("site", admin.EmptyFieldListFilter),]
+    list_filter = [
+        ("site", admin.EmptyFieldListFilter),
+    ]
     filter_horizontal = ("tags", "products")
     readonly_fields = ("user_created", "user_modified")
     search_fields = ("name", "executable_code")
     inlines = [InputInline]
 
-
     # Using is_global from the model, but also setting is as a boolean type so we get a checkmark instead
     @admin.display(boolean=True, description=_("Global"), ordering="site")
     def _is_global(self, obj):
         return obj.is_global
-
-    #def is_global_filter(self)
-
-    @admin.display(description=_("Jobs per site"))
-    def jobs_per_site(self, obj):
-        sites = m.Site.objects.filter(batches__script=obj).annotate(
-            num_jobs=Count("batches__jobs")
-        )
-
-        return format_html_join(
-            "\n", "<p>{} - {}</p>", ([(site.name, site.num_jobs) for site in sites])
-        )
-
-    @admin.display(description=_("Jobs per Site for the last year"))
-    def jobs_per_site_for_the_last_year(self, obj):
-        now = timezone.now()
-        a_year_ago = now - timezone.timedelta(days=365)
-
-        sites = m.Site.objects.filter(
-            batches__script=obj, batches__jobs__started__gte=a_year_ago
-        ).annotate(num_jobs=Count("batches__jobs"))
-
-        return format_html_join(
-            "\n", "<p>{} - {}</p>", ([(site.name, site.num_jobs) for site in sites])
-        )
 
     def associations_to_groups_per_site(self, obj):
         sites = m.Site.objects.all()

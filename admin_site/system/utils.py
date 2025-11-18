@@ -87,8 +87,10 @@ def quria_login_validate(site, loaner_number, pincode):
         f"https://axiell.io/api/quriaEU/patron-lookup/quria-release/integrations/"
         f"ncip/{site.agency_id}/small?sno={loaner_number}&pwd={pincode}"
     )
-
-    response = requests.get(loaner_auth_url, headers=headers)
+    try:
+        response = requests.get(loaner_auth_url, headers=headers)
+    except Exception:
+        return 0
 
     if response.ok:
         # If the NCIP is invalid in certain ways, such as being
@@ -351,13 +353,17 @@ def cicero_validate(loaner_number, pincode, site, pc=None):
     session_key_url = (
         f"{settings.CICERO_URL}/rest/external/v1/{site.agency_id}/authentication/login/"
     )
-    response = requests.post(
-        session_key_url,
-        json={
-            "username": site.citizen_login_api_user,
-            "password": site.citizen_login_api_password,
-        },
-    )
+    try:
+        response = requests.post(
+            session_key_url,
+            json={
+                "username": site.citizen_login_api_user,
+                "password": site.citizen_login_api_password,
+            },
+        )
+    # Likely exceptions: ConnectionError
+    except Exception:
+        return 0
     if response.ok:
         session_key = response.json()["sessionKey"]
         # Just debugging for the moment.
@@ -372,11 +378,14 @@ def cicero_validate(loaner_number, pincode, site, pc=None):
     loaner_auth_url = (
         f"{settings.CICERO_URL}/rest/external/{site.agency_id}/patrons/authenticate/v10"
     )
-    response = requests.post(
-        loaner_auth_url,
-        headers={"X-session": session_key},
-        json={"libraryCardNumber": loaner_number, "pincode": pincode},
-    )
+    try:
+        response = requests.post(
+            loaner_auth_url,
+            headers={"X-session": session_key},
+            json={"libraryCardNumber": loaner_number, "pincode": pincode},
+        )
+    except Exception:
+        return 0
     if response.ok:
         result = response.json()
         authenticate_status = result["authenticateStatus"]
@@ -461,6 +470,8 @@ def cicero_validate(loaner_number, pincode, site, pc=None):
                     if age < age_limit:
                         patron_id = "too_young"
         return patron_id
+    else:
+        return 0
 
 
 def always_validate_citizen(loaner_number, pincode, site):

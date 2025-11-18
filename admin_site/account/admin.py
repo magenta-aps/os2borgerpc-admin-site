@@ -51,6 +51,7 @@ class MyUserAdmin(UserAdmin):
         "user_profile__sites__customer",
         ("totpdevice", admin.EmptyFieldListFilter),
         "is_active",
+        ("is_staff", admin.BooleanFieldListFilter),
     )
     search_fields = ("username", "email")
 

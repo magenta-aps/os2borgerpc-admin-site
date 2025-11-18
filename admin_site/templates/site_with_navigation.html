@@ -152,7 +152,7 @@ detailpage
         <span class='material-symbols-outlined'>help_outline</span>
         {% translate "Help regarding events" %}
       </a>
-    {% elif current_url_computers %}
+    {% elif current_url_computer %}
       <a href="{% url 'doc' 'computers' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
         {% translate "Administrating computers" %}
@@ -204,7 +204,7 @@ detailpage
       </a>
     {% endif %}
 
-    {% if current_url_site_settings or current_url_groups or current_url_computers %}
+    {% if current_url_site_settings or current_url_groups or current_url_computer %}
       <a href="{% url 'doc' 'configuration' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
         {% translate "Configurations" %}

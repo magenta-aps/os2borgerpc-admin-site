@@ -333,6 +333,7 @@ class LoginLog(models.Model):
 
     identifier = models.CharField(verbose_name=_("identifier"), max_length=255)
     site = models.ForeignKey(Site, related_name="login_log", on_delete=models.CASCADE)
+    pc_uid = models.CharField(verbose_name=_("PC UID"), default="N/A", max_length=255)
     date = models.DateField(verbose_name=_("Date of login"))
     login_time = models.TimeField(verbose_name=_("Time of login"))
     logout_time = models.TimeField(verbose_name=_("Time of logout"), blank=True)
@@ -821,6 +822,7 @@ class PC(models.Model):
         if "mac" not in result.keys():
             result["mac"] = self.mac
         result["uid"] = self.uid
+        result["name"] = self.name
         return result
 
     def get_merged_config_list(self, key, default=None):
@@ -872,7 +874,7 @@ class Script(AuditModelMixin):
     uid = models.CharField(
         verbose_name=_("UID"), max_length=255, unique=True, blank=True, null=True
     )
-    description = models.TextField(verbose_name=_("description"), max_length=4096)
+    description = models.TextField(verbose_name=_("description"), max_length=8190)
     site = models.ForeignKey(
         Site, related_name="scripts", null=True, blank=True, on_delete=models.CASCADE
     )

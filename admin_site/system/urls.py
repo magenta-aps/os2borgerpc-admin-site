@@ -18,6 +18,7 @@ from system.views import (
     JobRestarter,
     JobSearch,
     JobsView,
+    GlobalJobsViewRedirect,
     PCGroupCreate,
     PCGroupDelete,
     PCGroupDuplicate,
@@ -49,6 +50,7 @@ from system.views import (
     SecurityProblemDelete,
     SecurityProblemUpdate,
     EventRuleRedirect,
+    GlobalEventRuleRedirect,
     EventRuleServerCreate,
     EventRuleServerDelete,
     EventRuleServerUpdate,
@@ -98,6 +100,12 @@ urlpatterns = [
         "site/<slug>/event_rules/",
         EventRuleRedirect.as_view(),
         name="event_rules",
+    ),
+    # To be able to link users on any site to the security problems page
+    path(
+        "event_rules/",
+        GlobalEventRuleRedirect.as_view(),
+        name="event_rule_redirect",
     ),
     # Security problems
     path(
@@ -311,6 +319,7 @@ urlpatterns = [
         name="job_info",
     ),
     path("site/<slug>/jobs/", JobsView.as_view(), name="jobs"),
+    path("jobs/", GlobalJobsViewRedirect.as_view(), name="jobs_redirect"),
     # Scripts
     path(
         "site/<slug>/scripts/<int:script_pk>/delete/",

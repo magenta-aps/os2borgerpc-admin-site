@@ -145,12 +145,6 @@ input[type="checkbox"] {
   margin: 5px;
 }
 
-#global-script-description {
-  font-family: sans-serif;
-  white-space: pre-wrap;
-  font-size: 0.9rem;
-}
-
 .dashboard {
   .list-item-hide {
     background: transparent;
@@ -193,14 +187,71 @@ input[type="checkbox"] {
   top: 0.5px
 }
 
-#global-script-description h1 {
-  font-size: 1.4rem;
+/* Markdown block - fx. to be used by the global script descriptions */
+
+.markdown-block {
+  font-family: sans-serif;
+  white-space: pre-wrap;
+  font-size: 0.9rem;
 }
 
-#global-script-description h2 {
-  font-size: 1.2rem;
+.markdown-block h1, .markdown-block h2, .markdown-block h3, .markdown-block h4, .markdown-block h5, .markdown-block h6 {
+  margin-bottom: 0.30rem;
 }
 
-#global-script-description p {
-  margin-bottom: 10px;
+.markdown-block h1, .markdown-block h2 {
+  font-size: 1.4rem!important;
+}
+
+.markdown-block h3 {
+  font-size: 1.3rem;
+}
+
+.markdown-block h4 {
+  font-size: 1.1rem;
+}
+
+.markdown-block h5 {
+  font-size: 1.0rem;
+}
+
+.markdown-block h6 {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.markdown-block p {
+  margin: -4px 0;
+}
+
+blockquote p {
+  margin-bottom: 0!important;
+}
+
+.markdown-block ol, .markdown-block > ul {
+  margin: -25px 0;
+}
+
+.markdown-block li {
+  margin: -5px 0;
+}
+
+.markdown-block table th, .markdown-block table td {
+  border: 1px solid #ccc;
+  border-radius: 0;
+  padding: 8px;
+}
+
+blockquote {
+  font-style: italic;
+  margin-left: 15px;
+  margin-bottom: 0;
+}
+
+blockquote p::before {
+  content: '"'
+}
+
+blockquote p::after {
+  content: '"'
 }

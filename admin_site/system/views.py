@@ -974,6 +974,19 @@ class JobsView(SiteView):
         return context
 
 
+class GlobalJobsViewRedirect(RedirectView, LoginRequiredMixin):
+    permanent = False
+    query_string = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        user = self.request.user
+
+        # If a user is a member of multiple sites, just randomly send them to the first one
+        first_slug = user.user_profile.sites.all().first().uid
+
+        return reverse("jobs", args=[first_slug])
+
+
 class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSiteMixin):
     paginate_by = 20
     http_method_names = ["get"]
@@ -3666,6 +3679,19 @@ class EventRuleRedirect(RedirectView, SuperAdminOrThisSiteMixin):
                 return event_rule_server.get_absolute_url()
         else:
             return reverse("event_rule_security_problem_new", args=[site.uid])
+
+
+class GlobalEventRuleRedirect(RedirectView, LoginRequiredMixin):
+    permanent = False
+    query_string = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        user = self.request.user
+
+        # If a user is a member of multiple sites, just randomly send them to the first one
+        first_slug = user.user_profile.sites.all().first().uid
+
+        return reverse("event_rules", args=[first_slug])
 
 
 class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):

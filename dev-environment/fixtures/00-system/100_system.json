@@ -2017,6 +2017,7 @@
     "model": "system.customer",
     "pk": 1,
     "fields": {
+        "created": null,
         "name": "Magenta",
         "country": 1,
         "site_prefix": "magenta",
@@ -2029,6 +2030,7 @@
     "model": "system.customer",
     "pk": 2,
     "fields": {
+        "created": null,
         "name": "Kunde Sverige",
         "country": 2,
         "site_prefix": "kunde-sverige",
@@ -2041,6 +2043,7 @@
     "model": "system.customer",
     "pk": 3,
     "fields": {
+        "created": null,
         "name": "Test Kunde Danmark",
         "country": 1,
         "site_prefix": "test-kunde-danmark",
@@ -2053,6 +2056,7 @@
     "model": "system.customer",
     "pk": 4,
     "fields": {
+        "created": null,
         "name": "SSO kunde",
         "country": 1,
         "site_prefix": "sso-kunde",
@@ -4591,6 +4595,46 @@
         "tags": [
             7
         ],
+        "products": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 89,
+    "fields": {
+        "created": "2025-11-13T10:21:07.030",
+        "modified": "2025-11-13T15:02:52.494",
+        "user_created": "magenta",
+        "user_modified": "magenta",
+        "name": "Markdown example",
+        "uid": null,
+        "description": "# Header 1\r\n\r\n## Header 2\r\n\r\n[Link](https://ecosia.com)\r\n[Link](https://ecosia.com)\r\n\r\n- List 1\r\n- List 2\r\n- List 3\r\n    - Nested list 1\r\n\r\nThis should be a table:\r\n\r\n| Header 1 | Header 2 |\r\n|--------------|--------------|\r\n| Row 1      | Row 1     |\r\n\r\n### Header 3\r\n\r\n**Bold**\r\n*Italic*\r\n_Also italic but with underscores_\r\n~~Should be strikethrough but isn't~~\r\nUnderlined is not possible by default with markdown syntax\r\n<span style=\"text-decoration: underline\">...but of course a lot more is possible with HTML in markdown</span>\r\n\r\n1. List 1\r\n2. List 2\r\n3. List 3\r\n\r\nThis should have a footnote[^1]\r\n\r\n[^1]: This should be a footnote\r\n\r\n#### Header 4\r\n\r\nRegular text for comparison\r\n\r\n> This should be\r\n> a block quote\r\n\r\nRegular text for comparison\r\n\r\n```html\r\n<span>This should be a code block</span>\r\n```\r\n\r\n##### Header 5\r\n\r\n<span style=\"color: red;\">HTML red text</span>",
+        "site": null,
+        "executable_code": "script_uploads/a.txt",
+        "is_security_script": false,
+        "is_hidden": false,
+        "feature_permission": null,
+        "tags": [],
+        "products": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 90,
+    "fields": {
+        "created": "2025-11-13T15:03:03.808",
+        "modified": "2025-11-13T15:08:23.839",
+        "user_created": "magenta",
+        "user_modified": "magenta",
+        "name": "Quria",
+        "uid": null,
+        "description": "Detta skript ställer in en dator att kräva inloggning via Quria och eventuellt även bokning via Easy!Appointments.\r\nDet är också möjligt att välja att medborgare ska boka en specifik dator och om en logg över inloggningar ska skrivas.\r\nOm medborgare ska boka en specifik dator, kan du tillåta dem att logga in utan bokning om det är lång tid til nästa bokning.\r\n\r\nLoggen över inloggningar kommer att innehålla det Quria-nummer/personnummer som användes för inloggning, inloggningsdatum, tid för inloggning och tid för utloggning.\r\nVid inloggning kommer tiden för utloggning att vara lika med tidpunkten för inloggning. Vid utloggning uppdateras tidpunkten för utloggning till aktuell tid.\r\nLoggen kommer att visas på [denna länk](https://os2borgerpc-admin.magenta.dk/admin/system/loginlog/).\r\nEndast site-admins har tillgång till loggen.\r\n\r\n**OBS**: Det här skriptet fungerar bara korrekt om de nödvändiga API-uppgifter anges under inställningar för Site. Kontakta Sambruk eller Magenta för att se den relaterade guiden.\r\n\r\n**OBS**: Om bokningen inte används kommer en ny inloggning att starta en inloggningsperiod som motsvarar den angivna Login-tid, om et värde anges, och i övrigt är lika med värdet som valts under inställningar för Site. Under denna period kan medborgaren logga in och ut (varje inloggning kräver fortfarande Quria information). Efter inloggningsperioden kommer en karantänperiod, som också er lika med den angivna karantänperiod, om ett värde anges, och i övrigt är lika med värdet som väljs under inställningar för Site, där medborgaren inte kan logga in. När karantänen är över kommer medborgaren att kunna starta en ny inloggningsperiod.\r\n\r\n**OBS**: \"Lång tid til nästa bokning\" definieras som en situation där det är längre än den använda Login-tid till nästa bokning.\r\n\r\n**OBS**: Bokning av specifika datorer fungerar endast om tjänsterna som kan bokas i Easy!Appointments har samma namn som hostname för de registrerade maskinerna på admin-sidan. Om du t.ex. har en dator med hostname \"pc1\", då måste den bokas via en tjänst med namnet \"pc1\", om du behöver bokning av specifika datorer. I detta sammanhang görs dock INGEN skillnad mellan stora och små bokstäver. Datorns hostname kan ändras genom att ändra dess namn.\r\n\r\n**OBS**: Om du vill att medborgaren ska loggas ut automatiskt när deras boknings- eller inloggningsperiod har gått ut måste du även använda skriptet [OS2borgerPC - Log altid ud efter X minutter med nedtæller](/scripts/1277). Värdet på skriptets andra parameter \"antal MINUTTER til logud\" är irrelevant i detta sammanhang, eftersom det skrivs över av Quria- och bokningsintegrationen.\r\n\r\nÄndringar av inställningarna träder i kraft först efter utloggning eller omstart.\r\n\r\n### Indataparametrar\r\n\r\n1. Aktivera? - Markera kryssrutan för att aktivera skriptet.\r\nLämna kryssrutan tom för att inaktivera skriptet.\r\nOm kryssrutan lämnas tom har de återstående parametrarna ingen betydelse.\r\n2. Bokning krävs - Markera kryssrutan för att kräva bokning.\r\nLämna kryssrutan tom för att inte använda bokning.\r\n3. Dator-specifik bokning - Markera kryssrutan för att kräva bokning av specifika datorer.\r\nLämna kryssrutan tom för att inte kräva bokning av specifika datorer.\r\n4. Tillåt inloggning utan bokning om det är lång tid till nästa bokning - Markera kryssrutan för att tillåta inloggning utan bokning om det är lång tid till nästa bokning.\r\nLämna kryssrutan tom för att inte tillåta inloggning utan bokning.\r\n5. Login-tid i minuter - Önskad Login-tid i minuter.\r\nOm denna parameter inte anges används den Login-tid som valts under inställningar för Site.\r\n6. Karantänperiod i minuter - Önskad Karantänperiod i minuter.\r\nOm denna parameter inte anges används den Karantänperiod som valts under inställningar för Site.\r\n7. Spara logg - Markera kryssrutan för att spara en logg över inloggningar med Quria-nummer/personnummer, tid för inloggning och tid för utloggning.\r\nLämna kryssrutan tom för att inte spara denna logg.\r\n\r\nTest text efter liste",
+        "site": null,
+        "executable_code": "script_uploads/a_Ws04PQP.txt",
+        "is_security_script": false,
+        "is_hidden": false,
+        "feature_permission": null,
+        "tags": [],
         "products": []
     }
 },

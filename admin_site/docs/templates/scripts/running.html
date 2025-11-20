@@ -35,4 +35,17 @@
      <a href="{% url 'doc' 'jobs' %}">{% translate "The job list" %}</a>
     {% translate "and track the execution of jobs on the individual computers." %}
   </p>
+  <p>
+      <strong>{% translate "Note" %}:</strong>
+      {% blocktranslate trimmed %}
+      A given computer will only start actually executing the script during
+      its next check-in after you started script execution. As the computers
+      check in every 5 minutes, it can thus take up to 5 minutes from the time
+      you started script execution until a given computer actually starts
+      executing the script.
+      {% endblocktranslate %}
+  </p>
+  <p>
+      {% translate "A computer can only check in and execute scripts if it is turned on and has an internet connection." %}
+  </p>
 {% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'index.html' %}
+{% load i18n %}
+
+{% block specific_content %}
+  <h1>{% translate "Security Rules" %}</h1>
+  <p>
+      {% url 'doc' 'monitoring_rules/securityscripts' as sec_scripts %}
+      {% blocktranslate trimmed %}
+      Security rules monitor various events on the monitored computers.
+      The type of events that are monitored by a security rule are determined by the
+      <a href={{sec_scripts}}>Security Script</a>
+      used for that security rule.
+      {% endblocktranslate %}
+  </p>
+  <p>
+      {% blocktranslate trimmed %}
+      The security script is executed to collect possible events every time a
+      monitored computer checks in with the admin portal. As the computers check in
+      every 5 minutes, it can thus take up to 5 minutes from the time when
+      an event occurred until the event is reported on the admin portal and
+      an email-notification is sent.
+    {% endblocktranslate %}
+  </p>
+  <p>
+      {% translate "A computer can only check in and report events if it is turned on and has an internet connection." %}
+  </p>
+  <h2>{% translate "Creating or editing security rules" %}</h2>
+  <p>
+    {% blocktranslate trimmed %}
+    The overview "Monitoring Rules" shows all the defined security rules and
+    offline rules that are monitored. You can edit an existing security rule
+    by selecting it in the list. You can define a new security rule by clicking
+    on "Add new security rule" above the list. The interface for both operations
+    has the same form.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% translate "A security rule has the following parameters" %}:
+  </p>
+  <ul>
+    <li>
+      {% translate "Name (mandatory): the name of the particular security rule." %}
+  </li>
+    <li>
+      {% translate "Security Script (mandatory): The Security Script is executed every time the computer checks in with the admin portal." %}
+  </li>
+    <li>
+      {% translate "Severity level (mandatory): Choose between Critical, High and Normal." %}
+  </li>
+  <li>
+      {% translate "Description (optional): A descriptive text that is included in the sent email warnings." %}
+  </li>
+  <li>
+      {% blocktranslate trimmed %}
+      Monitored groups (optional): The groups define which computers the security rule applies to. If
+      no groups are specified, the security rule will apply to <strong>all</strong> computers on the site.
+      {% endblocktranslate %}
+  </li>
+  <li>
+      {% blocktranslate trimmed %}
+      Recipient(s) of email warning (optional): The users that should receive an email about any events
+      related to the security rule. Note that if a monitored PC belongs to one or more groups with
+      supervisors, those supervisors will receive any email warnings related to that PC instead of the
+      recipients set here.
+      {% endblocktranslate %}
+  </li>
+  </ul>
+  <p>
+    {% blocktranslate trimmed %}
+    Any changes made to a security rule will not take effect until you have clicked
+    on "Save changes" at the bottom of the screen. Similarly, you must click on
+    "Save changes" to finish creating a new security rule once you have filled out
+    the mandatory parameters. You can verify that the security rule has been created
+    by checking if it appears in the list of monitored rules.
+    {% endblocktranslate %}
+  </p>
+{% endblock %}

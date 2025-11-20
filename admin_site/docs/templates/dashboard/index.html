@@ -1,0 +1,67 @@
+{% extends 'index.html' %}
+{% load i18n %}
+
+{% block getting_started_active %}class="active"{% endblock %}
+
+{% block specific_content %}
+  <h1>{% translate "The Dashboard" %}</h1>
+  <p>
+      {% blocktranslate trimmed %}
+      When you log in to the admin portal, you will be presented with the dashboard
+      for the site that your OS2borgerPC user is associated with.
+      If you have access to multiple sites, you will first be presented with the
+      sites overview where you must choose a site to access.
+      {% endblocktranslate %}
+  </p>
+  <p>{% translate "The dashboard provides an overview of certain relevant information for the site." %}</p>
+  <h2>{% translate "Latest unhandled events" %}</h2>
+  <p>
+      {% blocktranslate trimmed %}
+      This section shows up to five of the most recent unhandled events and the times when they occurred.
+      Events with the level "Normal" are not shown.
+      The "See all"-button links to the events overview.
+      {% endblocktranslate %}
+  </p>
+  <h2>{% translate "Latest failed jobs" %}</h2>
+  <p>
+      {% blocktranslate trimmed %}
+      This section shows up to five of the most recent failed jobs and the times when they finished.
+      If a failed job is no longer relevant, you can click on the "slashed eye"-icon to hide it.
+      Doing so will cause that job to no longer be shown on the dashboard. It will still be shown on
+      the job list. You can also click on the "Hide all shown jobs"-button to hide all the jobs
+      currently shown on the dashboard. You will be asked for confirmation when hiding failed jobs.
+      The "See all"-button links to the job list filtered to only show failed jobs.
+      {% endblocktranslate %}
+  </p>
+  <h2>{% translate "Latest news" %}</h2>
+  <p>
+      {% blocktranslate trimmed %}
+      This section shows the five most recent news and the times when they were uploaded.
+      The "See all"-button links to the news page.
+      {% endblocktranslate %}
+  </p>
+  <h2>{% translate "Computers that haven't checked in in 15 minutes" %}</h2>
+  <p>
+      {% blocktranslate trimmed %}
+      This section shows up to five computers that most recently went offline for more than 15 minutes,
+      the time since their last check in and the time of their last check in.
+      The "See status overview"-button links to the computer status overview.
+      {% endblocktranslate %}
+  </p>
+  <h2>{% translate "Newest global scripts" %}</h2>
+  <p>
+      {% blocktranslate trimmed %}
+      This section shows the five newest global scripts.
+      The "See all scripts"-button links to the scripts overview.
+      {% endblocktranslate %}
+  </p>
+  <h2>{% translate "Active computers that have not run all updates for more than 30 days" %}</h2>
+  <p>
+      {% blocktranslate trimmed %}
+      This section shows up to five active computers that have not run all updates for more than
+      30 days and the time since they last ran all updates. The computers that have not run all
+      updates for the longest time are shown first.
+      A computer is considered active if it has checked in within the last 28 days.
+      {% endblocktranslate %}
+  </p>
+{% endblock %}

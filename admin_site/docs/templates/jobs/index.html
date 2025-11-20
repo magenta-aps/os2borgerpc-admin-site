@@ -2,10 +2,10 @@
 {% load i18n %}
 
 {% block specific_content %}
-  <h1>{% translate "Job overview" %}</h1>
+  <h1>{% translate "Jobs" %}</h1>
   <p>
     {% blocktranslate trimmed %}
-    The job overview provides an overview of the execution of jobs on OS2borgerPC
+    The jobs overview provides an overview of the execution of jobs on OS2borgerPC
     computers for the chosen site. On the left, one can choose various filters
     that make the list more manageable, and on the right is shown a list of jobs
     that match the chosen filters.
@@ -47,6 +47,35 @@
     order to restart the job (mainly relevant if the job failed).
     {% endblocktranslate %}
   </p>
+  <h2>{% translate "Statuses" %}</h2>
+  <p>
+      {% blocktranslate trimmed %}
+      The different statuses indicate where the computer is in the process of
+      actually executing the script.
+      {% endblocktranslate %}
+  </p>
+  <ul>
+      <li>
+          {% translate "New: The computer has yet to check in and fetch the script." %}
+      </li>
+      <li>
+          {% translate "Submitted: The computer has checked in and fetched the script." %}
+      </li>
+      <li>
+          {% translate "Done: The computer has finished executing the script." %}
+      </li>
+      <li>
+          {% translate "Failed: The script execution failed in some way. Check the log output for more information." %}
+      </li>
+      <li>
+          {% blocktranslate trimmed %}
+          Restarted: This status is only used for finished jobs that have been restarted.
+          Restarting a finished job changes the status of that job to "Restarted" and creates
+          a "New" job using the same script and the same parameters as the job that was
+          restarted.
+          {% endblocktranslate %}
+      </li>
+  </ul>
   <h2>{% translate "Jobs run by Magenta" %}</h2>
   <p>
     {% blocktranslate trimmed %}

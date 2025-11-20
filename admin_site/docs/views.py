@@ -41,17 +41,16 @@ class DocView(TemplateView, LoginRequiredMixin):
     def get_context_data(self, **kwargs):  # noqa
 
         documentation_menu_items = [
-            ("", _("The administration site")),
+            ("", _("The admin portal")),
             ("om_os2borgerpc_admin", _("About")),
-            ("sites_overview", _("Sites overview")),
-            ("status", _("Status")),
+            ("sites_overview", _("The Sites overview")),
+            ("dashboard", _("The Dashboard")),
             ("computers", _("Computers")),
             ("groups", _("Groups")),
-            ("wake_plans", _("On/Off schedules")),
-            ("jobs", _("Jobs")),
             ("scripts", _("Scripts")),
-            ("security_scripts", _("Security Scripts")),
-            ("notifications", _("Notifications and offline rules")),
+            ("jobs", _("Jobs")),
+            ("wake_plans", _("On/Off schedules")),
+            ("monitoring_rules", _("Monitoring Rules")),
             ("users", _("Users")),
             ("configuration", _("Configurations")),
             ("changelogs", _("The News site")),

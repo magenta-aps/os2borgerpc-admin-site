@@ -61,7 +61,7 @@
               {# Adding the UID field manually to the form to be able to set it up with some htmx logic, and allow for an empty value #}
               <p class="d-flex align-items-center">{{user.user_profile.sites.first.customer.site_prefix}}-<input name="uid" pattern="[\-a-z0-9]{0,40}" maxlength="40" class="textinput form-control d-inline flex-grow-1" id="id_uid" hx-get="{% url 'site_uid_available_check' %}" hx-trigger="load, keyup changed delay:0.7s" hx-target="#site_uid_available_check_response"></p>
               <small id="hint_id_uid" class="form-text text-muted">
-                {% translate "This UID is used when registering a PC with the admin site." %}
+                {% translate "This UID is used when registering a PC with the admin portal." %}
                 {% translate "Must be unique. Valid characters are a-z (lower-case only), 0-9 and dashes, and the maximum length is 40 characters." %}
               </small>
             </div>

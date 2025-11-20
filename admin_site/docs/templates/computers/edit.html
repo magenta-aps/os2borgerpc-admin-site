@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block specific_content %}
-  <h1>{% translate "Computers: Master data and groups" %}</h1>
+  <h1>{% translate "Editing computers: Master data and groups" %}</h1>
   <p>
     {% blocktranslate trimmed %}
     When you click on a computer, you will by default be shown the computer's
@@ -11,6 +11,12 @@
     installation. You can also add or remove group affiliations. You must click
     the button "Save changes" before the changes take effect.
     {% endblocktranslate %}
+  </p>
+  <p>
+      {% blocktranslate trimmed %}
+      If you change the computer's name, its hostname will automatically be updated
+      to match the new name (in lower case) during the next check-in.
+      {% endblocktranslate %}
   </p>
   <p>
     {% blocktranslate trimmed %}

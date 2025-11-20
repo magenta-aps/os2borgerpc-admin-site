@@ -2,7 +2,26 @@
 {% load i18n %}
 
 {% block specific_content %}
-  <h1>{% translate "Administrating computers" %}</h1>
+  <h1>{% translate "Computers" %}</h1>
+  <p>
+    {% blocktranslate trimmed %}
+      When you click on "Computers" in the left-hand menu, you will be redirected to the status overview for computers.
+      On this overview, you will be shown information about all computers for the site,
+      sorted with new/inactive computers
+    {% endblocktranslate %}
+    <a href="{% url 'doc' 'computers/activating' %}">{% translate "waiting to be activated" %} </a>
+    {% blocktranslate trimmed %}
+    at the top and otherwise by when they were last seen.
+    {% endblocktranslate %}
+  </p>
+  <p>
+      {% blocktranslate trimmed %}
+      If you click on a computer name, you will be redirected to the administration page for that computer.
+      While you are on the status overview for computers, you can also click on "Editing" in the left-hand
+      menu to reach the page used for administrating computers.
+      {% endblocktranslate %}
+  </p>
+  <h2>{% translate "Administrating computers" %}</h2>
 
   <p>
     {% blocktranslate trimmed %}

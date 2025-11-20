@@ -2067,11 +2067,11 @@
 },
 {
     "model": "system.site",
-    "pk": 9,
+    "pk": 1,
     "fields": {
-        "name": "Magenta",
-        "uid": "magenta",
-        "configuration": 36,
+        "name": "Magenta Test",
+        "uid": "magenta-test",
+        "configuration": 37,
         "customer": 1,
         "created": null,
         "agency_id": "DK-100000",
@@ -2087,11 +2087,11 @@
 },
 {
     "model": "system.site",
-    "pk": 1,
+    "pk": 9,
     "fields": {
-        "name": "Magenta Test",
-        "uid": "magenta-test",
-        "configuration": 37,
+        "name": "Magenta",
+        "uid": "magenta",
+        "configuration": 36,
         "customer": 1,
         "created": null,
         "agency_id": "DK-100000",

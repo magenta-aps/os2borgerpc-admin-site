@@ -1,4 +1,4 @@
-{% extends 'index.html' %}
+{% extends 'base_docs.html' %}
 {% load i18n %}
 {% load static %}
 {% load custom_tags %}
@@ -7,6 +7,11 @@
 {% block specific_content %}
 
 <h1>{% translate "The Sites overview" %}</h1>
+    <p class="alert alert-info">
+        {% blocktranslate trimmed %}
+            Note: You can only see this page if you're either a customer admin, or you've been added to more than one site.
+        {% endblocktranslate %}
+    </p>
     <p>
         {% blocktranslate trimmed %}
             The sites overview shows all the sites that you have access to. A customer admin has access to
@@ -67,7 +72,7 @@
 </p>
 
 <h2>{% translate "Deleting a site" %}</h2>
-<p>{% translate "REMINDER: Only customer admins can delete a site!" %}</p>
+<p class="alert alert-info">{% translate "Note: Only customer admins can delete a site!" %}</p>
 <p>
     {% blocktranslate trimmed %}
         To start the process of deleting a site, click the dropdown symbol on the right side of the button
@@ -83,7 +88,7 @@
 </p>
 
 <h2>{% translate "Creating a new site" %}</h2>
-<p>{% translate "REMINDER: Only customer admins can create new sites!" %}</p>
+<p class="alert alert-info">{% translate "Note: Only customer admins can create new sites!" %}</p>
 <p>
     {% blocktranslate trimmed %}
         If you wish to create a new site, you must click on the "Add new site" button, which is only visible

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-02 13:47+0100\n"
+"POT-Creation-Date: 2025-12-05 16:46+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -133,8 +133,7 @@ msgstr "Nyhetskategorier"
 msgid "Comments"
 msgstr "Kommentarer"
 
-#: changelog/templates/list.html docs/templates/om_os2borgerpc_admin.html
-#: docs/views.py
+#: changelog/templates/list.html docs/templates/index.html docs/views.py
 msgid "OS2borgerPC"
 msgstr "Sambruk MedborgarPC"
 
@@ -142,7 +141,7 @@ msgstr "Sambruk MedborgarPC"
 msgid "News"
 msgstr "Nyheter"
 
-#: changelog/templates/list.html
+#: changelog/templates/list.html docs/templates/base_docs.html
 msgid "Back to previous page"
 msgstr "Tillbaka till föregående sida"
 
@@ -569,6 +568,15 @@ msgstr ""
 "Statuskoden 401 \"Error: Unauthorized\" kommer att returneras om du inte "
 "använder knappen %(auth)s eller om du anger en ogiltig API-nyckel."
 
+#: docs/templates/base_docs.html docs/views.py
+msgid "OS2borgerPC documentation"
+msgstr "Sambruk MedborgarPC dokumentation"
+
+#: docs/templates/base_docs.html templates/site_with_navigation.html
+#: templates/system/site_settings/api_keys/api_keys.html
+msgid "Documentation"
+msgstr "Dokumentation"
+
 #: docs/templates/changelogs/index.html docs/views.py
 msgid "The News site"
 msgstr "Nyhetssidan"
@@ -697,10 +705,6 @@ msgstr "Jobbhistorik"
 #: docs/templates/computers/__submenu__.html
 msgid "Activating"
 msgstr "Aktivering"
-
-#: docs/templates/computers/activating.html
-msgid "The Admin system"
-msgstr "Admin-systemet"
 
 #: docs/templates/computers/activating.html
 msgid "Activating a computer"
@@ -1781,17 +1785,44 @@ msgstr ""
 "Inställningar för Site har markerats."
 
 #: docs/templates/index.html
-msgid "OS2borgerPC documentation"
-msgstr "Sambruk MedborgarPC dokumentation"
+msgid ""
+"OS2borgerPC consists of a number of Linux-based operating systems (images) "
+"and a client to communicate with this admin portal which combined enables "
+"you to remotely manage those computers using a large number of scripts. In "
+"the left-hand menu, you can find documentation regarding the different parts "
+"of the system."
+msgstr ""
+"OS2borgerPC består av ett antal Linux-baserade operativsystem (avbildningar) "
+"och en klient för att kommunicera med denna administratörsportal, vilket "
+"tillsammans gör det möjligt för dig att fjärrhantera dessa datorer med hjälp "
+"av ett stort antal skript. I menyn till vänster hittar du dokumentation av "
+"systemets olika delar."
 
-#: docs/templates/index.html templates/site_with_navigation.html
-#: templates/system/site_settings/api_keys/api_keys.html
-msgid "Documentation"
-msgstr "Dokumentation"
+#: docs/templates/index.html docs/views.py
+msgid "About"
+msgstr "Om"
 
 #: docs/templates/index.html
-msgid "Return to admin"
-msgstr "Tillbaka til admin"
+msgid "OS2borgerPC is developed by"
+msgstr "Sambruk MedborgarPC-Admin utvecklas av"
+
+#: docs/templates/index.html
+msgid ""
+", originally in collaboration with the libraries in Aarhus and Silkeborg."
+msgstr ", original i samarbete med biblioteken i Århus och Silkeborg."
+
+#: docs/templates/index.html
+#, python-format
+msgid ""
+"OS2borgerPC and this documentation is 100%% Open Source and can be used and "
+"distributed in accordance with the conditions in version 3 of the"
+msgstr ""
+"Sambruk MedborgarPC och denna dokumentation är 100%% öppen källkod och kan "
+"användas och avslöjas enligt villkor i version 3 af"
+
+#: docs/templates/index.html
+msgid "The source code for OS2borgerPC can always be found on"
+msgstr "Källkoden för Sambruk MedborgarPC/OS2borgerPC kan alltid hittas på"
 
 #: docs/templates/jobs/index.html
 msgid ""
@@ -2091,15 +2122,15 @@ msgstr "Övervakningsregler"
 msgid ""
 "The overview \"Monitoring Rules\" shows all the defined security rules and "
 "offline rules that are monitored. Security rules are marked with the icon "
-"<span class='material-symbols-outlined'>gpp_maybe</span> and offline rules "
-"are marked with the icon <span class='material-symbols-"
-"outlined'>desktop_access_disabled</span>."
+"<span class=\"material-symbols-outlined\">gpp_maybe</span> and offline rules "
+"are marked with the icon <span class=\"material-symbols-"
+"outlined\">desktop_access_disabled</span>."
 msgstr ""
 "Översikten \"Övervakningsregler\" visar alla definierade säkerhetsregler och "
 "offline-regler som övervakas. Säkerhetsregler är markerade med ikonen <span "
-"class='material-symbols-outlined'>gpp_maybe</span> och offline-regler är "
-"markerade med ikonen <span class='material-symbols-"
-"outlined'>desktop_access_disabled</span>."
+"class=\"material-symbols-outlined\">gpp_maybe</span> och offline-regler är "
+"markerade med ikonen <span class=\"material-symbols-"
+"outlined\">desktop_access_disabled</span>."
 
 #: docs/templates/monitoring_rules/index.html
 msgid ""
@@ -2447,49 +2478,6 @@ msgid ""
 msgstr ""
 "Skicka formatet som en matris till modulen csv_writer genom att anropa write-"
 "metoden."
-
-#: docs/templates/om_os2borgerpc_admin.html
-msgid ""
-"OS2borgerPC enables you to remotely manage computers via the OS2borgerPC "
-"administration interface. In the left-hand menu, you can find documentation "
-"regarding the different parts of the system."
-msgstr ""
-"Sambruk MedborgarPC låter dig fjärrhantera datorer via Sambruk MedborgarPC "
-"administrationsgränssnitt. I menyn till vänster hittar du dokumentation av "
-"systemets olika delar."
-
-#: docs/templates/om_os2borgerpc_admin.html docs/views.py
-msgid "About"
-msgstr "Om"
-
-#: docs/templates/om_os2borgerpc_admin.html
-msgid "OS2borgerPC was developed by"
-msgstr "Sambruk MedborgarPC-Admin är utvecklat av"
-
-#: docs/templates/om_os2borgerpc_admin.html
-msgid "in collaboration with the libraries in Aarhus and Silkeborg."
-msgstr "i samarbete med biblioteken i Århus och Silkeborg."
-
-#: docs/templates/om_os2borgerpc_admin.html
-#, python-format
-msgid ""
-"OS2borgerPC is 100%% Open Source and can be used and distributed in "
-"accordance with the conditions in version 3 of the"
-msgstr ""
-"Sambruk MedborgarPC är 100%% öppen källkod och kan användas och avslöjas "
-"enligt villkor i version 3 af"
-
-#: docs/templates/om_os2borgerpc_admin.html
-msgid "This documention can be used and distributed in accordance with a"
-msgstr "Denna dokumentation får användas och lämnas ut i enlighet med en"
-
-#: docs/templates/om_os2borgerpc_admin.html
-msgid ""
-"The source code for the newest accessible version of OS2borgerPC can always "
-"be found on"
-msgstr ""
-"Källkoden för den senaste tillgängliga versionen av Sambruk MedborgarPC-"
-"Admin/OS2borgerPC kan alltid hittas på"
 
 #: docs/templates/os2borgerpc_kiosk_wifi_guide.html
 msgid "Updating the Wi-Fi password on a OS2borgerPC Kiosk"
@@ -3058,6 +3046,14 @@ msgstr "Sites-översikten"
 
 #: docs/templates/sites_overview/index.html
 msgid ""
+"Note: You can only see this page if you're either a customer admin, or "
+"you've been added to more than one site."
+msgstr ""
+"Notera: Du kan kun se denne side, hvis du enten er kunde-admin eller er "
+"blevet tilføjet til mere end én side."
+
+#: docs/templates/sites_overview/index.html
+msgid ""
 "The sites overview shows all the sites that you have access to. A customer "
 "admin has access to all sites for that customer while other users only have "
 "access to the sites that they have been assigned to. Customer admins can "
@@ -3155,8 +3151,8 @@ msgid "Deleting a site"
 msgstr "Ta bort ett site"
 
 #: docs/templates/sites_overview/index.html
-msgid "REMINDER: Only customer admins can delete a site!"
-msgstr "PÅMINNELSE: Endast kunde-admins kan ta bort ett site!"
+msgid "Note: Only customer admins can delete a site!"
+msgstr "Notera: Endast kunde-admins kan ta bort ett site!"
 
 #: docs/templates/sites_overview/index.html
 msgid ""
@@ -3189,8 +3185,8 @@ msgid "Creating a new site"
 msgstr "Skapa ett nyt site"
 
 #: docs/templates/sites_overview/index.html
-msgid "REMINDER: Only customer admins can create new sites!"
-msgstr "PÅMINNELSE: Endast kunde-admins kan skapa nya sites!"
+msgid "Note: Only customer admins can create new sites!"
+msgstr "Notera: Endast kunde-admins kan skapa nya sites!"
 
 #: docs/templates/sites_overview/index.html
 msgid ""
@@ -3224,13 +3220,39 @@ msgstr ""
 "lägga till befintliga användare till sitet via avsnittet \"Användare\" för "
 "det site. Se dokumentationen om \"Användare\" för mer information."
 
-#: docs/templates/tech.html docs/views.py
-msgid "Technical Documentation"
-msgstr "Teknisk Dokumentation"
+#: docs/templates/technical_docs.html docs/views.py
+msgid "Technical documentation"
+msgstr "Teknisk dokumentation"
 
-#: docs/templates/users/index.html templates/site_with_navigation.html
-msgid "Administrating users"
-msgstr "Administration av användare"
+#: docs/templates/technical_docs.html
+msgid ""
+"\n"
+"We have some technical information on Read the Docs for most parts of "
+"OS2borgerPC.\n"
+"Besides the one on the Kiosk Image they aren't that up to date, though.\n"
+msgstr ""
+
+#: docs/templates/technical_docs.html
+msgid "OS2borgerPC Image"
+msgstr "Sambruk MedborgarPC Image"
+
+#: docs/templates/technical_docs.html
+msgid "OS2borgerPC Kiosk Image"
+msgstr "Sambruk MedborgarPC Kiosk Image"
+
+#: docs/templates/technical_docs.html
+msgid "OS2borgerPC Admin Portal"
+msgstr "Sambruk MedborgarPC Admin Site"
+
+#: docs/templates/technical_docs.html
+msgid "OS2borgerPC Client"
+msgstr "Sambruk MedborgarPC Client"
+
+#: docs/templates/users/index.html docs/views.py
+#: templates/site_with_navigation.html
+#: templates/system/users/shared_navigation.html
+msgid "Users"
+msgstr "Användare"
 
 #: docs/templates/users/index.html
 msgid ""
@@ -3427,12 +3449,6 @@ msgid ""
 msgstr ""
 "Obs: Kontakta Magenta om en användare på din site behöver ändras till en "
 "användartyp som ingen av dina användare har behörighet att välja."
-
-#: docs/templates/users/index.html docs/views.py
-#: templates/site_with_navigation.html
-#: templates/system/users/shared_navigation.html
-msgid "Users"
-msgstr "Användare"
 
 #: docs/templates/users/index.html templates/site_with_navigation.html
 #: templates/system/sites/list.html
@@ -4191,28 +4207,12 @@ msgid "Updating Wi-Fi setup"
 msgstr "Uppdaterar Wi-Fi inställningar"
 
 #: docs/views.py
-msgid "Audit"
-msgstr "Revision"
+msgid "General"
+msgstr "Generellt"
 
 #: docs/views.py
-msgid "FAQ (PDF)"
-msgstr "Vanliga frågor (PDF)"
-
-#: docs/views.py
-msgid "OS2borgerPC Image"
-msgstr "Sambruk MedborgarPC Image"
-
-#: docs/views.py
-msgid "OS2borgerPC Admin Site"
-msgstr "Sambruk MedborgarPC Admin Site"
-
-#: docs/views.py
-msgid "OS2borgerPC Kiosk Image"
-msgstr "Sambruk MedborgarPC Kiosk Image"
-
-#: docs/views.py
-msgid "OS2borgerPC Client"
-msgstr "Sambruk MedborgarPC Client"
+msgid "Audit: FAQ (PDF)"
+msgstr "Revision: Vanliga frågor (PDF)"
 
 #: system/admin.py
 msgid "Number of computers"

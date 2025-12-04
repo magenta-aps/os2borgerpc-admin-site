@@ -133,39 +133,42 @@ detailpage
 
     <h2 class="text-light">{% translate "Documentation" %}</h2>
 
-    {% if current_url_site %}
-      {% comment %} Status currently has no documentation! {% endcomment %}
-    {% elif current_url_security_scripts or current_url_event_rules or current_url_security_events %}
-      <a href="{% url 'doc' 'security_scripts' %}" class="nav-link link-light">
+    {% if current_url_dashboard %}
+      <a href="{% url 'doc' 'dashboard' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
-        {% translate "Administrating security scripts" %}
+        {% translate "About the dashboard" %}
       </a>
-      <a href="{% url 'doc' 'security_scripts/securityproblems' %}" class="nav-link link-light">
+    {% elif current_url_security_scripts or current_url_event_rules or current_url_security_events %}
+      <a href="{% url 'doc' 'monitoring_rules/securityscripts' %}" class="nav-link link-light">
+        <span class='material-symbols-outlined'>help_outline</span>
+        {% translate "Security Scripts" %}
+      </a>
+      <a href="{% url 'doc' 'monitoring_rules/securityproblems' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
         {% translate "Security rule definition" %}
       </a>
-      <a href="{% url 'doc' 'notifications/index' %}" class="nav-link link-light">
+      <a href="{% url 'doc' 'monitoring_rules/eventrules' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
         {% translate "Offline rule definition" %}
       </a>
-      <a href="{% url 'doc' 'security_scripts/securityevents' %}" class="nav-link link-light">
+      <a href="{% url 'doc' 'monitoring_rules/securityevents' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
         {% translate "Help regarding events" %}
       </a>
     {% elif current_url_computer %}
       <a href="{% url 'doc' 'computers' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
-        {% translate "Administrating computers" %}
+        {% translate "Computers" %}
       </a>
     {% elif current_url_groups %}
       <a href="{% url 'doc' 'groups' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
-        {% translate "Administrating groups" %}
+        {% translate "Groups" %}
       </a>
     {% elif current_url_wake_plans %}
       <a href="{% url 'doc' 'wake_plans' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
-        {% translate "Administrating on/off schedules" %}
+        {% translate "On/Off schedules" %}
       </a>
     {% elif current_url_images %}
       {% comment %} Versions currently has no documentation! {% endcomment %}
@@ -189,7 +192,7 @@ detailpage
     {% if current_url_scripts or current_url_jobs %}
       <a href="{% url 'doc' 'scripts' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
-        {% translate "Administrating Scripts" %}
+        {% translate "Scripts" %}
       </a>
       <a href="{% url 'doc' 'scripts/running' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-13 09:43+0100\n"
+"POT-Creation-Date: 2025-12-02 14:03+0100\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -134,7 +134,7 @@ msgid "Comments"
 msgstr "Kommentarer"
 
 #: changelog/templates/list.html docs/templates/om_os2borgerpc_admin.html
-#: docs/templates/sites_overview/index.html docs/views.py
+#: docs/views.py
 msgid "OS2borgerPC"
 msgstr "OS2borgerPC"
 
@@ -219,9 +219,9 @@ msgstr "API-nøgler"
 msgid "PC's"
 msgstr "PC'er"
 
-#: docs/templates/api.html docs/templates/security_scripts/__submenu__.html
-#: docs/templates/security_scripts/edit.html
-#: docs/templates/security_scripts/securityevents.html
+#: docs/templates/api.html docs/templates/monitoring_rules/__submenu__.html
+#: docs/templates/monitoring_rules/securityevents.html
+#: docs/templates/monitoring_rules/securityscripts.html
 #: templates/site_with_navigation.html
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
 #: templates/system/event_rules/security_problem_confirm_delete.html
@@ -233,8 +233,8 @@ msgstr "Hændelser"
 msgid "PC"
 msgstr "PC"
 
-#: docs/templates/api.html docs/views.py templates/site_with_navigation.html
-#: templates/system/jobs/site_jobs.html
+#: docs/templates/api.html docs/templates/jobs/index.html docs/views.py
+#: templates/site_with_navigation.html templates/system/jobs/site_jobs.html
 #: templates/system/scripts/confirm_delete.html
 msgid "Jobs"
 msgstr "Jobs"
@@ -433,9 +433,9 @@ msgstr ""
 #: docs/templates/api.html
 msgid ""
 "In order to visit and view the API documentation you have to be signed in to "
-"the admin site."
+"the admin portal."
 msgstr ""
-"Du skal være logget ind på adminsitet for at kunne besøge og se API "
+"Du skal være logget ind på adminportalen for at kunne besøge og se API "
 "Dokumentationen."
 
 #: docs/templates/api.html
@@ -602,10 +602,10 @@ msgid "Read posts"
 msgstr "Læse opslag"
 
 #: docs/templates/changelogs/index.html
-msgid "Comment on a post with one's admin-site user"
+msgid "Comment on a post with one's admin portal user"
 msgstr ""
-"Kommentere på hvert opslag med den bruger man er registreret på adminsitet "
-"som"
+"Kommentere på hvert opslag med den bruger man er registreret på "
+"adminportalen som"
 
 #: docs/templates/changelogs/index.html
 msgid "List of posts"
@@ -666,11 +666,11 @@ msgstr "Kommentarer på opslag"
 
 #: docs/templates/changelogs/index.html
 msgid ""
-"If you are logged in to the admin-site, it is possible to add comments to a "
-"post."
+"If you are logged in to the admin portal, it is possible to add comments to "
+"a post."
 msgstr ""
-"Såfremt man er logget ind på sitet, vil man kunne tilføje kommentarer på et "
-"opslag."
+"Såfremt man er logget ind på adminportalen, vil man kunne tilføje "
+"kommentarer på et opslag."
 
 #: docs/templates/changelogs/index.html
 msgid "When you add a comment, your username will be shown above the comment."
@@ -709,10 +709,10 @@ msgstr "Aktivering af Computer"
 #: docs/templates/computers/activating.html
 msgid ""
 "Once you have installed OS2borgerPC on a computer and registered it with the "
-"admin site, it will show up on the list of new computers under"
+"admin portal, it will show up on the list of new computers under"
 msgstr ""
 "Når du har installeret OS2borgerPC på en computer og registreret den på "
-"adminsitet, vil den dukke op i listen over nye computere under"
+"adminportalen, vil den dukke op i listen over nye computere under"
 
 #: docs/templates/computers/activating.html
 msgid ""
@@ -732,17 +732,17 @@ msgstr ""
 
 #: docs/templates/computers/activating.html
 msgid ""
-"Except from the registration itself, the admin-site will always ignore all "
+"Except from the registration itself, the admin portal will always ignore all "
 "requests from computers that have not been activated. This is partially a "
 "practical measure (there is no reason to start updating a computer before "
 "you know that it is ready) and partially a security measure."
 msgstr ""
-"Bortset fra selve tilmeldingen vil administrationssitet altid ignorere alle "
+"Bortset fra selve tilmeldingen vil adminportalen altid ignorere alle "
 "henvendelser fra computere, der ikke er aktiveret. Dette er dels en praktisk "
 "foranstaltning (der er ingen grund til at begynde at opdatere en computer, "
 "før man ved, at den er parat), dels en sikkerhedsforanstaltning."
 
-#: docs/templates/computers/activating.html
+#: docs/templates/computers/activating.html docs/templates/scripts/running.html
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
 #: templates/system/event_rules/security_problem_confirm_delete.html
 #: templates/system/event_rules/site_event_rules_server.html
@@ -773,8 +773,8 @@ msgstr ""
 "ved, at den skal være der."
 
 #: docs/templates/computers/edit.html
-msgid "Computers: Master data and groups"
-msgstr "Computere: Stam-oplysninger og grupper"
+msgid "Editing computers: Master data and groups"
+msgstr "Computer-redigering: Stam-oplysninger og grupper"
 
 #: docs/templates/computers/edit.html
 msgid ""
@@ -790,6 +790,15 @@ msgstr ""
 "installation. Du kan også tilføje og fjerne grupper, som PC'en er "
 "tilknyttet. Du skal klikke på knappen \"Gem ændringer\", før dine ændringer "
 "træder i kræft."
+
+#: docs/templates/computers/edit.html
+msgid ""
+"If you change the computer's name, its hostname will automatically be "
+"updated to match the new name (in lower case) during the next check-in."
+msgstr ""
+"Hvis du ændrer computerens navn, vil dens hostname automatisk blive "
+"opdateret til at matche det nye navn (med kun små bogstaver) i forbindelse "
+"med næste tjek-ind."
 
 #: docs/templates/computers/edit.html
 msgid ""
@@ -817,7 +826,49 @@ msgstr ""
 "Bemærk, at medlemskab af grupper kan have indflydelse på computerens "
 "konfiguration."
 
-#: docs/templates/computers/index.html templates/site_with_navigation.html
+#: docs/templates/computers/index.html docs/templates/users/index.html
+#: docs/views.py templates/site_with_navigation.html
+#: templates/system/jobs/site_jobs.html
+#: templates/system/pcgroups/confirm_delete.html
+#: templates/system/pcs/no_pcs.html templates/system/pcs/pcs.html
+#: templates/system/pcs/update.html templates/system/sites/list.html
+#: templates/system/wake_plan/confirm_delete.html
+#: templates/system/wake_plan/wake_plan.html
+msgid "Computers"
+msgstr "Computere"
+
+#: docs/templates/computers/index.html
+msgid ""
+"When you click on \"Computers\" in the left-hand menu, you will be "
+"redirected to the status overview for computers. On this overview, you will "
+"be shown information about all computers for the site, sorted with new/"
+"inactive computers"
+msgstr ""
+"Når du klikker på \"Computere\" i venstremenuen, bliver du omdirigeret til "
+"status-oversigten for computere. På denne oversigt vil du se info om alle "
+"computere for sitet, sorteret med nye/inaktive computere"
+
+#: docs/templates/computers/index.html
+msgid "waiting to be activated"
+msgstr "der venter på at blive aktiverede"
+
+#: docs/templates/computers/index.html
+msgid "at the top and otherwise by when they were last seen."
+msgstr "øverst, og ellers efter hvornår, de senest er set."
+
+#: docs/templates/computers/index.html
+msgid ""
+"If you click on a computer name, you will be redirected to the "
+"administration page for that computer. While you are on the status overview "
+"for computers, you can also click on \"Editing\" in the left-hand menu to "
+"reach the page used for administrating computers."
+msgstr ""
+"Hvis du klikker på en computers navn, bliver du omdirigeret til "
+"administrationssiden for den computer. Mens du er på status-oversigten for "
+"computere, kan du også klikke på \"Redigering\" i venstremenuen for at komme "
+"til den side, som bruges til at administrere computere."
+
+#: docs/templates/computers/index.html
 msgid "Administrating computers"
 msgstr "Administration af computere"
 
@@ -877,21 +928,21 @@ msgstr ""
 
 #: docs/templates/configuration/index.html
 msgid ""
-"Configurations are used to exchange information between the admin-site and "
+"Configurations are used to exchange information between the admin portal and "
 "the registered computers in both directions."
 msgstr ""
-"Konfigurationer bruges til at udveksle information mellem adminsitet og de "
-"tilknyttede computere, i begge retninger."
+"Konfigurationer bruges til at udveksle information mellem adminportalen og "
+"de tilknyttede computere, i begge retninger."
 
 #: docs/templates/configuration/index.html
 msgid ""
-"In other words, it is possible to use the admin-site to specify a value that "
-"one or more computers will then receive and, similarly, a computer also "
-"sends values to the admin-site."
+"In other words, it is possible to use the admin portal to specify a value "
+"that one or more computers will then receive and, similarly, a computer also "
+"sends values to the admin portal."
 msgstr ""
-"Dvs. det er både muligt fra adminsitet at specificere en værdi som en eller "
-"flere computere så vil modtage, og ligeledes sender en computer værdier til "
-"adminsitet."
+"Dvs. det er både muligt fra adminportalen at specificere en værdi som en "
+"eller flere computere så vil modtage, og ligeledes sender en computer "
+"værdier til adminportalen."
 
 #: docs/templates/configuration/index.html
 msgid "General examples of possible uses"
@@ -899,13 +950,12 @@ msgstr "Generelle eksempler på anvendelsesmuligheder"
 
 #: docs/templates/configuration/index.html
 msgid ""
-"Among other things, the computer sends information about its hostname, its "
-"IP addresses, the current kernel version and the last time it performed "
-"automatic updates."
+"Among other things, the computer sends information about its IP addresses, "
+"the current kernel version and the last time it performed automatic updates."
 msgstr ""
-"Computeren sender bl.a. information om dens hostname, dens IP-addresser, den "
-"nuværende kernel-version og det sidste tidspunkt, hvor den foretog "
-"automatiske opdateringer."
+"Computeren sender bl.a. information om dens IP-addresser, den nuværende "
+"kernel-version og det sidste tidspunkt, hvor den foretog automatiske "
+"opdateringer."
 
 #: docs/templates/configuration/index.html
 msgid "This information can sometimes be relevant for system administrators."
@@ -926,12 +976,12 @@ msgstr "Det kan i nogle tilfælde være relevant at vide ift. fejlfinding."
 #: docs/templates/configuration/index.html
 msgid ""
 "As part of the development of a script, one might wish to set the "
-"configuration for the script via the admin-site, which allows the "
+"configuration for the script via the admin portal, which allows the "
 "configuration to be updated without rerunning the script, and also allows "
 "the configuration to vary between groups and computers."
 msgstr ""
 "Man ønsker ifm. udviklingen af et script at sende konfiguration dertil via "
-"adminsitet, som så kan opdateres uden genkørsel af scripts, eller som kan "
+"adminportalen, som så kan opdateres uden genkørsel af scripts, eller som kan "
 "variere ml. grupper eller computere."
 
 #: docs/templates/configuration/index.html
@@ -940,14 +990,15 @@ msgstr "Det kan i nogle tilfælde være relevant at vide for scriptudviklere."
 
 #: docs/templates/configuration/index.html
 msgid ""
-"The majority of configurations are controlled by the admin-site rather than "
-"the individual computer. This means that if you change a value on an "
+"The majority of configurations are controlled by the admin portal rather "
+"than the individual computer. This means that if you change a value on an "
 "individual computer, it will typically be changed back to the value listed "
-"on the admin-site during the next check-in."
+"on the admin portal during the next check-in."
 msgstr ""
-"Langt de fleste konfigurationer styres af adminsitet fremfor på den enkelte "
-"computer. Dvs. hvis du ændrer værdien på den enkelte computer, vil den "
-"oftest blive ændret tilbage til hvad adminsitet siger ved næste tjek-ind."
+"Langt de fleste konfigurationer styres af adminportalen fremfor på den "
+"enkelte computer. Dvs. hvis du ændrer værdien på den enkelte computer, vil "
+"den oftest blive ændret tilbage til hvad adminportalen siger ved næste tjek-"
+"ind."
 
 #: docs/templates/configuration/index.html
 msgid "Technical information for system administrators"
@@ -1064,11 +1115,11 @@ msgstr "Betydningen af de indbyggede konfigurationer"
 
 #: docs/templates/configuration/index.html
 msgid ""
-"All values without _ in front are controlled by the admin-site while values "
-"with _ are controlled by the computer / the client. Values with _ in front "
-"can thus not be changed via the admin interface."
+"All values without _ in front are controlled by the admin portal while "
+"values with _ are controlled by the computer / the client. Values with _ in "
+"front can thus not be changed via the admin interface."
 msgstr ""
-"Alle værdier uden _ foran bestemmes af adminsitet, mens værdier med _ "
+"Alle værdier uden _ foran bestemmes af adminportalen, mens værdier med _ "
 "bestemmes af computeren / klienten. Værdier med _ foran kan således ikke "
 "ændres via administrationsinterfacet."
 
@@ -1076,14 +1127,14 @@ msgstr ""
 #, python-format
 msgid ""
 "This means that if one were to change e.g. %(version)s on the computer, then "
-"the value would be overwritten during the next check-in with the admin-site. "
-"Note that \"job_timeout\" is the only built-in configuration that can be "
-"changed via the admin interface."
+"the value would be overwritten during the next check-in with the admin "
+"portal. Note that \"job_timeout\" is the only built-in configuration that "
+"can be changed via the admin portal."
 msgstr ""
 "Det vil i praksis sige, at hvis man eks. ændrer %(version)s på computeren, "
-"så vil den blive overskrevet efter næste tjek-ind med adminsitet. Bemærk at "
-"\"job_timeout\" er den eneste indbyggede konfiguration, som kan ændres via "
-"administrationsinterfacet."
+"så vil den blive overskrevet efter næste tjek-ind med adminportalen. Bemærk "
+"at \"job_timeout\" er den eneste indbyggede konfiguration, som kan ændres "
+"via adminportalen."
 
 #: docs/templates/configuration/index.html
 #: templates/system/configs/templates.html templates/system/pcs/pcs.html
@@ -1108,10 +1159,10 @@ msgstr "Versionen på OS2borgerPC-klienten"
 #: docs/templates/configuration/index.html
 msgid ""
 "The client is the particular software on the computer that communicates with "
-"the admin-site"
+"the admin portal"
 msgstr ""
 "Klienten er den software der kører på computeren, som er i kontakt med "
-"adminsitet"
+"adminportalen"
 
 #: docs/templates/configuration/index.html
 msgid "The name of the operating system"
@@ -1151,11 +1202,11 @@ msgstr "Computerens hostname"
 
 #: docs/templates/configuration/index.html
 msgid ""
-"It's set during the registration, and if you update the PC name on the admin-"
-"site"
+"It's set during the registration, and if you update the PC name on the admin "
+"portal"
 msgstr ""
 "Sættes i løbet af registreringen, og hvis du opdaterer PC-navnet på "
-"adminsitet"
+"adminportalen"
 
 #: docs/templates/configuration/index.html
 msgid "How long the client waits for a job to finish, in seconds"
@@ -1201,11 +1252,11 @@ msgstr "Computer"
 msgid ""
 "You create a configuration for a Site, a Group or a computer and it will "
 "automatically be transferred to the relevant computer(s) during their next "
-"check-in with the admin-site."
+"check-in with the admin portal."
 msgstr ""
 "Du opretter på et Site, en Gruppe eller en Computer en konfiguration, og den "
 "vil automatisk blive overført til de relevante computer(e), næste gang de "
-"tjekker ind på adminsitet."
+"tjekker ind på adminportalen."
 
 #: docs/templates/configuration/index.html
 msgid "From a terminal on the computer or a script, you can use these programs"
@@ -1238,16 +1289,137 @@ msgid "Creates a new configuration with the name citizen and the value 'yes'"
 msgstr "Opretter en ny konfiguration kaldet citizen, og sætter den til 'yes'"
 
 #: docs/templates/configuration/index.html
-msgid "Pushes a configuration to the admin-site"
-msgstr "Sender en konfiguration til adminsitet"
+msgid "Pushes a configuration to the admin portal"
+msgstr "Sender en konfiguration til adminportalen"
 
 #: docs/templates/configuration/index.html
-msgid "Pushes the example configuration serial_number to the admin-site"
-msgstr "Sender eksempel-konfigurationen serial_number til adminsitet"
+msgid "Pushes the example configuration serial_number to the admin portal"
+msgstr "Sender eksempel-konfigurationen serial_number til adminportalen"
 
 #: docs/templates/configuration/index.html
 msgid "In practice, the above programs interact with the file"
 msgstr "Ovenstående programmer interagerer i praksis med filen"
+
+#: docs/templates/dashboard/index.html docs/views.py
+msgid "The Dashboard"
+msgstr "Dashboardet"
+
+#: docs/templates/dashboard/index.html
+msgid ""
+"When you log in to the admin portal, you will be presented with the "
+"dashboard for the site that your OS2borgerPC user is associated with. If you "
+"have access to multiple sites, you will first be presented with the sites "
+"overview where you must choose a site to access."
+msgstr ""
+"Når du logger ind på adminportalen, bliver du præsenteret for dashboardet "
+"for det site, som din OS2borgerPC-bruger er tilknyttet. Hvis du har adgang "
+"til flere sites, bliver du først præsenteret for sites-oversigten, hvor du "
+"skal vælge det site, du vil ind på."
+
+#: docs/templates/dashboard/index.html
+msgid ""
+"The dashboard provides an overview of certain relevant information for the "
+"site."
+msgstr ""
+"Dashboardet viser en oversigt over visse relevante informationer for det "
+"pågældende site."
+
+#: docs/templates/dashboard/index.html templates/system/site_dashboard.html
+msgid "Latest unhandled events"
+msgstr "Seneste ikke-håndterede hændelser"
+
+#: docs/templates/dashboard/index.html
+msgid ""
+"This section shows up to five of the most recent unhandled events and the "
+"times when they occurred. Events with the level \"Normal\" are not shown. "
+"The \"See all\"-button links to the events overview."
+msgstr ""
+"Denne sektion viser op til fem af de seneste ikke-håndterede hændelser samt "
+"de tidspunkter, hvor de fandt sted. Hændelser med alvorlighedsgraden "
+"\"Normal\" vises ikke. Knappen \"Se alle\" linker til hændelsesoversigten."
+
+#: docs/templates/dashboard/index.html templates/system/dashboard_job_list.html
+msgid "Latest failed jobs"
+msgstr "Seneste fejlede jobs"
+
+#: docs/templates/dashboard/index.html
+msgid ""
+"This section shows up to five of the most recent failed jobs and the times "
+"when they finished. If a failed job is no longer relevant, you can click on "
+"the \"slashed eye\"-icon to hide it. Doing so will cause that job to no "
+"longer be shown on the dashboard. It will still be shown on the job list. "
+"You can also click on the \"Hide all shown jobs\"-button to hide all the "
+"jobs currently shown on the dashboard. You will be asked for confirmation "
+"when hiding failed jobs. The \"See all\"-button links to the job list "
+"filtered to only show failed jobs."
+msgstr ""
+"Denne sektion viser op til fem af de seneste fejlede jobs samt de "
+"tidspunkter, hvor de blev afsluttet. Hvis et fejlet job ikke længere er "
+"relevant, kan du klikke på det \"gennemstregede øje\" for at skjule jobbet. "
+"Dette medfører, at det pågældende job ikke længere vises på dashboardet. Du "
+"kan også trykke på \"Skjul alle viste jobs\"-knappen for at skjule alle de "
+"jobs, som i øjeblikket vises på dashboardet. Du vil blive spurgt om "
+"bekræftelse, når du skjuler fejlede jobs. Knappen \"Se alle\" linker til "
+"joblisten filtreret, så den kun viser fejlede jobs."
+
+#: docs/templates/dashboard/index.html templates/system/site_dashboard.html
+msgid "Latest news"
+msgstr "Seneste nyheder"
+
+#: docs/templates/dashboard/index.html
+msgid ""
+"This section shows the five most recent news and the times when they were "
+"uploaded. The \"See all\"-button links to the news page."
+msgstr ""
+"Denne sektion viser de fem seneste nyheder samt de tidspunkter, hvor de blev "
+"uploadet. Knappen \"Se alle\" linker til nyhedssiden."
+
+#: docs/templates/dashboard/index.html templates/system/site_dashboard.html
+msgid "Computers that haven't checked in in 15 minutes"
+msgstr "Computere som ikke er tjekket ind i 15 minutter"
+
+#: docs/templates/dashboard/index.html
+msgid ""
+"This section shows up to five computers that most recently went offline for "
+"more than 15 minutes, the time since their last check in and the time of "
+"their last check in. The \"See status overview\"-button links to the "
+"computer status overview."
+msgstr ""
+"Denne sektion viser op til fem computere, som senest gik offline i mere end "
+"15 minutter, hvor længe der er gået siden deres sidste tjek-ind og "
+"tidspunktet for deres sidste tjek-ind. Knappen \"Se status-oversigten\" "
+"linker til status-oversigten for computere."
+
+#: docs/templates/dashboard/index.html templates/system/site_dashboard.html
+msgid "Newest global scripts"
+msgstr "Nyeste globale scripts"
+
+#: docs/templates/dashboard/index.html
+msgid ""
+"This section shows the five newest global scripts. The \"See all scripts\"-"
+"button links to the scripts overview."
+msgstr ""
+"Denne sektion viser de fem nyeste globale scripts. Knappen \"Se alle "
+"scripts\" linker til scripts-listen."
+
+#: docs/templates/dashboard/index.html templates/system/site_dashboard.html
+msgid "Active computers that have not run all updates for more than 30 days"
+msgstr ""
+"Aktive computere som ikke har kørt alle opdateringer i mere end 30 dage"
+
+#: docs/templates/dashboard/index.html
+msgid ""
+"This section shows up to five active computers that have not run all updates "
+"for more than 30 days and the time since they last ran all updates. The "
+"computers that have not run all updates for the longest time are shown "
+"first. A computer is considered active if it has checked in within the last "
+"28 days."
+msgstr ""
+"Denne sektion viser op til fem aktive computere, som ikke har kørt alle "
+"opdateringer i mere end 30 dage, samt hvor længe der er gået, siden de sidst "
+"kørte alle opdateringer. De computere, som ikke har kørt alle opdateringer i "
+"længst tid, vises først. En computer betragtes som aktiv, hvis den er "
+"tjekket ind inden for de sidste 28 dage."
 
 #: docs/templates/groups/__submenu__.html docs/templates/groups/scripts.html
 #: templates/system/pcgroups/confirm_delete.html
@@ -1632,17 +1804,13 @@ msgid "Return to admin"
 msgstr "Tilbage til admin"
 
 #: docs/templates/jobs/index.html
-msgid "Job overview"
-msgstr "Job-oversigt"
-
-#: docs/templates/jobs/index.html
 msgid ""
-"The job overview provides an overview of the execution of jobs on "
+"The jobs overview provides an overview of the execution of jobs on "
 "OS2borgerPC computers for the chosen site. On the left, one can choose "
 "various filters that make the list more manageable, and on the right is "
 "shown a list of jobs that match the chosen filters."
 msgstr ""
-"Job-oversigten giver et overblik over afviklingen af jobs på OS2borgerPC-"
+"Jobs-oversigten giver et overblik over afviklingen af jobs på OS2borgerPC-"
 "computere for det valgte site. Til venstre kan man vælge diverse filtre der "
 "gør listen mere overskuelig og til højre vises en liste over jobs der "
 "matcher de valgte filtre."
@@ -1710,6 +1878,50 @@ msgstr ""
 "jobbet (dette er primært relevant hvis jobbet fejlede)."
 
 #: docs/templates/jobs/index.html
+msgid "Statuses"
+msgstr "Statuser"
+
+#: docs/templates/jobs/index.html
+msgid ""
+"The different statuses indicate where the computer is in the process of "
+"actually executing the script."
+msgstr ""
+"De forskellige statuser indikerer hvor computeren er i processen med reelt "
+"at afvikle scriptet."
+
+#: docs/templates/jobs/index.html
+msgid "New: The computer has yet to check in and fetch the script."
+msgstr "Nyt: Computeren har endnu ikke tjekket ind og hentet scriptet."
+
+#: docs/templates/jobs/index.html
+msgid "Submitted: The computer has checked in and fetched the script."
+msgstr "Afsendt: Computeren har tjekket ind og hentet scriptet."
+
+#: docs/templates/jobs/index.html
+msgid "Done: The computer has finished executing the script."
+msgstr "Udført: Computeren har afviklet scriptet."
+
+#: docs/templates/jobs/index.html
+msgid ""
+"Failed: The script execution failed in some way. Check the log output for "
+"more information."
+msgstr ""
+"Fejlet: Afviklingen af scriptet fejlede på en eller anden måde. Tjek log-"
+"outputtet for mere information."
+
+#: docs/templates/jobs/index.html
+msgid ""
+"Restarted: This status is only used for finished jobs that have been "
+"restarted. Restarting a finished job changes the status of that job to "
+"\"Restarted\" and creates a \"New\" job using the same script and the same "
+"parameters as the job that was restarted."
+msgstr ""
+"Genstartet: Denne status bruges kun til afsluttede jobs, som er blevet "
+"genstartet. Når et afsluttet job genstartes, ændres status for det job til "
+"\"Genstartet\", og der oprettes et \"Nyt\" job med det samme script og de "
+"samme parametre, som det job der blev genstartet."
+
+#: docs/templates/jobs/index.html
 msgid "Jobs run by Magenta"
 msgstr "Jobs kørt af Magenta"
 
@@ -1736,22 +1948,36 @@ msgstr "Lapning af sikkerhedshuller, såsom CVE'er identificeret i Ubuntu"
 msgid "Troubleshooting and error correction"
 msgstr "Fejlfinding og -retning"
 
-#: docs/templates/notifications/index.html docs/views.py
-msgid "Notifications and offline rules"
-msgstr "Notifikationer og offline-regler"
+#: docs/templates/monitoring_rules/__submenu__.html
+#: docs/templates/monitoring_rules/securityscripts.html
+#: templates/site_with_navigation.html templates/system/scripts/header.html
+msgid "Security Scripts"
+msgstr "Sikkerhedsscripts"
 
-#: docs/templates/notifications/index.html
+#: docs/templates/monitoring_rules/__submenu__.html
+#: docs/templates/monitoring_rules/securityproblems.html
+#: docs/templates/users/index.html
+msgid "Security Rules"
+msgstr "Sikkerhedsregler"
+
+#: docs/templates/monitoring_rules/__submenu__.html
+#: docs/templates/monitoring_rules/eventrules.html
+msgid "Offline Rules"
+msgstr "Offline-regler"
+
+#: docs/templates/monitoring_rules/eventrules.html
 msgid ""
 "Email notifications regarding computers that have been offline for longer "
 "than a selected period of time are generated by offline rules. If no offline "
-"rules have been defined, no notifications will be sent."
+"rules have been defined, no email-notifications about offline computers will "
+"be sent."
 msgstr ""
 "Email-notifikationer om computere, som har været offline længere end en "
 "valgt tidsperiode, bliver genereret af offline-regler. Hvis der ikke er "
-"blevet defineret nogen offline-regler, vil der ikke blive sendt "
-"notifikationer."
+"blevet defineret nogen offline-regler, vil der ikke blive sendt email-"
+"notifikationer om offline computere."
 
-#: docs/templates/notifications/index.html
+#: docs/templates/monitoring_rules/eventrules.html
 msgid ""
 "When an offline rule detects that a PC has been offline for too long, the "
 "system will also generate an event for that PC."
@@ -1759,24 +1985,24 @@ msgstr ""
 "Når en offline-regel detekterer, at en PC har været offline for længe, vil "
 "systemet også generere en hændelse relateret til den PC."
 
-#: docs/templates/notifications/index.html
+#: docs/templates/monitoring_rules/eventrules.html
 msgid ""
 "The system will only check the defined offline rules every ten minutes. It "
 "is thus possible for there to be a delay of up to ten minutes between a PC "
 "exceeding the allowed offline period and a notification being sent. This was "
-"necessary to limit the load on the admin-site."
+"necessary to limit the load on the admin portal."
 msgstr ""
 "Systemet tjekker kun de definerede offline-regler hvert tiende minut. Det er "
 "således muligt at der vil være en forsinkelse på op til ti minutter mellem "
 "at en PC overskrider den tilladte offline-periode og at en notifikation "
-"bliver sendt. Dette var nødvendigt for at begrænse belastningen på admin-"
-"sitet."
+"bliver sendt. Dette var nødvendigt for at begrænse belastningen på "
+"adminportalen."
 
-#: docs/templates/notifications/index.html
+#: docs/templates/monitoring_rules/eventrules.html
 msgid "Creating or editing offline rules"
 msgstr "Opret eller rediger offline-regler"
 
-#: docs/templates/notifications/index.html
+#: docs/templates/monitoring_rules/eventrules.html
 msgid ""
 "The overview \"Monitoring Rules\" shows all the defined security rules and "
 "offline rules that are monitored. You can edit an existing offline rule by "
@@ -1790,15 +2016,15 @@ msgstr ""
 "ved at klikke på \"Tilføj ny offline-regel\" oven over listen. Interfacet "
 "for begge operationer har samme form."
 
-#: docs/templates/notifications/index.html
+#: docs/templates/monitoring_rules/eventrules.html
 msgid "An offline rule has the following parameters:"
 msgstr "En offline-regel har følgende parametre:"
 
-#: docs/templates/notifications/index.html
+#: docs/templates/monitoring_rules/eventrules.html
 msgid "Name (mandatory): the name of the particular offline rule."
 msgstr "Navn (påkrævet): Navnet på den pågældende offline-regel."
 
-#: docs/templates/notifications/index.html
+#: docs/templates/monitoring_rules/eventrules.html
 msgid ""
 "Monitor period (mandatory): The period during which the rule is active. It "
 "is recommended to choose this period such that you avoid receiving "
@@ -1808,7 +2034,7 @@ msgstr ""
 "anbefales at vælge denne periode således, at du undgår at modtage "
 "notifikationer, når computerne bliver slukket om natten."
 
-#: docs/templates/notifications/index.html
+#: docs/templates/monitoring_rules/eventrules.html
 msgid ""
 "Maximum offline period allowed, in minutes (mandatory): The maximum period "
 "of time that a computer can be offline during the monitor period before "
@@ -1818,24 +2044,26 @@ msgstr ""
 "tidsperiode som en computer kan være offline under overvågningsperioden før "
 "der sendes email-notifikationer. Kan ikke være under 15 minutter."
 
-#: docs/templates/notifications/index.html
-#: docs/templates/security_scripts/securityproblems.html
+#: docs/templates/monitoring_rules/eventrules.html
+#: docs/templates/monitoring_rules/securityproblems.html
 msgid "Severity level (mandatory): Choose between Critical, High and Normal."
 msgstr "Alvorlighedsgrad (påkrævet): Vælg mellem Kritisk, Høj og Normal."
 
-#: docs/templates/notifications/index.html
+#: docs/templates/monitoring_rules/eventrules.html
 msgid "Description (optional): A description of the particular offline rule."
 msgstr "Beskrivelse (valgfri): En beskrivelse af den pågældende offline-regel."
 
-#: docs/templates/notifications/index.html
+#: docs/templates/monitoring_rules/eventrules.html
 msgid ""
 "Monitored groups (optional): The groups define which computers the offline "
-"rule applies to."
+"rule applies to. If no groups are specified, the offline rule will apply to "
+"<strong>all</strong> computers on the site."
 msgstr ""
 "Overvågede grupper (valgfri): Grupperne definerer hvilke computere, den "
-"aktuelle offline-regel er aktiv for."
+"aktuelle offline-regel er aktiv for. Hvis der ikke er angivet nogen grupper, "
+"vil offline-reglen være aktiv for <strong>alle</strong> computere på sitet."
 
-#: docs/templates/notifications/index.html
+#: docs/templates/monitoring_rules/eventrules.html
 msgid ""
 "Recipient(s) of email warning (optional): The users that should receive "
 "email notifications related to this offline rule. Note that if a monitored "
@@ -1849,7 +2077,7 @@ msgstr ""
 "disse ansvarspersoner modtage eventuelle email-notifikationer relateret til "
 "den PC i stedet for de modtagere, som er valgt her."
 
-#: docs/templates/notifications/index.html
+#: docs/templates/monitoring_rules/eventrules.html
 msgid ""
 "Any changes made to an offline rule will not take effect until you have "
 "clicked on \"Save changes\" at the bottom of the screen. Similarly, you must "
@@ -1864,6 +2092,378 @@ msgstr ""
 "når du har udfyldt de påkrævede parametre. Du kan verificere, at offline-"
 "reglen er blevet oprettet ved at tjekke om den står på listen over "
 "overvågede regler."
+
+#: docs/templates/monitoring_rules/index.html docs/views.py
+#: templates/site_with_navigation.html
+#: templates/system/event_rules/shared_navigation.html
+msgid "Monitoring Rules"
+msgstr "Overvågningsregler"
+
+#: docs/templates/monitoring_rules/index.html
+msgid ""
+"The overview \"Monitoring Rules\" shows all the defined security rules and "
+"offline rules that are monitored. Security rules are marked with the icon "
+"<span class='material-symbols-outlined'>gpp_maybe</span> and offline rules "
+"are marked with the icon <span class='material-symbols-"
+"outlined'>desktop_access_disabled</span>."
+msgstr ""
+"I oversigten \"Overvågningsregler\" vises alle definerede Sikkerhedsregler "
+"og Offline-regler, som der holdes øje med. Sikkerhedsregler er markeret med "
+"ikonet <span class='material-symbols-outlined'>gpp_maybe</span> og offline-"
+"regler er markeret med ikonet <span class='material-symbols-"
+"outlined'>desktop_access_disabled</span>."
+
+#: docs/templates/monitoring_rules/index.html
+msgid ""
+"You can define new security rules from the overview by clicking on \"Add new "
+"security rule\" above the list of defined rules. You can edit an existing "
+"security rule by selecting it in the list. The interface for both operations "
+"has the same form."
+msgstr ""
+"Fra oversigten kan du oprette nye Sikkerhedsregler ved at klikke på \"Tilføj "
+"ny sikkerhedsregel\" oven over listen med definerede regler. Du kan redigere "
+"en eksisterende sikkerhedsregel ved at vælge den i listen. Interfacet for "
+"begge operationer har samme form."
+
+#: docs/templates/monitoring_rules/index.html
+msgid ""
+"Similarly, you can define a new offline rule by clicking on \"Add new "
+"offline rule\" above the list of defined rules. You can edit an existing "
+"offline rule by selecting it in the list. The interface for both operations "
+"has the same form."
+msgstr ""
+"På samme vis kan du oprette en ny offline-regel ved at klikke på \"Tilføj ny "
+"offline-regel\" oven over listen. Du kan redigere en eksisterende offline-"
+"regel ved at vælge den i listen. Interfacet for begge operationer har samme "
+"form."
+
+#: docs/templates/monitoring_rules/index.html
+msgid "The following topics are relevant for monitoring rules"
+msgstr "Følgende emner er relevante for overvågningsregler"
+
+#: docs/templates/monitoring_rules/securityevents.html
+msgid ""
+"This overview shows the individual events that have been triggered by the "
+"system. In the left column, you can choose how you wish to filter the "
+"overview, i.e. choose which events you wish to see. By default, you will be "
+"shown all unresolved events with a severity level greater than normal. The "
+"severity level is also shown in the overview."
+msgstr ""
+"Denne oversigt viser de individuelle hændelser, som er udløst af systemet. I "
+"venstre kolonne kan du vælge hvordan oversigten filtreres, altså hvilke "
+"hændelser du vil se. Standard er, at du ser alle ikke-løste hændelser med en "
+"alvorlighedsgrad over normal. Af oversigten fremgår også hændelsernes "
+"alvorlighedsgrad."
+
+#: docs/templates/monitoring_rules/securityevents.html
+msgid ""
+"From the overview you can select and handle events. Handling an event allows "
+"you to change its status and the assigned user as well as add or change a "
+"note for the event. It is possible to handle multiple events simultaneously."
+msgstr ""
+"Fra oversigten kan du vælge og håndtere hændelser. Når du håndterer en "
+"hændelse, kan du ændre dens status, og hvem der står, at den håndteres af "
+"samt tilføje eller ændre en note for hændelsen. Det er muligt at håndtere "
+"flere hændelser på en gang."
+
+#: docs/templates/monitoring_rules/securityevents.html
+msgid ""
+"The possible statuses are new (the default), assigned and resolved. The "
+"assigned user can be chosen from among all users on the site you are on. It "
+"is possible for an event to have no assigned user."
+msgstr ""
+"De mulige statuser er ny (standard), tildelt og løst. Brugeren som der står, "
+"at hændelsen håndteres af kan vælges blandt alle brugere på det site, man er "
+"under. Det er muligt for en hændelse ikke at have nogen bruger angivet til "
+"at håndtere den."
+
+#: docs/templates/monitoring_rules/securityproblems.html
+#, python-format
+msgid ""
+"Security rules monitor various events on the monitored computers. The type "
+"of events that are monitored by a security rule are determined by the <a "
+"href=%(sec_scripts)s>Security Script</a> used for that security rule."
+msgstr ""
+"Sikkerhedsregler overvåger forskellige hændelser på de overvågede computere. "
+"Hvilken slags hændelser, der overvåges af en sikkerhedsregel, afgøres af det "
+"<a href=%(sec_scripts)s>Sikkerhedsscript</a>, der bruges til "
+"sikkerhedsreglen."
+
+#: docs/templates/monitoring_rules/securityproblems.html
+msgid ""
+"The security script is executed to collect possible events every time a "
+"monitored computer checks in with the admin portal. As the computers check "
+"in every 5 minutes, it can thus take up to 5 minutes from the time when an "
+"event occurred until the event is reported on the admin portal and an email-"
+"notification is sent."
+msgstr ""
+"Sikkerhedsscriptet afvikles for at indsamle mulige hændelser hver gang en "
+"overvåget computer tjekker ind på adminportalen. Da computerne tjekker ind "
+"med 5 minutters mellemrum, kan der således gå op til 5 minutter mellem at en "
+"hændelse finder sted, og at hændelsen indrapporteres på adminportalen og der "
+"sendes en email-notifikation."
+
+#: docs/templates/monitoring_rules/securityproblems.html
+msgid ""
+"A computer can only check in and report events if it is turned on and has an "
+"internet connection."
+msgstr ""
+"En computer kan kun tjekke ind og indrapportere hændelser, hvis den er tændt "
+"og har internetforbindelse."
+
+#: docs/templates/monitoring_rules/securityproblems.html
+msgid "Creating or editing security rules"
+msgstr "Opret eller rediger sikkerhedsregler"
+
+#: docs/templates/monitoring_rules/securityproblems.html
+msgid ""
+"The overview \"Monitoring Rules\" shows all the defined security rules and "
+"offline rules that are monitored. You can edit an existing security rule by "
+"selecting it in the list. You can define a new security rule by clicking on "
+"\"Add new security rule\" above the list. The interface for both operations "
+"has the same form."
+msgstr ""
+"I oversigten \"Overvågningsregler\" vises alle definerede Sikkerhedsregler "
+"og Offline-regler, som der holdes øje med. Du kan redigere en eksisterende "
+"sikkerhedsregel ved at vælge den i listen. Du kan oprette en ny "
+"sikkerhedsregel ved at klikke på \"Tilføj ny offline-regel\" oven over "
+"listen. Interfacet for begge operationer har samme form."
+
+#: docs/templates/monitoring_rules/securityproblems.html
+msgid "A security rule has the following parameters"
+msgstr "En sikkerhedsregel har følgende parametre:"
+
+#: docs/templates/monitoring_rules/securityproblems.html
+msgid "Name (mandatory): the name of the particular security rule."
+msgstr "Navn (påkrævet): Navnet på den pågældende sikkerhedsregel."
+
+#: docs/templates/monitoring_rules/securityproblems.html
+msgid ""
+"Security Script (mandatory): The Security Script is executed every time the "
+"computer checks in with the admin portal."
+msgstr ""
+"Sikkerhedsscript (påkrævet): Sikkerhedsscriptet afvikles hver gang en "
+"computer tjekker ind på adminportalen."
+
+#: docs/templates/monitoring_rules/securityproblems.html
+msgid ""
+"Description (optional): A descriptive text that is included in the sent "
+"email warnings."
+msgstr ""
+"Beskrivelse (valgfri): En beskrivende tekst, som indgår i de afsendte "
+"advarsels-emails."
+
+#: docs/templates/monitoring_rules/securityproblems.html
+msgid ""
+"Monitored groups (optional): The groups define which computers the security "
+"rule applies to. If no groups are specified, the security rule will apply to "
+"<strong>all</strong> computers on the site."
+msgstr ""
+"Overvågede grupper (valgfri): Grupperne definerer hvilke computere, den "
+"aktuelle sikkerhedsregel er aktiv for. Hvis der ikke er angivet nogen "
+"grupper, vil sikkerhedsreglen være aktiv for <strong>alle</strong> computere "
+"på sitet."
+
+#: docs/templates/monitoring_rules/securityproblems.html
+msgid ""
+"Recipient(s) of email warning (optional): The users that should receive an "
+"email about any events related to the security rule. Note that if a "
+"monitored PC belongs to one or more groups with supervisors, those "
+"supervisors will receive any email warnings related to that PC instead of "
+"the recipients set here."
+msgstr ""
+"Modtager(e) af email-advarsel (valgfri): Hvilke brugere der skal modtage en "
+"email omkring hændelser relateret til denne sikkerhedsregel. Bemærk at hvis "
+"en overvåget PC tilhører en eller flere grupper med ansvarspersoner, så vil "
+"disse ansvarspersoner modtage eventuelle email-advarsler relateret til den "
+"PC i stedet for de modtagere, som er valgt her."
+
+#: docs/templates/monitoring_rules/securityproblems.html
+msgid ""
+"Any changes made to a security rule will not take effect until you have "
+"clicked on \"Save changes\" at the bottom of the screen. Similarly, you must "
+"click on \"Save changes\" to finish creating a new security rule once you "
+"have filled out the mandatory parameters. You can verify that the security "
+"rule has been created by checking if it appears in the list of monitored "
+"rules."
+msgstr ""
+"Ændringer i en sikkerhedsregel vil ikke tage effekt, før du har klikket på "
+"\"Gem ændringer\" i bunden af skærmbilledet. På lignende vis skal du klikke "
+"på \"Gem ændringer\" for at færdiggøre oprettelsen af en ny sikkerhedsregel, "
+"når du har udfyldt de påkrævede parametre. Du kan verificere, at "
+"sikkerhedsreglen er blevet oprettet ved at tjekke om den står på listen over "
+"overvågede regler."
+
+#: docs/templates/monitoring_rules/securityscripts.html
+msgid ""
+"When you click on \"Security Scripts\" in the left-hand menu, a list of "
+"security scripts will be shown to the right of the left-hand menu and the "
+"editing interface for security scripts will be shown to the right of this "
+"list."
+msgstr ""
+"Når man klikker på \"Sikkerhedsscripts\" i venstremenuen, vil man til højre "
+"for venstremenuen få vist en liste af Sikkerhedsscripts, og til højre for "
+"denne liste vil man få vist redigeringsinterfacet for Sikkerhedsscripts."
+
+#: docs/templates/monitoring_rules/securityscripts.html
+#, python-format
+msgid ""
+"Security scripts monitor special events whereas Scripts are for individual "
+"actions. Security scripts are not run directly on the computers, but are "
+"instead used for <a href=%(sec_rules)s>Security Rules</a>."
+msgstr ""
+"Sikkerhedsscripts holder øje med specielle hændelser, hvorimod Scripts er "
+"til enkeltstående handlinger. Sikkerhedsscripts køres ikke direkte på "
+"computerne men bruges i stedet til <a href=%(sec_rules)s>Sikkerhedsregler</"
+"a>."
+
+#: docs/templates/monitoring_rules/securityscripts.html
+msgid ""
+"The list of security scripts is divided in two parts that one can swap "
+"between by clicking on the tabs \"Local scripts\" and \"Global scripts\" "
+"above the list."
+msgstr ""
+"Listen af Sikkerhedsscripts er delt op i to dele som kan skiftes imellem ved "
+"at klikke på fanebladene \"Lokale scripts\" og \"Globale scripts\" oven over "
+"listen."
+
+#: docs/templates/monitoring_rules/securityscripts.html
+msgid ""
+"Local scripts are security scripts that can only be used on the currently "
+"chosen site while global scripts are security scripts that can be used on "
+"all sites."
+msgstr ""
+"Lokale scripts dækker over Sikkerhedsscripts, som kun kan bruges på det site "
+"man er under, mens Globale scripts dækker over Sikkerhedsscripts, der kan "
+"bruges på alle sites."
+
+#: docs/templates/monitoring_rules/securityscripts.html
+msgid ""
+"If you wish to add a new security script, you must click on \"Add new "
+"Security Script\" above the list of security scripts. This will open a modal "
+"where you can fill out the name and description and upload the script code. "
+"When you then click on \"Create Security Script\", the script will be "
+"created, and you will be redirected to the editing interface for the newly "
+"created security script."
+msgstr ""
+"Hvis du ønsker at oprette et nyt Sikkerhedsscript skal du klikke på \"Tilføj "
+"nyt Sikkerhedsscript\" oven over listen med Sikkerhedsscripts. Dette vil "
+"åbne en dialog hvor du kan udfylde script-navn, beskrivelse og uploade "
+"script-kode. Når du derefter klikker på \"Opret Sikkerhedsscript\" vil "
+"Sikkerhedsscriptet blive oprettet, og du vil blive viderestillet til "
+"redigeringssiden for det nyoprettede sikkerhedsscript."
+
+#: docs/templates/monitoring_rules/securityscripts.html
+msgid "Editing Security Scripts"
+msgstr "Redigering af Sikkerhedsscripts"
+
+#: docs/templates/monitoring_rules/securityscripts.html
+msgid "Note that only Magenta can edit global security scripts."
+msgstr "Bemærk at kun Magenta kan redigere globale sikkerhedsscripts."
+
+#: docs/templates/monitoring_rules/securityscripts.html
+msgid ""
+"If you wish to edit a Security Script, you must click on \"Security "
+"Scripts\" in the left-hand menu and then select the security script in the "
+"list to the right of the left-hand menu. Note that it may be necessary to "
+"swap between the tabs \"Local scripts\" and \"Global scripts\" in order to "
+"find the script. You can also search through the security scripts by "
+"selecting the search field \"Find ...\" and typing a search term. This will "
+"cause the list to display all security scripts whose names contain the "
+"search term."
+msgstr ""
+"For at redigere et Sikkerhedsscript skal du klikke på \"Sikkerhedsscripts\" "
+"i venstremenuen og efterfølgende vælge Sikkerhedsscriptet i listen over "
+"Sikkerhedsscripts til højre for venstremenuen. Bemærk at det kan være "
+"nødvendigt at skifte mellem fanebladenene \"Lokale scripts\" og \"Globale "
+"scripts\" for at finde Sikkerhedsscriptet. Du kan også søge igennem alle "
+"Sikkerhedsscripts ved at vælge søgefeltet \"Find ...\" og indtaste en "
+"søgeterm. Dette vil få listen til at vise de Sikkerhedsscripts, hvis navn "
+"indeholder søgetermen."
+
+#: docs/templates/monitoring_rules/securityscripts.html
+msgid ""
+"When you edit a security script you can change its name and description. It "
+"is also possible to upload a new version of the script by clicking on the "
+"tab \"Code\" and then selecting a file to upload. Changes do not become "
+"permanent until you've clicked on \"Save changes\" at the bottom of the "
+"screen."
+msgstr ""
+"Når du redigerer et Sikkerhedsscript har du mulighed for at ændre dets navn "
+"og beskrivelse. Du kan også uploade en ny version af Sikkerhedsscriptet ved "
+"at klikke på fanebladet \"Kode\" og derefter vælge en fil at uploade. "
+"Ændringer du har foretaget træder ikke i kraft, før du har klikket på \"Gem "
+"ændringer\" i bunden af siden."
+
+#: docs/templates/monitoring_rules/securityscripts.html
+msgid "Please note the following regarding security scripts"
+msgstr "Ved Sikkerhedsscripts, skal du være opmærksom på følgende"
+
+#: docs/templates/monitoring_rules/securityscripts.html
+msgid "A security script is a script that collects"
+msgstr "Et Sikkerhedsscript er et script, som indsamler"
+
+#: docs/templates/monitoring_rules/securityscripts.html
+msgid ""
+"A security script does not have any input parameters, and it must follow a "
+"specific format."
+msgstr ""
+"Et Sikkerhedscript tager ikke nogen inputparametre, og det skal følge et "
+"bestemt format."
+
+#: docs/templates/monitoring_rules/securityscripts.html
+msgid ""
+"The structure of a security script will typically involve reading an amount "
+"of data from a log file, searching the data for an event based on one or "
+"more keywords and then saving the information in a specific format. A "
+"security script can be a shell script or a python script."
+msgstr ""
+"Opbygningen af et Sikkerhedscript vil typisk være, at læse en mængde data "
+"fra en log fil, søge i dataen efter en hændelse via et eller flere keywords, "
+"og så herefter gemme oplysningerne i et bestemt format. Et Sikkerhedsscript "
+"kan være et shellscript eller et pythonscript."
+
+#: docs/templates/monitoring_rules/securityscripts.html
+msgid ""
+"The format looks like this: \"event timestamp, security rule id, event "
+"summary\"."
+msgstr ""
+"Formatet ser således ud: \"tidsstempel for hændelsen, Sikkerhedsreglens id, "
+"hændelsesreferat\"."
+
+#: docs/templates/monitoring_rules/securityscripts.html
+msgid ""
+"The event timestamp is the time when the event took place. It is usually "
+"obtained from the log file."
+msgstr ""
+"Tidsstemplet er det tidspunkt, hvor hændelsen fandt sted. Det fås normalt "
+"fra log-filen."
+
+#: docs/templates/monitoring_rules/securityscripts.html
+msgid ""
+"The security rule id is a number found in the url for editing that specific "
+"security rule. Your security script is used by a security rule and it is the "
+"id of this rule that you need."
+msgstr ""
+"Sikkerhedsreglens id er et tal, som kan findes i url'en for den specifikke "
+"sikkerhedsregel. Dit Sikkerhedsscript tilhører en sikkerhedsregel, og det er "
+"dennes id du skal bruge."
+
+#: docs/templates/monitoring_rules/securityscripts.html
+msgid ""
+"The event summary can be something you define or a part of the collected "
+"data."
+msgstr ""
+"Hændelsesreferatet kan enten være noget du definerer eller en bid af det "
+"indsamlede data."
+
+#: docs/templates/monitoring_rules/securityscripts.html
+msgid ""
+"Deliver the format as an array to the module csv_writer by calling the "
+"method write."
+msgstr ""
+"Aflever formatet som et array til modulet csv_writer ved at kalde metoden "
+"write."
 
 #: docs/templates/om_os2borgerpc_admin.html
 msgid ""
@@ -2134,7 +2734,8 @@ msgid "Editing Scripts"
 msgstr "Redigering af Scripts"
 
 #: docs/templates/scripts/__submenu__.html
-msgid "Editing arguments"
+#: docs/templates/scripts/parameters.html
+msgid "Editing parameters"
 msgstr "Redigering af inputparametre"
 
 #: docs/templates/scripts/__submenu__.html docs/templates/scripts/running.html
@@ -2186,9 +2787,11 @@ msgstr "I sidste fane har du mulighed for at"
 msgid "adjust the arguments for the script"
 msgstr "tilpasse inputparametre for Scriptet"
 
-#: docs/templates/scripts/index.html templates/site_with_navigation.html
-msgid "Administrating Scripts"
-msgstr "Administration af Scripts"
+#: docs/templates/scripts/index.html docs/templates/users/index.html
+#: docs/views.py templates/site_with_navigation.html
+#: templates/system/scripts/header.html
+msgid "Scripts"
+msgstr "Scripts"
 
 #: docs/templates/scripts/index.html
 msgid ""
@@ -2244,10 +2847,6 @@ msgstr ""
 "klikker på \"Opret Script\" vil scriptet blive oprettet, og du vil blive "
 "viderestillet til redigeringssiden for det nyoprettede script, hvor du vil "
 "have mulighed for at tilføje inputparametre til scriptet."
-
-#: docs/templates/scripts/parameters.html
-msgid "Editing Script arguments"
-msgstr "Redigering af Script-inputparametre"
 
 #: docs/templates/scripts/parameters.html
 msgid "Note that only Magenta can edit the parameters of global scripts."
@@ -2452,289 +3051,30 @@ msgstr ""
 msgid "and track the execution of jobs on the individual computers."
 msgstr "og følge med i afviklingen af jobs på de enkelte computere."
 
-#: docs/templates/security_scripts/__submenu__.html
-#: docs/templates/security_scripts/edit.html
-msgid "Editing Security Scripts"
-msgstr "Redigering af Sikkerhedsscripts"
-
-#: docs/templates/security_scripts/__submenu__.html
-#: docs/templates/security_scripts/securityproblems.html
-#: docs/templates/users/index.html
-msgid "Security Rules"
-msgstr "Sikkerhedsregler"
-
-#: docs/templates/security_scripts/edit.html
-msgid "Note that only Magenta can edit global security scripts."
-msgstr "Bemærk at kun Magenta kan redigere globale sikkerhedsscripts."
-
-#: docs/templates/security_scripts/edit.html
+#: docs/templates/scripts/running.html
 msgid ""
-"If you wish to edit a Security Script, you must click on \"Security "
-"Scripts\" in the left-hand menu and then select the security script in the "
-"list to the right of the left-hand menu. Note that it may be necessary to "
-"swap between the tabs \"Local scripts\" and \"Global scripts\" in order to "
-"find the script. You can also search through the security scripts by "
-"selecting the search field \"Find ...\" and typing a search term. This will "
-"cause the list to display all security scripts whose names contain the "
-"search term."
+"A given computer will only start actually executing the script during its "
+"next check-in after you started script execution. As the computers check in "
+"every 5 minutes, it can thus take up to 5 minutes from the time you started "
+"script execution until a given computer actually starts executing the script."
 msgstr ""
-"For at redigere et Sikkerhedsscript skal du klikke på \"Sikkerhedsscripts\" "
-"i venstremenuen og efterfølgende vælge Sikkerhedsscriptet i listen over "
-"Sikkerhedsscripts til højre for venstremenuen. Bemærk at det kan være "
-"nødvendigt at skifte mellem fanebladenene \"Lokale scripts\" og \"Globale "
-"scripts\" for at finde Sikkerhedsscriptet. Du kan også søge igennem alle "
-"Sikkerhedsscripts ved at vælge søgefeltet \"Find ...\" og indtaste en "
-"søgeterm. Dette vil få listen til at vise de Sikkerhedsscripts, hvis navn "
-"indeholder søgetermen."
+"En given computer begynder først reelt at afvikle scriptet ved dens næste "
+"tjek-ind, efter at du startede afviklingen af scriptet. Da computerne "
+"tjekker ind med 5 minutters mellemrum, kan der således gå op til 5 minutter "
+"fra du startede afviklingen af scriptet før en given computer reelt begynder "
+"at afvikle scriptet."
 
-#: docs/templates/security_scripts/edit.html
+#: docs/templates/scripts/running.html
 msgid ""
-"When you edit a security script you can change its name and description. It "
-"is also possible to upload a new version of the script by clicking on the "
-"tab \"Code\" and then selecting a file to upload. Changes do not become "
-"permanent until you've clicked on \"Save changes\" at the bottom of the "
-"screen."
+"A computer can only check in and execute scripts if it is turned on and has "
+"an internet connection."
 msgstr ""
-"Når du redigerer et Sikkerhedsscript har du mulighed for at ændre dets navn "
-"og beskrivelse. Du kan også uploade en ny version af Sikkerhedsscriptet ved "
-"at klikke på fanebladet \"Kode\" og derefter vælge en fil at uploade. "
-"Ændringer du har foretaget træder ikke i kraft, før du har klikket på \"Gem "
-"ændringer\" i bunden af siden."
-
-#: docs/templates/security_scripts/edit.html
-msgid "Please note the following regarding security scripts"
-msgstr "Ved Sikkerhedsscripts, skal du være opmærksom på følgende"
-
-#: docs/templates/security_scripts/edit.html
-msgid "A security script is a script that collects"
-msgstr "Et Sikkerhedsscript er et script, som indsamler"
-
-#: docs/templates/security_scripts/edit.html
-msgid ""
-"A security script does not have any input parameters, and it must follow a "
-"specific format."
-msgstr ""
-"Et Sikkerhedscript tager ikke nogen inputparametre, og det skal følge et "
-"bestemt format."
-
-#: docs/templates/security_scripts/edit.html
-msgid ""
-"The structure of a security script will typically involve reading an amount "
-"of data from a log file, searching the data for an event based on one or "
-"more keywords and then saving the information in a specific format. A "
-"security script can be a shell script or a python script."
-msgstr ""
-"Opbygningen af et Sikkerhedscript vil typisk være, at læse en mængde data "
-"fra en log fil, søge i dataen efter en hændelse via et eller flere keywords, "
-"og så herefter gemme oplysningerne i et bestemt format. Et Sikkerhedsscript "
-"kan være et shellscript eller et pythonscript."
-
-#: docs/templates/security_scripts/edit.html
-msgid ""
-"The format looks like this: \"event timestamp, security rule id, event "
-"summary\"."
-msgstr ""
-"Formatet ser således ud: \"tidsstempel for hændelsen, Sikkerhedsreglens id, "
-"hændelsesreferat\"."
-
-#: docs/templates/security_scripts/edit.html
-msgid ""
-"The event timestamp is the time when the event took place. It is usually "
-"obtained from the log file."
-msgstr ""
-"Tidsstemplet er det tidspunkt, hvor hændelsen fandt sted. Det fås normalt "
-"fra log-filen."
-
-#: docs/templates/security_scripts/edit.html
-msgid ""
-"The security rule id is a number found in the url for editing that specific "
-"security rule. Your security script is used by a security rule and it is the "
-"id of this rule that you need."
-msgstr ""
-"Sikkerhedsreglens id er et tal, som kan findes i url'en for den specifikke "
-"sikkerhedsregel. Dit Sikkerhedsscript tilhører en sikkerhedsregel, og det er "
-"dennes id du skal bruge."
-
-#: docs/templates/security_scripts/edit.html
-msgid ""
-"The event summary can be something you define or a part of the collected "
-"data."
-msgstr ""
-"Hændelsesreferatet kan enten være noget du definerer eller en bid af det "
-"indsamlede data."
-
-#: docs/templates/security_scripts/edit.html
-msgid ""
-"Deliver the format as an array to the module csv_writer by calling the "
-"method write."
-msgstr ""
-"Aflever formatet som et array til modulet csv_writer ved at kalde metoden "
-"write."
-
-#: docs/templates/security_scripts/index.html
-#: templates/site_with_navigation.html
-msgid "Administrating security scripts"
-msgstr "Administration af sikkerhedsscripts"
-
-#: docs/templates/security_scripts/index.html
-msgid ""
-"When you click on \"Security Scripts\" in the left-hand menu, a list of "
-"security scripts will be shown to the right of the left-hand menu and the "
-"editing interface for security scripts will be shown to the right of this "
-"list."
-msgstr ""
-"Når man klikker på \"Sikkerhedsscripts\" i venstremenuen, vil man til højre "
-"for venstremenuen få vist en liste af Sikkerhedsscripts, og til højre for "
-"denne liste vil man få vist redigeringsinterfacet for Sikkerhedsscripts."
-
-#: docs/templates/security_scripts/index.html
-msgid ""
-"Security scripts monitor special events whereas Scripts are for individual "
-"actions."
-msgstr ""
-"Sikkerhedsscripts holder øje med specielle hændelser, hvorimod Scripts er "
-"til enkeltstående handlinger."
-
-#: docs/templates/security_scripts/index.html
-msgid ""
-"The list of security scripts is divided in two parts that one can swap "
-"between by clicking on the tabs \"Local scripts\" and \"Global scripts\" "
-"above the list."
-msgstr ""
-"Listen af Sikkerhedsscripts er delt op i to dele som kan skiftes imellem ved "
-"at klikke på fanebladene \"Lokale scripts\" og \"Globale scripts\" oven over "
-"listen."
-
-#: docs/templates/security_scripts/index.html
-msgid ""
-"Local scripts are security scripts that can only be used on the currently "
-"chosen site while global scripts are security scripts that can be used on "
-"all sites."
-msgstr ""
-"Lokale scripts dækker over Sikkerhedsscripts, som kun kan bruges på det site "
-"man er under, mens Globale scripts dækker over Sikkerhedsscripts, der kan "
-"bruges på alle sites."
-
-#: docs/templates/security_scripts/index.html
-msgid "You have the following options for every security script"
-msgstr "For hvert Sikkerhedsscript har du mulighed for følgende"
-
-#: docs/templates/security_scripts/index.html
-msgid ""
-"If you wish to add a new security script, you must click on \"Add new "
-"Security Script\" above the list of security scripts. This will open a modal "
-"where you can fill out the name and description and upload the script code. "
-"When you then click on \"Create Security Script\", the script will be "
-"created, and you will be redirected to the editing interface for the newly "
-"created security script."
-msgstr ""
-"Hvis du ønsker at oprette et nyt Sikkerhedsscript skal du klikke på \"Tilføj "
-"nyt Sikkerhedsscript\" oven over listen med Sikkerhedsscripts. Dette vil "
-"åbne en dialog hvor du kan udfylde script-navn, beskrivelse og uploade "
-"script-kode. Når du derefter klikker på \"Opret Sikkerhedsscript\" vil "
-"Sikkerhedsscriptet blive oprettet, og du vil blive viderestillet til "
-"redigeringssiden for det nyoprettede sikkerhedsscript."
-
-#: docs/templates/security_scripts/securityevents.html
-msgid ""
-"This overview shows the individual events that have been triggered by the "
-"system. In the left column, you can choose how you wish to filter the "
-"overview, i.e. choose which events you wish to see. By default, you will be "
-"shown all unresolved events with a severity level greater than normal. The "
-"severity level is also shown in the overview."
-msgstr ""
-"Denne oversigt viser de individuelle hændelser, som er udløst af systemet. I "
-"venstre kolonne kan du vælge hvordan oversigten filtreres, altså hvilke "
-"hændelser du vil se. Standard er, at du ser alle ikke-løste hændelser med en "
-"alvorlighedsgrad over normal. Af oversigten fremgår også hændelsernes "
-"alvorlighedsgrad."
-
-#: docs/templates/security_scripts/securityevents.html
-msgid ""
-"From the overview you can select and handle events. Handling an event allows "
-"you to change its status and the assigned user as well as add or change a "
-"note for the event. It is possible to handle multiple events simultaneously."
-msgstr ""
-"Fra oversigten kan du vælge og håndtere hændelser. Når du håndterer en "
-"hændelse, kan du ændre dens status, og hvem der står, at den håndteres af "
-"samt tilføje eller ændre en note for hændelsen. Det er muligt at håndtere "
-"flere hændelser på en gang."
-
-#: docs/templates/security_scripts/securityevents.html
-msgid ""
-"The possible statuses are new (the default), assigned and resolved. The "
-"assigned user can be chosen from among all users on the site you are on. It "
-"is possible for an event to have no assigned user."
-msgstr ""
-"De mulige statuser er ny (standard), tildelt og løst. Brugeren som der står, "
-"at hændelsen håndteres af kan vælges blandt alle brugere på det site, man er "
-"under. Det er muligt for en hændelse ikke at have nogen bruger angivet til "
-"at håndtere den."
-
-#: docs/templates/security_scripts/securityproblems.html
-msgid ""
-"The overview \"Monitoring Rules\" shows all the defined security rules and "
-"offline rules that are monitored. You can define new security rules from the "
-"overview by clicking on \"Add new security rule\" above the list of defined "
-"rules. You can edit an existing security rule by selecting it in the list. "
-"The interface for both operations has the same form."
-msgstr ""
-"I oversigten \"Overvågningsregler\" vises alle definerede Sikkerhedsregler "
-"og Offline-regler, som der holdes øje med. Fra oversigten kan du oprette nye "
-"Sikkerhedsregler ved at klikke på \"Tilføj ny sikkerhedsregel\" oven over "
-"listen med definerede regler. Du kan redigere en eksisterende "
-"sikkerhedsregel ved at vælge den i listen. Interfacet for begge operationer "
-"har samme form."
-
-#: docs/templates/security_scripts/securityproblems.html
-msgid "A new security rule takes the following input"
-msgstr "En ny Sikkerhedsregel tager følgende input"
-
-#: docs/templates/security_scripts/securityproblems.html
-msgid "Name (mandatory): the name of the particular security rule."
-msgstr "Navn (påkrævet): Navnet på den pågældende sikkerhedsregel."
-
-#: docs/templates/security_scripts/securityproblems.html
-msgid ""
-"Security Script (mandatory): The Security Script is executed every time the "
-"computer checks in with the admin-site."
-msgstr ""
-"Sikkerhedsscript (påkrævet): Sikkerhedsscriptet afvikles hver gang en "
-"computer tjekker ind på adminsitet."
-
-#: docs/templates/security_scripts/securityproblems.html
-msgid ""
-"Description (optional): A descriptive text that is included in the sent "
-"email warnings."
-msgstr ""
-"Beskrivelse (valgfri): En beskrivende tekst, som indgår i de afsendte "
-"advarsels-emails."
-
-#: docs/templates/security_scripts/securityproblems.html
-msgid ""
-"Monitored groups (optional): The groups define which computers the security "
-"rule applies to."
-msgstr ""
-"Overvågede grupper (valgfri): Grupperne definerer hvilke computere, den "
-"aktuelle sikkerhedsregel er aktiv for."
-
-#: docs/templates/security_scripts/securityproblems.html
-msgid ""
-"Recipient(s) of email warning (optional): The users that should receive an "
-"email about any events related to the security rule. Note that if a "
-"monitored PC belongs to one or more groups with supervisors, those "
-"supervisors will receive any email warnings related to that PC instead of "
-"the recipients set here."
-msgstr ""
-"Modtager(e) af email-advarsel (valgfri): Hvilke brugere der skal modtage en "
-"email omkring hændelser relateret til denne sikkerhedsregel. Bemærk at hvis "
-"en overvåget PC tilhører en eller flere grupper med ansvarspersoner, så vil "
-"disse ansvarspersoner modtage eventuelle email-advarsler relateret til den "
-"PC i stedet for de modtagere, som er valgt her."
+"En computer kan kun tjekke ind og afvikle scripts, hvis den er tændt og har "
+"internetforbindelse."
 
 #: docs/templates/sites_overview/index.html docs/views.py
-msgid "Sites overview"
-msgstr "Sites-oversigt"
+msgid "The Sites overview"
+msgstr "Sites-oversigten"
 
 #: docs/templates/sites_overview/index.html
 msgid ""
@@ -2772,15 +3112,6 @@ msgstr ""
 "I toppen af oversigten vises der noget generel information om de sites, som "
 "du har adgang til."
 
-#: docs/templates/sites_overview/index.html docs/templates/users/index.html
-#: templates/site_with_navigation.html templates/system/sites/list.html
-msgid "Sites"
-msgstr "Sites"
-
-#: docs/templates/sites_overview/index.html
-msgid "The total number of sites that you have access to"
-msgstr "Samlet antal sites, som du har adgang til"
-
 #: docs/templates/sites_overview/index.html templates/system/sites/list.html
 msgid "Computers total"
 msgstr "Computere i alt"
@@ -2789,15 +3120,6 @@ msgstr "Computere i alt"
 msgid ""
 "The total number of computers registered on the sites that you have access to"
 msgstr "Samlet antal computere registreret på de sites, som du har adgang til"
-
-#: docs/templates/sites_overview/index.html system/models.py
-msgid "activated"
-msgstr "aktiveret"
-
-#: docs/templates/sites_overview/index.html
-msgid ""
-"The total number of activated computers on the sites that you have access to"
-msgstr "Samlet antal aktiverede computere på de sites, som du har adgang til"
 
 #: docs/templates/sites_overview/index.html templates/system/pcs/pcs.html
 #: templates/system/sites/list.html
@@ -2809,6 +3131,11 @@ msgid ""
 "The total number of online computers on the sites that you have access to"
 msgstr "Samlet antal online computere på de sites, som du har adgang til"
 
+#: docs/templates/sites_overview/index.html templates/system/pcs/pcs.html
+#: templates/system/scripts/run_step1.html templates/system/sites/list.html
+msgid "BorgerPC"
+msgstr "BorgerPC"
+
 #: docs/templates/sites_overview/index.html
 msgid ""
 "The total number of OS2borgerPC computers (not kiosk) on the sites that you "
@@ -2817,9 +3144,10 @@ msgstr ""
 "Samlet antal OS2borgerPC computere (ikke kiosk) på de sites, som du har "
 "adgang til"
 
-#: docs/templates/sites_overview/index.html docs/views.py
-msgid "OS2borgerPC Kiosk"
-msgstr "OS2borgerPC Kiosk"
+#: docs/templates/sites_overview/index.html templates/system/pcs/pcs.html
+#: templates/system/scripts/run_step1.html templates/system/sites/list.html
+msgid "Kiosk"
+msgstr "Kiosk"
 
 #: docs/templates/sites_overview/index.html
 msgid ""
@@ -2914,56 +3242,6 @@ msgstr ""
 "tilføje eksisterende brugere til sitet via sektionen \"Brugere\" for det "
 "site. Se dokumentationen omkring \"Brugere\" for mere information."
 
-#: docs/templates/status/index.html
-#: docs/templates/wake_plans/edit_settings.html docs/views.py
-#: templates/system/jobs/site_jobs.html templates/system/pcs/pcs.html
-#: templates/system/pcs/update.html
-#: templates/system/security_events/site_security_events.html
-msgid "Status"
-msgstr "Status"
-
-#: docs/templates/status/index.html
-msgid ""
-"When you log in to the admin-site, you will be presented with the status "
-"screen for the site that your OS2borgerPC user is associated with. If you "
-"have access to multiple sites, you must first choose a site to access."
-msgstr ""
-"Når du logger ind på adminsitet, bliver du præsenteret for status-billedet "
-"for det site, som din OS2borgerPC-bruger er tilknyttet. Hvis du har adgang "
-"til flere sites, skal du først vælge det site, du vil ind på."
-
-#: docs/templates/status/index.html docs/templates/users/index.html
-#: docs/views.py templates/site_with_navigation.html
-#: templates/system/jobs/site_jobs.html
-#: templates/system/pcgroups/confirm_delete.html
-#: templates/system/pcs/no_pcs.html templates/system/pcs/pcs.html
-#: templates/system/pcs/update.html templates/system/sites/list.html
-#: templates/system/wake_plan/confirm_delete.html
-#: templates/system/wake_plan/wake_plan.html
-msgid "Computers"
-msgstr "Computere"
-
-#: docs/templates/status/index.html
-msgid ""
-"On this list, you will be shown information about all computers for the "
-"site, sorted with new/inactive computers"
-msgstr ""
-"På denne liste vil du se info om alle computere for sitet, sorteret med nye/"
-"inaktive computere"
-
-#: docs/templates/status/index.html
-msgid "waiting to be activated"
-msgstr "der venter på at blive aktiverede"
-
-#: docs/templates/status/index.html
-msgid "at the top and otherwise by when they were last seen."
-msgstr "øverst, og ellers efter hvornår, de senest er set."
-
-#: docs/templates/status/index.html
-msgid ""
-"You can click on a particular computer to see mere information about it."
-msgstr "Du kan klikke på den enkelte computer for at se nærmere info om den."
-
 #: docs/templates/tech.html docs/views.py
 msgid "Technical Documentation"
 msgstr "Teknisk Dokumentation"
@@ -3015,13 +3293,13 @@ msgstr "Brugernavn"
 
 #: docs/templates/users/index.html
 msgid ""
-"This is the username that the user must use when they log in to the admin-"
-"site. It can be no more than 150 characters long and can only contain "
+"This is the username that the user must use when they log in to the admin "
+"portal. It can be no more than 150 characters long and can only contain "
 "numbers, letters and the special characters"
 msgstr ""
-"Dette er det brugernavn, som brugeren skal bruge, når de logger ind på admin-"
-"sitet. Det kan maksimalt være 150 tegn og kun indeholde tal, bogstaver og "
-"specialtegnene"
+"Dette er det brugernavn, som brugeren skal bruge, når de logger ind på "
+"adminportalen. Det kan maksimalt være 150 tegn og kun indeholde tal, "
+"bogstaver og specialtegnene"
 
 #: docs/templates/users/index.html docs/templates/wake_plans/index.html
 msgid "and"
@@ -3173,10 +3451,10 @@ msgstr ""
 msgid "Users"
 msgstr "Brugere"
 
-#: docs/templates/users/index.html docs/views.py
-#: templates/site_with_navigation.html templates/system/scripts/header.html
-msgid "Scripts"
-msgstr "Scripts"
+#: docs/templates/users/index.html templates/site_with_navigation.html
+#: templates/system/sites/list.html
+msgid "Sites"
+msgstr "Sites"
 
 #: docs/templates/users/index.html
 msgid "All permissions, except deleting Customer Admins"
@@ -3434,6 +3712,13 @@ msgstr ""
 "tidsplanen til højre i skærmbilledet."
 
 #: docs/templates/wake_plans/edit_settings.html
+#: templates/system/jobs/site_jobs.html templates/system/pcs/pcs.html
+#: templates/system/pcs/update.html
+#: templates/system/security_events/site_security_events.html
+msgid "Status"
+msgstr "Status"
+
+#: docs/templates/wake_plans/edit_settings.html
 msgid ""
 "A schedule can be active or inactive. It will only affect the associated "
 "groups if it is active."
@@ -3449,18 +3734,17 @@ msgstr "Dvaletilstand"
 msgid ""
 "The chosen sleep state determines the state that the members of the schedule "
 "are placed in when they are turned off according to the schedule. In order "
-"from least to greatest energy savings, the options are standby, freeze, mem "
-"and off. We thus recommend using the sleep state off in order to achieve the "
-"greatest energy savings, but not all hardware supports this sleep state. If "
-"the sleep state off is used on a computer that does not support it, the "
-"computer will not wake automatically. It will still be possible to turn it "
-"on manually."
+"from least to greatest energy savings, the options are freeze, mem and off. "
+"We thus recommend using the sleep state off in order to achieve the greatest "
+"energy savings, but not all hardware supports this sleep state. If the sleep "
+"state off is used on a computer that does not support it, the computer will "
+"not wake automatically. It will still be possible to turn it on manually."
 msgstr ""
 "Den valgte dvaletilstand bestemmer, hvilken tilstand medlemmerne af "
 "tidsplanen lukker ned i, når de slukker efter tidsplanen. I rækkefølge fra "
-"mindste til største strømbesparing er mulighederne standby, freeze, mem og "
-"off. Vi anbefaler derfor, at man anvender dvaletilstanden off for størst "
-"mulig strømbesparing, men det er ikke alt hardware, der understøtter denne "
+"mindste til største strømbesparing er mulighederne freeze, mem og off. Vi "
+"anbefaler derfor, at man anvender dvaletilstanden off for størst mulig "
+"strømbesparing, men det er ikke alt hardware, der understøtter denne "
 "dvaletilstand. Hvis dvaletilstanden off anvendes på en computer, der ikke "
 "understøtter den, vil computeren ikke vågne igen. Den vil dog stadig kunne "
 "tændes manuelt."
@@ -3633,20 +3917,10 @@ msgstr ""
 #: docs/templates/wake_plans/index.html
 msgid ""
 "The suspend script can also suspend the computer when it is inactive on the "
-"login screen. However, this requires that script execution at login has been "
-"enabled via the script"
+"login screen. The warning will not be shown on the login screen."
 msgstr ""
 "Dvale-scriptet kan også sætte computeren i dvale, hvis den står inaktiv på "
-"login-skærmen. Dette kræver dog, at scriptkørsel ved login er blevet slået "
-"til via scriptet"
-
-#: docs/templates/wake_plans/index.html
-msgid ""
-"Script execution at login is automatically enabled on image 5.0.0 and newer "
-"images. The warning will not be shown on the login screen."
-msgstr ""
-"Scriptkørsel ved login er automatisk slået til på image 5.0.0 og nyere "
-"images. Advarslen vises ikke på login-skærmen."
+"login-skærmen. Advarslen vises ikke på login-skærmen."
 
 #: docs/templates/wake_plans/index.html
 msgid ""
@@ -3909,13 +4183,8 @@ msgstr ""
 "\"Indstilling af UEFI/BIOS\" længere oppe."
 
 #: docs/views.py
-msgid "The administration site"
-msgstr "Administrationssiden"
-
-#: docs/views.py templates/site_with_navigation.html
-#: templates/system/scripts/header.html
-msgid "Security Scripts"
-msgstr "Sikkerhedsscripts"
+msgid "The admin portal"
+msgstr "Adminportalen"
 
 #: docs/views.py
 msgid "Setting up security surveillance (PDF)"
@@ -3928,6 +4197,10 @@ msgstr "Installationsguide (PDF)"
 #: docs/views.py
 msgid "Old installation guide (PDF)"
 msgstr "Gammel installationsguide (PDF)"
+
+#: docs/views.py
+msgid "OS2borgerPC Kiosk"
+msgstr "OS2borgerPC Kiosk"
 
 #: docs/views.py
 msgid "Installation Guide for x64"
@@ -3970,16 +4243,16 @@ msgid "Number of computers"
 msgstr "Antal computere"
 
 #: system/admin.py
-msgid "Feature permissions"
-msgstr "Feature-adgange"
+msgid "Number of BorgerPC computers"
+msgstr "Antal BorgerPC computere"
 
 #: system/admin.py
 msgid "Number of KioskPC computers"
 msgstr "Antal KioskPC computere"
 
 #: system/admin.py
-msgid "Number of BorgerPC computers"
-msgstr "Antal BorgerPC computere"
+msgid "Feature permissions"
+msgstr "Feature-adgange"
 
 #: system/admin.py system/models.py
 msgid "customers with access"
@@ -3992,14 +4265,6 @@ msgstr "Site"
 #: system/admin.py templates/system/scripts/search_result.html
 msgid "Global"
 msgstr "Global"
-
-#: system/admin.py
-msgid "Jobs per site"
-msgstr "Jobs per site"
-
-#: system/admin.py
-msgid "Jobs per Site for the last year"
-msgstr "Jobs per site i det sidste år"
 
 #: system/forms.py system/models.py
 msgid "Password for login API (e.g. Cicero)"
@@ -4340,6 +4605,10 @@ msgid ""
 "characters"
 msgstr ""
 "Gyldige tegn er a-z, A-Z, 0-9 og bindestreg (-). Længden skal være 1-40 tegn"
+
+#: system/models.py
+msgid "activated"
+msgstr "aktiveret"
 
 #: system/models.py
 msgid "last seen"
@@ -4818,11 +5087,6 @@ msgid "Monitoring"
 msgstr "Overvågning"
 
 #: templates/site_with_navigation.html
-#: templates/system/event_rules/shared_navigation.html
-msgid "Monitoring Rules"
-msgstr "Overvågningsregler"
-
-#: templates/site_with_navigation.html
 msgid "Organizing"
 msgstr "Organisering"
 
@@ -4843,6 +5107,10 @@ msgid "Images"
 msgstr ""
 
 #: templates/site_with_navigation.html
+msgid "About the dashboard"
+msgstr "Om dashboardet"
+
+#: templates/site_with_navigation.html
 msgid "Security rule definition"
 msgstr "Definition af sikkerhedsregler"
 
@@ -4853,14 +5121,6 @@ msgstr "Definition af offline-regler"
 #: templates/site_with_navigation.html
 msgid "Help regarding events"
 msgstr "Hjælp til hændelser"
-
-#: templates/site_with_navigation.html
-msgid "Administrating groups"
-msgstr "Administration af grupper"
-
-#: templates/site_with_navigation.html
-msgid "Administrating on/off schedules"
-msgstr "Administration af tidsplaner"
 
 #: templates/site_with_navigation.html
 msgid "Help regarding the job list"
@@ -4925,10 +5185,6 @@ msgstr "Håndter konfiguration"
 #: templates/system/pcgroups/site_groups.html
 msgid "Save"
 msgstr "Gem"
-
-#: templates/system/dashboard_job_list.html
-msgid "Latest failed jobs"
-msgstr "Seneste fejlede jobs"
 
 #: templates/system/dashboard_job_list.html
 msgid ""
@@ -5500,16 +5756,6 @@ msgstr "Totalt antal Kiosk PC'er"
 msgid "Activated:"
 msgstr "Aktiverede:"
 
-#: templates/system/pcs/pcs.html templates/system/scripts/run_step1.html
-#: templates/system/sites/list.html
-msgid "BorgerPC"
-msgstr "BorgerPC"
-
-#: templates/system/pcs/pcs.html templates/system/scripts/run_step1.html
-#: templates/system/sites/list.html
-msgid "Kiosk"
-msgstr "Kiosk"
-
 #: templates/system/pcs/pcs.html
 msgid "Activated"
 msgstr "Aktiveret"
@@ -5757,33 +6003,12 @@ msgid "Handled by"
 msgstr "Håndteres af"
 
 #: templates/system/site_dashboard.html
-msgid "Latest unhandled events"
-msgstr "Seneste ikke-håndterede hændelser"
-
-#: templates/system/site_dashboard.html
-msgid "Latest news"
-msgstr "Seneste nyheder"
-
-#: templates/system/site_dashboard.html
-msgid "Computers that haven't checked in in 15 minutes"
-msgstr "Computere som ikke er tjekket ind i 15 minutter"
-
-#: templates/system/site_dashboard.html
 msgid "See status overview"
 msgstr "Se status-oversigten"
 
 #: templates/system/site_dashboard.html
-msgid "Newest global scripts"
-msgstr "Nyeste globale scripts"
-
-#: templates/system/site_dashboard.html
 msgid "See all scripts"
 msgstr "Se alle scripts"
-
-#: templates/system/site_dashboard.html
-msgid "Active computers that have not run all updates for more than 30 days"
-msgstr ""
-"Aktive computere som ikke har kørt alle opdateringer i mere end 30 dage"
 
 #: templates/system/site_dashboard.html
 msgid ""
@@ -5850,8 +6075,8 @@ msgid "You can additionally visit the API's own docs at"
 msgstr "Derudover kan du besøge API'ets egne docs på"
 
 #: templates/system/site_settings/api_keys/api_keys.html
-msgid "as long as you are signed in to the admin site."
-msgstr "så længe du er logget ind på adminsitet."
+msgid "as long as you are signed in to the admin portal."
+msgstr "så længe du er logget ind på adminportalen."
 
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "Generate new API Key"
@@ -5887,10 +6112,10 @@ msgstr ""
 
 #: templates/system/site_two_factor_pc.html
 msgid ""
-"Two-factor authentication on your admin-site profile is administered from "
-"the Users-section."
+"Two-factor authentication on your admin portal user is administered from the "
+"Users-section."
 msgstr ""
-"Totrinsbekræftelse på din admin-site profil administreres fra sektionen "
+"Totrinsbekræftelse på din adminportal-bruger administreres fra sektionen "
 "Brugere."
 
 #: templates/system/site_two_factor_pc.html
@@ -6008,8 +6233,8 @@ msgid "Add new site"
 msgstr "Tilføj nyt site"
 
 #: templates/system/sites/list.html
-msgid "This UID is used when registering a PC with the admin site."
-msgstr "Dette UID bruges ifm. registrering på adminsitet."
+msgid "This UID is used when registering a PC with the admin portal."
+msgstr "Dette UID bruges ifm. registrering på adminportalen."
 
 #: templates/system/sites/list.html
 msgid ""
@@ -6450,8 +6675,8 @@ msgstr "Send en besked til Magenta"
 #: templates/two_factor/core/setup.html
 #: templates/two_factor/core/setup_complete.html
 #: templates/two_factor/profile/disable.html
-msgid "Two-factor authentication for admin-site login"
-msgstr "Totrinsbekræftelse for admin-site login"
+msgid "Two-factor authentication for admin portal login"
+msgstr "Totrinsbekræftelse for login til adminportalen"
 
 #: templates/two_factor/core/backup_tokens.html
 msgid "Backup Tokens"

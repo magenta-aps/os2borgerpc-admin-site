@@ -2,7 +2,47 @@
 {% load i18n %}
 
 {% block specific_content %}
-  <h1>{% translate "Editing Security Scripts" %}</h1>
+  <h1>{% translate "Security Scripts" %}</h1>
+  <p>
+    {% blocktranslate trimmed %}
+    When you click on "Security Scripts" in the left-hand menu, a list of
+    security scripts will be shown to the right of the left-hand menu and
+    the editing interface for security scripts will be shown to the right
+    of this list.
+    {% endblocktranslate %}
+  </p>
+  <p>
+      {% url 'doc' 'monitoring_rules/securityproblems' as sec_rules %}
+      {% blocktranslate trimmed %}
+      Security scripts monitor special events whereas Scripts are for individual actions.
+      Security scripts are not run directly on the computers, but are instead used for
+      <a href={{sec_rules}}>Security Rules</a>.
+      {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    The list of security scripts is divided in two parts that one can swap between
+    by clicking on the tabs "Local scripts" and "Global scripts" above
+    the list.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    Local scripts are security scripts that can only be used on the currently chosen
+    site while global scripts are security scripts that can be used on all sites.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    If you wish to add a new security script, you must click on "Add new
+    Security Script" above the list of security scripts. This will open
+    a modal where you can fill out the name and description and upload the
+    script code. When you then click on "Create Security Script", the
+    script will be created, and you will be redirected to the editing
+    interface for the newly created security script.
+    {% endblocktranslate %}
+  </p>
+  <h2>{% translate "Editing Security Scripts" %}</h2>
   <p>
     {% translate "Note that only Magenta can edit global security scripts." %}
   </p>
@@ -29,7 +69,7 @@
   <p>
     {% translate "Please note the following regarding security scripts" %}:
     <br>
-    {% translate "A security script is a script that collects" %} <a href="{% url 'doc' 'security_scripts/securityevents' %}"> {% translate "Events" %}</a>.
+    {% translate "A security script is a script that collects" %} <a href="{% url 'doc' 'monitoring_rules/securityevents' %}"> {% translate "Events" %}</a>.
     <br>
     <br>
     {% blocktranslate trimmed %}

@@ -365,10 +365,6 @@ urlpatterns = [
     ),
     # Documentation
     path(
-        "documentation/",
-        RedirectView.as_view(url="/documentation/om_os2borgerpc_admin/"),
-    ),
-    path(
         "documentation/os2borgerpc_installation_guide/",
         RedirectView.as_view(url=static("docs/OS2BorgerPC_installation_guide_da.pdf")),
     ),

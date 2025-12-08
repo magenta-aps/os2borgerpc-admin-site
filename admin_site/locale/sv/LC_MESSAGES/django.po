@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-05 16:46+0100\n"
+"POT-Creation-Date: 2025-12-08 15:42+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -209,7 +209,7 @@ msgstr "Det finns ingen nyhetskategori med följande ID: %s"
 msgid "API Key"
 msgstr "API-nyckel"
 
-#: docs/templates/api.html templates/site_with_navigation.html
+#: docs/templates/api.html
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "API Keys"
 msgstr "API-nycklar"
@@ -244,8 +244,8 @@ msgstr "Inloggningar"
 
 #: docs/templates/api.html docs/templates/computers/index.html
 #: docs/templates/configuration/index.html docs/templates/groups/index.html
-#: docs/views.py templates/site_with_navigation.html
-#: templates/system/pcgroups/site_groups.html templates/system/pcs/update.html
+#: docs/views.py templates/system/pcgroups/site_groups.html
+#: templates/system/pcs/update.html
 #: templates/system/site_settings/site_settings.html
 msgid "Configurations"
 msgstr "Konfigurationer"
@@ -570,7 +570,7 @@ msgstr ""
 
 #: docs/templates/base_docs.html docs/views.py
 msgid "OS2borgerPC documentation"
-msgstr "Sambruk MedborgarPC dokumentation"
+msgstr "Sambruk MedborgarPC-dokumentation"
 
 #: docs/templates/base_docs.html templates/site_with_navigation.html
 #: templates/system/site_settings/api_keys/api_keys.html
@@ -1804,7 +1804,7 @@ msgstr "Om"
 
 #: docs/templates/index.html
 msgid "OS2borgerPC is developed by"
-msgstr "Sambruk MedborgarPC-Admin utvecklas av"
+msgstr "Sambruk MedborgarPC utvecklas av"
 
 #: docs/templates/index.html
 msgid ""
@@ -3049,8 +3049,8 @@ msgid ""
 "Note: You can only see this page if you're either a customer admin, or "
 "you've been added to more than one site."
 msgstr ""
-"Notera: Du kan kun se denne side, hvis du enten er kunde-admin eller er "
-"blevet tilføjet til mere end én side."
+"Obs: Du kan bara se den här sidan om du antingen är kunde-admin eller om du "
+"har lagts till på mer än et site."
 
 #: docs/templates/sites_overview/index.html
 msgid ""
@@ -3152,7 +3152,7 @@ msgstr "Ta bort ett site"
 
 #: docs/templates/sites_overview/index.html
 msgid "Note: Only customer admins can delete a site!"
-msgstr "Notera: Endast kunde-admins kan ta bort ett site!"
+msgstr "Obs: Endast kunde-admins kan ta bort ett site!"
 
 #: docs/templates/sites_overview/index.html
 msgid ""
@@ -3186,7 +3186,7 @@ msgstr "Skapa ett nyt site"
 
 #: docs/templates/sites_overview/index.html
 msgid "Note: Only customer admins can create new sites!"
-msgstr "Notera: Endast kunde-admins kan skapa nya sites!"
+msgstr "Obs: Endast kunde-admins kan skapa nya sites!"
 
 #: docs/templates/sites_overview/index.html
 msgid ""
@@ -3226,11 +3226,13 @@ msgstr "Teknisk dokumentation"
 
 #: docs/templates/technical_docs.html
 msgid ""
-"\n"
-"We have some technical information on Read the Docs for most parts of "
-"OS2borgerPC.\n"
-"Besides the one on the Kiosk Image they aren't that up to date, though.\n"
+"We have Read the Docs pages with some technical information about most parts "
+"of OS2borgerPC. Apart from the Read the Docs page about Kiosk images, they "
+"only contain limited information, however."
 msgstr ""
+"Vi har Read the Docs-sidor med teknisk information om de flesta delar av "
+"Sambruk MedborgarPC. Förutom Read the Docs-sidan om Kiosk-images innehåller "
+"de dock endast begränsad information."
 
 #: docs/templates/technical_docs.html
 msgid "OS2borgerPC Image"
@@ -5092,24 +5094,52 @@ msgid "About the dashboard"
 msgstr "Om dashboardet"
 
 #: templates/site_with_navigation.html
-msgid "Security rule definition"
-msgstr "Definition av säkerhetsregler"
+msgid "About Security Scripts"
+msgstr "Om Säkerhetsskripts"
 
 #: templates/site_with_navigation.html
-msgid "Offline rule definition"
-msgstr "Definition av offline-regler"
+msgid "About Security rules"
+msgstr "Om Säkerhetsregler"
 
 #: templates/site_with_navigation.html
-msgid "Help regarding events"
-msgstr "Hjälp vid incidenter"
+msgid "About Offline rules"
+msgstr "Om Offline-regler"
 
 #: templates/site_with_navigation.html
-msgid "Help regarding the job list"
-msgstr "Hjälp för jobblistan"
+msgid "About events"
+msgstr "Om Incidenter"
 
 #: templates/site_with_navigation.html
-msgid "Help regarding the news page"
-msgstr "Hjälp för nyhetssidan"
+msgid "About Computers"
+msgstr "Om Datorer"
+
+#: templates/site_with_navigation.html
+msgid "About Groups"
+msgstr "Om Grupper"
+
+#: templates/site_with_navigation.html
+msgid "About On/Off schedules"
+msgstr "Om Schema för på- och avstängning"
+
+#: templates/site_with_navigation.html
+msgid "About jobs"
+msgstr "Om Jobs"
+
+#: templates/site_with_navigation.html
+msgid "About Users"
+msgstr "Om Användare"
+
+#: templates/site_with_navigation.html
+msgid "About Scripts"
+msgstr "Om Skripts"
+
+#: templates/site_with_navigation.html
+msgid "About API Keys"
+msgstr "Om API-nycklar"
+
+#: templates/site_with_navigation.html
+msgid "About Configurations"
+msgstr "Om Konfigurationer"
 
 #: templates/site_with_navigation.html
 msgid "Read the documentation ..."
@@ -5871,8 +5901,8 @@ msgid ""
 "Note: Scripts can only be run on computers that have been activated and "
 "groups that have at least 1 associated computer."
 msgstr ""
-"Observera: Skript kan endast köras på datorer som är aktiverade och på "
-"Grupper som har minst 1 dator ansluten.."
+"Obs: Skript kan endast köras på datorer som är aktiverade och på Grupper som "
+"har minst 1 dator ansluten."
 
 #: templates/system/scripts/run_step2.html
 msgid "Specify parameters"

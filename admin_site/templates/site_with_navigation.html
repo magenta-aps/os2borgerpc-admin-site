@@ -31,8 +31,7 @@ detailpage
       {% translate "Dashboard" %}
     </a>
 
-    {% set_css_class_active request.resolver_match.url_name "changelogs" as current_url_changelogs %}
-    <a href="{% url 'changelogs' %}" class="nav-link link-light {{ current_url_changelogs }}">
+    <a href="{% url 'changelogs' %}" class="nav-link link-light">
       <span class="material-symbols-outlined">tips_and_updates</span>
       {% translate "News" %}
     </a>
@@ -141,58 +140,53 @@ detailpage
     {% elif current_url_security_scripts or current_url_event_rules or current_url_security_events %}
       <a href="{% url 'doc' 'monitoring_rules/securityscripts' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
-        {% translate "Security Scripts" %}
+        {% translate "About Security Scripts" %}
       </a>
       <a href="{% url 'doc' 'monitoring_rules/securityproblems' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
-        {% translate "Security rule definition" %}
+        {% translate "About Security rules" %}
       </a>
       <a href="{% url 'doc' 'monitoring_rules/eventrules' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
-        {% translate "Offline rule definition" %}
+        {% translate "About Offline rules" %}
       </a>
       <a href="{% url 'doc' 'monitoring_rules/securityevents' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
-        {% translate "Help regarding events" %}
+        {% translate "About events" %}
       </a>
     {% elif current_url_computer %}
       <a href="{% url 'doc' 'computers' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
-        {% translate "Computers" %}
+        {% translate "About Computers" %}
       </a>
     {% elif current_url_groups %}
       <a href="{% url 'doc' 'groups' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
-        {% translate "Groups" %}
+        {% translate "About Groups" %}
       </a>
     {% elif current_url_wake_plans %}
       <a href="{% url 'doc' 'wake_plans' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
-        {% translate "On/Off schedules" %}
+        {% translate "About On/Off schedules" %}
       </a>
     {% elif current_url_images %}
       {% comment %} Versions currently has no documentation! {% endcomment %}
     {% elif current_url_jobs %}
       <a href="{% url 'doc' 'jobs' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
-        {% translate "Help regarding the job list" %}
+        {% translate "About jobs" %}
       </a>
     {% elif current_url_users %}
       <a href="{% url 'doc' 'users' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
-        {% translate "Users" %}
-      </a>
-    {% elif current_url_changelogs %}
-      <a href="{% url 'doc' 'changelogs' %}" class="nav-link link-light">
-        <span class="material-symbols-outlined">help_outline</span>
-        {% translate "Help regarding the news page" %}
+        {% translate "About Users" %}
       </a>
     {% endif %}
 
     {% if current_url_scripts or current_url_jobs %}
       <a href="{% url 'doc' 'scripts' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
-        {% translate "Scripts" %}
+        {% translate "About Scripts" %}
       </a>
       <a href="{% url 'doc' 'scripts/running' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
@@ -203,14 +197,14 @@ detailpage
     {% if current_url_site_settings %}
       <a href="{% url 'doc' 'api' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
-        {% translate "API Keys" %}
+        {% translate "About API Keys" %}
       </a>
     {% endif %}
 
     {% if current_url_site_settings or current_url_groups or current_url_computer %}
       <a href="{% url 'doc' 'configuration' %}" class="nav-link link-light">
         <span class='material-symbols-outlined'>help_outline</span>
-        {% translate "Configurations" %}
+        {% translate "About Configurations" %}
       </a>
     {% endif %}
 

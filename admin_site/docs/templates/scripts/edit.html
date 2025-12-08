@@ -1,4 +1,4 @@
-{% extends 'index.html' %}
+{% extends 'base_docs.html' %}
 {% load i18n %}
 
 {% block specific_content %}
@@ -30,5 +30,4 @@
     {% translate "In the last tab, you can" %}
     <a href="{% url 'doc' 'scripts/parameters' %}">{% translate "adjust the arguments for the script" %}</a>.
   </p>
-  <p>
 {% endblock %}

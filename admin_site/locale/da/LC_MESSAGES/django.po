@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-02 14:03+0100\n"
+"POT-Creation-Date: 2025-12-08 15:42+0100\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -133,8 +133,7 @@ msgstr "Nyhedskategorier"
 msgid "Comments"
 msgstr "Kommentarer"
 
-#: changelog/templates/list.html docs/templates/om_os2borgerpc_admin.html
-#: docs/views.py
+#: changelog/templates/list.html docs/templates/index.html docs/views.py
 msgid "OS2borgerPC"
 msgstr "OS2borgerPC"
 
@@ -142,7 +141,7 @@ msgstr "OS2borgerPC"
 msgid "News"
 msgstr "Nyheder"
 
-#: changelog/templates/list.html
+#: changelog/templates/list.html docs/templates/base_docs.html
 msgid "Back to previous page"
 msgstr "Tilbage til forrige side"
 
@@ -210,7 +209,7 @@ msgstr "Der findes ingen nyhedskategori med følgende ID: %s"
 msgid "API Key"
 msgstr "API-nøgle"
 
-#: docs/templates/api.html templates/site_with_navigation.html
+#: docs/templates/api.html
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "API Keys"
 msgstr "API-nøgler"
@@ -245,8 +244,8 @@ msgstr "Logins"
 
 #: docs/templates/api.html docs/templates/computers/index.html
 #: docs/templates/configuration/index.html docs/templates/groups/index.html
-#: docs/views.py templates/site_with_navigation.html
-#: templates/system/pcgroups/site_groups.html templates/system/pcs/update.html
+#: docs/views.py templates/system/pcgroups/site_groups.html
+#: templates/system/pcs/update.html
 #: templates/system/site_settings/site_settings.html
 msgid "Configurations"
 msgstr "Konfigurationer"
@@ -569,6 +568,15 @@ msgstr ""
 "Statuskoden 401 \"Error: Unauthorized\" vil blive returneret, hvis du ikke "
 "bruger knappen %(auth)s, eller hvis du angiver en ugyldig API-nøgle."
 
+#: docs/templates/base_docs.html docs/views.py
+msgid "OS2borgerPC documentation"
+msgstr "OS2borgerPC-dokumentation"
+
+#: docs/templates/base_docs.html templates/site_with_navigation.html
+#: templates/system/site_settings/api_keys/api_keys.html
+msgid "Documentation"
+msgstr "Dokumentation"
+
 #: docs/templates/changelogs/index.html docs/views.py
 msgid "The News site"
 msgstr "Nyhedssiden"
@@ -697,10 +705,6 @@ msgstr "Jobhistorik"
 #: docs/templates/computers/__submenu__.html
 msgid "Activating"
 msgstr "Aktivering"
-
-#: docs/templates/computers/activating.html
-msgid "The Admin system"
-msgstr "Admin-systemet"
 
 #: docs/templates/computers/activating.html
 msgid "Activating a computer"
@@ -1791,17 +1795,43 @@ msgstr ""
 "indstilling under Site-indstillinger er slået til."
 
 #: docs/templates/index.html
-msgid "OS2borgerPC documentation"
-msgstr "OS2borgerPC dokumentation"
+msgid ""
+"OS2borgerPC consists of a number of Linux-based operating systems (images) "
+"and a client to communicate with this admin portal which combined enables "
+"you to remotely manage those computers using a large number of scripts. In "
+"the left-hand menu, you can find documentation regarding the different parts "
+"of the system."
+msgstr ""
+"OS2borgerPC består af en række Linux-basede operativsystemer (images) og en "
+"klient til at kommunikere med denne adminportal, som sammen gør det muligt "
+"at fjernstyre disse computere med en lang række scripts. I menuen til "
+"venstre kan du finde dokumentation for de forskellige dele af systemet."
 
-#: docs/templates/index.html templates/site_with_navigation.html
-#: templates/system/site_settings/api_keys/api_keys.html
-msgid "Documentation"
-msgstr "Dokumentation"
+#: docs/templates/index.html docs/views.py
+msgid "About"
+msgstr "Om"
 
 #: docs/templates/index.html
-msgid "Return to admin"
-msgstr "Tilbage til admin"
+msgid "OS2borgerPC is developed by"
+msgstr "OS2borgerPC udvikles af"
+
+#: docs/templates/index.html
+msgid ""
+", originally in collaboration with the libraries in Aarhus and Silkeborg."
+msgstr ", originalt i samarbejde med bibliotekerne i Aarhus og Silkeborg."
+
+#: docs/templates/index.html
+#, python-format
+msgid ""
+"OS2borgerPC and this documentation is 100%% Open Source and can be used and "
+"distributed in accordance with the conditions in version 3 of the"
+msgstr ""
+"OS2borgerPC og denne dokumentation er 100%% open source og kan bruges og "
+"videregives i henhold til betingelserne i version 3 af"
+
+#: docs/templates/index.html
+msgid "The source code for OS2borgerPC can always be found on"
+msgstr "Kildekoden til OS2borgerPC kan altid findes på"
 
 #: docs/templates/jobs/index.html
 msgid ""
@@ -2103,15 +2133,15 @@ msgstr "Overvågningsregler"
 msgid ""
 "The overview \"Monitoring Rules\" shows all the defined security rules and "
 "offline rules that are monitored. Security rules are marked with the icon "
-"<span class='material-symbols-outlined'>gpp_maybe</span> and offline rules "
-"are marked with the icon <span class='material-symbols-"
-"outlined'>desktop_access_disabled</span>."
+"<span class=\"material-symbols-outlined\">gpp_maybe</span> and offline rules "
+"are marked with the icon <span class=\"material-symbols-"
+"outlined\">desktop_access_disabled</span>."
 msgstr ""
 "I oversigten \"Overvågningsregler\" vises alle definerede Sikkerhedsregler "
 "og Offline-regler, som der holdes øje med. Sikkerhedsregler er markeret med "
-"ikonet <span class='material-symbols-outlined'>gpp_maybe</span> og offline-"
-"regler er markeret med ikonet <span class='material-symbols-"
-"outlined'>desktop_access_disabled</span>."
+"ikonet <span class=\"material-symbols-outlined\">gpp_maybe</span> og offline-"
+"regler er markeret med ikonet <span class=\"material-symbols-"
+"outlined\">desktop_access_disabled</span>."
 
 #: docs/templates/monitoring_rules/index.html
 msgid ""
@@ -2464,49 +2494,6 @@ msgid ""
 msgstr ""
 "Aflever formatet som et array til modulet csv_writer ved at kalde metoden "
 "write."
-
-#: docs/templates/om_os2borgerpc_admin.html
-msgid ""
-"OS2borgerPC enables you to remotely manage computers via the OS2borgerPC "
-"administration interface. In the left-hand menu, you can find documentation "
-"regarding the different parts of the system."
-msgstr ""
-"OS2borgerPC giver dig mulighed for at fjernadministre computere via "
-"OS2borgerPC-administrationsinterfacet. I menuen til venstre kan du finde "
-"dokumentation for de forskellige dele af systemet."
-
-#: docs/templates/om_os2borgerpc_admin.html docs/views.py
-msgid "About"
-msgstr "Om"
-
-#: docs/templates/om_os2borgerpc_admin.html
-msgid "OS2borgerPC was developed by"
-msgstr "OS2borgerPC-Admin er udviklet af"
-
-#: docs/templates/om_os2borgerpc_admin.html
-msgid "in collaboration with the libraries in Aarhus and Silkeborg."
-msgstr "i samarbejde med bibliotekerne i Aarhus og Silkeborg."
-
-#: docs/templates/om_os2borgerpc_admin.html
-#, python-format
-msgid ""
-"OS2borgerPC is 100%% Open Source and can be used and distributed in "
-"accordance with the conditions in version 3 of the"
-msgstr ""
-"OS2borgerPC er 100%% open source og kan bruges og videregives i henhold til "
-"betingelserne i version 3 af"
-
-#: docs/templates/om_os2borgerpc_admin.html
-msgid "This documention can be used and distributed in accordance with a"
-msgstr "Denne dokumentation kan anvendes og videregives i henhold til en"
-
-#: docs/templates/om_os2borgerpc_admin.html
-msgid ""
-"The source code for the newest accessible version of OS2borgerPC can always "
-"be found on"
-msgstr ""
-"Kildekoden til den nyeste tilgængelige version af OS2borgerPC-Admin kan "
-"altid findes på"
 
 #: docs/templates/os2borgerpc_kiosk_wifi_guide.html
 msgid "Updating the Wi-Fi password on a OS2borgerPC Kiosk"
@@ -3078,6 +3065,14 @@ msgstr "Sites-oversigten"
 
 #: docs/templates/sites_overview/index.html
 msgid ""
+"Note: You can only see this page if you're either a customer admin, or "
+"you've been added to more than one site."
+msgstr ""
+"Bemærk: Du kan kun se denne side, hvis du enten er kunde-admin, eller du er "
+"blevet tilføjet til mere end ét site."
+
+#: docs/templates/sites_overview/index.html
+msgid ""
 "The sites overview shows all the sites that you have access to. A customer "
 "admin has access to all sites for that customer while other users only have "
 "access to the sites that they have been assigned to. Customer admins can "
@@ -3173,8 +3168,8 @@ msgid "Deleting a site"
 msgstr "Sletning af site"
 
 #: docs/templates/sites_overview/index.html
-msgid "REMINDER: Only customer admins can delete a site!"
-msgstr "HUSK: Kun kunde-admins kan slette et site!"
+msgid "Note: Only customer admins can delete a site!"
+msgstr "Bemærk: Kun kunde-admins kan slette sites!"
 
 #: docs/templates/sites_overview/index.html
 msgid ""
@@ -3207,8 +3202,8 @@ msgid "Creating a new site"
 msgstr "Oprettelse af nyt site"
 
 #: docs/templates/sites_overview/index.html
-msgid "REMINDER: Only customer admins can create new sites!"
-msgstr "HUSK: Kun kunde-admins kan oprette nye sites!"
+msgid "Note: Only customer admins can create new sites!"
+msgstr "Bemærk: Kun kunde-admins kan oprette nye sites!"
 
 #: docs/templates/sites_overview/index.html
 msgid ""
@@ -3242,13 +3237,41 @@ msgstr ""
 "tilføje eksisterende brugere til sitet via sektionen \"Brugere\" for det "
 "site. Se dokumentationen omkring \"Brugere\" for mere information."
 
-#: docs/templates/tech.html docs/views.py
-msgid "Technical Documentation"
-msgstr "Teknisk Dokumentation"
+#: docs/templates/technical_docs.html docs/views.py
+msgid "Technical documentation"
+msgstr "Teknisk dokumentation"
 
-#: docs/templates/users/index.html templates/site_with_navigation.html
-msgid "Administrating users"
-msgstr "Administration af brugere"
+#: docs/templates/technical_docs.html
+msgid ""
+"We have Read the Docs pages with some technical information about most parts "
+"of OS2borgerPC. Apart from the Read the Docs page about Kiosk images, they "
+"only contain limited information, however."
+msgstr ""
+"Vi har Read the Docs-sider med noget teknisk information om de fleste dele "
+"af OS2borgerPC. Bortset fra Read the Docs-siden om Kiosk-images, indeholder "
+"de dog kun begrænset information."
+
+#: docs/templates/technical_docs.html
+msgid "OS2borgerPC Image"
+msgstr "OS2borgerPC Image"
+
+#: docs/templates/technical_docs.html
+msgid "OS2borgerPC Kiosk Image"
+msgstr "OS2borgerPC Kiosk Image"
+
+#: docs/templates/technical_docs.html
+msgid "OS2borgerPC Admin Portal"
+msgstr "OS2borgerPC Adminportal"
+
+#: docs/templates/technical_docs.html
+msgid "OS2borgerPC Client"
+msgstr "OS2borgerPC Klient"
+
+#: docs/templates/users/index.html docs/views.py
+#: templates/site_with_navigation.html
+#: templates/system/users/shared_navigation.html
+msgid "Users"
+msgstr "Brugere"
 
 #: docs/templates/users/index.html
 msgid ""
@@ -3444,12 +3467,6 @@ msgid ""
 msgstr ""
 "Bemærk: Kontakt Magenta hvis en bruger på dit site skal ændres til en "
 "brugertype, som ingen af jeres brugere har rettigheder til at vælge."
-
-#: docs/templates/users/index.html docs/views.py
-#: templates/site_with_navigation.html
-#: templates/system/users/shared_navigation.html
-msgid "Users"
-msgstr "Brugere"
 
 #: docs/templates/users/index.html templates/site_with_navigation.html
 #: templates/system/sites/list.html
@@ -4215,28 +4232,12 @@ msgid "Updating Wi-Fi setup"
 msgstr "Opdatering af Wi-Fi opsætning"
 
 #: docs/views.py
-msgid "Audit"
-msgstr "Revision"
+msgid "General"
+msgstr "Generelt"
 
 #: docs/views.py
-msgid "FAQ (PDF)"
-msgstr "Ofte stillede spørgsmål (PDF)"
-
-#: docs/views.py
-msgid "OS2borgerPC Image"
-msgstr "OS2borgerPC Image"
-
-#: docs/views.py
-msgid "OS2borgerPC Admin Site"
-msgstr "OS2borgerPC Admin Site"
-
-#: docs/views.py
-msgid "OS2borgerPC Kiosk Image"
-msgstr "OS2borgerPC Kiosk Image"
-
-#: docs/views.py
-msgid "OS2borgerPC Client"
-msgstr "OS2borgerPC Client"
+msgid "Audit: FAQ (PDF)"
+msgstr "Revision: Ofte stillede spørgsmål (PDF)"
 
 #: system/admin.py
 msgid "Number of computers"
@@ -5111,24 +5112,52 @@ msgid "About the dashboard"
 msgstr "Om dashboardet"
 
 #: templates/site_with_navigation.html
-msgid "Security rule definition"
-msgstr "Definition af sikkerhedsregler"
+msgid "About Security Scripts"
+msgstr "Om Sikkerhedsscripts"
 
 #: templates/site_with_navigation.html
-msgid "Offline rule definition"
-msgstr "Definition af offline-regler"
+msgid "About Security rules"
+msgstr "Om Sikkerhedsregler"
 
 #: templates/site_with_navigation.html
-msgid "Help regarding events"
-msgstr "Hjælp til hændelser"
+msgid "About Offline rules"
+msgstr "Om Offline-regler"
 
 #: templates/site_with_navigation.html
-msgid "Help regarding the job list"
-msgstr "Hjælp til joblisten"
+msgid "About events"
+msgstr "Om Hændelser"
 
 #: templates/site_with_navigation.html
-msgid "Help regarding the news page"
-msgstr "Hjælp til nyhedssiden"
+msgid "About Computers"
+msgstr "Om Computere"
+
+#: templates/site_with_navigation.html
+msgid "About Groups"
+msgstr "Om Grupper"
+
+#: templates/site_with_navigation.html
+msgid "About On/Off schedules"
+msgstr "Om Tænd/Sluk tidsplaner"
+
+#: templates/site_with_navigation.html
+msgid "About jobs"
+msgstr "Om Jobs"
+
+#: templates/site_with_navigation.html
+msgid "About Users"
+msgstr "Om Brugere"
+
+#: templates/site_with_navigation.html
+msgid "About Scripts"
+msgstr "Om Scripts"
+
+#: templates/site_with_navigation.html
+msgid "About API Keys"
+msgstr "Om API-nøgler"
+
+#: templates/site_with_navigation.html
+msgid "About Configurations"
+msgstr "Om Konfigurationer"
 
 #: templates/site_with_navigation.html
 msgid "Read the documentation ..."

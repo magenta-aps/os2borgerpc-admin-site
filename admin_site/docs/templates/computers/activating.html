@@ -1,7 +1,5 @@
-{% extends 'index.html' %}
+{% extends 'base_docs.html' %}
 {% load i18n %}
-
-{% block doc_subtitle %}{% translate "The Admin system" %}{% endblock %}
 
 {% block specific_content %}
   <h1>{% translate "Activating a computer" %}</h1>
@@ -21,6 +19,7 @@
     that have not been activated. This is partially a practical measure (there is no reason to start
     updating a computer before you know that it is ready) and partially a security measure.
     {% endblocktranslate %}
+  </p>
   <p>
     <b>{% translate "Note" %}:</b> {% blocktranslate trimmed %}
     One of the reasons that all computers must be activated manually is to prevent foreign computers

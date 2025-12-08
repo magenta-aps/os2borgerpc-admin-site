@@ -4,7 +4,6 @@ from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.models import User
 
-from markdownx.utils import markdownify
 from markdownx.models import MarkdownxField
 
 
@@ -31,10 +30,6 @@ class Changelog(models.Model):
 
     def get_tags(self):
         return self.tags.values("name", "pk")
-
-    def render_content(self):
-        # This method returns the markdown text of the 'content' field as html code.
-        return markdownify(self.content)
 
     def __str__(self):
         return self.title

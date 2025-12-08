@@ -1,4 +1,4 @@
-from django.shortcuts import render
+import re
 
 from changelog.models import (
     Changelog,
@@ -15,7 +15,8 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import Http404
 from django.utils.translation import gettext_lazy as _
-from django.urls import reverse
+
+from os2borgerpc_admin import utils as global_utils
 
 
 # Mixin class to require login - copied from system app
@@ -83,6 +84,29 @@ class ChangelogListView(ListView):
                     % context["tag_filter"]
                 )
 
+        params = self.request.GET or self.request.POST
+        back_link = params.get("back")
+        if back_link is None:
+            referer = self.request.META.get("HTTP_REFERER")
+            if referer and referer.find("/changelog/") == -1:
+                back_link = referer
+        site_uid = None
+        if back_link:
+            context["back_link"] = back_link
+            site_uid_match = re.search("site/[-a-z0-9]*/", back_link)
+            if site_uid_match:
+                try:
+                    site_uid = site_uid_match[0].split("/")[1]
+                except IndexError:
+                    pass  # site_uid remains None
+        else:
+            context["back_link"] = "/"
+
+        for changelog in queryset:
+            changelog.content = global_utils.render_custom_links(
+                changelog.content, site_uid, True
+            )
+
         # Paginate the queryset and add it to the context
         context["entries"] = self.get_paginated_queryset(queryset, context["page"])
 
@@ -90,18 +114,10 @@ class ChangelogListView(ListView):
         if "id" in self.kwargs:
             specific_changelog = get_object_or_404(Changelog, pk=self.kwargs["id"])
             if specific_changelog not in context["entries"]:
+                specific_changelog.content = global_utils.render_custom_links(
+                    specific_changelog.content, site_uid, True
+                )
                 context["specific_changelog"] = specific_changelog
-
-        params = self.request.GET or self.request.POST
-        back_link = params.get("back")
-        if back_link is None:
-            referer = self.request.META.get("HTTP_REFERER")
-            if referer and referer.find("/changelog/") == -1:
-                back_link = referer
-        if back_link:
-            context["back_link"] = back_link
-        else:
-            context["back_link"] = "/"
 
         # Add all comments that belong to the entries on the current page to the
         # context

@@ -44,6 +44,7 @@ class MyUserAdmin(UserAdmin):
         "totp_enabled",
         "is_active",
         "is_staff",
+        "is_superuser",
         "last_login",
     )
     list_filter = (
@@ -51,6 +52,7 @@ class MyUserAdmin(UserAdmin):
         "user_profile__sites__customer",
         ("totpdevice", admin.EmptyFieldListFilter),
         "is_active",
+        "is_superuser",
         ("is_staff", admin.BooleanFieldListFilter),
     )
     search_fields = ("username", "email")

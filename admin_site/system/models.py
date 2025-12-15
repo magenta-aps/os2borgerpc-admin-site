@@ -200,7 +200,7 @@ class Site(models.Model):
         validators=[
             RegexValidator(
                 re.compile("^[-a-z0-9]+$"),
-                "Enter a valid “UID” consisting of lowercase letters, numbers or hyphens.",
+                "Enter a valid “UID” consisting of lowercase (English) letters, numbers or hyphens.",
             )
         ],
     )
@@ -732,12 +732,12 @@ class PC(models.Model):
         verbose_name=_("name"),
         max_length=40,
         help_text=_(
-            "Valid characters are a-z, A-Z, 0-9 and hyphen (-). The length must be 1-40 characters"
+            "Valid characters are (English) letters, numbers and hyphens. The length must be 1-40 characters.<br/>Note: If you change this, the computer's hostname will be updated, becoming a lowercased version of the new name."
         ),
         validators=[
             RegexValidator(
                 re.compile("^[-a-zA-Z0-9]+$"),
-                "Enter a valid name consisting of letters, numbers or hyphens.",
+                "Enter a valid name consisting of (English) letters, numbers or hyphens.",
             )
         ],
     )

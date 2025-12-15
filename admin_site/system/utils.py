@@ -407,11 +407,19 @@ def cicero_validate(loaner_number, pincode, site, pc=None):
                     return patron_id
                 # We need a separate request to get the patron details (birthday)
                 patron_url = f"{settings.CICERO_URL}/rest/external/{site.agency_id}/patrons/person/{patron_id}/v4"
-                response = requests.get(patron_url, headers={"X-session": session_key})
+                try:
+                    response = requests.get(
+                        patron_url, headers={"X-session": session_key}
+                    )
+                except Exception:
+                    return patron_id
                 if response.ok:
-                    patron_birthday = response.json()["birthday"]
+                    try:
+                        patron_birthday = response.json()["birthday"]
+                    except Exception:
+                        return patron_id
                 else:
-                    patron_birthday = None
+                    return patron_id
                 # If the patron has a birthday listed and age_limit is non-zero
                 if patron_birthday and age_limit:
                     now = datetime.now()

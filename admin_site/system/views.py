@@ -4136,6 +4136,11 @@ class ImageVersionView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
                 .order_by("-image_version")
             )
 
+        for v in versions_accessible_by_user:
+            v.release_notes = global_utils.render_custom_links(
+                v.release_notes, site.uid, True
+            )
+
         # If the Product is multilang and the user language isn't Danish: Hide image versions that don't have a multilang image
         user_language = self.request.user.user_profile.language
         if selected_product.multilang and user_language != "da":

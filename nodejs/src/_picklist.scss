@@ -1,9 +1,10 @@
 .pick-list {
 
     .pick-list-dropdown-btn {
+        padding: $spacer*.25 0;
+        text-align: left;  // Override default btn centering
         text-decoration: none;
         width: 100%;
-        padding: $spacer*.25 0;
 
         .material-symbols-outlined {
             margin-right: $spacer*.5;

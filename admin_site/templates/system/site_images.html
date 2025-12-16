@@ -35,7 +35,7 @@
         <dd>{{ first_ver.os }}</dd>
         <dt>{% translate "Release notes" %}</dt>
         <dd>
-          <pre style="font-family: var(--bs-font-sans-serif)">{{ first_ver.release_notes }}</pre>
+          {{ first_ver.release_notes|safe }}
         </dd>
       </dl>
       {% if first_ver.image_upload %}
@@ -96,7 +96,7 @@
 
               </td>
               <td>
-                <pre style="font-family: var(--bs-font-sans-serif); white-space: pre-wrap;">{{ image.release_notes }}</pre>
+                {{ image.release_notes|safe }}
               </td>
               <td>
                 {% if image.image_upload %}

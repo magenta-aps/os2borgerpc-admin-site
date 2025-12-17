@@ -14,10 +14,10 @@ detailpage
 {% endblock %}
 
 {% block globalnav %}
-<nav id="left-menu" class="nav nav-pills utils-global">
+<nav id="left-menu" class="nav nav-pills">
   <h2 class="text-light">500 - {% translate "Server error" %}</h2>
-  <a href="/" class="nav-link link-light d-flex align-items-center">
-    <span class="material-symbols-outlined" style="margin: 0 .25rem 0 -.25rem; font-size: 1.25rem;">arrow_back</span>
+  <a href="/" class="nav-link d-flex align-items-center">
+    <span class="material-symbols-outlined">arrow_back</span>
     {% translate "Return to OS2borgerPC-admin" %}
   </a>
 </nav>
@@ -25,7 +25,7 @@ detailpage
 
 {% block specific_content %}
 <div class="p-4">
-	<p>{% translate "A server error has occurred, and we have been notified about the error." %}</p>
+  <p>{% translate "A server error has occurred, and we have been notified about the error." %}</p>
   <p>{% translate "Best regards" %}<br/>
   <strong>{% translate "The OS2BorgerPC team" %}</strong></p>
 </div>

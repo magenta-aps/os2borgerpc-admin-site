@@ -1328,7 +1328,7 @@ class ScriptMixin(object):
                     ),
                 }
 
-                if data["name"] is None or data["name"] == "":
+                if data["name"] == "":
                     data["name_error"] = _("Error: You must provide a name")
                     success = False
 
@@ -3100,10 +3100,9 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             site_membership = user_profile.sitemembership_set.get(
                 site=site, user_profile=user_profile
             )
-            if site.customer.using_sso:
-                requested_user_type = site_membership.site_user_type
-            else:
-                requested_user_type = int(form.cleaned_data.get("usertype") or SiteMembership.SITE_USER)
+            requested_user_type = int(
+                form.cleaned_data.get("usertype") or site_membership.site_user_type
+            )
 
             # If a user was made a customer admin, ensure that they have access
             # to all sites for this customer

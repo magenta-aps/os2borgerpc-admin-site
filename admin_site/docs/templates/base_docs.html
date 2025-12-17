@@ -31,22 +31,22 @@ detailpage
 {% endblock %}
 
 {% block globalnav %}
-<nav id="left-menu" class="nav nav-pills utils-global">
+<nav id="left-menu" class="nav nav-pills">
   <h2 class="text-light">{% translate "Documentation" %}</h2>
-  <a href="{{ back_link }}" class="nav-link link-light">
+  <a href="{{ back_link }}" class="nav-link">
     <span class="material-symbols-outlined">arrow_back</span>{% translate "Back to previous page" %}
   </a>
   {% for link, name in docmenuitems %}
     {% if link %}
       {# References to PDFs #}
       {% if ".pdf" in link %}
-        <a class="nav-link link-light" href="{% static link %}" target="_blank"> {{ name }} </a>
+        <a class="nav-link" href="{% static link %}" target="_blank"> {{ name }} </a>
       {# References to other websites #}
       {% elif "http" in link %}
-        <a class="nav-link link-light" href="{{link}}" target="_blank"> {{ name }} </a>
+        <a class="nav-link" href="{{link}}" target="_blank"> {{ name }} </a>
       {# References to other parts of the admin portal #}
       {% else %}
-        <a class="nav-link link-light {% if menu_active == link %}active{% endif %}" href="{% url 'doc' link %}">
+        <a class="nav-link {% if menu_active == link %}active{% endif %}" href="{% url 'doc' link %}">
         {{ name }}
         </a>
       {% endif %}

@@ -1,6 +1,7 @@
 import re
 
 from django.urls import reverse
+from system.models import Script
 
 from markdownx.utils import markdownify
 
@@ -25,46 +26,58 @@ def render_custom_links(text, site_uid, also_markdownify):
 
     index = 0
     while True:
-        match = re.search(f"{DELIMITER}[A-Z_]+/?[0-9]*", text[index:])
+        match = re.search(f"{DELIMITER}[a-z_]+/?[0-9]*", text[index:])
         if not match:
             break
 
         index = match.start()
         m = match.group()
         # For links to specific objects, that include /something
-        id = 1
+        pk = 1
         try:
             res = m.split("/")[1]
             if res:
-                id = res
+                pk = res
         except Exception:
             pass
+        replacement = ""
         # site_uid indicates whether it's an anonymous user (e.g. changelog in some cases) or not
-        if "SITE" in m:
+        if "site" in m:
             if site_uid:
                 replacement = reverse("dashboard", args=[site_uid])
             else:
                 replacement = reverse("index")
-        elif "EVENT_RULES" in m:
+        elif "event_rules" in m:
             if site_uid:
                 replacement = reverse("event_rules", args=[site_uid])
             else:
                 replacement = reverse("event_rules_redirect")
-        elif "JOBS" in m:
+        elif "jobs" in m:
             if site_uid:
                 replacement = reverse("jobs", args=[site_uid])
             else:
                 replacement = reverse("jobs_redirect")
-        elif "SEC_SCRIPT/" in m:  # This check needs to be before SCRIPT
+        elif "sec_script/" in m:  # This check needs to be before SCRIPT
             if site_uid:
-                replacement = reverse("security_script", args=[site_uid, id])
+                replacement = reverse("security_script", args=[site_uid, pk])
             else:
-                replacement = reverse("script_redirect_id", args=[id])
-        elif "SCRIPT/" in m:
+                replacement = reverse("script_redirect_id", args=[pk])
+        elif "script/" in m:
             if site_uid:
-                replacement = reverse("script", args=[site_uid, id])
+                replacement = reverse("script", args=[site_uid, pk])
             else:
-                replacement = reverse("script_redirect_id", args=[id])
+                replacement = reverse("script_redirect_id", args=[pk])
+        elif "scriptn/" in m:
+            if site_uid:
+                addr = reverse("script", args=[site_uid, pk])
+            else:
+                addr = reverse("script_redirect_id", args=[pk])
+            script_name = (
+                Script.objects.filter(pk=pk).values_list("name", flat=True).first()
+            )
+            if script_name:
+                replacement = f"[{script_name}]({addr})"
+
         text = text.replace(m, replacement)
 
     if also_markdownify:

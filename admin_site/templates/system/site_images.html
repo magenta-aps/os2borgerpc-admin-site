@@ -1,5 +1,6 @@
 {% extends "site_with_navigation.html" %}
 {% load i18n %}
+{% load custom_tags %}
 
 {% block specific_title %}
 {% translate "Images" %}
@@ -35,7 +36,7 @@
         <dd>{{ first_ver.os }}</dd>
         <dt>{% translate "Release notes" %}</dt>
         <dd>
-          {{ first_ver.release_notes|safe }}
+        {{ first_ver.release_notes|render_custom_links_markdown:site.uid|safe }}
         </dd>
       </dl>
       {% if first_ver.image_upload %}
@@ -96,7 +97,7 @@
 
               </td>
               <td>
-                {{ image.release_notes|safe }}
+                {{ image.release_notes|render_custom_links_markdown:site.uid|safe }}
               </td>
               <td>
                 {% if image.image_upload %}

@@ -4,6 +4,8 @@ from django.utils.timesince import timesince
 from datetime import datetime
 from django.core.files.storage import default_storage
 
+from os2borgerpc_admin import utils as global_utils
+
 import os
 
 register = template.Library()
@@ -43,6 +45,11 @@ def set_css_class_active(url_name, match):
         if match == "script" and "security_script" in url_name:
             return
         return "active"
+
+
+@register.filter
+def render_custom_links_markdown(text, site_uid):
+    return global_utils.render_custom_links(text, site_uid, True)
 
 
 @register.filter

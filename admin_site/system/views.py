@@ -1328,7 +1328,7 @@ class ScriptMixin(object):
                     ),
                 }
 
-                if data["name"] == "":
+                if data["name"] is None or data["name"] == "":
                     data["name_error"] = _("Error: You must provide a name")
                     success = False
 

@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 
 import system.models as m
+from account.models import SiteMembership
 
 # ACTIONS #
 
@@ -432,7 +433,10 @@ class LoginLogAdmin(admin.ModelAdmin):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(site__in=request.user.user_profile.sites.all())
+        allowed_sites = request.user.user_profile.sitemembership_set.filter(
+            site_user_type__gte=SiteMembership.SITE_ADMIN
+        ).values_list("site", flat=True)
+        return qs.filter(site__in=allowed_sites)
 
 
 @admin.register(m.PC)

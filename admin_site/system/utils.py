@@ -1,6 +1,5 @@
 """Utility methods for the OS2borgerPC project."""
 
-import jwt
 import json
 import logging
 import re

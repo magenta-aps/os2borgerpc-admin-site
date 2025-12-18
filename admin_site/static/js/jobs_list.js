@@ -57,13 +57,8 @@ function joblog_copy() {
   btn.lastElementChild.classList.remove('d-none')
 }
 
-function closeAllPopovers() {
-    document.querySelectorAll(".popover").forEach(pop=>bootstrap.Popover.getInstance(pop).hide())
-}
-
 // Function to handle displaying popover for job details
 function getPopoverHtml(jobPk) {
-    closeAllPopovers()
     const triggerElement = document.querySelector(`a[onclick="getPopoverHtml(${jobPk})"]`);
 
     fetch(`${JOBS_BASE_URL}${jobPk}/info/`)  // Fetch popover content

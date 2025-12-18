@@ -21,14 +21,12 @@ events/changes.
     </td>
 
     <td>
-      <p class="mb-0" style="margin-left: -.5rem;">
-        <form type="delete">
-          <button class="btn btn-sm ps-3" type="submit" hx-target="#api-keys-list" hx-delete="{% url "api_key_delete" slug=key.site.uid pk=key.pk %}" hx-confirm="{% translate "Are you sure you want to delete the following API Key?:" %} {{key.key}}">
-            <span class='material-symbols-outlined'>delete</span>
-            {% translate "Delete" %}
-          </button>
-        </form>
-      </p>
+      <form type="delete">
+        <button class="btn btn-secondary btn-danger" type="submit" hx-target="#api-keys-list" hx-delete="{% url "api_key_delete" slug=key.site.uid pk=key.pk %}" hx-confirm="{% translate "Are you sure you want to delete the following API Key?:" %} {{key.key}}">
+          <span class='material-symbols-outlined'>delete</span>
+          {% translate "Delete" %}
+        </button>
+      </form>
     </td>
   </tr>
 {% empty %}

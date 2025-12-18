@@ -29,7 +29,7 @@
             </thead>
 
             <!-- hx-target below points to this container element for replacing  -->
-            <tbody id="api-keys-list">
+            <tbody id="api-keys-list" class="align-middle">
               {% include "system/site_settings/api_keys/partials/list.html" %}
             </tbody>
 
@@ -38,8 +38,8 @@
                 <td colspan="3">
                   <form method="post">
                     {% csrf_token %}
-                    <button class="d-flex align-items-center btn-primary" type="submit" hx-post="{% url 'api_key_new' slug=site.uid %}" hx-target="#api-keys-list">
-                      <span class="material-symbols-outlined me-1">add</span>
+                    <button class="btn btn-primary" type="submit" hx-post="{% url 'api_key_new' slug=site.uid %}" hx-target="#api-keys-list">
+                      <span class="material-symbols-outlined">add</span>
                       {% translate "Generate new API Key" %}
                     </button>
                   </form>

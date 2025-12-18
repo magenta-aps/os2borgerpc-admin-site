@@ -2993,7 +2993,11 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
                 )
             user_profile.language = form.cleaned_data["language"]
             user_profile.save()
-            if int(form.cleaned_data["usertype"]) >= site_membership.SITE_ADMIN:
+            if int(
+                form.cleaned_data["usertype"]
+            ) >= site_membership.SITE_ADMIN and site.customer.feature_permission.filter(
+                uid__in=["quria", "sms-login"]
+            ):
                 self.object.user_permissions.set(
                     Permission.objects.filter(name="Can view login log")
                 )
@@ -3139,7 +3143,11 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
                 site_membership.save()
             if (
                 not self.selected_user.is_superuser
+                and not self.selected_user.user_profile.is_hidden
                 and requested_user_type >= site_membership.SITE_ADMIN
+                and site.customer.feature_permission.filter(
+                    uid__in=["quria", "sms-login"]
+                )
             ):
                 self.object.user_permissions.set(
                     Permission.objects.filter(name="Can view login log")
@@ -3147,7 +3155,19 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
                 self.object.is_staff = True
             elif (
                 not self.selected_user.is_superuser
+                and not self.selected_user.user_profile.is_hidden
                 and requested_user_type < site_membership.SITE_ADMIN
+                and site.customer.feature_permission.filter(
+                    uid__in=["quria", "sms-login"]
+                )
+                and all(
+                    user_type < site_membership.SITE_ADMIN
+                    for user_type in self.selected_user.user_profile.sitemembership_set.exclude(
+                        site=site
+                    ).values_list(
+                        "site_user_type", flat=True
+                    )
+                )
             ):
                 self.object.is_staff = False
             user_profile.language = form.cleaned_data["language"]

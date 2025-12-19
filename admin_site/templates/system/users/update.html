@@ -7,7 +7,8 @@
       <h2 class="divideheader">{% translate "Edit user" %}: <em>{{ selected_user.username }}</em></h2>
       <div class="basic-info">
         <span>{% translate "Created" %}: {{ selected_user.date_joined }}</span>
-        <span class="ms-5">{% translate "Last login" %}: {{ selected_user.last_login }}</span>
+        {% translate "Never" as never %}
+        <span class="ms-5">{% translate "Most recent login" %}: {{ selected_user.last_login|default_if_none:never }}</span>
       </div>
       {% else %}
       <h2 class="divideheader">{% translate "Create new user" %}</h2>

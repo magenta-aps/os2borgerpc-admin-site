@@ -6338,7 +6338,7 @@ msgid "Edit user"
 msgstr "Redigér bruger"
 
 #: templates/system/users/update.html
-msgid "Last login"
+msgid "Most recent login"
 msgstr "Seneste login"
 
 #: templates/system/users/update.html

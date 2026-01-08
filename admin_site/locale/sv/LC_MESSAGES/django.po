@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 14:26+0100\n"
+"POT-Creation-Date: 2026-01-08 13:16+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -4580,13 +4580,23 @@ msgstr "MAC"
 
 #: system/models.py
 msgid ""
-"Valid characters are (English) letters, numbers and hyphens. The length must "
-"be 1-40 characters.<br/>Note: If you change this, the computer's hostname "
-"will be updated, becoming a lowercased version of the new name."
+"Valid characters are (English) letters, numbers and hyphens, and it may not "
+"start with a hyphen. The length must be 1-40 characters.<br/>Note: If you "
+"change this, the computer's hostname will be updated, becoming a lowercased "
+"version of the new name."
 msgstr ""
-"Giltiga tecken är (engelska) bokstäver, siffror och bindestreck. Längden "
-"måste vara 1-40 tecken.<br/>Obs! Om du ändrar detta kommer datorns värdnamn "
-"att uppdateras till det nya namnet, med små bokstäver."
+"Giltiga tecken är (engelska) bokstäver, siffror och bindestreck, och det får "
+"inte börja med ett bindestreck. Längden måste vara 1-40 tecken.<br/>Obs! Om "
+"du ändrar detta kommer datorns värdnamn att uppdateras till det nya namnet, "
+"med små bokstäver."
+
+#: system/models.py
+msgid ""
+"Enter a valid name consisting of (English) letters, numbers or hyphens. It "
+"may not start with a hyphen."
+msgstr ""
+"Ange ett giltigt namn bestående av (engelska) bokstäver, siffror eller "
+"bindestreck. Det får inte börja med ett bindestreck."
 
 #: system/models.py
 msgid "activated"
@@ -5805,6 +5815,7 @@ msgid "ago"
 msgstr "sedan"
 
 #: templates/system/pcs/pcs.html templates/system/pcs/update.html
+#: templates/system/users/update.html
 msgid "Never"
 msgstr "Aldrig"
 

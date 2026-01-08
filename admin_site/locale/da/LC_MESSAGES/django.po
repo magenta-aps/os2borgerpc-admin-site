@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 14:13+0100\n"
+"POT-Creation-Date: 2026-01-08 13:16+0100\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -4602,13 +4602,23 @@ msgstr "MAC"
 
 #: system/models.py
 msgid ""
-"Valid characters are (English) letters, numbers and hyphens. The length must "
-"be 1-40 characters.<br/>Note: If you change this, the computer's hostname "
-"will be updated, becoming a lowercased version of the new name."
+"Valid characters are (English) letters, numbers and hyphens, and it may not "
+"start with a hyphen. The length must be 1-40 characters.<br/>Note: If you "
+"change this, the computer's hostname will be updated, becoming a lowercased "
+"version of the new name."
 msgstr ""
-"Gyldige tegn er (engelske) bogstaver, tal og bindestreger. Længden skal være "
-"1-40 tegn.<br/>Bemærk: Hvis du ændrer dette, vil computerens hostnavn blive "
-"opdateret til at matche det nye navn, med små bogstaver."
+"Gyldige tegn er (engelske) bogstaver, tal og bindestreger, og det må ikke "
+"starte med bindestreg. Længden skal være 1-40 tegn.<br/>Bemærk: Hvis du "
+"ændrer dette, vil computerens hostnavn blive opdateret til at matche det nye "
+"navn, med små bogstaver."
+
+#: system/models.py
+msgid ""
+"Enter a valid name consisting of (English) letters, numbers or hyphens. It "
+"may not start with a hyphen."
+msgstr ""
+"Indtast et gyldigt navn, bestående af (engelske) bogstaver, tal og "
+"bindestreger. Det må ikke starte med bindestreg."
 
 #: system/models.py
 msgid "activated"
@@ -5822,6 +5832,7 @@ msgid "ago"
 msgstr "siden"
 
 #: templates/system/pcs/pcs.html templates/system/pcs/update.html
+#: templates/system/users/update.html
 msgid "Never"
 msgstr "Aldrig"
 

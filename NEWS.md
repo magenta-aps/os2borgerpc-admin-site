@@ -1,3 +1,15 @@
+## Version 6.12.0, January 8, 2026
+
+- Update docs
+- Update dependencies including psycopg
+- Add support for markdown in image release notes
+- Add support for site dependent links in markdown
+- Ensure that only users belonging to customers that use Login logs can view the related page in /admin
+- Make Entra ID integration match usernames case-insensitively
+- Mention hostname sync in help text for pc name
+- Handle more exceptions related to login integrations
+- Show superuser status on the user overview in the admin backend
+
 ## Version 6.11.0, November 13, 2025
 
 - Improve markdown styling

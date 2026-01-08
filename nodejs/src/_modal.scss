@@ -1,7 +1,16 @@
 :root {
-    --bs-modal-padding: 1.5rem; // The previous default used by modal-body
-    --bs-modal-header-padding: .75rem 1.5rem; // The previous default used by modal-header
+    // Most of these are just the previous defaults
+    --bs-modal-padding: 1.5rem;
+    --bs-modal-inner-border-radius: calc(0.3rem - 1px);
+    /* Header */
+    --bs-modal-header-padding: .75rem 1.5rem;
+    --bs-modal-header-border-width: 1px;
+    --bs-modal-header-border-color: #d6dadb;
+    /* Footer */
+    --bs-modal-footer-bg: #f1f1f1;
     --bs-modal-footer-gap: 0;
+    --bs-modal-footer-border-width: 1px;
+    --bs-modal-footer-border-color: #d6dadb;
 }
 
 .modal-title {

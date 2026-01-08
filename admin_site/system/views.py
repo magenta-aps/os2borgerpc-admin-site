@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
 import secrets
-from markdownx.utils import markdownify
 
 from django.http import Http404, JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -36,6 +35,8 @@ from django_otp.decorators import otp_required
 from django_otp import devices_for_user, user_has_device
 from django_otp.plugins.otp_static.models import StaticToken
 from django.forms import Form
+
+from os2borgerpc_admin import utils as global_utils
 
 from system.utils import (
     get_badge_class,
@@ -974,9 +975,9 @@ class JobsView(SiteView):
         return context
 
 
+# To be able to link here for anonymous users from e.g. e-mails/PDFs
 class GlobalJobsViewRedirect(RedirectView, LoginRequiredMixin):
     permanent = False
-    query_string = True
 
     def get_redirect_url(self, *args, **kwargs):
         user = self.request.user
@@ -1470,9 +1471,11 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         self.create_form.prefix = "create"
         context["create_form"] = self.create_form
         request_user = self.request.user
-        if not request_user.is_superuser and self.script.is_global:
-            self.script.description = markdownify(self.script.description)
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        if not request_user.is_superuser and self.script.is_global:
+            self.script.description = global_utils.render_custom_links(
+                self.script.description, site.uid, True
+            )
         context["site_membership"] = (
             request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
         )
@@ -1517,9 +1520,9 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             return reverse("script", args=[self.site.uid, self.script.pk])
 
 
+# To be able to link here for anonymous users from e.g. e-mails/PDFs
 class GlobalScriptRedirect(RedirectView, LoginRequiredMixin):
     permanent = False
-    query_string = True
 
     def get_redirect_url(self, *args, **kwargs):
         user = self.request.user
@@ -2990,7 +2993,11 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
                 )
             user_profile.language = form.cleaned_data["language"]
             user_profile.save()
-            if int(form.cleaned_data["usertype"]) >= site_membership.SITE_ADMIN:
+            if int(
+                form.cleaned_data["usertype"]
+            ) >= site_membership.SITE_ADMIN and site.customer.feature_permission.filter(
+                uid__in=["quria", "sms-login"]
+            ):
                 self.object.user_permissions.set(
                     Permission.objects.filter(name="Can view login log")
                 )
@@ -3097,10 +3104,9 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             site_membership = user_profile.sitemembership_set.get(
                 site=site, user_profile=user_profile
             )
-            if site.customer.using_sso:
-                requested_user_type = site_membership.site_user_type
-            else:
-                requested_user_type = int(form.cleaned_data["usertype"])
+            requested_user_type = int(
+                form.cleaned_data.get("usertype") or site_membership.site_user_type
+            )
 
             # If a user was made a customer admin, ensure that they have access
             # to all sites for this customer
@@ -3137,7 +3143,11 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
                 site_membership.save()
             if (
                 not self.selected_user.is_superuser
+                and not self.selected_user.user_profile.is_hidden
                 and requested_user_type >= site_membership.SITE_ADMIN
+                and site.customer.feature_permission.filter(
+                    uid__in=["quria", "sms-login"]
+                )
             ):
                 self.object.user_permissions.set(
                     Permission.objects.filter(name="Can view login log")
@@ -3145,7 +3155,19 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
                 self.object.is_staff = True
             elif (
                 not self.selected_user.is_superuser
+                and not self.selected_user.user_profile.is_hidden
                 and requested_user_type < site_membership.SITE_ADMIN
+                and site.customer.feature_permission.filter(
+                    uid__in=["quria", "sms-login"]
+                )
+                and all(
+                    user_type < site_membership.SITE_ADMIN
+                    for user_type in self.selected_user.user_profile.sitemembership_set.exclude(
+                        site=site
+                    ).values_list(
+                        "site_user_type", flat=True
+                    )
+                )
             ):
                 self.object.is_staff = False
             user_profile.language = form.cleaned_data["language"]
@@ -3683,7 +3705,6 @@ class EventRuleRedirect(RedirectView, SuperAdminOrThisSiteMixin):
 
 class GlobalEventRuleRedirect(RedirectView, LoginRequiredMixin):
     permanent = False
-    query_string = True
 
     def get_redirect_url(self, *args, **kwargs):
         user = self.request.user

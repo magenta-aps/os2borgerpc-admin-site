@@ -1,0 +1,19 @@
+{% extends 'base_docs.html' %}
+{% load i18n %}
+
+{% block specific_content %}
+<h2>{% translate "Technical documentation" %}</h2>
+
+{% blocktranslate trimmed %}
+We have Read the Docs pages with some technical information about most parts of OS2borgerPC.
+Apart from the Read the Docs page about Kiosk images, they only contain limited information, however.
+{% endblocktranslate %}
+
+<ul>
+  <li><a href="https://os2borgerpc-image.readthedocs.io">{% translate "OS2borgerPC Image" %}</a></li>
+  <li><a href="https://os2borgerpc-server-image.readthedocs.io">{% translate "OS2borgerPC Kiosk Image" %}</a></li>
+  <li><a href="https://os2borgerpc-admin.readthedocs.io">{% translate "OS2borgerPC Admin Portal" %}</a></li>
+  <li><a href="https://os2borgerpc-client.readthedocs.io">{% translate "OS2borgerPC Client" %}</a></li>
+</ul>
+
+{% endblock %}

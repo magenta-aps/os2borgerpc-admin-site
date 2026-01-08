@@ -1,8 +1,6 @@
-{% extends 'index.html' %}
+{% extends 'base_docs.html' %}
 {% load static %}
 {% load i18n %}
-
-{% block doc_subtitle %}API{% endblock %}
 
 {% block specific_content %}
   {% translate "API Key" as api_key %}
@@ -60,16 +58,16 @@
     This {{api_key}} is sent as an {{header}} in the following format:
     {% endblocktranslate %}
   </p>
-    <pre><code class="docs-code bash">
+    <pre><code class="bash">
       Authorization: Bearer &lt;{{api_key}} Here&gt;
     </code></pre>
     <p>{% translate "...without the" %} <strong>"&lt;"</strong> <strong>"&gt;"</strong> {% translate "brackets." %}</p>
     {% blocktranslate trimmed %}
     An example request to the API, with an example {{api_key}}, looks like this, using the CLI tool
     {% endblocktranslate %}
-    <code>curl</code>:
+    <strong>curl</strong>:
 
-    <pre><code class="docs-code bash">
+    <pre><code class="bash">
        curl --header 'Authorization: Bearer Oa5HaJT9fM7aQLN3hjjc2AG6dtbGu4Evb4PDyvl-x81wVl5jnYS9m0c3rqKuaca9Xt4ll45lmLlwob8xM8vY2rQQoH1eXgij0nF9' https://os2borgerpc-admin.magenta.dk/api/system/computers
     </code></pre>
   </p>
@@ -131,7 +129,7 @@
   </p>
   <p>
     {% blocktranslate trimmed %}
-    In order to visit and view the API documentation you have to be signed in to the admin site.
+    In order to visit and view the API documentation you have to be signed in to the admin portal.
     {% endblocktranslate %}
   </p>
   <p>

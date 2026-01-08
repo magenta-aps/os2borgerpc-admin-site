@@ -1,4 +1,4 @@
-{% extends 'index.html' %}
+{% extends 'base_docs.html' %}
 {% load i18n %}
 {% load static %}
 {% load custom_tags %}
@@ -6,7 +6,12 @@
 
 {% block specific_content %}
 
-<h1>{% translate "Sites overview" %}</h1>
+<h1>{% translate "The Sites overview" %}</h1>
+    <p class="alert alert-info">
+        {% blocktranslate trimmed %}
+            Note: You can only see this page if you're either a customer admin, or you've been added to more than one site.
+        {% endblocktranslate %}
+    </p>
     <p>
         {% blocktranslate trimmed %}
             The sites overview shows all the sites that you have access to. A customer admin has access to
@@ -34,21 +39,9 @@
 <p>
     <ul>
         <li>
-            <strong>{% translate "Sites" %}</strong>:
-            {% blocktranslate trimmed %}
-                The total number of sites that you have access to
-            {% endblocktranslate %}
-        </li>
-        <li>
             <strong>{% translate "Computers total" %}</strong>:
             {% blocktranslate trimmed %}
                 The total number of computers registered on the sites that you have access to
-            {% endblocktranslate %}
-        </li>
-        <li>
-            <strong>{% translate "activated" %}</strong>:
-            {% blocktranslate trimmed %}
-                The total number of activated computers on the sites that you have access to
             {% endblocktranslate %}
         </li>
         <li>
@@ -58,13 +51,13 @@
             {% endblocktranslate %}
         </li>
         <li>
-            <strong>{% translate "OS2borgerPC" %}</strong>:
+            <strong>{% translate "BorgerPC" %}</strong>:
             {% blocktranslate trimmed %}
                 The total number of OS2borgerPC computers (not kiosk) on the sites that you have access to
             {% endblocktranslate %}
         </li>
         <li>
-            <strong>{% translate "OS2borgerPC Kiosk" %}</strong>:
+            <strong>{% translate "Kiosk" %}</strong>:
             {% blocktranslate trimmed %}
                 The total number of OS2borgerPC kiosk computers on the sites that you have access to
             {% endblocktranslate %}
@@ -79,7 +72,7 @@
 </p>
 
 <h2>{% translate "Deleting a site" %}</h2>
-<p>{% translate "REMINDER: Only customer admins can delete a site!" %}</p>
+<p class="alert alert-info">{% translate "Note: Only customer admins can delete a site!" %}</p>
 <p>
     {% blocktranslate trimmed %}
         To start the process of deleting a site, click the dropdown symbol on the right side of the button
@@ -95,7 +88,7 @@
 </p>
 
 <h2>{% translate "Creating a new site" %}</h2>
-<p>{% translate "REMINDER: Only customer admins can create new sites!" %}</p>
+<p class="alert alert-info">{% translate "Note: Only customer admins can create new sites!" %}</p>
 <p>
     {% blocktranslate trimmed %}
         If you wish to create a new site, you must click on the "Add new site" button, which is only visible

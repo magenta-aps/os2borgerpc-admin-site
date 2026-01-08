@@ -2067,11 +2067,11 @@
 },
 {
     "model": "system.site",
-    "pk": 9,
+    "pk": 1,
     "fields": {
-        "name": "Magenta",
-        "uid": "magenta",
-        "configuration": 36,
+        "name": "Magenta Test",
+        "uid": "magenta-test",
+        "configuration": 37,
         "customer": 1,
         "created": null,
         "agency_id": "DK-100000",
@@ -2087,11 +2087,11 @@
 },
 {
     "model": "system.site",
-    "pk": 1,
+    "pk": 9,
     "fields": {
-        "name": "Magenta Test",
-        "uid": "magenta-test",
-        "configuration": 37,
+        "name": "Magenta",
+        "uid": "magenta",
+        "configuration": 36,
         "customer": 1,
         "created": null,
         "agency_id": "DK-100000",
@@ -3429,12 +3429,12 @@
     "pk": 5,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:16:32.818",
+        "modified": "2025-11-20T10:01:01.191",
         "user_created": "",
         "user_modified": "magenta",
         "name": "Chrome - Autostart tilføj/fjern",
         "uid": null,
-        "description": "Dette script tilføjer eller fjerner Google Chrome fra autostart. Det er endvidere muligt at få Google Chrome til at starte op i fuldskærm.\r\n\r\nAutostart betyder at Google Chrome vil starte op når brugeren logger ind.\r\n\r\nHvis du tilføjer \"Ja\" som argument bliver Google Chrome tilføjet til autostart og åbnet i fuldskærm.\r\nHvis du tilføjer \"Nej\" som argument bliver Google Chrome tilføjet til autostart og åbnet i normal skærm størelse.\r\nHvis du tilføjer \"Fjern\" som argument bliver Google Chrome fjernet fra autostart.\r\n\r\nTestet på Ubuntu 20.04",
+        "description": "Dette script tilføjer eller fjerner Google Chrome fra autostart. Det er endvidere muligt at få Google Chrome til at starte op i fuldskærm.\r\n\r\nAutostart betyder at Google Chrome vil starte op når brugeren logger ind.\r\n\r\nHvis du tilføjer \"Ja\" som argument bliver Google Chrome tilføjet til autostart og åbnet i fuldskærm.\r\nHvis du tilføjer \"Nej\" som argument bliver Google Chrome tilføjet til autostart og åbnet i normal skærm størelse.\r\nHvis du tilføjer \"Fjern\" som argument bliver Google Chrome fjernet fra autostart.\r\n\r\n[Test af link til andet script](€€script/6)\r\n\r\nTestet på Ubuntu 20.04",
         "site": null,
         "executable_code": "script_uploads/chrome_autostart_cP5Rsu2.sh",
         "is_security_script": false,
@@ -3443,7 +3443,9 @@
         "tags": [
             3
         ],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -3451,7 +3453,7 @@
     "pk": 6,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:16:16.929",
+        "modified": "2025-11-20T10:01:24.776",
         "user_created": "",
         "user_modified": "magenta",
         "name": "Chrome - Deaktiver autologin",
@@ -3465,7 +3467,9 @@
         "tags": [
             3
         ],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -3473,7 +3477,7 @@
     "pk": 7,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:16:10.864",
+        "modified": "2025-11-20T10:01:34.836",
         "user_created": "",
         "user_modified": "magenta",
         "name": "Chrome - Deaktiver nøglering",
@@ -3487,7 +3491,9 @@
         "tags": [
             3
         ],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -3495,7 +3501,7 @@
     "pk": 8,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:27:09.584",
+        "modified": "2025-11-20T10:01:46.315",
         "user_created": "",
         "user_modified": "flash_gordon",
         "name": "Chrome - Installér",
@@ -3509,7 +3515,9 @@
         "tags": [
             3
         ],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -3517,7 +3525,7 @@
     "pk": 9,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2023-10-19T10:08:36.038",
+        "modified": "2025-11-20T10:02:08.548",
         "user_created": "",
         "user_modified": "magenta",
         "name": "Chrome - Skift startside",
@@ -3531,7 +3539,9 @@
         "tags": [
             3
         ],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -3539,7 +3549,7 @@
     "pk": 10,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:26:58.614",
+        "modified": "2025-11-20T10:01:54.039",
         "user_created": "",
         "user_modified": "flash_gordon",
         "name": "Chrome - Sæt som default browser",
@@ -3553,7 +3563,9 @@
         "tags": [
             3
         ],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -3561,7 +3573,7 @@
     "pk": 11,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:30:10.289",
+        "modified": "2025-11-20T10:02:48.811",
         "user_created": "",
         "user_modified": "flash_gordon",
         "name": "Desktop - Fjern \"Luk ned\" og \"Genstart\" fra sessionmenuen og blokér for nedlukning via systempolitik",
@@ -3575,7 +3587,9 @@
         "tags": [
             4
         ],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -3583,7 +3597,7 @@
     "pk": 12,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:30:03.787",
+        "modified": "2025-11-20T10:02:43.283",
         "user_created": "",
         "user_modified": "flash_gordon",
         "name": "Desktop - Fjern besked om opdatering",
@@ -3597,7 +3611,9 @@
         "tags": [
             4
         ],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -3605,7 +3621,7 @@
     "pk": 13,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:15:34.367",
+        "modified": "2025-11-20T10:03:03.641",
         "user_created": "",
         "user_modified": "magenta",
         "name": "Desktop - Skift baggrundsbillede",
@@ -3619,7 +3635,9 @@
         "tags": [
             4
         ],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -3627,7 +3645,7 @@
     "pk": 14,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:15:40.905",
+        "modified": "2025-11-20T10:03:10.461",
         "user_created": "",
         "user_modified": "magenta",
         "name": "Desktop - Vis tilgængelighedsfunktioner",
@@ -3641,7 +3659,9 @@
         "tags": [
             4
         ],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -3649,7 +3669,7 @@
     "pk": 16,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-08-10T09:24:03.341",
+        "modified": "2025-11-20T10:05:31.009",
         "user_created": "",
         "user_modified": "",
         "name": "OS2borgerPC - Skift start tidspunkt og interval",
@@ -3663,7 +3683,9 @@
         "tags": [
             2
         ],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -3671,7 +3693,7 @@
     "pk": 17,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-08-10T09:23:42.962",
+        "modified": "2025-11-20T10:05:02.813",
         "user_created": "",
         "user_modified": "",
         "name": "OS2borgerPC Kiosk - Installer Chromium",
@@ -3685,7 +3707,9 @@
         "tags": [
             2
         ],
-        "products": []
+        "products": [
+            2
+        ]
     }
 },
 {
@@ -3693,7 +3717,7 @@
     "pk": 18,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-08-10T09:23:36.807",
+        "modified": "2025-11-20T10:05:09.635",
         "user_created": "",
         "user_modified": "",
         "name": "OS2borgerPC Kiosk - Installer SSH og VNC",
@@ -3707,7 +3731,9 @@
         "tags": [
             2
         ],
-        "products": []
+        "products": [
+            2
+        ]
     }
 },
 {
@@ -3715,7 +3741,7 @@
     "pk": 19,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-12-02T13:39:30.625",
+        "modified": "2025-11-20T10:04:53.868",
         "user_created": "",
         "user_modified": "mowgli",
         "name": "OS2borgerPC Kiosk - Autostart Chromium",
@@ -3729,7 +3755,9 @@
         "tags": [
             2
         ],
-        "products": []
+        "products": [
+            2
+        ]
     }
 },
 {
@@ -3737,7 +3765,7 @@
     "pk": 20,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:41:26.875",
+        "modified": "2025-11-20T10:08:31.320",
         "user_created": "",
         "user_modified": "flash_gordon",
         "name": "System - Aktivér automatisk borgerlogin",
@@ -3751,7 +3779,9 @@
         "tags": [
             1
         ],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -3759,7 +3789,7 @@
     "pk": 21,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:13:15.258",
+        "modified": "2025-11-20T10:08:48.996",
         "user_created": "",
         "user_modified": "magenta",
         "name": "System - Aktivér automatiske opdateringer",
@@ -3773,7 +3803,10 @@
         "tags": [
             1
         ],
-        "products": []
+        "products": [
+            1,
+            2
+        ]
     }
 },
 {
@@ -3781,7 +3814,7 @@
     "pk": 22,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:41:36.967",
+        "modified": "2025-11-20T10:09:02.936",
         "user_created": "",
         "user_modified": "flash_gordon",
         "name": "System - Genstart computer efter X minutter",
@@ -3795,7 +3828,10 @@
         "tags": [
             1
         ],
-        "products": []
+        "products": [
+            1,
+            2
+        ]
     }
 },
 {
@@ -3803,7 +3839,7 @@
     "pk": 23,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:41:42.820",
+        "modified": "2025-11-20T10:09:09.916",
         "user_created": "",
         "user_modified": "flash_gordon",
         "name": "System - Genstart computeren NU",
@@ -3817,7 +3853,10 @@
         "tags": [
             1
         ],
-        "products": []
+        "products": [
+            1,
+            2
+        ]
     }
 },
 {
@@ -3825,7 +3864,7 @@
     "pk": 24,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:13:31.797",
+        "modified": "2025-11-20T10:09:33.490",
         "user_created": "",
         "user_modified": "magenta",
         "name": "System - Grub: Aktiver sikkerhed",
@@ -3839,7 +3878,10 @@
         "tags": [
             1
         ],
-        "products": []
+        "products": [
+            1,
+            2
+        ]
     }
 },
 {
@@ -3847,7 +3889,7 @@
     "pk": 25,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:41:54.489",
+        "modified": "2025-11-20T10:09:41.731",
         "user_created": "",
         "user_modified": "flash_gordon",
         "name": "System - Log altid ud efter X minutter uden besked",
@@ -3861,7 +3903,9 @@
         "tags": [
             1
         ],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -3869,7 +3913,7 @@
     "pk": 26,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:13:52.581",
+        "modified": "2025-11-20T10:10:03.008",
         "user_created": "",
         "user_modified": "magenta",
         "name": "System - Log bruger ud efter X minutter med besked",
@@ -3883,7 +3927,9 @@
         "tags": [
             1
         ],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -3891,7 +3937,7 @@
     "pk": 27,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:13:44.437",
+        "modified": "2025-11-20T10:09:50.359",
         "user_created": "",
         "user_modified": "magenta",
         "name": "System - Log brugeren ud",
@@ -3905,7 +3951,9 @@
         "tags": [
             1
         ],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -3913,7 +3961,7 @@
     "pk": 28,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:13:57.595",
+        "modified": "2025-11-20T10:10:14.716",
         "user_created": "",
         "user_modified": "magenta",
         "name": "System - Luk ned dagligt",
@@ -3927,7 +3975,10 @@
         "tags": [
             1
         ],
-        "products": []
+        "products": [
+            1,
+            2
+        ]
     }
 },
 {
@@ -3935,7 +3986,7 @@
     "pk": 29,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:42:23.733",
+        "modified": "2025-11-20T10:10:23.752",
         "user_created": "",
         "user_modified": "flash_gordon",
         "name": "System - Luk ned og vågn dagligt",
@@ -3949,7 +4000,10 @@
         "tags": [
             1
         ],
-        "products": []
+        "products": [
+            1,
+            2
+        ]
     }
 },
 {
@@ -3957,7 +4011,7 @@
     "pk": 30,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:14:11.937",
+        "modified": "2025-11-20T10:10:31.688",
         "user_created": "",
         "user_modified": "magenta",
         "name": "System - Opdater alt",
@@ -3971,7 +4025,10 @@
         "tags": [
             1
         ],
-        "products": []
+        "products": [
+            1,
+            2
+        ]
     }
 },
 {
@@ -3979,10 +4036,10 @@
     "pk": 31,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:14:21.909",
+        "modified": "2025-11-20T10:10:38.279",
         "user_created": "",
         "user_modified": "magenta",
-        "name": "System - rotér skærm",
+        "name": "System - Rotér skærm",
         "uid": null,
         "description": "Rotérer den første skærm der bliver fundet til \"normal\", \"left\" eller \"right\".\r\n\r\n\r\nTestet på Ubuntu 20.04",
         "site": null,
@@ -4001,7 +4058,7 @@
     "pk": 32,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:42:40.123",
+        "modified": "2025-11-20T10:10:53.964",
         "user_created": "",
         "user_modified": "flash_gordon",
         "name": "System - Set system clock from BIOS",
@@ -4015,7 +4072,10 @@
         "tags": [
             1
         ],
-        "products": []
+        "products": [
+            1,
+            2
+        ]
     }
 },
 {
@@ -4023,7 +4083,7 @@
     "pk": 33,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:14:30.786",
+        "modified": "2025-11-20T10:11:28.433",
         "user_created": "",
         "user_modified": "magenta",
         "name": "System - Skift lydudgang",
@@ -4037,7 +4097,10 @@
         "tags": [
             1
         ],
-        "products": []
+        "products": [
+            1,
+            2
+        ]
     }
 },
 {
@@ -4045,7 +4108,7 @@
     "pk": 34,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:42:48.545",
+        "modified": "2025-11-20T10:11:35.067",
         "user_created": "",
         "user_modified": "flash_gordon",
         "name": "System - Skift navn på en computer",
@@ -4059,7 +4122,10 @@
         "tags": [
             1
         ],
-        "products": []
+        "products": [
+            1,
+            2
+        ]
     }
 },
 {
@@ -4067,7 +4133,7 @@
     "pk": 35,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2023-05-08T14:14:39.285",
+        "modified": "2025-11-20T10:11:09.968",
         "user_created": "",
         "user_modified": "magenta",
         "name": "System - Skift kodeord for Borger",
@@ -4081,7 +4147,9 @@
         "tags": [
             1
         ],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -4089,7 +4157,7 @@
     "pk": 36,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2023-05-08T14:17:13.412",
+        "modified": "2025-11-20T10:11:20.134",
         "user_created": "",
         "user_modified": "magenta",
         "name": "System - Skift kodeord for superuser",
@@ -4103,7 +4171,10 @@
         "tags": [
             1
         ],
-        "products": []
+        "products": [
+            1,
+            2
+        ]
     }
 },
 {
@@ -4111,12 +4182,12 @@
     "pk": 37,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-08-10T09:20:23.484",
+        "modified": "2025-11-20T10:12:44.405",
         "user_created": "",
         "user_modified": "",
         "name": "System - Tilføj Exfat support",
         "uid": null,
-        "description": "Gør det muligt for Ubuntu at tilkoble et Windows exfat drev.\r\n\r\nTestet på Ubuntu 20.04.\r\n\r\nUdviklet af: Unkown.",
+        "description": "Gør det muligt for Ubuntu at tilkoble et Windows exfat drev.\r\n\r\nTestet på Ubuntu 20.04.\r\n\r\nUdviklet af: Ukendt.",
         "site": null,
         "executable_code": "script_uploads/Exfat_enable_qCyiT2z.sh",
         "is_security_script": false,
@@ -4125,7 +4196,9 @@
         "tags": [
             1
         ],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -4255,7 +4328,7 @@
     "pk": 68,
     "fields": {
         "created": "2021-08-25T11:19:11.606",
-        "modified": "2022-01-26T15:15:27.842",
+        "modified": "2025-11-20T10:02:55.719",
         "user_created": "mowgli",
         "user_modified": "magenta",
         "name": "Desktop - Logud-knap med valgfrit ikon",
@@ -4269,7 +4342,9 @@
         "tags": [
             4
         ],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -4297,7 +4372,7 @@
     "pk": 74,
     "fields": {
         "created": "2021-11-28T15:43:34.421",
-        "modified": "2022-01-26T15:12:05.296",
+        "modified": "2025-11-20T10:05:16.486",
         "user_created": "mowgli",
         "user_modified": "magenta",
         "name": "OS2borgerPC - Log altid ud efter X minutter med nedtæller",
@@ -4309,7 +4384,9 @@
         "is_hidden": false,
         "feature_permission": null,
         "tags": [],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -4317,7 +4394,7 @@
     "pk": 75,
     "fields": {
         "created": "2021-11-28T15:44:26.423",
-        "modified": "2022-01-26T15:12:10.354",
+        "modified": "2025-11-20T10:02:15.618",
         "user_created": "mowgli",
         "user_modified": "magenta",
         "name": "Cicero - Installér PAM-modul",
@@ -4329,7 +4406,9 @@
         "is_hidden": false,
         "feature_permission": null,
         "tags": [],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -4337,7 +4416,7 @@
     "pk": 76,
     "fields": {
         "created": "2021-11-30T14:50:10.592",
-        "modified": "2021-11-30T14:50:40.156",
+        "modified": "2025-11-20T10:05:24.527",
         "user_created": "mowgli",
         "user_modified": "",
         "name": "OS2borgerPC - Opdater klient (yanked)",
@@ -4349,7 +4428,9 @@
         "is_hidden": false,
         "feature_permission": null,
         "tags": [],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -4377,7 +4458,7 @@
     "pk": 78,
     "fields": {
         "created": "2022-01-04T16:36:40.662",
-        "modified": "2022-01-04T16:41:07.708",
+        "modified": "2025-11-20T10:11:47.408",
         "user_created": "mowgli",
         "user_modified": "mowgli",
         "name": "System - Slå to-faktor autentifikation for superbruger til",
@@ -4391,7 +4472,10 @@
         "tags": [
             1
         ],
-        "products": []
+        "products": [
+            1,
+            2
+        ]
     }
 },
 {
@@ -4459,7 +4543,7 @@
     "pk": 82,
     "fields": {
         "created": "2022-10-25T10:48:10.835",
-        "modified": "2022-10-25T10:48:10.835",
+        "modified": "2025-11-20T10:07:11.752",
         "user_created": "",
         "user_modified": "magenta",
         "name": "Tænd/sluk tidsplan - Tilføj tidsplan",
@@ -4471,7 +4555,10 @@
         "is_hidden": true,
         "feature_permission": null,
         "tags": [],
-        "products": []
+        "products": [
+            1,
+            2
+        ]
     }
 },
 {
@@ -4479,7 +4566,7 @@
     "pk": 83,
     "fields": {
         "created": "2022-10-25T10:48:10.835",
-        "modified": "2022-10-25T10:48:10.835",
+        "modified": "2025-11-20T10:12:26.386",
         "user_created": "",
         "user_modified": "magenta",
         "name": "Tænd/sluk tidsplan - Fjern tidsplan",
@@ -4491,7 +4578,10 @@
         "is_hidden": true,
         "feature_permission": null,
         "tags": [],
-        "products": []
+        "products": [
+            1,
+            2
+        ]
     }
 },
 {
@@ -4519,7 +4609,7 @@
     "pk": 85,
     "fields": {
         "created": "2023-09-21T15:52:26.994",
-        "modified": "2023-09-21T15:52:26.994",
+        "modified": "2025-11-20T10:08:23.262",
         "user_created": "",
         "user_modified": "",
         "name": "Sikkerhed - Totrinsbekræftelse for superuser",
@@ -4533,7 +4623,10 @@
         "tags": [
             5
         ],
-        "products": []
+        "products": [
+            1,
+            2
+        ]
     }
 },
 {
@@ -4581,7 +4674,7 @@
     "pk": 88,
     "fields": {
         "created": "2025-10-30T14:10:23.320",
-        "modified": "2025-10-30T14:22:31.794",
+        "modified": "2025-11-20T10:04:17.780",
         "user_created": "magenta",
         "user_modified": "magenta",
         "name": "Login - Send løbende antal login dagligt til adminsitet",
@@ -4595,7 +4688,9 @@
         "tags": [
             7
         ],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -4603,19 +4698,24 @@
     "pk": 89,
     "fields": {
         "created": "2025-11-13T10:21:07.030",
-        "modified": "2025-11-13T15:02:52.494",
+        "modified": "2025-11-20T10:04:08.786",
         "user_created": "magenta",
         "user_modified": "magenta",
         "name": "Markdown example",
         "uid": null,
-        "description": "# Header 1\r\n\r\n## Header 2\r\n\r\n[Link](https://ecosia.com)\r\n[Link](https://ecosia.com)\r\n\r\n- List 1\r\n- List 2\r\n- List 3\r\n    - Nested list 1\r\n\r\nThis should be a table:\r\n\r\n| Header 1 | Header 2 |\r\n|--------------|--------------|\r\n| Row 1      | Row 1     |\r\n\r\n### Header 3\r\n\r\n**Bold**\r\n*Italic*\r\n_Also italic but with underscores_\r\n~~Should be strikethrough but isn't~~\r\nUnderlined is not possible by default with markdown syntax\r\n<span style=\"text-decoration: underline\">...but of course a lot more is possible with HTML in markdown</span>\r\n\r\n1. List 1\r\n2. List 2\r\n3. List 3\r\n\r\nThis should have a footnote[^1]\r\n\r\n[^1]: This should be a footnote\r\n\r\n#### Header 4\r\n\r\nRegular text for comparison\r\n\r\n> This should be\r\n> a block quote\r\n\r\nRegular text for comparison\r\n\r\n```html\r\n<span>This should be a code block</span>\r\n```\r\n\r\n##### Header 5\r\n\r\n<span style=\"color: red;\">HTML red text</span>",
+        "description": "# Header 1\r\n\r\n## Header 2\r\n\r\n[Regular link](https://ecosia.com)\r\n\r\n- List 1\r\n- List 2\r\n- List 3\r\n    - Nested list 1\r\n\r\nThis should be a table:\r\n\r\n| Header 1 | Header 2 |\r\n|--------------|--------------|\r\n| Row 1      | Row 1     |\r\n\r\n### Header 3\r\n\r\n**Bold**\r\n*Italic*\r\n_Also italic but with underscores_\r\n~~Should be strikethrough but isn't~~\r\nUnderlined is not possible by default with markdown syntax\r\n<span style=\"text-decoration: underline\">...but of course a lot more is possible with HTML in markdown</span>\r\n\r\n1. List 1\r\n2. List 2\r\n3. List 3\r\n\r\nThis should have a footnote[^1]\r\n\r\n[^1]: This should be a footnote\r\n\r\n#### Header 4\r\n\r\nRegular text for comparison\r\n\r\n> This should be\r\n> a block quote\r\n\r\nRegular text for comparison\r\n\r\n```html\r\n<span>This should be a code block</span>\r\n```\r\n\r\n€€scriptn/75\r\n[Script](€€script/75)\r\n[Monitoring rules](€€event_rules)\r\n[Jobs](€€jobs)\r\n[Security script](€€sec_script/81)\r\n[Site](€€site)\r\n\r\n##### Header 5\r\n\r\n<span style=\"color: red;\">HTML red text</span>",
         "site": null,
         "executable_code": "script_uploads/a.txt",
         "is_security_script": false,
         "is_hidden": false,
         "feature_permission": null,
         "tags": [],
-        "products": []
+        "products": [
+            1,
+            3,
+            2,
+            7
+        ]
     }
 },
 {
@@ -4623,7 +4723,7 @@
     "pk": 90,
     "fields": {
         "created": "2025-11-13T15:03:03.808",
-        "modified": "2025-11-13T15:08:23.839",
+        "modified": "2025-11-20T10:07:53.119",
         "user_created": "magenta",
         "user_modified": "magenta",
         "name": "Quria",
@@ -4635,7 +4735,9 @@
         "is_hidden": false,
         "feature_permission": null,
         "tags": [],
-        "products": []
+        "products": [
+            1
+        ]
     }
 },
 {
@@ -9021,7 +9123,7 @@
         "release_date": "2024-04-23",
         "published": true,
         "os": "Ubuntu 22.04",
-        "release_notes": "MD5sum: f150078e1caf51b1804fa860344c0504\r\nSwedish (multi-language) MD5sum: b14dd4c6704eb4ab674e0fb9bfa3e5e6\r\n\r\nGrundlæggende:\r\n- Opgraderet til Ubuntu Desktop 22.04.3.\r\n\r\nFølgende funktionalitet er blevet indbygget:\r\n- Opdatering af klienten i forbindelse med indledende registrering\r\n- Superuser har adgang til at redigere printerindstillinger\r\n- Deaktivering af Bluetooth\r\n- Slå Wayland fra\r\n- Automatiske opdateringer (sikkerhed)\r\n- Randomiser tjek-in-tidspunkt\r\n- Sæt GRUB-kodeord (bootmanageren) til noget tilfældigt (fremfor det ikke er sat og der er fri adgang)\r\n- Kør scripts på loginskærm (forudsætning for scriptet der aktiverer numlock på loginskærm)\r\n- Fjern popup-beskeder om fremtidige Ubuntu-opgraderinger (ikke opdateringer)\r\n- Firefox: Nedlås indstillinger / policies\r\n- Installer Okular som standard PDF-læser\r\n- Sæt baggrundsbilleder på loginskærm og skrivebord\r\n- Fjern Libreoffice \"Tip of the day\"\r\n- Borger: Aktiver genveje\r\n- Borger: Fjern luk ned, genstart og dvale fra menu\r\n- Borger: Fjern \"Lås\" fra menu\r\n- Borger: Fjern \"Skift bruger\" fra menu\r\n- Borger: Fjern skriveadgang til skrivebordet\r\n- Borger: Fjern adgang til Indstillinger\r\n- Borger: Sæt Borger som forvalgt bruger på loginskærm, fremfor den \r\n   seneste loggede ind er forvalgt, som kan være superuser\r\n- Borger: Fjern Alt-F2 (Kør)\r\n- Vis hjælpeværktøjer i menuen som standard\r\n\r\nIndbygget version af OS2borgerPC-klienten: 2.4.1",
+        "release_notes": "MD5sum: f150078e1caf51b1804fa860344c0504  \r\nSwedish (multi-language) MD5sum: b14dd4c6704eb4ab674e0fb9bfa3e5e6\r\n\r\nGrundlæggende:\r\n\r\n- Opgraderet til Ubuntu Desktop 22.04.3.\r\n\r\nFølgende funktionalitet er blevet indbygget:\r\n\r\n- Opdatering af klienten i forbindelse med indledende registrering\r\n- Superuser har adgang til at redigere printerindstillinger\r\n- Deaktivering af Bluetooth\r\n- Slå Wayland fra\r\n- Automatiske opdateringer (sikkerhed)\r\n- Randomiser tjek-in-tidspunkt\r\n- Sæt GRUB-kodeord (bootmanageren) til noget tilfældigt (fremfor det ikke er sat og der er fri adgang)\r\n- Kør scripts på loginskærm (forudsætning for scriptet der aktiverer numlock på loginskærm)\r\n- Fjern popup-beskeder om fremtidige Ubuntu-opgraderinger (ikke opdateringer)\r\n- Firefox: Nedlås indstillinger / policies\r\n- Installer Okular som standard PDF-læser\r\n- Sæt baggrundsbilleder på loginskærm og skrivebord\r\n- Fjern Libreoffice \"Tip of the day\"\r\n- Borger: Aktiver genveje\r\n- Borger: Fjern luk ned, genstart og dvale fra menu\r\n- Borger: Fjern \"Lås\" fra menu\r\n- Borger: Fjern \"Skift bruger\" fra menu\r\n- Borger: Fjern skriveadgang til skrivebordet\r\n- Borger: Fjern adgang til Indstillinger\r\n- Borger: Sæt Borger som forvalgt bruger på loginskærm, fremfor den \r\n   seneste loggede ind er forvalgt, som kan være superuser\r\n- Borger: Fjern Alt-F2 (Kør)\r\n- Vis hjælpeværktøjer i menuen som standard\r\n\r\nIndbygget version af OS2borgerPC-klienten: 2.4.1",
         "image_upload": "images/os2borgerpc-5.2.0.iso",
         "image_upload_multilang": "images/os2borgerpc-5.2.0M.iso"
     }

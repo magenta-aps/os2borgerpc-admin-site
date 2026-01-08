@@ -1,4 +1,4 @@
-{% extends 'index.html' %}
+{% extends 'base_docs.html' %}
 {% load static %}
 {% load i18n %}
 {% load custom_tags %}
@@ -46,13 +46,7 @@
   <p>
     {% blocktranslate trimmed %}
     The suspend script can also suspend the computer when it is inactive on the
-    login screen. However, this requires that script execution at login has been
-    enabled via the script
-    {% endblocktranslate %}
-    <a href="{% url 'script_redirect_id' '1064' %}">Udfases - Slå scriptkørsel ved login til/fra</a>.
-    {% blocktranslate trimmed %}
-    Script execution at login is automatically enabled on image 5.0.0 and newer images.
-    The warning will not be shown on the login screen.
+    login screen. The warning will not be shown on the login screen.
     {% endblocktranslate %}
   </p>
   <p>

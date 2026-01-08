@@ -189,6 +189,19 @@
     }
 },
 {
+    "model": "changelog.changelog",
+    "pk": 11,
+    "fields": {
+        "title": "Test links",
+        "description": "Test links",
+        "content": "Links:\r\n\r\n- [Script](€€script/75)\r\n- [Monitoring rules](€€event_rules)\r\n- [Jobs](€€jobs)\r\n- [Security script](€€sec_script/81)\r\n- [Site](€€site)",
+        "created": "2022-02-18T12:13:28",
+        "updated": "2022-02-18T12:13:28",
+        "published": true,
+        "tags": []
+    }
+},
+{
     "model": "changelog.changelogcomment",
     "pk": 7,
     "fields": {

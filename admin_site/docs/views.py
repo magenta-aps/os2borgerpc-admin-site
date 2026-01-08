@@ -41,17 +41,16 @@ class DocView(TemplateView, LoginRequiredMixin):
     def get_context_data(self, **kwargs):  # noqa
 
         documentation_menu_items = [
-            ("", _("The administration site")),
-            ("om_os2borgerpc_admin", _("About")),
-            ("sites_overview", _("Sites overview")),
-            ("status", _("Status")),
+            ("", _("The admin portal")),
+            ("index", _("About")),
+            ("sites_overview", _("The Sites overview")),
+            ("dashboard", _("The Dashboard")),
             ("computers", _("Computers")),
             ("groups", _("Groups")),
-            ("wake_plans", _("On/Off schedules")),
-            ("jobs", _("Jobs")),
             ("scripts", _("Scripts")),
-            ("security_scripts", _("Security Scripts")),
-            ("notifications", _("Notifications and offline rules")),
+            ("jobs", _("Jobs")),
+            ("wake_plans", _("On/Off schedules")),
+            ("monitoring_rules", _("Monitoring Rules")),
             ("users", _("Users")),
             ("configuration", _("Configurations")),
             ("changelogs", _("The News site")),
@@ -81,16 +80,9 @@ class DocView(TemplateView, LoginRequiredMixin):
                 _("Installation Guide for Raspberry Pi"),
             ),
             ("os2borgerpc_kiosk_wifi_guide", _("Updating Wi-Fi setup")),
-            ("", _("Audit")),
-            (self.get_doc_user_lang("docs/Audit_doc", ".pdf"), _("FAQ (PDF)")),
-            ("", _("Technical Documentation")),
-            ("https://os2borgerpc-image.readthedocs.io", _("OS2borgerPC Image")),
-            ("https://os2borgerpc-admin.readthedocs.io", _("OS2borgerPC Admin Site")),
-            (
-                "https://os2borgerpc-server-image.readthedocs.io",
-                _("OS2borgerPC Kiosk Image"),
-            ),
-            ("https://os2borgerpc-client.readthedocs.io", _("OS2borgerPC Client")),
+            ("", _("General")),
+            (self.get_doc_user_lang("docs/Audit_doc", ".pdf"), _("Audit: FAQ (PDF)")),
+            ("technical_docs", _("Technical documentation")),
         ]
 
         if "name" in self.kwargs:
@@ -126,14 +118,7 @@ class DocView(TemplateView, LoginRequiredMixin):
 
         context["menu_active"] = docnames[0]
 
-        # Set heading according to chosen item
-        current_heading = None
-        for link, name in context["docmenuitems"]:
-            if link == "":
-                current_heading = name
-            elif link == docnames[0]:
-                context["docheading"] = current_heading
-                break
+        context["docheading"] = _("OS2borgerPC documentation")
 
         # Add a submenu if it exists
         submenu_template = docnames[0] + "/__submenu__.html"

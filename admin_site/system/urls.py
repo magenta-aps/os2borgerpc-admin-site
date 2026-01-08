@@ -101,11 +101,11 @@ urlpatterns = [
         EventRuleRedirect.as_view(),
         name="event_rules",
     ),
-    # To be able to link users on any site to the security problems page
+    # To be able to link here for anonymous users from e.g. e-mails/PDFs
     path(
         "event_rules/",
         GlobalEventRuleRedirect.as_view(),
-        name="event_rule_redirect",
+        name="event_rules_redirect",
     ),
     # Security problems
     path(
@@ -319,6 +319,7 @@ urlpatterns = [
         name="job_info",
     ),
     path("site/<slug>/jobs/", JobsView.as_view(), name="jobs"),
+    # To be able to link here for anonymous users from e.g. e-mails/PDFs
     path("jobs/", GlobalJobsViewRedirect.as_view(), name="jobs_redirect"),
     # Scripts
     path(
@@ -338,6 +339,7 @@ urlpatterns = [
     ),
     path("site/<slug>/scripts/new/", ScriptCreate.as_view(), name="new_script"),
     path("site/<slug>/scripts/", ScriptRedirect.as_view(), name="scripts"),
+    # To be able to link here for anonymous users from e.g. e-mails/PDFs
     path(
         "scripts/<int:script_pk>/",
         GlobalScriptRedirect.as_view(),
@@ -364,10 +366,6 @@ urlpatterns = [
         name="user_delete",
     ),
     # Documentation
-    path(
-        "documentation/",
-        RedirectView.as_view(url="/documentation/om_os2borgerpc_admin/"),
-    ),
     path(
         "documentation/os2borgerpc_installation_guide/",
         RedirectView.as_view(url=static("docs/OS2BorgerPC_installation_guide_da.pdf")),

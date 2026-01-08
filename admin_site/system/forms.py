@@ -56,7 +56,7 @@ class SiteForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         instance = getattr(self, "instance", None)
         if instance and instance.pk:
-            self.fields["uid"].widget.attrs["readonly"] = True
+            self.fields["uid"].disabled = True
             # Add placeholder if a value exists
             for field_name in [
                 "booking_api_key",
@@ -177,7 +177,7 @@ class UserLinkForm(forms.Form):
 
 class UserForm(forms.ModelForm):
     usertype = forms.ChoiceField(
-        required=True,
+        required=False,
         choices=SiteMembership.type_choices,
         label=_("Usertype"),
     )
@@ -235,7 +235,7 @@ class UserForm(forms.ModelForm):
             (c, l) for c, l in SiteMembership.type_choices if c <= choice_type
         ]
         if choice_type == SiteMembership.SITE_USER:  # Only one choice
-            self.fields["usertype"].widget.attrs["readonly"] = True
+            self.fields["usertype"].disabled = True
 
     # Sets the choices in the usertype widget depending on the usertype
     # of the user currently filling out the form

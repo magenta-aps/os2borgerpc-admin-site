@@ -1,0 +1,33 @@
+{% extends 'base_docs.html' %}
+{% load i18n %}
+
+{% block specific_content %}
+  <h1>{% translate "Monitoring Rules" %}</h1>
+  <p>
+      {% blocktranslate trimmed %}
+      The overview "Monitoring Rules" shows all the defined security rules and
+      offline rules that are monitored. Security rules are marked with the icon
+      <span class="material-symbols-outlined">gpp_maybe</span> and offline rules are
+      marked with the icon <span class="material-symbols-outlined">desktop_access_disabled</span>.
+      {% endblocktranslate %}
+  </p>
+  <p>
+      {% blocktranslate trimmed %}
+      You can define new security rules from the overview by clicking on
+      "Add new security rule" above the list of defined rules. You can edit
+      an existing security rule by selecting it in the list. The interface
+      for both operations has the same form.
+      {% endblocktranslate %}
+  </p>
+  <p>
+      {% blocktranslate trimmed %}
+      Similarly, you can define a new offline rule by clicking on "Add new offline rule"
+      above the list of defined rules. You can edit an existing offline rule by selecting
+      it in the list. The interface for both operations has the same form.
+      {% endblocktranslate %}
+  </p>
+  <p>
+      {% translate "The following topics are relevant for monitoring rules" %}:
+      {% include 'monitoring_rules/__submenu__.html' %}
+  </p>
+{% endblock %}

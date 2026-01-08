@@ -220,8 +220,7 @@ class Site(models.Model):
         max_length=50,
         blank=True,
         help_text=_(
-            "Necessary for customers who wish to"
-            " integrate with standard library login"
+            "Necessary for customers who wish to integrate with standard library login"
         ),
     )
     citizen_login_api_user = models.CharField(
@@ -732,12 +731,14 @@ class PC(models.Model):
         verbose_name=_("name"),
         max_length=40,
         help_text=_(
-            "Valid characters are (English) letters, numbers and hyphens. The length must be 1-40 characters.<br/>Note: If you change this, the computer's hostname will be updated, becoming a lowercased version of the new name."
+            "Valid characters are (English) letters, numbers and hyphens, and it may not start with a hyphen. The length must be 1-40 characters.<br/>Note: If you change this, the computer's hostname will be updated, becoming a lowercased version of the new name."
         ),
         validators=[
             RegexValidator(
-                re.compile("^[-a-zA-Z0-9]+$"),
-                "Enter a valid name consisting of (English) letters, numbers or hyphens.",
+                re.compile("^[a-zA-Z0-9][-a-zA-Z0-9]*$"),
+                _(
+                    "Enter a valid name consisting of (English) letters, numbers or hyphens. It may not start with a hyphen."
+                ),
             )
         ],
     )

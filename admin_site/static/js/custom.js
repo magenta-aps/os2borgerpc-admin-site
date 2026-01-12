@@ -315,7 +315,7 @@ var BibOS
                     document.removeEventListener('click', handleClickOutside);
                 }
             });
-            Array.from(document.getElementsByClassName('clipboard-btn')).forEach(btn=>btn.addEventListener('click', joblog_copy))
+            Array.from(document.getElementsByClassName('clipboard-btn')).forEach(btn=>btn.addEventListener('click', pc_joblog_copy))
         },
         error: function () {},
       })
@@ -350,7 +350,7 @@ function calcPaginationRange(pag_data, obj_per_page) {
   return range
 }
 
-function joblog_copy() {
+function pc_joblog_copy() {
   let btn = document.getElementById("clipboard-button")
   let log = document.getElementById("job-log").innerText
 

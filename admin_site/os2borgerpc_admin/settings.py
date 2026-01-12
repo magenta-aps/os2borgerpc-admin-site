@@ -88,7 +88,7 @@ DATABASES = {
         "HOST": settings["DB_HOST"],
         "PORT": settings.get("DB_PORT", fallback=""),
         "OPTIONS": {
-            "connect_timeout": 2,  # Minimum in 2
+            "connect_timeout": 10,  # Minimum in 2
         },
     }
 }

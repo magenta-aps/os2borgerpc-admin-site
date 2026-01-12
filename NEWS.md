@@ -1,3 +1,7 @@
+## Version 6.12.1, January 12, 2026
+
+- Revert psycopg to version 3.1.18 due to bug in newer versions
+
 ## Version 6.12.0, January 8, 2026
 
 - Update docs

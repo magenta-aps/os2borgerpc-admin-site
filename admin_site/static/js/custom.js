@@ -267,34 +267,6 @@ var BibOS
 
       if (!inserted) lastInsert(elem)
     },
-    // Only used by the computer job list
-    setupJobInfoButtons: function (rootElem) {
-      // initialize all job info popovers.
-      var popoverTriggerList = [].slice.call(
-        document.querySelectorAll('[data-bs-toggle="popover"]'),
-      )
-      var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-        return new bootstrap.Popover(popoverTriggerEl)
-      })
-
-      var t = this
-
-      // JOBINFOBUTTON
-      $(rootElem)
-        .find(".jobinfobutton")
-        .on("show.bs.popover", function (e) {
-          // hide all popovers before a new popover is shown.
-          popoverTriggerList.map(function (popoverTriggerEl) {
-            $(popoverTriggerEl).popover("hide")
-          })
-        })
-
-      $(rootElem)
-        .find(".jobinfobutton")
-        .on("shown.bs.popover", function (e) {
-          t.showJobInfo(this)
-        })
-    },
     setupSecurityEventLogInfoButtons: function (rootElem) {
       // initialize all security event log info popovers.
       var popoverTriggerList = [].slice.call(
@@ -314,14 +286,12 @@ var BibOS
         })
     },
     // Only used by the computer job list
-    showJobInfo: function (triggerElem) {
-      var popover = bootstrap.Popover.getInstance(triggerElem)
-      triggerElem = $(triggerElem)
-      var id = triggerElem.attr("data-pk")
-      this.shownJobInfo = id
+    showJobInfo: function (jobPk) {
+      const triggerElement = document.querySelector(`button[onclick="BibOS.showJobInfo(${jobPk})"]`);
+
       var url = location.href.match(/^(https?:\/\/[^\/]+\/site\/[^\/]+\/)/)
       if (url) {
-        url = url[1] + "jobs/" + id + "/info/"
+        url = url[1] + "jobs/" + jobPk + "/info/"
       } else {
         return false
       }
@@ -330,16 +300,22 @@ var BibOS
         url: url,
         success: function (data) {
           // set content from backend data and redraw popover.
-          triggerElem.attr("data-bs-content", data)
-          popover.setContent()
+          const popover = new bootstrap.Popover(triggerElement, {
+                title: gettext("Job info"), content: data, html: true, placement: 'right', trigger: 'manual'
+            });
 
-          // TODO: Only used by computers job list - rewrite to use the general copy button instead
-          const parser = new DOMParser();
-          const dataHTML = parser.parseFromString(data, 'text/html');
+            popover.show();  // Show the popover
 
-          const jobLog = dataHTML.getElementById("job-log").innerText
+            // Hide popover when clicking outside
+            document.addEventListener('click', function handleClickOutside(e) {
+                const popoverElement = document.querySelector('.popover');
 
-          addEventListenerForClipBoardButton(jobLog)
+                if (!triggerElement.contains(e.target) && !popoverElement.contains(e.target)) {
+                    popover.hide();
+                    document.removeEventListener('click', handleClickOutside);
+                }
+            });
+            Array.from(document.getElementsByClassName('clipboard-btn')).forEach(btn=>btn.addEventListener('click', pc_joblog_copy))
         },
         error: function () {},
       })
@@ -374,24 +350,21 @@ function calcPaginationRange(pag_data, obj_per_page) {
   return range
 }
 
+function pc_joblog_copy() {
+  let btn = document.getElementById("clipboard-button")
+  let log = document.getElementById("job-log").innerText
+
+  navigator.clipboard.writeText(log)
+
+  btn.getElementsByClassName("copy-btn-text-orig")[0].classList.add('d-none')
+  btn.lastElementChild.classList.remove('d-none')
+}
+
 // Function to get the value of a named cookie
 function getCookie(name) {
   const value = `; ${document.cookie}`
   const parts = value.split(`; ${name}=`)
   if (parts.length === 2) return parts.pop().split(";").shift()
-}
-
-/* Currently only used by the computer job log copy button */
-function addEventListenerForClipBoardButton(log) {
-  let btn = document.getElementById("clipboard-button")
-
-  btn.addEventListener('click', () => {
-
-    navigator.clipboard.writeText(log)
-
-    btn.getElementsByClassName("copy-btn-text-orig")[0].classList.add('d-none')
-    btn.lastElementChild.classList.remove('d-none')
-  })
 }
 
 /* General purpose copy button */

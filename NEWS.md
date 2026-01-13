@@ -1,3 +1,8 @@
+## Version 6.12.1, January 12, 2026
+
+- Change connect_timeout to 10
+- Fix the job log copy button on the pc job list
+
 ## Version 6.12.0, January 8, 2026
 
 - Update docs

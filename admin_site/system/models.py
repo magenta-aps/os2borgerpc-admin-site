@@ -1144,12 +1144,16 @@ class Job(models.Model):
                 {"type": param.input.value_type, "value": param.transfer_value}
             )
 
+        # We remove carriage return in the executable code via replace to ensure
+        # that scripts made on Windows also work
         return {
             "id": self.pk,
             "name": self.batch.script.name,
             "status": self.status,
             "parameters": parameters,
-            "executable_code": self.batch.script.executable_code.read().decode("utf8"),
+            "executable_code": self.batch.script.executable_code.read()
+            .decode("utf8")
+            .replace("\r", ""),
         }
 
     def resolve(self):

@@ -74,7 +74,6 @@ from system.views import (
     UserUpdate,
 )
 
-
 urlpatterns = [
     # TODO: Switch to using the django javascript translation system
     # For translations of strings in javascript files that are printed to the user

@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from system.models import SecurityEvent, Citizen
+from system.models import SecurityEvent, Citizen, LoginLog
 from datetime import datetime, timedelta
 
 
@@ -18,3 +18,5 @@ class Command(BaseCommand):
         SecurityEvent.objects.filter(reported_time__lt=a_year_ago).delete()
         # Delete old citizen objects
         Citizen.objects.filter(last_successful_login__lt=two_days_ago).delete()
+        # Delete old login logs
+        LoginLog.objects.filter(date__lt=a_year_ago).delete()

@@ -6,7 +6,6 @@ django-markdownx==4.0.7
 django-ninja==0.22.2
 django-storages==1.14.6
 django-two-factor-auth[phonenumberslite]==1.18.0
-django-xmlrpc==0.1.8
 google-api-core==2.24.1           # If using Google Cloud
 google-auth==2.38.0               # If using Google Cloud
 google-cloud-core==2.4.2          # If using Google Cloud
@@ -17,7 +16,6 @@ gunicorn==23.0.0
 mozilla-django-oidc==4.0.1
 psycopg-binary==3.2.13            # Postgres support
 psycopg==3.2.13                   # Postgres support
-python-dateutil==2.9.0            # Required by django-xmlrpc
 PyJWT==2.10.1                     # Support for decoding JWT's
 requests==2.32.3
 whitenoise==6.9.0                 # If you don't have a web server in front to serve static files

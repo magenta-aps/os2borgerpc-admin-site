@@ -8,7 +8,6 @@ from django.contrib import admin
 from .user_api import api as user_api
 from .client_api import api as client_api
 
-from django_xmlrpc.views import handle_xmlrpc
 from markdownx import urls as markdownx
 from two_factor.urls import urlpatterns as tf_urls
 
@@ -17,9 +16,6 @@ admin.autodiscover()
 urlpatterns = [
     # Login-related
     path("", include("account.urls")),
-    # xmlrpc
-    path("xmlrpc/", handle_xmlrpc, name="xmlrpc"),
-    path("admin-xml/", handle_xmlrpc),
     # Include each of our apps' URLs
     path("", include("system.urls")),
     path("documentation/", include("docs.urls")),

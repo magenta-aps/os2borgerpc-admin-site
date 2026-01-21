@@ -224,7 +224,6 @@ LOCAL_APPS = (
 )
 
 THIRD_PARTY_APPS = (
-    "django_xmlrpc",
     "django_extensions",
     "crispy_forms",
     "crispy_bootstrap5",
@@ -248,23 +247,6 @@ DJANGO_APPS = (
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
-
-XMLRPC_METHODS = (
-    ("system.rpc.register_new_computer", "register_new_computer"),
-    ("system.rpc.register_new_computer_v2", "register_new_computer_v2"),
-    ("system.rpc.send_status_info", "send_status_info"),
-    ("system.rpc.send_status_info_v2", "send_status_info_v2"),
-    ("system.rpc.get_instructions", "get_instructions"),
-    ("system.rpc.push_config_keys", "push_config_keys"),
-    ("system.rpc.push_security_events", "push_security_events"),
-    ("system.rpc.citizen_login", "citizen_login"),
-    ("system.rpc.citizen_logout", "citizen_logout"),
-    ("system.rpc.sms_login", "sms_login"),
-    ("system.rpc.sms_login_finalize", "sms_login_finalize"),
-    ("system.rpc.sms_logout", "sms_logout"),
-    ("system.rpc.general_citizen_login", "general_citizen_login"),
-    ("system.rpc.general_citizen_logout", "general_citizen_logout"),
-)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

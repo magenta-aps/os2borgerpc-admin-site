@@ -2,6 +2,7 @@ from ninja import Router
 from .client_api_schemas import (
     CitizenLoginSchema,
     CitizenLogoutSchema,
+    ConfirmJobsReceiptSchema,
     GeneralCitizenLoginSchema,
     GeneralCitizenLogoutSchema,
     GetInstructionsSchema,
@@ -14,18 +15,19 @@ from .client_api_schemas import (
     SmsLogoutSchema,
 )
 from .rpc import (
-    register_new_computer_v2,
-    send_status_info_v2,
+    citizen_login,
+    citizen_logout,
+    confirm_jobs_receipt,
+    general_citizen_login,
+    general_citizen_logout,
     get_instructions,
     push_config_keys,
     push_security_events,
+    register_new_computer_v2,
+    send_status_info_v2,
     sms_login,
     sms_login_finalize,
     sms_logout,
-    general_citizen_logout,
-    general_citizen_login,
-    citizen_logout,
-    citizen_login,
 )
 
 router = Router()
@@ -44,6 +46,11 @@ def send_status_info_route(request, data: SendStatusInfoSchema):
 @router.post("/get_instructions")
 def get_instructions_route(request, data: GetInstructionsSchema):
     return get_instructions(**data.dict())
+
+
+@router.post("/confirm_jobs_receipt")
+def confirm_jobs_receipt_route(request, data: ConfirmJobsReceiptSchema):
+    return confirm_jobs_receipt(**data.dict())
 
 
 @router.post("/push_config_keys", response={200: str, 400: str})

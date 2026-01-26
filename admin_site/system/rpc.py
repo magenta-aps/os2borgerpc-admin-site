@@ -235,7 +235,8 @@ def get_instructions(pc_uid):
             "name": identifier,
             "executable_code": security_problem.security_script.executable_code.read()
             .decode("utf8")
-            .replace("%SECURITY_PROBLEM_UID%", str(security_problem.id)),
+            .replace("%SECURITY_PROBLEM_UID%", str(security_problem.id))
+            .replace("\r", ""),
         }
         scripts.append(script_dict)
 

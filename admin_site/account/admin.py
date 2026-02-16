@@ -65,7 +65,8 @@ class MyUserAdmin(UserAdmin):
 
     @admin.display(ordering="user_profile__sites__customer")
     def customer(self, obj):
-        return obj.user_profile.sites.first().customer
+        if obj.user_profile.sites.count() > 0:
+            return obj.user_profile.sites.first().customer
 
     @admin.display(ordering="user_profile__sites")
     def sites(self, obj):

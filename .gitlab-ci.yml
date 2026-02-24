@@ -33,17 +33,20 @@ variables:
 #  Lint stage  #
 ################
 
-.lint-default: &lint-default
+# NOTE: Keep linter versions in sync with the versions used in pre-commit
+
+lint python:
   stage: lint
-
-Lint Python:
-  <<: *lint-default
   image: python:3.13-alpine
-  before_script: [pip3 install black]
-  script: [cd admin_site, black --version, black --check --diff .]
+  before_script: [pip3 install ruff]
+  script: [
+    "cd admin_site",
+    "ruff --version",
+    "ruff format --diff .",
+  ]
 
-Lint Dockerfiles:
-  <<: *lint-default
+lint dockerfiles:
+  stage: lint
   image: hadolint/hadolint:latest-alpine
   script:
     - find . -name Dockerfile -exec hadolint {} \;
@@ -52,12 +55,12 @@ Lint Dockerfiles:
 #  Build stage  #
 #################
 
-Build app image:
+build app image:
   extends: .build-docker
   # Minimize unnecessary builds, specified because the extended template sets needs to []
   needs:
-    - Lint Python
-    - Lint Dockerfiles
+    - lint python
+    - lint dockerfiles
 
 ###################
 #  Release stage  #
@@ -70,7 +73,7 @@ Build app image:
     GIT_STRATEGY: none  # We do not need the source code
   before_script: [apk add skopeo]
 
-Release versioned:
+release versioned:
   <<: *release-default
   extends: [.rules:semver-all]
   script:
@@ -79,7 +82,7 @@ Release versioned:
       "docker://${IMAGE_SHA}"
       "docker://${RELEASE_IMAGE_TAG}"
 
-Release latest:
+release latest:
   <<: *release-default
   extends: [.rules:semver-core]
   script:
@@ -92,17 +95,17 @@ Release latest:
 #  Deploy stage  #
 ##################
 
-TESTING update version salt:
+testing update version salt:
   extends: [.rules:semver-all, .config:endpoint-with-tag]
-  needs: [Release versioned]
+  needs: [release versioned]
   when: manual
   variables:
     ENDPOINT: os2bpc/salt/update-test
     CONFIG_UPDATER_USERNAME: os2bpc
 
-TESTING trigger salt deployment:
+testing trigger salt deployment:
   extends: [.rules:semver-all, .saltbert]
-  needs: [TESTING update version salt]
+  needs: [testing update version salt]
   when: manual
   variables:
     SALTBERT_ORCHESTRATION: os2bpc.test
@@ -112,17 +115,17 @@ TESTING trigger salt deployment:
     name: os2borgerpc-test
     url: https://os2borgerpc-test.magenta.dk
 
-PROD update version salt:
+prod update version salt:
   extends: [.rules:semver-core, .config:endpoint-with-tag]
-  needs: [Release latest, TESTING trigger salt deployment]
+  needs: [release latest, testing trigger salt deployment]
   when: manual
   variables:
     ENDPOINT: os2bpc/salt/update-production
     CONFIG_UPDATER_USERNAME: os2bpc
 
-PROD trigger salt deployment:
+prod trigger salt deployment:
   extends: [.rules:semver-core, .saltbert]
-  needs: [PROD update version salt]
+  needs: [prod update version salt]
   when: manual
   variables:
     SALTBERT_ORCHESTRATION: os2bpc.production

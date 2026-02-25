@@ -6,12 +6,6 @@ django-markdownx==4.0.7
 django-ninja==0.22.2
 django-storages==1.14.6
 django-two-factor-auth[phonenumberslite]==1.18.0
-google-api-core==2.24.1           # If using Google Cloud
-google-auth==2.38.0               # If using Google Cloud
-google-cloud-core==2.4.2          # If using Google Cloud
-google-cloud-storage==3.0.0       # If using Google Cloud
-google-crc32c==1.6.0              # If using Google Cloud - for hashing
-googleapis-common-protos==1.68.0  # If using Google Cloud
 gunicorn==23.0.0
 mozilla-django-oidc==4.0.1
 psycopg-binary==3.3.3             # Postgres support

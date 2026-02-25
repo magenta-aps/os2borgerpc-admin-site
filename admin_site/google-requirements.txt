@@ -1,0 +1,7 @@
+# Only relevant if using Google Cloud
+google-api-core==2.24.1
+google-auth==2.38.0
+google-cloud-core==2.4.2
+google-cloud-storage==3.0.0
+google-crc32c==1.6.0
+googleapis-common-protos==1.68.0

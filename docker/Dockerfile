@@ -58,7 +58,8 @@ COPY VERSION /code/VERSION
 
 # Install requirements.
 COPY admin_site/requirements.txt /code/admin_site/requirements.txt
-RUN pip3 install --no-cache-dir -r  admin_site/requirements.txt
+COPY admin_site/google-requirements.txt /code/admin_site/google-requirements.txt
+RUN pip3 install --no-cache-dir --requirement  admin_site/requirements.txt --requirement admin_site/google-requirements.txt
 
 # Install supercronic
 ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.2.25/supercronic-linux-amd64 \

@@ -5,8 +5,6 @@ import os
 from datetime import datetime
 from pathlib import Path
 
-from google.oauth2 import service_account
-
 logger = logging.getLogger(__name__)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -140,6 +138,9 @@ STATICFILES_FINDERS = (
 
 # Storage setup
 if os.environ.get("GS_BUCKET_NAME"):
+    # Importing it here so it's not a hard requirement
+    from google.oauth2 import service_account
+
     # The Google Cloud Storage bucket name. For `django-storages[google]`
     # https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
     # If it is set, we save all files to Google Cloud.

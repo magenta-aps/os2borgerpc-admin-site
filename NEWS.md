@@ -1,3 +1,14 @@
+## Version 7.0.0, February 26, 2026
+
+- Remove the legacy XMLRPC API
+- Update Python from 3.9 -> 3.12
+- Handle Windows line endings in security scripts as well
+- Implement support for a check for whether jobs have been received
+- Add a little extra info to the backend interface
+- Clean up login logs regularly
+- Update psycopg to 3.3.3
+- Update django patch version to 4.2.28
+
 ## Version 6.13.0, January 20, 2026
 
 - Handle scripts written on Windows

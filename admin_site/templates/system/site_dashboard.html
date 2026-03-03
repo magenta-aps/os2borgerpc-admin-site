@@ -165,8 +165,8 @@
                 {% for entry in oldest_full_updates %}
                     <tr>
                         <td>
-                            <a href="{% url 'computer' site.uid entry.owner_configuration.pc_set.first.uid %}">
-                            <strong>{{ entry.owner_configuration.pc_set.first.name }}</strong>
+                            <a href="{% url 'computer' site.uid entry.owner_configuration.pc.uid %}">
+                            <strong>{{ entry.owner_configuration.pc.name }}</strong>
                             </a>
                         </td>
                         <td class="text-end">

@@ -272,22 +272,22 @@ class ConfigurationAdmin(admin.ModelAdmin):
 @admin.register(m.ConfigurationEntry)
 class ConfigurationEntryAdmin(admin.ModelAdmin):
     def site(self, obj):
-        return obj.owner_configuration.site_set.first()
+        return obj.owner_configuration.site
 
     def pcgroup(self, obj):
-        return obj.owner_configuration.pcgroup_set.first()
+        return obj.owner_configuration.pcgroup
 
     def pc(self, obj):
-        return obj.owner_configuration.pc_set.first()
+        return obj.owner_configuration.pc
 
     def site_indirect(self, obj):
         owner_conf = obj.owner_configuration
-        if owner_conf.site_set.exists():
-            return owner_conf.site_set.first()
-        elif owner_conf.pcgroup_set.exists():
-            return owner_conf.pcgroup_set.first().site
-        elif owner_conf.pc_set.exists():
-            return owner_conf.pc_set.first().site
+        if owner_conf.site:
+            return owner_conf.site
+        elif owner_conf.pcgroup:
+            return owner_conf.pcgroup.site
+        elif owner_conf.pc:
+            return owner_conf.pc.site
 
     list_display = [
         "id",

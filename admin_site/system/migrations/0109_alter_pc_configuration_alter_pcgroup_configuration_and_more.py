@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("system", "0094_remove_configuration_name"),
+        ("system", "0108_alter_pc_name"),
     ]
 
     operations = [

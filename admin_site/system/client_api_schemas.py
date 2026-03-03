@@ -16,6 +16,12 @@ class SendStatusInfoSchema(Schema):
 
 class GetInstructionsSchema(Schema):
     pc_uid: str
+    jobs_received_check: bool = False
+
+
+class ConfirmJobsReceiptSchema(Schema):
+    pc_uid: str
+    job_ids: list
 
 
 class PushConfigKeysSchema(Schema):

@@ -404,7 +404,15 @@ class FeaturePermissionAdmin(admin.ModelAdmin):
 
 @admin.register(m.ImageVersion)
 class ImageVersionAdmin(admin.ModelAdmin):
-    list_display = ("product", "image_version", "os", "release_date")
+    list_display = (
+        "product",
+        "image_version",
+        "os",
+        "published",
+        "release_date",
+        "image_upload",
+        "image_upload_multilang",
+    )
 
 
 @admin.register(m.Job)

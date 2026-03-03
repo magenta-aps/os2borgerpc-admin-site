@@ -191,7 +191,7 @@ def send_status_info(pc_uid, package_data, job_data, update_required):
     return send_status_info_v2(pc_uid, job_data)
 
 
-def get_instructions(pc_uid):
+def get_instructions(pc_uid, jobs_received_check=False):
     """This function will ask for new instructions in the form of a list of
     jobs, which will be scheduled for execution and executed upon receipt.
     These jobs will generally take the form of bash scripts."""
@@ -211,8 +211,12 @@ def get_instructions(pc_uid):
 
     jobs = []
     for job in pc.jobs.filter(status=Job.NEW).order_by("pk"):
-        job.status = Job.SUBMITTED
-        job.save()
+        # If the client uses confirm_jobs_receipt, we don't change
+        # the job status to SUBMITTED until the receipt
+        # has been confirmed
+        if not jobs_received_check:
+            job.status = Job.SUBMITTED
+            job.save()
         jobs.append(job.as_instruction)
 
     # Check for security scripts covering the site and
@@ -235,7 +239,8 @@ def get_instructions(pc_uid):
             "name": identifier,
             "executable_code": security_problem.security_script.executable_code.read()
             .decode("utf8")
-            .replace("%SECURITY_PROBLEM_UID%", str(security_problem.id)),
+            .replace("%SECURITY_PROBLEM_UID%", str(security_problem.id))
+            .replace("\r", ""),
         }
         scripts.append(script_dict)
 
@@ -246,6 +251,24 @@ def get_instructions(pc_uid):
     }
 
     return instructions
+
+
+def confirm_jobs_receipt(pc_uid, job_ids):
+    """This function is used by the client to confirm receipt of jobs sent via get_instructions."""
+
+    try:
+        pc = PC.objects.get(uid=pc_uid)
+    except PC.DoesNotExist:
+        # Fail silently
+        return {}
+
+    jobs = pc.jobs.filter(id__in=job_ids)
+    for job in jobs:
+        if job.status == Job.NEW:
+            job.status = Job.SUBMITTED
+            job.save()
+
+    return True
 
 
 def push_config_keys(pc_uid, config_dict, read_only=False, api_call=False):

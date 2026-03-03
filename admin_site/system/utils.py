@@ -341,7 +341,7 @@ def cicero_validate(loaner_number, pincode, site, pc=None):
     """
     logger = logging.getLogger(__name__)
 
-    regex_match = re.fullmatch(f"^\d+$", pincode)
+    regex_match = re.fullmatch(r"^\d+$", pincode)
     if not regex_match:
         # logger.warning("{site.name}: Pincode must be a number.")
         return 0

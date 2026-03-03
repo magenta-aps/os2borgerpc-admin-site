@@ -358,7 +358,9 @@ class PCForm(forms.ModelForm):
         model = PC
         exclude = ("configuration", "site", "created", "last_seen", "product")
         widgets = {
-            "name": forms.widgets.TextInput(attrs={"pattern": "[\-a-z0-9A-Z]{1,40}"}),
+            "name": forms.widgets.TextInput(
+                attrs={"pattern": r"[a-z0-9A-Z][\-a-z0-9A-Z]{1,40}"}
+            ),
         }
 
 

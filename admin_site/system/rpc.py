@@ -264,8 +264,9 @@ def confirm_jobs_receipt(pc_uid, job_ids):
 
     jobs = pc.jobs.filter(id__in=job_ids)
     for job in jobs:
-        job.status = Job.SUBMITTED
-        job.save()
+        if job.status == Job.NEW:
+            job.status = Job.SUBMITTED
+            job.save()
 
     return True
 

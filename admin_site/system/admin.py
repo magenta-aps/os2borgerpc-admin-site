@@ -249,13 +249,16 @@ class CitizenAdmin(admin.ModelAdmin):
 @admin.register(m.Configuration)
 class ConfigurationAdmin(admin.ModelAdmin):
     def site(self, obj):
-        return obj.site
+        if hasattr(obj, "site"):
+            return obj.site
 
     def pcgroup(self, obj):
-        return obj.pcgroup
+        if hasattr(obj, "pcgroup"):
+            return obj.pcgroup
 
     def pc(self, obj):
-        return obj.pc
+        if hasattr(obj, "pc"):
+            return obj.pc
 
     list_display = ["id", "pc", "pcgroup", "site"]
     search_fields = ("id",)
@@ -272,22 +275,28 @@ class ConfigurationAdmin(admin.ModelAdmin):
 @admin.register(m.ConfigurationEntry)
 class ConfigurationEntryAdmin(admin.ModelAdmin):
     def site(self, obj):
-        return obj.owner_configuration.site
+        conf = obj.owner_configuration
+        if hasattr(conf, "site"):
+            return conf.site
 
     def pcgroup(self, obj):
-        return obj.owner_configuration.pcgroup
+        conf = obj.owner_configuration
+        if hasattr(conf, "pcgroup"):
+            return conf.pcgroup
 
     def pc(self, obj):
-        return obj.owner_configuration.pc
+        conf = obj.owner_configuration
+        if hasattr(conf, "pc"):
+            return conf.pc
 
     def site_indirect(self, obj):
-        owner_conf = obj.owner_configuration
-        if owner_conf.site:
-            return owner_conf.site
-        elif owner_conf.pcgroup:
-            return owner_conf.pcgroup.site
-        elif owner_conf.pc:
-            return owner_conf.pc.site
+        conf = obj.owner_configuration
+        if hasattr(conf, "site"):
+            return conf.site
+        elif hasattr(conf, "pcgroup"):
+            return conf.pcgroup.site
+        elif hasattr(conf, "pc"):
+            return conf.pc.site
 
     list_display = [
         "id",

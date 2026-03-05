@@ -248,16 +248,19 @@ class CitizenAdmin(admin.ModelAdmin):
 
 @admin.register(m.Configuration)
 class ConfigurationAdmin(admin.ModelAdmin):
-    def sites(self, obj):
-        return list(obj.site_set.all())
+    def site(self, obj):
+        if hasattr(obj, "site"):
+            return obj.site
 
-    def pcgroups(self, obj):
-        return list(obj.pcgroup_set.all())
+    def pcgroup(self, obj):
+        if hasattr(obj, "pcgroup"):
+            return obj.pcgroup
 
-    def pcs(self, obj):
-        return list(obj.pc_set.all())
+    def pc(self, obj):
+        if hasattr(obj, "pc"):
+            return obj.pc
 
-    list_display = ["id", "pcs", "pcgroups", "sites"]
+    list_display = ["id", "pc", "pcgroup", "site"]
     search_fields = ("id",)
     inlines = [
         ConfigurationEntryInline,
@@ -272,22 +275,28 @@ class ConfigurationAdmin(admin.ModelAdmin):
 @admin.register(m.ConfigurationEntry)
 class ConfigurationEntryAdmin(admin.ModelAdmin):
     def site(self, obj):
-        return obj.owner_configuration.site_set.first()
+        conf = obj.owner_configuration
+        if hasattr(conf, "site"):
+            return conf.site
 
     def pcgroup(self, obj):
-        return obj.owner_configuration.pcgroup_set.first()
+        conf = obj.owner_configuration
+        if hasattr(conf, "pcgroup"):
+            return conf.pcgroup
 
     def pc(self, obj):
-        return obj.owner_configuration.pc_set.first()
+        conf = obj.owner_configuration
+        if hasattr(conf, "pc"):
+            return conf.pc
 
     def site_indirect(self, obj):
-        owner_conf = obj.owner_configuration
-        if owner_conf.site_set.exists():
-            return owner_conf.site_set.first()
-        elif owner_conf.pcgroup_set.exists():
-            return owner_conf.pcgroup_set.first().site
-        elif owner_conf.pc_set.exists():
-            return owner_conf.pc_set.first().site
+        conf = obj.owner_configuration
+        if hasattr(conf, "site"):
+            return conf.site
+        elif hasattr(conf, "pcgroup"):
+            return conf.pcgroup.site
+        elif hasattr(conf, "pc"):
+            return conf.pc.site
 
     list_display = [
         "id",

@@ -137,7 +137,7 @@ def get_pc_configuration(request, configuration_id):
     site = get_site_from_request(request)
     config = Configuration.objects.filter(id=configuration_id).first()
     if config:
-        pc = config.pc_set.first()
+        pc = config.pc
     if config and pc and pc.site == site:
         conf = ConfigurationEntry.objects.filter(owner_configuration=configuration_id)
         return 200, conf

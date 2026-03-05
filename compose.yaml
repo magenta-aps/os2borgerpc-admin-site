@@ -20,6 +20,10 @@ services:
         image: bpc
         pull_policy: never
         container_name: bpc-application
+        env_file:
+            - path: ./dev-environment/bpc.env
+            - path: ./dev-environment/overrides.env
+              required: false
         # NOTE: --workers 1 and --max-requests 1 makes gunicorn run with only
         # one worker + respawn it after each request to reload on changes
         # to templates/CSS + avoid issues where different workers have cached
@@ -43,7 +47,6 @@ services:
                    --timeout 0 --config /code/docker/gunicorn-settings.py os2borgerpc_admin.wsgi"
         volumes:
             - .:/code/
-            - ./dev-environment/dev-settings.ini:/user-settings.ini
             - ./dev-environment/fixtures:/code/admin_site/fixtures/
         depends_on:
             - db
@@ -56,10 +59,11 @@ services:
         image: bpc
         pull_policy: never
         container_name: bpc-cron
+        env_file:
+            - path: ./dev-environment/bpc.env
         volumes:
             - .:/code/
-            - ./dev-environment/dev-settings.ini:/user-settings.ini
-        command: [ "supercronic", "/crontab" ]
+        command: ["supercronic", "/crontab"]
         entrypoint: []
         depends_on:
             - application
@@ -67,12 +71,8 @@ services:
         image: postgres:13
         container_name: bpc-db
         restart: always
-        environment:
-            # NOTE: These values are only used in the local development
-            # environment, so it's not particularly important that
-            # they're secure
-            POSTGRES_USER: bpc
-            POSTGRES_PASSWORD: bpc
+        env_file:
+            - path: ./dev-environment/bpc.env
         volumes:
             - postgres-data:/var/lib/postgresql/data
 

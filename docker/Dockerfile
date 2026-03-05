@@ -103,14 +103,10 @@ COPY --from=frontend \
   /code/nodejs/node_modules/bootstrap-table/dist/locale/bootstrap-table-da-DK.min.js \
   /frontend/js/
 
-# Unfortunately, `collectstatic` requires all settings to be set. We include a
-# set of insecure setting here for only this purpose. We make sure to delete it
-# afterward. If `insecure-settings.ini` is found in any production image,
-# consider it a bug. See `insecure-settings.ini` for a detailed explanation.
+# temporarily setting a few envs so manage.py works here
 RUN set -ex \
-  && BPC_USER_CONFIG_PATH=/code/docker/insecure-settings.ini python ./manage.py collectstatic --no-input --clear \
-  && BPC_USER_CONFIG_PATH=/code/docker/insecure-settings.ini python ./manage.py compilemessages \
-  && rm /code/docker/insecure-settings.ini
+  && LANGUAGE_CODE=da-dk python ./manage.py collectstatic --no-input --clear \
+  && LANGUAGE_CODE=da-dk python ./manage.py compilemessages
 
 # Run the server as our non-root user on port 9999
 USER $USER_NAME:$GROUP_NAME

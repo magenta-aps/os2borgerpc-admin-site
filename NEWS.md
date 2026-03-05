@@ -1,3 +1,10 @@
+## Version 7.1.0, March 5, 2026
+
+- Update BorgerPC installation guides
+- Simplify how settings are read, use envs
+- Make Configurations OneToOne instead of ManyToOne
+- Fix python syntax warning after upgrading Python version
+
 ## Version 7.0.0, February 26, 2026
 
 - Remove the legacy XMLRPC API

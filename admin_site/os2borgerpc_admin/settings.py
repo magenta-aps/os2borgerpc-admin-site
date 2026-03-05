@@ -5,7 +5,9 @@ import os
 from datetime import datetime
 from pathlib import Path
 
-from google.oauth2 import service_account
+if os.environ.get("GS_BUCKET_NAME"):
+    # Importing it here so it's not a hard requirement
+    from google.oauth2 import service_account
 
 logger = logging.getLogger(__name__)
 

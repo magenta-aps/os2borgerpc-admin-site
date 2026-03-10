@@ -37,7 +37,7 @@ services:
         # Open PR to make --reload-extra-file recursive:
         # https://github.com/benoitc/gunicorn/pull/1846
         command:
-            sh -c "./manage.py initialize_database &&
+            sh -c "./manage.py initialize_database /code/dev-environment/fixtures &&
                    ./manage.py compilemessages &&
                    gunicorn --reload --workers 1 --max-requests 1
                    --reload-extra-file /code/admin_site/locale/da/LC_MESSAGES/django.mo
@@ -47,7 +47,6 @@ services:
                    --timeout 0 --config /code/docker/gunicorn-settings.py os2borgerpc_admin.wsgi"
         volumes:
             - .:/code/
-            - ./dev-environment/fixtures:/code/admin_site/fixtures/
         depends_on:
             - db
         ports:

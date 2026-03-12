@@ -32,7 +32,7 @@ class SiteMembershipInline(admin.TabularInline):
 
 
 @admin.register(User)
-class MyUserAdmin(UserAdmin):
+class CustomUserAdmin(UserAdmin):
     inlines = [UserProfileInline]
     list_display = (
         "username",
@@ -82,7 +82,7 @@ class MyUserAdmin(UserAdmin):
 
 
 @admin.register(m.UserProfile)
-class MyUserProfileAdmin(admin.ModelAdmin):
+class UserProfileAdmin(admin.ModelAdmin):
     inlines = [SiteMembershipInline]
     list_display = ("user",)
     search_fields = ("user__username",)

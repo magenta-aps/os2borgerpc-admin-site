@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-08 13:16+0100\n"
+"POT-Creation-Date: 2026-03-12 11:51+0100\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -6715,8 +6715,6 @@ msgid "Send a message to Magenta"
 msgstr "Send en besked til Magenta"
 
 #: templates/two_factor/core/backup_tokens.html
-#: templates/two_factor/core/setup.html
-#: templates/two_factor/core/setup_complete.html
 #: templates/two_factor/profile/disable.html
 msgid "Two-factor authentication for admin portal login"
 msgstr "Totrinsbekræftelse for login til adminportalen"
@@ -6803,15 +6801,15 @@ msgstr "SSO-login"
 
 #: templates/two_factor/core/setup.html
 #: templates/two_factor/core/setup_complete.html
-msgid "Enable Two-Factor Authentication for"
-msgstr "Aktivér Totrinsbekræftelse for"
+msgid "Enable two-factor authentication for admin-site login for"
+msgstr "Totrinsbekræftelse for login til adminportalen for"
 
 #: templates/two_factor/core/setup.html
 msgid ""
-"You are about to take your account security to the next level. Follow the "
-"steps in this wizard to enable two-factor authentication."
+"You are about to take your account security to the next level. Follow this "
+"wizard to enable two-factor authentication."
 msgstr ""
-"Du er ved at forøge sikkerheden på din brugerkonto. Følg skridtene i denne "
+"Du er ved at forøge sikkerheden på din brugerkonto. Følg denne "
 "wizard for at aktivere totrinsbekræftelse."
 
 #: templates/two_factor/core/setup.html
@@ -6821,10 +6819,10 @@ msgstr ""
 #: templates/two_factor/core/setup.html
 msgid ""
 "To start using an authenticator app, please use your smartphone to scan the "
-"QR code below. For example, use FreeOTP Authenticator."
+"QR code below. For example, use Aegis Authenticator or FreeOTP Authenticator."
 msgstr ""
 "Brug venligst din authenticator app til at skanne QR koden herunder. Du kan "
-"f.eks. bruge FreeOTP Authenticator."
+"f.eks. bruge Aegis Authenticator eller FreeOTP Authenticator."
 
 #: templates/two_factor/core/setup.html
 msgid ""

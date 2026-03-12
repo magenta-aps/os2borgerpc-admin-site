@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block specific_title %}
-{% translate "Two-factor authentication for admin portal login" %}
+  {% trans "Enable two-factor authentication for admin-site login for" %} <em>{{ user.username }}</em>
 {% endblock %}
 
 {% block extra_media %}
@@ -11,18 +11,16 @@
 
 {% block specific_content %}
 <div class="container-fluid main">
-  <h2 class="divideheader">{% trans "Enable Two-Factor Authentication for" %} <em>{{ user.username }}</em></h2>
   <div class="tab-content">
   {% if wizard.steps.current == 'welcome' %}
     <p>{% blocktrans trimmed %}You are about to take your account security to the
-        next level. Follow the steps in this wizard to enable two-factor
-        authentication.{% endblocktrans %}</p>
+        next level. Follow this wizard to enable two-factor authentication.{% endblocktrans %}</p>
   {% elif wizard.steps.current == 'method' %}
     <p>{% blocktrans trimmed %}Please select which authentication method you would
         like to use.{% endblocktrans %}</p>
   {% elif wizard.steps.current == 'generator' %}
     <p>{% blocktrans trimmed %}To start using an authenticator app, please use your
-        smartphone to scan the QR code below. For example, use FreeOTP
+        smartphone to scan the QR code below. For example, use Aegis Authenticator or FreeOTP
         Authenticator.{% endblocktrans %}</p>
     <p><img src="{{ QR_URL }}" alt="QR Code" class="bg-white"/></p>
     <p>{% blocktrans trimmed %}Alternatively, you can use the following secret to

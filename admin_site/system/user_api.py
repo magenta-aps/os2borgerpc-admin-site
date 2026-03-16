@@ -120,9 +120,7 @@ def list_events(
             to_date + timedelta(days=1),
         ],  # +1 to include the full to_date
         status=status.upper(),
-    ).order_by(
-        "-id"
-    )  # or -occurred_time, but ID is probably faster
+    ).order_by("-id")  # or -occurred_time, but ID is probably faster
     return events
 
 
@@ -240,9 +238,7 @@ def get_jobs(
             from_date,
             to_date + timedelta(days=1),
         ],  # +1 to include the full to_date
-    ).order_by(
-        "-id"
-    )  # or -created, but ID is probably faster
+    ).order_by("-id")  # or -created, but ID is probably faster
 
     return jobs or []
 

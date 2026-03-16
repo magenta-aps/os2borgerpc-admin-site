@@ -1,17 +1,10 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
-
-Replace this with more appropriate tests for your application.
-"""
-
 import os
 
 from django.conf import settings
+from django.contrib.auth.models import User
+from django.core.mail import EmailMessage
 from django.test import TestCase
 
-from django.core.mail import EmailMessage
-from django.contrib.auth.models import User
 from account.models import UserProfile
 
 print("FILE", os.path.dirname(__file__))
@@ -33,12 +26,6 @@ class SimpleTest(TestCase):
         # level='High', script_id=1, site_id=1)
         UserProfile.objects.create(user=site_user)
         UserProfile.objects.create(user=test_user)
-
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
 
     def test_notify_user(self):
         data = "KEYBOARD, Summary, Raw data"

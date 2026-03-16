@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("system", "0090_pc_product_product_config_name_product_short_name"),
     ]

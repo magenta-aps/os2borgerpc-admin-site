@@ -397,7 +397,6 @@ class EventRuleServerAdmin(admin.ModelAdmin):
 
 @admin.register(m.FeaturePermission)
 class FeaturePermissionAdmin(admin.ModelAdmin):
-
     @admin.display(description=_("customers with access"))
     def customers_with_access(self, obj):
         return list(obj.customers.all())

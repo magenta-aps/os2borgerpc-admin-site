@@ -1484,10 +1484,8 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             self.script.is_hidden
             and not self.request.user.is_superuser
             and not self.request.user.user_profile.is_hidden
-            and not (
-                self.script.feature_permission
-                in self.site.customer.feature_permission.all()
-            )
+            and self.script.feature_permission
+            not in self.site.customer.feature_permission.all()
         ):
             raise PermissionDenied
         return self.script

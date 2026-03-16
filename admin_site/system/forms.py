@@ -133,7 +133,6 @@ class PCGroupForm(forms.ModelForm):
 class ScriptForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        instance = getattr(self, "instance", None)
 
         self.fields["tags"].disabled = True
 

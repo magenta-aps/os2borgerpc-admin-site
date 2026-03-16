@@ -282,7 +282,6 @@ class SiteMixin(View):
 
 
 class SiteUIDAvailableCheck(LoginRequiredMixin):
-
     def dispatch(self, *args, **kwargs):
         site_prefix = self.request.user.user_profile.sites.first().customer.site_prefix
         uid_postfix = self.request.GET["uid"]
@@ -3164,9 +3163,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
                     user_type < site_membership.SITE_ADMIN
                     for user_type in self.selected_user.user_profile.sitemembership_set.exclude(
                         site=site
-                    ).values_list(
-                        "site_user_type", flat=True
-                    )
+                    ).values_list("site_user_type", flat=True)
                 )
             ):
                 self.object.is_staff = False

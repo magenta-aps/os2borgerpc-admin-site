@@ -79,8 +79,7 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
         new_pc.site = Site.objects.get(uid=site)
     except Site.DoesNotExist:
         error_string = (
-            "The chosen site UID does not match any sites on the "
-            "chosen admin portal."
+            "The chosen site UID does not match any sites on the chosen admin portal."
         )
         # See comment at the first use of api_call
         if api_call:

@@ -5,7 +5,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("system", "0089_alter_wakeweekplan_sleep_state"),
     ]

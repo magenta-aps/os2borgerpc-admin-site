@@ -1,6 +1,5 @@
 from .models import ConfigurationEntry, Job, PC, SecurityEvent
 from ninja import ModelSchema, Schema
-from ninja.orm import create_schema
 
 # Schemas are used by user_api.py, and it specifies things like which attributes are fetched for a given object
 

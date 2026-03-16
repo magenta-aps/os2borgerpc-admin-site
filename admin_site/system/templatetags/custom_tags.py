@@ -67,7 +67,7 @@ def file_basename(value):
             return "File not found"
 
         return os.path.basename(file_path)
-    except Exception as e:
+    except Exception:
         return "Error: File not found"
 
 

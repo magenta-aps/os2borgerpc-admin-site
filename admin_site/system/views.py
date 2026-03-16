@@ -806,7 +806,6 @@ class AdminTwoFactorSetup(otp_views.SetupView, SuperAdminOrThisSiteMixin):
 
     def get_context_data(self, form, **kwargs):
         context = super().get_context_data(form, **kwargs)
-        user = self.request.user
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
         context["site"] = site
         # url to redirect to when the user clicks cancel

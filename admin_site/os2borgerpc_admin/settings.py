@@ -245,6 +245,12 @@ LOGGING = {
             "formatter": "console",
         },
     },
+    "loggers": {
+        "django.db.backends": {
+            "level": os.environ.get("DB_LOG_LEVEL", "CRITICAL"),
+            "handlers": ["console"],
+        },
+    },
     "root": {
         "handlers": ["console", "mail_admins"],
         "level": os.environ.get("LOG_LEVEL", "ERROR"),

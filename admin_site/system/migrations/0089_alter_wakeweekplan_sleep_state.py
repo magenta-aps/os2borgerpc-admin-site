@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("system", "0088_alter_imageversion_image_upload_and_more"),
     ]

@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("system", "0093_alter_configurationentry_options_and_more"),
     ]

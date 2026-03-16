@@ -6,7 +6,6 @@ import re
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("system", "0098_customer_site_prefix"),
     ]

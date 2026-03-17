@@ -133,7 +133,6 @@ class PCGroupForm(forms.ModelForm):
 class ScriptForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        instance = getattr(self, "instance", None)
 
         self.fields["tags"].disabled = True
 
@@ -171,7 +170,7 @@ class UserLinkForm(forms.Form):
 
     def setup_usertype_choices(self, loginuser_type, is_superuser):
         self.fields["usertype"].choices = [
-            (c, l) for c, l in SiteMembership.type_choices if c <= 2
+            (num, text) for num, text in SiteMembership.type_choices if num <= 2
         ]
 
 
@@ -232,7 +231,9 @@ class UserForm(forms.ModelForm):
 
     def set_usertype_limited_choices(self, choice_type):
         self.fields["usertype"].choices = [
-            (c, l) for c, l in SiteMembership.type_choices if c <= choice_type
+            (num, text)
+            for num, text in SiteMembership.type_choices
+            if num <= choice_type
         ]
         if choice_type == SiteMembership.SITE_USER:  # Only one choice
             self.fields["usertype"].disabled = True

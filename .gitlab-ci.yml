@@ -33,17 +33,36 @@ variables:
 #  Lint stage  #
 ################
 
-# NOTE: Keep linter versions in sync with the versions used in pre-commit
-
-lint python:
+pre-commit:
   stage: lint
-  image: python:3.13-alpine
-  before_script: [pip3 install ruff]
-  script: [
-    "cd admin_site",
-    "ruff --version",
-    "ruff format --diff .",
-  ]
+  image: alpine:edge
+  before_script:
+    - apk add pre-commit git
+    # Prepare bin cache
+    - mkdir --parents ${BIN_CACHE_DIR}
+    - export PATH=$PATH:${BIN_CACHE_DIR}
+  script:
+    pre-commit run --all-files --verbose
+  variables:
+    # GitLab can only cache paths that are in the local working copy, so we
+    # change directories to be inside the project directory.
+    # https://docs.gitlab.com/ee/ci/yaml/index.html#cache
+    # https://pre-commit.com/index.html#gitlab-ci-example
+    PIP_CACHE_DIR: ${CI_PROJECT_DIR}/.cache/pip
+    PRE_COMMIT_HOME: ${CI_PROJECT_DIR}/.cache/pre-commit
+    BIN_CACHE_DIR: ${CI_PROJECT_DIR}/.cache/bin
+  cache:
+    # The cache is tied to the pre-commit and gitlab-ci config, so it is reused
+    # as long as .pre-commit-config.yaml and .gitlab-ci.yml is unchanged.
+    # https://docs.gitlab.com/ee/ci/yaml/index.html#cachekeyfiles
+    key:
+      files:
+        - .pre-commit-config.yaml
+        - .gitlab-ci.yml
+    paths:
+      - ${PIP_CACHE_DIR}
+      - ${PRE_COMMIT_HOME}
+      - ${BIN_CACHE_DIR}
 
 lint dockerfiles:
   stage: lint
@@ -59,7 +78,7 @@ build app image:
   extends: .build-docker
   # Minimize unnecessary builds, specified because the extended template sets needs to []
   needs:
-    - lint python
+    - pre-commit
     - lint dockerfiles
 
 ###################

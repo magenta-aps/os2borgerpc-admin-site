@@ -228,7 +228,7 @@ class BatchAdmin(admin.ModelAdmin):
     list_display = ("id", "site", "name", "script")
     fields = ("site", "name", "script")
     list_filter = ("site",)
-    search_fields = ("name", "site__name", "script__name")
+    search_fields = ("id", "name", "site__name", "script__name")
     readonly_fields = ("script",)
     inlines = [JobInline, BatchParameterInline]
 
@@ -433,7 +433,7 @@ class JobAdmin(admin.ModelAdmin):
         "finished",
     )
     list_filter = ("status",)
-    search_fields = ("batch__script__name", "user__username", "pc__name")
+    search_fields = ("id", "batch__script__name", "user__username", "pc__name")
     readonly_fields = ("created", "started", "finished", "batch", "pc")
 
 

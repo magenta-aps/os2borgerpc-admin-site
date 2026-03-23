@@ -81,6 +81,8 @@ msgstr "Lägg till en kommentar"
 #: templates/system/event_rules/security_problem_confirm_delete.html
 #: templates/system/event_rules/site_event_rules_server.html
 #: templates/system/event_rules/site_security_problems.html
+#: templates/system/file_archive/confirm_delete.html
+#: templates/system/file_archive/file_archive.html
 #: templates/system/pcgroups/confirm_delete.html
 #: templates/system/pcgroups/site_groups.html
 #: templates/system/pcs/confirm_delete.html templates/system/pcs/update.html
@@ -829,7 +831,8 @@ msgstr "Observera att gruppmedlemskap kan påverka datorns konfiguration."
 #: templates/system/jobs/site_jobs.html
 #: templates/system/pcgroups/confirm_delete.html
 #: templates/system/pcs/no_pcs.html templates/system/pcs/pcs.html
-#: templates/system/pcs/update.html templates/system/sites/list.html
+#: templates/system/pcs/update.html templates/system/scripts/run_step1.html
+#: templates/system/sites/list.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_plan.html
 msgid "Computers"
@@ -1022,6 +1025,8 @@ msgstr "Redigera"
 
 #: docs/templates/configuration/index.html templates/system/configs/item.html
 #: templates/system/event_rules/shared_navigation.html
+#: templates/system/file_archive/file_archive.html
+#: templates/system/file_archive/partials/list.html
 #: templates/system/scripts/confirm_delete.html
 #: templates/system/scripts/templates.html
 #: templates/system/scripts/update_form.html
@@ -1134,8 +1139,9 @@ msgstr ""
 "ändras via adminsidan."
 
 #: docs/templates/configuration/index.html
-#: templates/system/configs/templates.html templates/system/pcs/pcs.html
-#: templates/system/scripts/update_form.html
+#: templates/system/configs/templates.html
+#: templates/system/file_archive/file_archive.html
+#: templates/system/pcs/pcs.html templates/system/scripts/update_form.html
 #: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid "Name"
 msgstr "Namn"
@@ -1600,6 +1606,7 @@ msgstr ""
 #: templates/system/event_rules/security_problem_confirm_delete.html
 #: templates/system/jobs/site_jobs.html
 #: templates/system/pcgroups/site_groups.html
+#: templates/system/scripts/run_step1.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_plan.html
 msgid "Groups"
@@ -3109,7 +3116,7 @@ msgid ""
 msgstr "Det totala antalet online datorer på de sites som du har tillgång till"
 
 #: docs/templates/sites_overview/index.html templates/system/pcs/pcs.html
-#: templates/system/scripts/run_step1.html templates/system/sites/list.html
+#: templates/system/sites/list.html
 msgid "BorgerPC"
 msgstr "MedborgarPC"
 
@@ -3122,7 +3129,7 @@ msgstr ""
 "tillgång till"
 
 #: docs/templates/sites_overview/index.html templates/system/pcs/pcs.html
-#: templates/system/scripts/run_step1.html templates/system/sites/list.html
+#: templates/system/sites/list.html
 msgid "Kiosk"
 msgstr "Kiosk"
 
@@ -4310,7 +4317,7 @@ msgstr "De två lösenorden måste vara desamma"
 msgid "A user named \"%s\" already exists."
 msgstr "En användare med namnet \"%s\" finns redan."
 
-#: system/mixins.py
+#: system/mixins.py system/models.py
 msgid "modified"
 msgstr "modifierad"
 
@@ -4689,6 +4696,18 @@ msgstr "standardvärde"
 msgid "mandatory"
 msgstr "krävs"
 
+#: system/models.py templates/system/file_archive/file_archive.html
+msgid "file"
+msgstr "fil"
+
+#: system/models.py
+msgid "created by"
+msgstr "skapad av"
+
+#: system/models.py
+msgid "site"
+msgstr "site"
+
 # Konsistens ml. navn i sikkerhedsregel og sikkerhedshændelse
 #: system/models.py
 msgid "level"
@@ -5016,6 +5035,25 @@ msgstr "Du har ingen offline-regel med följande ID: %s"
 msgid "No product matches the given ID: %s"
 msgstr "Ingen produkt matchar det angivna ID: %s"
 
+#: system/views.py
+#, python-format
+msgid "File %s created"
+msgstr "Site %s skapad"
+
+#: system/views.py
+#, python-format
+msgid ""
+"There was an error handling the selected file %s and it was not uploaded. Is "
+"the file empty?"
+msgstr ""
+"Det uppstod ett fel vid hanteringen av den valda filen %s och den laddades "
+"inte upp. Är filen tom?"
+
+#: system/views.py
+#, python-format
+msgid "File %s deleted"
+msgstr "Site %s raderad"
+
 #: templates/403.html
 msgid "Permission denied"
 msgstr "Rättigheter förbjudna"
@@ -5094,12 +5132,17 @@ msgid "Scripting"
 msgstr "Scripting"
 
 #: templates/site_with_navigation.html
+#: templates/system/file_archive/file_archive.html
+msgid "File archive"
+msgstr "Filarkiv"
+
+#: templates/site_with_navigation.html
 msgid "Users & Images"
 msgstr "Användare och Images"
 
 #: templates/site_with_navigation.html templates/system/site_images.html
 msgid "Images"
-msgstr ""
+msgstr "Images"
 
 #: templates/site_with_navigation.html
 msgid "About the dashboard"
@@ -5313,6 +5356,7 @@ msgstr "Är du säker på att du vill radera Offline-regeln"
 
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
 #: templates/system/event_rules/security_problem_confirm_delete.html
+#: templates/system/file_archive/confirm_delete.html
 #: templates/system/pcgroups/confirm_delete.html
 #: templates/system/pcs/confirm_delete.html
 #: templates/system/scripts/confirm_delete.html
@@ -5498,6 +5542,78 @@ msgstr "Mottagare av e-postvarning"
 msgid "New security rule"
 msgstr "Ny säkerhetsregel"
 
+#: templates/system/file_archive/confirm_delete.html
+msgid "Delete file"
+msgstr "Ta bort fil"
+
+#: templates/system/file_archive/confirm_delete.html
+msgid "This file parameter cannot currently be deleted"
+msgstr "Denna filparameter kan för närvarande inte raderas."
+
+#: templates/system/file_archive/confirm_delete.html
+msgid ""
+"The reason is it's currently used by at least one associated script in the "
+"following groups: "
+msgstr ""
+"Anledningen är att det för närvarande används av minst ett associerat skript "
+"i följande grupper: "
+
+#: templates/system/file_archive/confirm_delete.html
+msgid ""
+"Either replace it where it's used, or if the group(s) it's used in are no "
+"longer needed, remove the groups."
+msgstr ""
+"Antingen ersätt det där det används, eller om gruppen/grupperna det används "
+"i inte längre behövs, ta bort grupperna."
+
+#: templates/system/file_archive/confirm_delete.html
+msgid "Afterwards you can return here and delete it."
+msgstr "Efteråt kan du återvända hit och radera det."
+
+#: templates/system/file_archive/confirm_delete.html
+msgid "Go back"
+msgstr "Gå tillbaka"
+
+#: templates/system/file_archive/confirm_delete.html
+msgid "Are you sure you wish to delete the file"
+msgstr "Är du säker på att du vill radera filen"
+
+#: templates/system/file_archive/file_archive.html
+msgid "Upload new file"
+msgstr "Ladda upp ny fil"
+
+#: templates/system/file_archive/file_archive.html
+#: templates/system/pcs/pcs.html
+msgid "Description"
+msgstr "Beskrivning"
+
+#: templates/system/file_archive/file_archive.html
+msgid "File name"
+msgstr "filnamn"
+
+#: templates/system/file_archive/file_archive.html
+#: templates/system/jobs/site_jobs.html templates/system/pcs/update.html
+#: templates/system/scripts/update.html templates/system/users/update.html
+msgid "Created"
+msgstr "Skapad"
+
+#: templates/system/file_archive/file_archive.html
+#: templates/system/scripts/update.html
+msgid "Modified"
+msgstr "Ändrat"
+
+#: templates/system/file_archive/file_archive.html
+msgid "Created by"
+msgstr "Skapad av"
+
+#: templates/system/file_archive/file_archive.html
+msgid "Upload new"
+msgstr "Ladda upp nytt"
+
+#: templates/system/file_archive/partials/list.html
+msgid "You currently have no files in your archive"
+msgstr "Du har för närvarande inga filer i ditt arkiv."
+
 #: templates/system/jobs/info.html templates/system/jobs/restart.html
 msgid "Restart job"
 msgstr "Omstart av jobb"
@@ -5551,11 +5667,6 @@ msgstr "Skript"
 #: templates/system/jobs/site_jobs.html
 msgid "User"
 msgstr "Användare"
-
-#: templates/system/jobs/site_jobs.html templates/system/pcs/update.html
-#: templates/system/scripts/update.html templates/system/users/update.html
-msgid "Created"
-msgstr "Skapad"
 
 #: templates/system/jobs/site_jobs.html templates/system/pcs/update.html
 msgid "Started"
@@ -5786,10 +5897,6 @@ msgid "Activated"
 msgstr "Aktiverad"
 
 #: templates/system/pcs/pcs.html
-msgid "Description"
-msgstr "Beskrivning"
-
-#: templates/system/pcs/pcs.html
 msgid "Location"
 msgstr "Placering"
 
@@ -5967,10 +6074,6 @@ msgstr "Hitta ..."
 msgid "Clear the filter"
 msgstr "Rensa filter"
 
-#: templates/system/scripts/update.html
-msgid "Modified"
-msgstr "Ändrat"
-
 #: templates/system/scripts/update_form.html
 msgid "Code"
 msgstr "Kod"
@@ -6117,8 +6220,8 @@ msgid "Are you sure you want to delete the following API Key?:"
 msgstr "Är du säker på att du vill ta bort följande API-nyckel?:"
 
 #: templates/system/site_settings/api_keys/partials/list.html
-msgid "There are currently no API keys"
-msgstr "Det finns för närvarande inga API-nycklar"
+msgid "You currently have no API keys"
+msgstr "Du har för närvarande inga API-nycklar"
 
 #: templates/system/site_two_factor_pc.html
 msgid ""

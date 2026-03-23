@@ -3,7 +3,7 @@
 
 {% block run_dialog_heading %}
   <h3>
-    <span class="text-muted">{% translate "Run script" %}:</span><br>
+    <span class="text-muted">{% translate "Run script" %}</span>: {{script.name}} <br/>
     {% translate "Select computers and/or groups" %}
   </h3>
 {% endblock %}
@@ -12,46 +12,64 @@
     <p>{% blocktranslate trimmed %}Note: Scripts can only be run on computers that have been activated
         and groups that have at least 1 associated computer.{% endblocktranslate %}</p>
 
+  <div class="container-fluid">
     <div class="row">
       <div class="col-6">
-        <h4>Computere</h4>
+        <h4>{% translate "Computers" %}</h4>
         <ul class="list-unstyled" id="products">
           <li>
-            <input id="pick-all" type="checkbox" onclick="toggle_checks(this, 'pcs', 'pc');"/>
+            <input id="pick-all" type="checkbox" onclick="toggle_checks(this, 'pcs', 'pc');" class="form-check-input"/>
             <label for="pick-all"><strong>{% translate "All" %}</strong></label>
             <br/>
           </li>
           {% for product in products %}
             <li>
-              <input type="checkbox" id="pick-all-{{product.id}}" onclick="toggle_checks(this, 'pcs', 'pc-{{product.id}}');" />
+              <input type="checkbox" id="pick-all-{{product.id}}" onclick="toggle_checks(this, 'pcs', 'pc-{{product.id}}');" class="form-check-input"/>
               <!-- TODO: Remove the swedish hack below of translating product.name once the database itself is translated -->
-              <!-- {% translate "BorgerPC" %} -->
-              <!-- {% translate "Kiosk" %} -->
               <label for="pick-all-{{product.id}}"><strong>{% translate "All" %} {% translate product.short_name %}</strong></label>
               <br/>
             </li>
           {% endfor %}
         </ul>
-        <ul id="pcs" class="list-unstyled">
-          {% for pc in pcs %}
-            {% if pc.is_activated %}
-              <li>
-                <input type="checkbox"
-                       name = "pcs"
-                       class ="pc pc-{{pc.product.id}}"
-                       id="check-pc-{{pc.pk}}"
-                       value="{{pc.pk}}">
-                <label for="check-pc-{{pc.pk}}">{{pc.name}}</label>
-               </li>
-            {% endif %}
-          {% endfor %}
-        </ul>
+        <table id="pcs" class="table table-sm table-bordered">
+          <tbody>
+            {% for pc in pcs %}
+              {% if pc.is_activated %}
+                <tr>
+                  <td class="bg-transparent ps-0 pe-1 py-0">
+                    <input type="checkbox"
+                           name = "pcs"
+                           class ="pc pc-{{pc.product.id}} form-check-input"
+                           id="check-pc-{{pc.pk}}"
+                           value="{{pc.pk}}">
+                  </td>
+                  {% comment %}
+                  <td class="bg-transparent ps-0 pe-0">
+                    <label for="check-pc-{{pc.pk}}">
+                      {% if products|length > 1 %}
+                      {#({{pc.product.short_name}}) #}
+                        {# TODO: Figure out if we want the badges instead #}
+                        <span class="badge bg-{{ pc.badgeclass }}">{{pc.product.short_name}}</span>
+                      {% endif %}
+                    </label>
+                  </td>
+                  {% endcomment %}
+                  <td class="bg-transparent ps-0 pe-1 py-0">
+                    <label for="check-pc-{{pc.pk}}">
+                      {{pc.name}}
+                    </label>
+                  </td>
+                 </tr>
+              {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
       <div class="col-6">
-        <h4>Grupper</h4>
+        <h4>{% translate "Groups" %}</h4>
         <ul class="list-unstyled">
           <li class="mb-3">
-            <input type="checkbox" onclick="toggle_checks(this, 'groups', 'group')" id="pick-all-groups"/>
+            <input type="checkbox" onclick="toggle_checks(this, 'groups', 'group')" id="pick-all-groups" class="form-check-input"/>
             <label for="pick-all-groups"><strong>{% translate "All" %}</strong></label>
             <br/>
           </li>
@@ -59,13 +77,14 @@
         <ul id="groups" class="list-unstyled">
           {% for group in groups %}
             <li>
-              <input class="group" type="checkbox" name="groups" id="check-group-{{group.pk}}" value="{{group.pk}}">
+              <input class="group form-check-input" type="checkbox" name="groups" id="check-group-{{group.pk}}" value="{{group.pk}}"/>
               <label for="check-group-{{group.pk}}">{{group.name}}</label>
             </li>
           {% endfor %}
         </ul>
       </div>
     </div>
+  </div>
 
     <!-- Function for selecting all checkboxes: -->
     <script>

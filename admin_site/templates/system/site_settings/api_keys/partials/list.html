@@ -1,9 +1,8 @@
 {% load i18n %}
 {% comment %}
-This file is both used to render the initial film-list, and HTMX is using it to re-render the film-list on certain
-events/changes.
+This is both used to render the initial list, and HTMX is using
+it to re-render the list on certain events/changes.
 {% endcomment %}
-
 
 {% for key in api_keys %}
   <tr>
@@ -15,9 +14,7 @@ events/changes.
       <span class="d-none">{% translate "API Key copied!" %}</span>
     </td>
     <td>
-      <form method="post">
-        <input style="width: 350px;" type="text" name="description" hx-post="{% url 'api_key_update' slug=key.site.uid pk=key.pk %}" hx-trigger="keyup changed delay:1s" value="{{ key.description|default:"" }}">
-      </form>
+      <input style="width: 350px;" type="text" name="description" hx-post="{% url 'api_key_update' key.site.uid key.pk %}" hx-trigger="keyup changed delay:1s" value="{{ key.description|default:"" }}">
     </td>
 
     <td>
@@ -30,5 +27,7 @@ events/changes.
     </td>
   </tr>
 {% empty %}
-<tr><td>{% translate "There are currently no API keys" %}</td><td></td><td></td></tr>
+  <tr>
+    <td colspan="3">{% translate "You currently have no API keys" %}</td>
+  </tr>
 {% endfor %}

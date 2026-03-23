@@ -1,0 +1,55 @@
+{% extends "site_with_navigation.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block specific_title %}
+{% translate "File archive" %}
+{% endblock %}
+
+{% block specific_content %}
+  <main class="container-fluid main sublevelmain">
+    {% include 'notification.html' %}
+    <button class="btn btn-primary mb-3" data-bs-target="#addNewFile" type="button" data-bs-toggle="modal" title="{% translate "Upload new file" %}">
+      <span class="material-symbols-outlined">add</span>
+      {% translate "Upload new file" %}
+    </button>
+
+    <table class="table align-middle table-bordered">
+      <thead>
+        <tr>
+          <th>{% translate "Name" %}</th>
+          <th>{% translate "File name" %}</th>
+          <th>{% translate "Description" %}</th>
+          <th>{% translate "Created" %}</th>
+          <th>{% translate "Modified" %}</th>
+          <th>{% translate "Created by" %}</th>
+          <th>{% translate "Delete" %}</th>
+        </tr>
+      </thead>
+      <tbody id="file-archive-list">
+        {% include "system/file_archive/partials/list.html" %}
+      </tbody>
+    </table>
+  </main>
+
+  <div id="addNewFile" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form action="{% url 'file_archive_new' site.uid %}" name="create_form" id="create_form" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="modal-header">
+            <h3>{% translate "Upload new" %} {% translate "file" %}</h3>
+            <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            {{form|crispy}}
+          </div>
+          <div class="modal-footer">
+            <input type="submit" class="btn btn-primary" value="{% translate "Upload new" %} {% translate "file" %}">
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

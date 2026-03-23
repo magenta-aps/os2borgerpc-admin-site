@@ -408,6 +408,20 @@ class FeaturePermissionAdmin(admin.ModelAdmin):
     search_fields = ("name", "uid")
 
 
+@admin.register(m.FileParameter)
+class FileParameterAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "file",
+        "name",
+        "description",
+        "created",
+        "modified",
+        "created_by",
+        "site",
+    )
+
+
 @admin.register(m.ImageVersion)
 class ImageVersionAdmin(admin.ModelAdmin):
     list_display = (

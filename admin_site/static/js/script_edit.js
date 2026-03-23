@@ -1,3 +1,4 @@
+/* USED FOR SCRIPT EDITING AND SCRIPT RUNNING */
 ;(function (BibOS, $) {
   BibOS.addTemplate("script-input", "#script-input-template")
 
@@ -40,6 +41,7 @@
     setModalContent: function (html) {
       $("#runscriptmodal").html(html)
     },
+    /* SCRIPT UPDATE */
     addInput: function (id, data_in) {
       var container = $(id)
       if (!data_in) data_in = {}
@@ -127,10 +129,11 @@
   })
 })(BibOS, $)
 
-/* Syntax highlighting */
+/* Script editing: Syntax highlighting */
 const code = document.getElementById("script-code")
 hljs.highlightElement(code)
 
+/* Script editing: Used to correctly set mandatory status (e.g. boolean and options fields can't be mandatory and all other types default to mandatory, but can be set optional) and the type of the default value field (and whether or not it's disabled) when changing the parameter type. */
 function type_check(event) {
   /* The index of the relevant input line is extracted from the name of the triggering event,
      which has the form "script-input-i-type," where i is the index.
@@ -164,6 +167,7 @@ function type_check(event) {
   }
 }
 
+/* Script editing: Undoes unsaved changes, used by a Cancel button */
 function script_refresh(saved_script_inputs) {
   const active_script_inputs = document.getElementsByClassName("script-input")
   $("#details").load(window.location.href + " #details")

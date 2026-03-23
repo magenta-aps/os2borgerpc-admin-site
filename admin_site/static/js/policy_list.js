@@ -13,25 +13,28 @@ class PolicyList {
         document.querySelector("#updategroupform").addEventListener("submit", this.verifyPolicies.bind(this))
     }
 
+    /**
+     * The final handling of whether a policy is valid before it's submitted to the server, triggered when saving group settings
+     */
     verifyPolicies(event) {
-        const inputFields = Array.from(this.tableBody.querySelectorAll(".policy-script-param"))
-        for (const inputField of inputFields) {
+        const hiddenFields = Array.from(this.tableBody.querySelectorAll(".policy-script-param"))
+        for (const hiddenField of hiddenFields) {
             // Before the submit event is sent to the server, we can make a simple check to see if all required values are filled
             // This preserves the users input in case they forget to fill out an input field
-            if (inputField.dataset.isrequired){
-                const row = inputField.closest("tr")
-                if (inputField.type !== "file" && !inputField.value.trim()) {
-                    displayError(inputField, row)
+            if (hiddenField.dataset.isrequired){
+                const row = hiddenField.closest("tr")
+                if (hiddenField.type !== "file" && !hiddenField.value.trim()) {
+                    displayError(hiddenField, row)
                     event.preventDefault()
                     break;
-                } else if (inputField.type === "file") {
+                } else if (hiddenField.type === "file") {
                     // We can't check on the value of the <input type="file"> element itself
                     // Since those input fields never store their data in the value attribute
                     // Instead we can check if the print field has any contents, either text or child nodes
-                    const printElement = inputField.nextElementSibling.querySelector(".policy-script-print-value")
+                    const printElement = hiddenField.nextElementSibling.querySelector(".policy-script-print-value")
                     const hasContent = printElement.textContent.trim() !== "" || printElement.children.length > 0;
                     if (!hasContent) {
-                        displayError(inputField, row)
+                        displayError(hiddenField, row)
                         event.preventDefault()
                         break;
                     }
@@ -42,9 +45,12 @@ class PolicyList {
             }
         }
 
-        function displayError(inputField, row) {
+        /**
+         * If an error in the policy is discovered when attempting to save it, this will display that error to the user
+         */
+        function displayError(hiddenField, row) {
             const message = `Script:\n
-                    ${inputField.parentElement.getAttribute("data-name") || gettext("Unknown script")}
+                    ${hiddenField.parentElement.getAttribute("data-name") || gettext("Unknown script")}
                     \n${gettext("has empty required input fields")}`
             displayToast(message, "error")
             if (row) {
@@ -54,7 +60,10 @@ class PolicyList {
         }
     }
 
-    // These two snippets of HTML should match what's inside item.html
+    /**
+     * This HTML snippet should match what's inside item.html
+     * Used by renderScriptFields which is run by addToPolicy
+     */
     hiddenParamField(name, type, required, default_value) {
         return `
             <input class="policy-script-param ${type === "FILE" ? "d-none" : ""}"
@@ -65,26 +74,31 @@ class PolicyList {
                 data-inputtype="${type}"
                 ${required == "True" ? "data-isrequired='true'" : ""}
             />
-        `;
-
+        `
     }
 
+    /**
+     * This HTML snippet should match what's inside item.html
+     * Used by renderScriptFields which is run by addToPolicy
+     */
     visibleParamField(input) {
         if (input.type === "TEXT_FIELD") {
             input.default_value = input.default_value.split(",")[0]
         }
         return `
             <div class="policy-script-print">
-                <strong class="policy-script-print-name"> ${input.name}:</strong>
+                <span class="policy-script-print-name pe-1">${input.name}${input.required == "True" ? '*' : ''}:</span>
                 <span class="policy-script-print-value">
                     ${input.type === "BOOLEAN"
-            ? '<input type="checkbox" class="form-check-input" checked disabled>'
-            : input.default_value} 
+                        ? '<input type="checkbox" class="form-check-input" checked disabled>'
+                        : input.default_value} 
                 </span>
             </div>`
-
     }
 
+    /**
+     * Called by list.html when you click a script from the search results to add it to the policy
+     */
     addToPolicy(scriptId, scriptName, scriptPk, scriptInputs) {
         const itemHtml = BibOS.expandTemplate("policylist-item", {
             ps_pk: "new_" + this.amountOfNewScripts,
@@ -102,7 +116,9 @@ class PolicyList {
         this.updateNew("group_policies")
     }
 
-
+    /**
+    * Called at the end when you add or remove a script from a policy
+    */
     updateNew(id = "group_policies") {
         let num = 0
         document.querySelectorAll(`#${id} input.policy-script-pos`).forEach((element) => {
@@ -116,6 +132,9 @@ class PolicyList {
         this.amountOfNewScripts = num;
     }
 
+    /**
+     * Renders the non-editable list of parameters and their values for a newly added associated script that hasn't yet been saved
+     */
     renderScriptFields(pk, scriptPk, scriptInputs, rowNode) {
         if (!scriptInputs || scriptInputs.length === 0) {
             rowNode.querySelector(".edit-policy-btn")?.classList.add("invisible")
@@ -137,9 +156,14 @@ class PolicyList {
 
         rowNode.querySelector(`[data-pk="policy-script-${pk}"]`)?.insertAdjacentHTML("beforeend", param_fields)
     }
-
+    /**
+     * Triggered when clicking the submit button while editing the parameters for a specific policy script
+     * Fetches data from the visible parameters and updates the hidden parameters based on the changes.
+     * Additionally it updates the values displayed next to each script?
+     */
     submitEditDialog(policy_id) {
         const wrapper = document.getElementById(policy_id)
+        // Note: This loop omits select/options which don't have .form-control but instead .form-select
         const modalInputs = document.querySelectorAll(
             "#editpolicyscriptdialog .modal-body .form-control",
         )
@@ -147,13 +171,13 @@ class PolicyList {
            corresponding hidden input field already has a value) */
         let count = 0
         modalInputs.forEach((inputElement) => {
-            let inputName = inputElement.getAttribute("name").substring(5)
-            let inputField = wrapper.querySelector('input[name="' + inputName + '"]')
-            if (inputField.getAttribute("data-isrequired")) {
+            let hiddenFieldName = inputElement.getAttribute("name").substring(5)
+            let hiddenField = wrapper.querySelector(`input[name="${hiddenFieldName}"]`)
+            if (hiddenField.getAttribute("data-isrequired")) {
                 if (
                     inputElement.type === "file" &&
                     inputElement.files.length === 0 &&
-                    inputField.files.length === 0
+                    hiddenField.files.length === 0
                 ) {
                     /* If the hidden input field has a value, then it's fine if
                        this one doesn't -- we won't overwrite it */
@@ -176,44 +200,45 @@ class PolicyList {
         }
 
         // loop over inputs inside the modal, and set their corresponding hidden input fields in the group form
+        //
         modalInputs.forEach((inputElement) => {
-            let inputName = inputElement.getAttribute("name").substring(5)
-            let inputField = wrapper.querySelector(`input[name="${inputName}"]`)
+            let hiddenFieldName = inputElement.getAttribute("name").substring(5)
+            let hiddenField = wrapper.querySelector(`input[name="${hiddenFieldName}"]`)
 
             let visibleValueField = null
-            let nextSibling = inputField.nextElementSibling
+            let hiddenFieldNextSibling = hiddenField.nextElementSibling
 
-            while (nextSibling) {
-                if (nextSibling.matches(".policy-script-print")) {
-                    visibleValueField = nextSibling.querySelector(
+            while (hiddenFieldNextSibling) {
+                if (hiddenFieldNextSibling.matches(".policy-script-print")) {
+                    visibleValueField = hiddenFieldNextSibling.querySelector(
                         ".policy-script-print-value",
                     )
                     break
                 }
-                nextSibling = nextSibling.nextElementSibling
+                hiddenFieldNextSibling = hiddenFieldNextSibling.nextElementSibling
             }
             if (!visibleValueField) return;
 
             if (inputElement.type === "file") {
+                // If a new file was selected set that in hiddenparams, otherwise set the selected file
                 if (inputElement.files.length !== 0) {
-                    inputField.files = inputElement.files
+                    hiddenField.files = inputElement.files
                     visibleValueField.textContent = inputElement.files[0].name
                 }
             } else if (inputElement.type === "checkbox") {
-                inputField.value = inputElement.checked ? "True" : "False"
+                hiddenField.value = inputElement.checked ? "True" : "False"
                 visibleValueField.innerHTML = `<input type="checkbox" class="form-check-input" disabled ${inputElement.checked ? "checked" : ""}>`
             } else if (inputElement.type === "password") {
-                inputField.value = inputElement.value
+                hiddenField.value = inputElement.value
                 visibleValueField.textContent = "•••••"
 
                 // This workaround prevents the browser from prompting to save a password
                 inputElement.type = "text"
                 inputElement.classList.add("d-none")
-                const clonedElement = inputElement.cloneNode()
-                inputElement.parentElement.appendChild(clonedElement)
+                inputElement.parentElement.appendChild(inputElement.cloneNode())
                 inputElement.remove()
             } else {
-                inputField.value = inputElement.value
+                hiddenField.value = inputElement.value
                 visibleValueField.textContent = inputElement.value
             }
         })
@@ -221,7 +246,11 @@ class PolicyList {
         return false
     }
 
-    scriptEdit(clickedElement, defaultValues) {
+    /**
+     * Renders the form in the modal, created when clicking to edit the values for the input parameters of an associated script,
+     * based on data in the hidden params (policy-script-param)
+     */
+    editScriptInputParams(clickedElement, defaultValues) {
         // the modal body that contains the input fields
         const modalbody = document.querySelector("#editpolicyscriptdialog .modal-body")
         modalbody.innerHTML = ""
@@ -230,7 +259,8 @@ class PolicyList {
         clickedElement.closest("tr").querySelectorAll(".policy-script-param").forEach((inputparam, index) => {
             const paramType = this.getFieldType(inputparam.getAttribute("data-inputtype"))
             const wrapperDiv = document.createElement("div")
-            let newElement;
+            wrapperDiv.classList.add("mb-3")
+            let newElement
 
             if (paramType === "textfield") {
                 newElement = document.createElement("select")
@@ -312,7 +342,9 @@ class PolicyList {
         return typeMapping[type] || "text"
     }
 
-
+    /**
+     * Called when you click to remove an associated script from the policy
+     */
     removeItem(clickedElem, id) {
         // Find the closest parent <tr> element
         const rowElement = clickedElem.closest("tr")
@@ -324,6 +356,9 @@ class PolicyList {
         this.updateNew(id)
     }
 
+    /**
+     * When you click to save group settings this is called to redo the counts for script positions
+     */
     updateScriptPositions() {
         let fields = document.getElementsByClassName("position-field")
 

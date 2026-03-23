@@ -1,0 +1,33 @@
+{% extends "site_with_navigation.html" %}
+{% load custom_tags %}
+{% load i18n %}
+
+{% block specific_title %}
+{% translate "Delete file" %}: {{file}}
+{% endblock %}
+
+{% block specific_content %}
+  <div class="container-fluid main">
+    {% if associated_groups %}
+    <h1>{% translate "This file parameter cannot currently be deleted"%}</h1>
+    <p>{% translate "The reason is it's currently used by at least one associated script in the following groups: "%}</p>
+      <p>{{associated_groups|join:","}}</p>
+      <p>{% translate "Either replace it where it's used, or if the group(s) it's used in are no longer needed, remove the groups."%}<br/>
+      {% translate "Afterwards you can return here and delete it."%}</p>
+      <div>
+        <button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1)">{% translate "Go back" %}</button>
+      </div>
+    {% else %}
+    <p>
+      {% translate "Are you sure you wish to delete the file" %}:
+      <strong style="font-size: 1.25em;">{{ file }}</strong>?
+    </p>
+    <form method="post">
+      {% csrf_token %}
+      {{ form }}
+      <input class="btn btn-danger me-3" type="submit" value="{% translate "Confirm deletion" %}">
+      <button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1)">{% translate "Cancel" %}</button>
+    </form>
+    {% endif %}
+  </div>
+{% endblock %}

@@ -1,5 +1,7 @@
 {% load i18n %}
 
+{# This, along with list.html, render the existing list of policy scripts loaded from the db #}
+
 <tr>
   <td class="sortable-handle" style="min-width: 6.2rem; width: 5%; cursor: pointer;">
     <input type="hidden" class="position-field" name="group_policies_{{ ps_pk }}_position" value="{{ ps.position }}">
@@ -15,9 +17,9 @@
       <input class="policy-script-name" type="hidden" name="group_policies_{{ ps_pk }}" value="{{ script_pk }}">
       {% for param in params %}
         {% if param.input.value_type != 'FILE' %}
-          {# Even though it looks complicated, the logic for mandatory parameters is simple enough: The browser won't enforce the non-emptiness check for mandatory passwords or files if a value is stored in the database #}
+          {# Even though it looks complicated, the logic for mandatory parameters is simple enough: The browser won't enforce the non-emptiness check for mandatory passwords if a value is stored in the database #}
           {% if param.input.value_type != 'PASSWORD' %}
-            <input class="policy-script-param" type="hidden" name="group_policies_{{ ps_pk }}_param_{{ param.input.position }}" value="{{ param.string_value }}{{ param.file_value }}" data-inputtype="{{ param.input.value_type }}" {% if param.input.mandatory %} data-isrequired="true" {% endif %}>
+            <input class="policy-script-param" type="hidden" name="group_policies_{{ ps_pk }}_param_{{ param.input.position }}" value="{{ param.string_value }}" data-inputtype="{{ param.input.value_type }}" {% if param.input.mandatory %} data-isrequired="true" {% endif %}>
           {% else %}
             <input class="policy-script-param" type="hidden" name="group_policies_{{ ps_pk }}_param_{{ param.input.position }}" data-inputtype="{{ param.input.value_type }}" {% if not param.string_value and param.input.mandatory %} data-isrequired="true" {% endif %}>
           {% endif %}
@@ -25,9 +27,9 @@
           <input class="policy-script-param d-none form-control" type="file" name="group_policies_{{ ps.pk }}_param_{{ param.input.position }}" data-inputtype="FILE" {% if not param.file_value and param.input.mandatory %} data-isrequired="true" {% endif %}>
         {% endif %}
         <div class="policy-script-print">
-          <strong class="policy-script-print-name">
-            {{ param.input.name }}:
-          </strong>
+          <span class="policy-script-print-name pe-1">
+            {{ param.input.name }}{% if param.input.mandatory %}*{% endif %}:
+          </span>
           <span class="policy-script-print-value">
             {% if param.input.value_type == 'FILE' %}
               {% if param.file_value %}
@@ -35,7 +37,7 @@
                   {{ param.file_value|file_basename }}
                 </a>
               {% else %}
-              {% translate "None selected" %}
+                {% translate "None selected" %}
               {% endif %}
             {% elif param.input.value_type == 'PASSWORD' %}
               •••••
@@ -55,7 +57,7 @@
   </td>
   <td style="min-width: 6.2rem; width: 20%;">
     <p class="mb-0" style="margin-left: -.5rem;">
-     <a class="mb-1 mt-1 btn btn-sm {% if not params %} invisible {% endif %}" onclick="policyListHandler.scriptEdit(this,
+     <a class="mb-1 mt-1 btn btn-sm {% if not params %} invisible {% endif %}" onclick="policyListHandler.editScriptInputParams(this,
       [{% for param in params %}
       '{{ param.input.default_value }}',
       {% endfor %}]

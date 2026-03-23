@@ -42,7 +42,7 @@
         {{ form.executable_code|as_crispy_field }}
 
         {% if selected_script.is_global and not user.is_superuser %}
-        <a class="btn btn-sm btn-secondary p-2 mb-3" href="{{selected_script.executable_code.url}}" download>
+        <a class="btn btn-sm btn-secondary p-2 mb-3" href="{{ selected_script.executable_code.url }}" download>
             <span class="material-symbols-outlined">
               cloud_download
             </span>

@@ -1,40 +1,9 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load static %}
 
 {% block stylesheets %}
-  <style>
-    html,
-    body,
-    #adm-wrapper,
-    #adm-bodywrapper {
-      width: 100%;
-      height: 100%;
-    }
-    body {
-      padding: 0;
-      margin: 0;
-      background-color: transparent;
-      min-width: auto;
-      display: flex;
-      flex-flow: column nowrap;
-    }
-    #adm-wrapper {
-      display: block;
-      min-width: auto;
-    }
-    #adm-globalnav {
-      display: none;
-    }
-    #adm-content {
-      display: flex;
-      flex-flow: column nowrap;
-    }
-    #run_script_form {
-      flex-grow: 1;
-      display: flex;
-      flex-flow: column nowrap;
-    }
-  </style>
+  <link href="{% static "css/script_run.css" %}" rel="stylesheet" media="screen">
 {% endblock %}
 
 {% block specific_content %}
@@ -64,7 +33,6 @@
     <div class="modal-footer">
       {% block run_dialog_footer %}{% endblock %}
     </div>
-
   </form>
 
   <script>

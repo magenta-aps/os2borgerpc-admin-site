@@ -1,21 +1,21 @@
+from account.models import SiteMembership, UserProfile
 from django import forms
-from django.forms import ValidationError
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
-
+from crispy_forms.helper import FormHelper
 from system.models import (
-    ConfigurationEntry,
-    Input,
     PC,
+    ConfigurationEntry,
+    EventRuleServer,
+    FileParameter,
+    Input,
     PCGroup,
-    WakeChangeEvent,
-    WakeWeekPlan,
     Script,
     SecurityEvent,
-    EventRuleServer,
     Site,
+    WakeChangeEvent,
+    WakeWeekPlan,
 )
-from account.models import SiteMembership, UserProfile
 
 time_format = forms.TimeInput(
     attrs={"type": "time", "max": "23:59", "class": "form-control"}, format="%H:%M"
@@ -262,7 +262,7 @@ class UserForm(forms.ModelForm):
         user_exists = self.Meta.model.objects.filter(username=form_username).exists()
 
         if not self.instance.username == form_username and user_exists:
-            raise ValidationError(
+            raise forms.ValidationError(
                 _('A user named "%s" already exists.') % form_username
             )
         return cleaned_data
@@ -298,11 +298,23 @@ class UserFormSSO(forms.ModelForm):
         fields = ("language",)
 
 
+# Currently not used by script run or associated scripts, but only the relevant FileArchive views
+# to create or update FileParameters
+class FileParameterForm(forms.ModelForm):
+    class Meta:
+        model = FileParameter
+        fields = "__all__"
+
+
 # Only used by script run, not associated scripts
 class ParameterForm(forms.Form):
     def __init__(self, *args, **kwargs):
         script = kwargs.pop("script")
         super().__init__(*args, **kwargs)
+
+        # Crispy: Disable labels on crispy fields when using as_crispy_fields as this form currently creates them manually separately
+        self.helper = FormHelper()
+        self.helper.form_show_labels = False
 
         for i, inp in enumerate(script.ordered_inputs):
             name = "parameter_%s" % i

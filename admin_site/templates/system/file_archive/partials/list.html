@@ -1,0 +1,28 @@
+{% load i18n %}
+
+{% for file in files %}
+  <tr>
+    <td>
+      <input style="width: 165px;" name="name" hx-post="{% url 'file_archive_update' site.uid file.pk %}" hx-trigger="keyup changed delay:1s" value="{{ file.name|default:"" }}">
+    </td>
+    <td>
+      <a href="{{file.file.url}}">{{file.file|file_basename}}</a>
+    </td>
+    <td>
+      <input style="width: 320px;" name="description" hx-post="{% url 'file_archive_update' site.uid file.pk %}" hx-trigger="keyup changed delay:1s" value="{{ file.description|default:"" }}">
+    </td>
+    <td>{{file.created}}</td>
+    <td>{{file.modified}}</td>
+    <td>{{file.created_by}}</td>
+    <td>
+      <a href="{% url "file_archive_delete" site.uid file.pk %}" class="btn btn-danger">
+        <span class='material-symbols-outlined align-middle'>delete</span>
+        {% translate "Delete" %}
+      </a>
+    </td>
+  </tr>
+{% empty %}
+  <tr>
+    <td colspan="7">{% translate "You currently have no files in your archive" %}</td>
+  </tr>
+{% endfor %}

@@ -2,39 +2,31 @@
 import json
 import secrets
 
-from django.http import Http404, JsonResponse, HttpResponse
-from django.shortcuts import get_object_or_404, redirect, render
+import django_otp
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.utils.decorators import method_decorator
-from django.utils.translation import gettext_lazy as _
-from django.utils.html import escape
-from django.contrib.auth.models import User, Permission
+from django.contrib.auth.models import Permission, User
+from django.core.exceptions import PermissionDenied
+from django.db import transaction
+from django.db.models import F, Q
+from django.forms import Form
+from django.http import Http404, HttpResponse, HttpResponseRedirect, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import resolve, reverse
-
+from django.utils.decorators import method_decorator
+from django.utils.html import escape
+from django.utils.translation import gettext_lazy as _
+from django.views.generic import DetailView, ListView, RedirectView, TemplateView, View
 from django.views.generic.edit import (
     CreateView,
+    DeleteView,
     DeletionMixin,
     FormView,
     UpdateView,
-    DeleteView,
 )
-from django.views.generic import View, ListView, DetailView, RedirectView, TemplateView
 from django.views.generic.list import BaseListView
-
-from django.db import transaction
-from django.db.models import Q, F
-
-from django.core.exceptions import PermissionDenied
-
-import django_otp
-from two_factor.forms import TOTPDeviceForm
-from two_factor.utils import default_device
-from two_factor import views as otp_views
-from two_factor.plugins.phonenumber.utils import get_available_phone_methods
-from django_otp.decorators import otp_required
 from django_otp import devices_for_user, user_has_device
+from django_otp.decorators import otp_required
 from django_otp.plugins.otp_static.models import StaticToken
-from django.forms import Form
 
 from os2borgerpc_admin import utils as global_utils
 
@@ -61,6 +53,7 @@ from system.models import (
     Configuration,
     ConfigurationEntry,
     Customer,
+    FileParameter,
     ImageVersion,
     Input,
     Job,
@@ -83,19 +76,24 @@ from system.models import (
 from system.forms import (
     ConfigurationEntryForm,
     EventRuleServerForm,
+    FileParameterForm,
+    ParameterForm,
     PCForm,
     PCGroupForm,
-    ParameterForm,
     ScriptForm,
     SecurityEventForm,
-    SiteForm,
     SiteCreateForm,
+    SiteForm,
     UserForm,
     UserFormSSO,
     UserLinkForm,
     WakeChangeEventForm,
     WakePlanForm,
 )
+from two_factor import views as otp_views
+from two_factor.forms import TOTPDeviceForm
+from two_factor.plugins.phonenumber.utils import get_available_phone_methods
+from two_factor.utils import default_device
 
 
 def run_wake_plan_script(site, pcs, args, user, type="remove"):
@@ -246,6 +244,7 @@ class SelectionMixin(View):
 class JSONResponseMixin:
     """
     A mixin that can be used to render a JSON response.
+    Used by SecurityEvents and Jobs for pagination/filtering.
     """
 
     def render_to_json_response(self, context, **response_kwargs):
@@ -367,7 +366,7 @@ class SiteList(ListView, LoginRequiredMixin):
         context["user_sites"] = user_sites
         # The dictionary to generate the customer-site list has the following structure:
         # {"Denmark": [Customer1, Customer2], "Sweden": [Customer3, ...] ...}
-        # Handling the logic for non-superusers differently because it can be done in a much less complex way
+        # Handling the logic for superusers differently because it can be done in a less complex way
         if self.request.user.is_superuser:
             countries = Country.objects.all()
         else:
@@ -1196,6 +1195,7 @@ class JobInfo(DetailView, SuperAdminOrThisSiteMixin):
         return context
 
 
+# Used by ScriptCreate, Update and Delete
 class ScriptMixin(object):
     script = None
     script_inputs = ""
@@ -1568,6 +1568,10 @@ class ScriptRun(SiteView):
         all_groups = self.object.groups.all()
         context["groups"] = [group for group in all_groups if group.pcs.count() > 0]
 
+        # TODO: Figure out if we want the badges
+        for p in context["pcs"]:
+            p.badgeclass = get_badge_class(p.product.id)
+
         if len(context["script"].ordered_inputs) > 0:
             context["action"] = ScriptRun.STEP2
         else:
@@ -1592,7 +1596,9 @@ class ScriptRun(SiteView):
     def step3(self, context):
         self.template_name = "system/scripts/run_step3.html"
         form = ParameterForm(
-            self.request.POST, self.request.FILES, script=context["script"]
+            self.request.POST,
+            self.request.FILES,
+            script=context["script"],
         )
         context["form"] = form
 
@@ -2421,9 +2427,6 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
 
             return response
 
-    def form_invalid(self, form):
-        return super().form_invalid(form)
-
     def check_settings_updates(self, plan_pre, events_pre):
         """Helper function used to check if the plan settings have changed."""
         plan_post = self.object
@@ -2664,9 +2667,6 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
 
         return response
 
-    def form_invalid(self, form):
-        return super().form_invalid(form)
-
     def check_settings_updates(self, event_pre):
         """Helper function used to check if the settings have changed
         and the event is used by an active wake plan"""
@@ -2716,9 +2716,6 @@ class WakeChangeEventCreate(WakeChangeEventBaseMixin, CreateView):
             )
 
         return response
-
-    def form_invalid(self, form):
-        return super().form_invalid(form)
 
 
 class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):
@@ -3378,12 +3375,15 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         del context["newform"].fields["pcs"]
         del context["newform"].fields["supervisors"]
 
+        # For Associated Scripts
         context["all_scripts"] = Script.objects.filter(
             Q(site=site) | Q(site=None),
             Q(is_hidden=False)
             | Q(feature_permission__in=site.customer.feature_permission.all()),
             is_security_script=False,
         )
+
+        context["site_files"] = FileParameter.objects.filter(site=site)
 
         return context
 
@@ -3543,9 +3543,6 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                 error=True,
             )
             return response
-
-    def form_invalid(self, form):
-        return super().form_invalid(form)
 
     def get_notification_strings(self, pc_names, plan_names):
         """Helper function used to generate strings for the notification displayed
@@ -4093,7 +4090,6 @@ class ImageVersionView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
 
     template_name = "system/site_images.html"
     model = ImageVersion
-    selection_class = ImageVersion
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -4145,3 +4141,95 @@ class ImageVersionView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
         context["user_language"] = user_language
 
         return context
+
+
+# Handles listing and updates via HTMX
+class FileArchive(SiteMixin, ListView, SuperAdminOrThisSiteMixin):
+    model = FileParameter
+    template_name = "system/file_archive/file_archive.html"
+    ordering = "-modified"
+    context_object_name = "files"
+
+    def get_context_data(self, **kwargs):
+        # First, get basic context from superclass
+        context = super().get_context_data(**kwargs)
+        context["form"] = FileParameterForm()
+
+        return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        queryset = queryset.filter(site=site)
+
+        return queryset
+
+    def post(self, request, *args, **kwargs):
+        obj = get_object_or_404(FileParameter, pk=kwargs["pk"])
+
+        if "name" in request.POST:
+            obj.name = request.POST["name"]
+        elif "description" in request.POST:
+            obj.description = request.POST["description"]
+
+        obj.save()
+
+        return HttpResponse("OK")
+
+
+class FileArchiveCreate(CreateView, SuperAdminOrThisSiteMixin):
+    form_class = FileParameterForm
+
+    def get_success_url(self):
+        return reverse(
+            "file_archive",
+            kwargs={
+                "slug": self.kwargs["slug"],
+            },
+        )
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        self.object.created_by = self.request.user
+
+        response = super().form_valid(form)
+
+        set_notification_cookie(response, _("File %s created") % self.object.name)
+
+        return response
+
+    def form_invalid(self, form):
+        response = HttpResponseRedirect(
+            reverse("file_archive", kwargs={"slug": self.kwargs["slug"]})
+        )
+        set_notification_cookie(
+            response,
+            _(
+                "There was an error handling the selected file %s and it was not uploaded. Is the file empty?"
+            )
+            % self.request.POST["name"],
+            error=True,
+        )
+        return response
+
+
+class FileArchiveDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
+    model = FileParameter
+    template_name = "system/file_archive/confirm_delete.html"
+    context_object_name = "file"
+
+    def get_success_url(self):
+        return reverse("file_archive", kwargs={"slug": self.kwargs["slug"]})
+
+    def form_valid(self, form, *args, **kwargs):
+        if self.object.site not in self.request.user.user_profile.sites.all():
+            return self.form_invalid(form)
+
+        response = super().delete(form, *args, **kwargs)
+
+        set_notification_cookie(
+            response,
+            _("File %s deleted") % self.object,
+        )
+        return response

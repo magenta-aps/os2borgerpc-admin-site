@@ -1,0 +1,46 @@
+/* Within the runscript modal iframe */
+#adm-wrapper {
+  min-width: initial;
+}
+
+#adm-bodywrapper,
+#adm-header,
+#adm-body,
+#adm-content {
+  width: 100%;
+}
+
+#adm-content {
+  flex: initial;
+}
+
+#run_script_form {
+  flex-grow: 1;
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+}
+
+.field:not(:first-child) {
+  margin-top: 15px;
+}
+
+.field select,
+.field input:not([type="checkbox"]) {
+  background: white;
+}
+
+#pcs tr {
+  border: none !important;
+}
+
+.modal-body {
+  overflow-y: auto;
+  padding-bottom: 80px;
+}
+
+.modal-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}

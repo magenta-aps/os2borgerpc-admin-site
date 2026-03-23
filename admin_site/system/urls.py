@@ -1,16 +1,22 @@
+from django.templatetags.static import static
 from django.urls import path
 from django.views.generic import RedirectView
-from django.templatetags.static import static
-
 from django.views.i18n import JavaScriptCatalog
-
 from system.views import (
     AdminIndex,
+    AdminTwoFactorBackupTokens,
+    AdminTwoFactorDisable,
+    AdminTwoFactorSetup,
+    AdminTwoFactorSetupComplete,
     APIKeyCreate,
     APIKeyDelete,
     APIKeyUpdate,
     ConfigurationEntryCreate,
     ConfigurationEntryUpdate,
+    FileArchive,
+    FileArchiveCreate,
+    FileArchiveDelete,
+    GlobalScriptRedirect,
     ImageVersionRedirect,
     ImageVersionRedirectSite,
     ImageVersionView,
@@ -25,24 +31,14 @@ from system.views import (
     PCGroupRedirect,
     PCGroupUpdate,
     PCsOverview,
-    PCUpdateRedirect,
-    PCUpdate,
     PCDelete,
-    WakePlanCreate,
-    WakePlanDuplicate,
-    WakePlanDelete,
-    WakePlanRedirect,
-    WakePlanUpdate,
-    WakeChangeEventCreate,
-    WakeChangeEventDelete,
-    WakeChangeEventRedirect,
-    WakeChangeEventUpdate,
+    PCUpdate,
+    PCUpdateRedirect,
     ScriptCreate,
     ScriptDelete,
     ScriptRedirect,
     ScriptRun,
     ScriptUpdate,
-    GlobalScriptRedirect,
     SecurityEventSearch,
     SecurityEventsUpdate,
     SecurityEventsView,
@@ -62,16 +58,21 @@ from system.views import (
     SiteDelete,
     SiteSettings,
     TwoFactor,
-    AdminTwoFactorSetup,
-    AdminTwoFactorSetupComplete,
-    AdminTwoFactorDisable,
-    AdminTwoFactorBackupTokens,
     UserCreate,
     UserDelete,
     UserLink,
     UserRedirect,
     UserRedirectSite,
     UserUpdate,
+    WakeChangeEventCreate,
+    WakeChangeEventDelete,
+    WakeChangeEventRedirect,
+    WakeChangeEventUpdate,
+    WakePlanCreate,
+    WakePlanDelete,
+    WakePlanDuplicate,
+    WakePlanRedirect,
+    WakePlanUpdate,
 )
 
 urlpatterns = [
@@ -385,6 +386,28 @@ urlpatterns = [
         ImageVersionView.as_view(),
         name="images-product",
     ),
+    # Files
+    path(
+        "site/<slug>/file_archive/",
+        FileArchive.as_view(),
+        name="file_archive",
+    ),
+    path(
+        "site/<slug>/file_archive/new/",
+        FileArchiveCreate.as_view(),
+        name="file_archive_new",
+    ),
+    path(
+        "site/<slug>/file_archive/<int:pk>/update/",
+        FileArchive.as_view(),
+        name="file_archive_update",
+    ),
+    path(
+        "site/<slug>/file_archive/<int:pk>/delete/",
+        FileArchiveDelete.as_view(),
+        name="file_archive_delete",
+    ),
+    # API Key
     # This contains both a regular view and an HTMX view
     path(
         "site/<slug>/api-keys/",
@@ -396,6 +419,7 @@ urlpatterns = [
 # Define HTMX URL Patterns here, and add them to the urlpatterns list
 # Basically these are views that only return partial HTML fragments rather than entire pages
 htmx_urlpatterns = [
+    # API Key
     path(
         "site/<slug>/api-keys/new/",
         APIKeyCreate.as_view(),
@@ -416,6 +440,7 @@ htmx_urlpatterns = [
         SiteDashboardJobListUpdate.as_view(),
         name="dashboard_jobs",
     ),
+    # Sites overview
     path(
         "sites/new-validate/",
         SiteUIDAvailableCheck.as_view(),

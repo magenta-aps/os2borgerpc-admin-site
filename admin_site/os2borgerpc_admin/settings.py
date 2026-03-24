@@ -198,14 +198,18 @@ MIDDLEWARE = (
 
 # Email settings
 
+# FROM field for regular e-mails sent by django. Ought to match the SMTP user.
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
-ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL")
-EMAIL_HOST = os.environ.get("EMAIL_HOST")
-EMAIL_PORT = os.environ.get("EMAIL_PORT")
+# FROM field for server-error emails (see mail_admins). Ought to match the SMTP user
 SERVER_EMAIL = os.environ.get("SERVER_EMAIL")
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# The recipient for server error e-mails
+ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL")
+# SMTP host/username/password
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+# Django's default email backend
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 ROOT_URLCONF = "os2borgerpc_admin.urls"
 

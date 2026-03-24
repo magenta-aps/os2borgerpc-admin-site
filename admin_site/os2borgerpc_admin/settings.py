@@ -242,40 +242,49 @@ DJANGO_APPS = (
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
-# A sample logging configuration. The only tangible logging
-# performed by this configuration is to send an email to
-# the site admins on every HTTP 500 error when DEBUG=False.
+# Django's logging is basically Python's logging with only a few additions.
+# The below config sends an email to the site admins on every HTTP 500 error when DEBUG=False.
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
-        "console": {
+        "bpc": {
+            # https://docs.python.org/3/library/logging.html#levels
             "format": "{levelname} {asctime} {message}",
             "style": "{",
         }
     },
-    "filters": {"require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}},
+    "filters": {
+        # This is a default filter - filtering away all logs when Debug=TRUE
+        "require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}
+    },
     "handlers": {
+        # mail_admins is default
+        # Uses the default formatter, which is only the message
         "mail_admins": {
             "level": "ERROR",
             "filters": ["require_debug_false"],
             "class": "django.utils.log.AdminEmailHandler",
         },
-        "console": {
+        # Changes the formatter from the default "console" handler
+        "custom_console": {
             "class": "logging.StreamHandler",
-            "formatter": "console",
+            "formatter": "bpc",
         },
     },
     "loggers": {
+        # This is not default
         "django.db.backends": {
             "level": os.environ.get("DB_LOG_LEVEL", "CRITICAL"),
-            "handlers": ["console"],
+            "handlers": ["custom_console"],
+            "propagate": False,
         },
     },
+    # This is not default
     "root": {
-        "handlers": ["console", "mail_admins"],
+        "handlers": ["custom_console", "mail_admins"],
         "level": os.environ.get("LOG_LEVEL", "ERROR"),
     },
 }

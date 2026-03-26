@@ -13,37 +13,11 @@
 {% endblock %}
 
 {% block subnav %}
-<ul class="sublevelnav item-list">
-  {% if not pc_list.all %}
-    <li>{% translate "There are no computers" %}</li>
-  {% endif %}
-  {% for pc in pc_list %}
-    <li class="{% if pc == selected_pc %}active{% endif %}">
-      <a class="item-list-link pc-status-list-link" id="{{pc.uid}}" href="{% url "computer" site.url pc.uid %}">
-          {% if pc.is_activated %}
-                <span>{{ pc.name }}</span>
-                <span class="ms-auto badge bg-{{ pc.badgeclass }}">{% if multiple_products %}{{ pc.product.short_name }}{% endif %}</span>
-          {% else %}
-            <span>
-              {{ pc.name }}
-            </span>
-              <br>
-              <div class="ms-auto">
-                  <span class="badge bg-danger">{% translate "Not activated" %}</span>
-                  <span class="badge bg-{{ pc.badgeclass }}">{% if multiple_products %}{{ pc.product.short_name }}{% endif %}</span>
-              </div>
-          {% endif %}
-      </a>
-      {% if pc == selected_pc %}
-      <a class="item-list-deletable material-symbols-outlined" href="{% url "computer_delete" site.url pc.uid %}" title="{% translate "Delete computer" %}">
-          clear
-        </a>
-      {% else %}
-      <div class="spacer_non_selected_pc"></div>
-      {% endif%}
-    </li>
-  {% endfor %}
-</ul>
+  <nav  id="site-computer-navigationlist" class="sublevelnav"
+        hx-get="{% url "computers_navigationlist" site.url selected_pc.uid %}?name={{ params | params_get:'name' }}"
+        hx-target="#site-computer-navigationlist" hx-swap="outerHTML"
+        hx-trigger="revealed">
+  </nav>
 {% endblock %}
 
 {% block specific_content %}

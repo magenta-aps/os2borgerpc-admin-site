@@ -1622,6 +1622,41 @@ class PCUpdateRedirect(SelectionMixin, SiteView):
             return super().render_to_response(context)
 
 
+class PCNavigationList(DetailView, SiteMixin, SuperAdminOrThisSiteMixin):
+    model = Site
+    slug_field = "uid"
+
+    template_name = "system/pcs/pcs_navigation_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        site = context["site"]
+
+        pc = None
+        try:
+            pc = PC.objects.get(uid=self.kwargs["pc_uid"], site=site.id)
+        except PC.DoesNotExist:
+            pc = None
+
+        context["selected_pc"] = pc
+
+        params = self.request.GET.dict() or self.request.POST.dict()
+
+        context["params"] = params
+
+        site_pcs = site.pcs.select_related("product")
+        if "name" in params and params["name"]:
+            site_pcs = site_pcs.filter(name__icontains=params["name"])
+        else:
+            site_pcs = site_pcs.all()
+
+        for p in site_pcs:
+            p.badgeclass = get_badge_class(p.product.id)
+
+        context["pc_list"] = site_pcs
+        return context
+
+
 class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
     template_name = "system/pcs/update.html"
     form_class = PCForm
@@ -1656,6 +1691,8 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         form = context["form"]
         pc = self.object
         params = self.request.GET or self.request.POST
+
+        context["params"] = params
 
         all_pcs = site.pcs.all()
 

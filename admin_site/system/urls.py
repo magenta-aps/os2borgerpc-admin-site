@@ -29,6 +29,7 @@ from system.views import (
     PCsOverview,
     PCsOverviewTable,
     PCDelete,
+    PCNavigationList,
     PCUpdate,
     PCUpdateRedirect,
     ScriptCreate,
@@ -200,6 +201,11 @@ urlpatterns = [
         "site/<slug>/computers/<pc_uid>/",
         PCUpdate.as_view(),
         name="computer",
+    ),
+    path(
+        "site/<slug>/computers/<pc_uid>/navigationlist",
+        PCNavigationList.as_view(),
+        name="computers_navigationlist",
     ),
     path(
         "site/<slug>/computers/<pc_uid>/delete/",

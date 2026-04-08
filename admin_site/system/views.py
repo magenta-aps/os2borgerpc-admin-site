@@ -836,6 +836,7 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
             )
         else:
             queryset = Job.objects.all()
+
         params = self.request.GET
 
         query = {"batch__site": site}
@@ -857,6 +858,20 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
             orderby = "-pk"
 
         queryset = queryset.filter(**query).order_by(orderby, "pk")
+
+        # prefetch selected batches and scripts to get rid of many individual SQL queries
+        # INNER JOIN "system_batch" ON ("system_job"."batch_id" = "system_batch"."id"
+        # INNER JOIN "system_script" ON ("system_batch"."script_id" = "system_script"."id"
+        queryset = queryset.select_related("batch__script")
+
+        # prefetch selected pcs to get rid of many individual SQL queries
+        # INNER JOIN "system_pc" ON ("system_job"."pc_id" = "system_pc"."id"
+        queryset = queryset.select_related("pc")
+
+        # prefetch selected users to get rid of many individual SQL queries
+        # notice that not all jobs have users associated
+        # LEFT OUTER JOIN "auth_user" ON ("system_job"."user_id" = "auth_user"."id")
+        queryset = queryset.select_related("user")
 
         return queryset
 

@@ -194,6 +194,14 @@ msgid "chat"
 msgstr "chat"
 
 #: changelog/templates/list.html
+msgid "Page"
+msgstr "Sida"
+
+#: changelog/templates/list.html
+msgid "First"
+msgstr "Första"
+
+#: changelog/templates/list.html
 msgid "Previous"
 msgstr "Föregående"
 
@@ -201,6 +209,22 @@ msgstr "Föregående"
 #: templates/two_factor/_wizard_actions.html
 msgid "Next"
 msgstr "Nästa"
+
+#: changelog/templates/list.html
+msgid "Last"
+msgstr "Sista"
+
+#: changelog/templates/list.html
+msgid "of"
+msgstr "av"
+
+#: changelog/templates/list.html
+msgid "Filter by computer names"
+msgstr "Filtrera efter datornamn"
+
+#: changelog/templates/list.html
+msgid "No results are matching this query"
+msgstr "Inga resultat matchar den här frågan"
 
 #: changelog/views.py
 #, python-format

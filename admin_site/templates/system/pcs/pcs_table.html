@@ -1,0 +1,124 @@
+{% load i18n %}
+{% load custom_tags %}
+
+{% url "computers_overview_table" site.url as table_url %}
+<table class="table table-extendable caption-top" data-toggle="table" data-classes="table table-bordered" id="site-status-table">
+  <thead>
+    <tr class="align-top">
+      <th>
+        <span class="table-navigation px-2"
+          hx-trigger="click"
+          hx-get="{{ table_url }}?{{ params | params_sort_by_asc_desc_none:'name' | params_urlencode }}"
+          hx-target="#site-status-table" hx-swap="outerHTML">
+        {% translate 'Name' %}&nbsp;{{ params | params_show_sort_arrow:'name' }}
+        </span>
+        <input id="site-status-table-input" class="form-control d-inline w-auto" type="search"
+               name="name"
+               placeholder="{% translate 'Filter by computer names' %}"
+               value="{{ params | params_get:'name' }}"
+               hx-get="{{ table_url }}?{{ params | params_set_page:1 | params_urlencode }}"
+               hx-trigger="input changed delay:1000ms, keyup[key=='Enter']"
+               hx-target="#site-status-table" hx-swap="outerHTML"
+               hx-on::after-swap="htmx.find('#site-status-table-input').focus()"
+               />
+      </th>
+      <th><span class="table-navigation px-2"
+          hx-trigger="click"
+          hx-get="{{ table_url }}?{{ params | params_sort_by_asc_desc_none:'product_short_name' | params_urlencode }}"
+          hx-target="#site-status-table"
+          hx-swap="outerHTML">
+        {% translate 'product'|capfirst %}&nbsp;{{ params | params_show_sort_arrow:'product_short_name' }}
+      </span></th>
+      <th><span class="table-navigation px-2"
+          hx-trigger="click"
+          hx-get="{{ table_url }}?{{ params | params_sort_by_asc_desc_none:'is_activated' | params_urlencode }}"
+          hx-target="#site-status-table" hx-swap="outerHTML">
+        {% translate 'Activated' %}&nbsp;{{ params | params_show_sort_arrow:'is_activated' }}
+      </span></th>
+      <th><span class="table-navigation px-2"
+          hx-trigger="click"
+          hx-get="{{ table_url }}?{{ params | params_sort_by_asc_desc_none:'description' | params_urlencode }}"
+          hx-target="#site-status-table" hx-swap="outerHTMLparams["sort"]">
+        {% translate 'Description' %}&nbsp;{{ params | params_show_sort_arrow:'description' }}
+      </span></th>
+      <th><span class="table-navigation px-2" 
+          hx-trigger="click"
+          hx-get="{{ table_url }}?{{ params | params_sort_by_asc_desc_none:'location' | params_urlencode }}"
+          hx-target="#site-status-table" hx-swap="outerHTML">
+        {% translate 'Location' %}&nbsp;{{ params | params_show_sort_arrow:'location' }}
+      </span></th>
+      <th><span class="table-navigation px-2"
+          hx-trigger="click"
+          hx-get="{{ table_url }}?{{ params | params_sort_by_asc_desc_none:'os_release' | params_urlencode }}"
+          hx-target="#site-status-table" hx-swap="outerHTML">
+        {% translate 'Ubuntu version' %}&nbsp;{{ params | params_show_sort_arrow:'os_release' }}
+      </span></th>
+      <th><span class="table-navigation px-2"
+          hx-trigger="click"
+          hx-get="{{ table_url }}?{{ params | params_sort_by_asc_desc_none:'online' | params_urlencode }}"
+          hx-target="#site-status-table" hx-swap="outerHTML">
+        {% translate 'Status' %}&nbsp;{{ params | params_show_sort_arrow:'online' }}
+      </span></th>
+      <th><span class="table-navigation px-2"
+          hx-trigger="click"
+          hx-get="{{ table_url }}?{{ params | params_sort_by_asc_desc_none:'last_seen' | params_urlencode }}"
+          hx-target="#site-status-table" hx-swap="outerHTML">
+        {% translate 'Latest check-in' %}&nbsp;{{ params | params_show_sort_arrow:'last_seen' }}
+      </span></th>
+    </tr>
+    {% if site_pcs.paginator and site_pcs.paginator.num_pages > 1 %}
+    <tr>
+      <th colspan="8">{% include 'htmx_paginator.html' with action_url=table_url params=params paginated_list=site_pcs target_selector='#site-status-table' %}</th>
+    </tr>
+    {% endif %}
+  </thead>
+  <tbody>
+    {% for pc in site_pcs %}
+      <tr class="click-list--item">
+        <td>
+          <strong><a href="{% url 'computer' slug=site.uid pc_uid=pc.uid %}">{{ pc.name }}</a></strong>
+        </td>
+        <td>
+          <span class="badge bg-{{ pc.badgeclass }}">
+            {{ pc.product_short_name }}
+          </span>
+        </td>
+        <td>
+          {% if pc.is_activated %}
+            <span class="badge bg-success">{% translate 'Activated' %}</span>
+          {% else %}
+            <span class="badge bg-danger">{% translate 'Not activated' %}</span>
+          {% endif %}
+        </td>
+        <td>{{ pc.description }}</td>
+        <td>{{ pc.location }}</td>
+        <td>{{ pc.os_release|default:"" }}</td>
+        <td>
+          {% if pc.online %}
+            <span class="badge bg-success">{% translate 'Online' %}</span>
+          {% else %}
+            <span class="badge bg-danger">{% translate 'Offline' %}</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if pc.last_seen %}
+            {{ pc.last_seen|timesince }} {% translate 'ago' %}<br/>
+            {{ pc.last_seen }}
+          {% else %}
+            {% translate 'Never' %}
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+    {% if not site_pcs %}
+      <tr>
+        <td colspan="8">{% translate 'No results are matching this query' %}</td>
+      </tr>
+    {% endif %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <th colspan="8">{% include 'htmx_paginator.html' with action_url=table_url params=params paginated_list=site_pcs target_selector='#site-status-table' %}</th>
+    </tr>
+  </tfoot>
+</table>

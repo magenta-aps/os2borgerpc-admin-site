@@ -194,6 +194,14 @@ msgid "chat"
 msgstr "chat"
 
 #: changelog/templates/list.html
+msgid "Page"
+msgstr "Side"
+
+#: changelog/templates/list.html
+msgid "First"
+msgstr "Første"
+
+#: changelog/templates/list.html
 msgid "Previous"
 msgstr "Forrige"
 
@@ -201,6 +209,24 @@ msgstr "Forrige"
 #: templates/two_factor/_wizard_actions.html
 msgid "Next"
 msgstr "Næste"
+
+#: changelog/templates/list.html
+msgid "Last"
+msgstr "Sidste"
+
+#: changelog/templates/list.html
+msgid "of"
+msgstr "af"
+
+#: changelog/templates/list.html
+msgid "Filter by computer names"
+msgstr "Filtrer efter computernavn"
+
+
+#: changelog/templates/list.html
+msgid "No results are matching this query"
+msgstr "Ingen resultater matcher denne forespørgsel"
+
 
 #: changelog/views.py
 #, python-format

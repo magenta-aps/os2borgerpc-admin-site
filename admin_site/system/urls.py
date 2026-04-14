@@ -31,6 +31,7 @@ from system.views import (
     PCGroupRedirect,
     PCGroupUpdate,
     PCsOverview,
+    PCsOverviewTable,
     PCDelete,
     PCUpdate,
     PCUpdateRedirect,
@@ -445,6 +446,12 @@ htmx_urlpatterns = [
         "sites/new-validate/",
         SiteUIDAvailableCheck.as_view(),
         name="site_uid_available_check",
+    ),
+    # Computers overview table
+    path(
+        "site/<slug>/status/table",
+        PCsOverviewTable.as_view(),
+        name="computers_overview_table",
     ),
 ]
 

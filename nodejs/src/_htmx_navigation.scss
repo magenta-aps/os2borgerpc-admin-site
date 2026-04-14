@@ -1,0 +1,11 @@
+
+/* HTMX navigation on PC's table */
+span.table-navigation[hx-trigger="click"] {
+    padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+    border-radius: var(--bs-border-radius);
+}
+span.table-navigation[hx-trigger="click"]:focus,
+span.table-navigation[hx-trigger="click"]:hover {
+    cursor: pointer;
+    background-color: var(--bs-orange);
+}

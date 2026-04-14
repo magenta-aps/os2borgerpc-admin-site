@@ -7,6 +7,7 @@ from django.core.files.storage import default_storage
 from os2borgerpc_admin import utils as global_utils
 
 import os
+import urllib.parse
 
 register = template.Library()
 
@@ -82,6 +83,55 @@ def timesince_string(text, string_format="%Y-%m-%d %H:%M"):
 @register.filter
 def get_model_name(text):
     return text._meta.object_name
+
+
+# HTMX computers table filters
+
+
+@register.filter
+def params_sort_by_asc_desc_none(params, sort_tag):
+    new_params = params.copy()
+
+    # start on first page when resorting
+    new_params["page"] = 1
+
+    # flip sort_by output in this cyclus:
+    # None|SomeOtherTag -> sort_tag -> -sort_tag -> sort_tag -> -sort_tag ...
+    if sort_tag == params["sort"]:
+        new_params["sort"] = "-" + sort_tag
+    else:
+        new_params["sort"] = sort_tag
+
+    return new_params
+
+
+@register.filter
+def params_show_sort_arrow(params, sort_tag):
+    if sort_tag == params["sort"]:
+        return "\u2191"  # UPWARDS ARROW
+
+    if sort_tag == params["sort"][1:]:  # filter prefix '-' out
+        return "\u2193"  # DOWNWARDS ARROW
+
+    return "\u2194"  # LEFT RIGHT ARROW
+
+
+@register.filter
+def params_get(params, params_key):
+    # avoid display 'None' in search field
+    return params.get(params_key, "")
+
+
+@register.filter
+def params_set_page(params, page):
+    new_params = params.copy()
+    new_params["page"] = page
+    return new_params
+
+
+@register.filter
+def params_urlencode(params):
+    return urllib.parse.urlencode(params)
 
 
 # CURRENTLY UNUSED

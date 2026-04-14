@@ -6,6 +6,7 @@ import django_otp
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import Permission, User
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator
 from django.db import transaction
 from django.db.models import F, Q
 from django.forms import Form
@@ -61,6 +62,7 @@ from system.models import (
     Product,
     PC,
     PCGroup,
+    PCsOverviewV,
     WakeWeekPlan,
     WakeChangeEvent,
     Script,
@@ -138,6 +140,15 @@ def site_pcs_stats(context, site_list):
         configuration__entries__key="os2_product",
         configuration__entries__value="os2borgerpc kiosk",
     ).count()
+    context["total_pcs_count"] = PC.objects.filter(
+        site__in=site_list,
+    ).count()
+    context["activated_pcs_count"] = PC.objects.filter(
+        site__in=site_list, is_activated=True
+    ).count()
+    context["online_pcs_count"] = online_pcs_count_filter(
+        PC.objects.filter(site__in=site_list)
+    )
     # Add counts for each _os_release
     context["releases"] = []
     for release in (
@@ -1704,25 +1715,67 @@ class PCsOverview(SiteView):
 
     template_name = "system/pcs/pcs.html"
 
-    # For hver pc skal vi hente seneste security event.
     def get_context_data(self, **kwargs):
-        context = super(PCsOverview, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context = site_pcs_stats(context, [kwargs["object"]])
 
-        site_pcs = self.object.pcs.all().order_by(
-            "is_activated", F("last_seen").desc(nulls_last=True)
-        )
+        return context
+
+
+class PCsOverviewTable(DetailView, SuperAdminOrThisSiteMixin):
+    """Class for showing the pcs overview table block"""
+
+    model = Site
+    slug_field = "uid"
+
+    template_name = "system/pcs/pcs_table.html"
+
+    VALID_ORDER_BY = []
+    for i in [
+        "created",
+        "description",
+        "is_activated",
+        "last_seen",
+        "location",
+        "mac",
+        "name",
+        "online",
+        "os_release",
+        "product_short_name",
+        "uid",
+    ]:
+        VALID_ORDER_BY.append(i)
+        VALID_ORDER_BY.append("-" + i)
+
+    # For hver pc skal vi hente seneste security event.
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        site_id = context["site"].id
+
+        params = self.request.GET.dict() or self.request.POST.dict()
+        params["page"] = int(params["page"]) if "page" in params else 1
+
+        if "sort" not in params or params["sort"] not in self.VALID_ORDER_BY:
+            params["sort"] = "-last_seen"
+
+        # filter by computer 'name'
+        # prefetch foreign key SQL tables 'system_configuration' 'system_product'
+        site_pcs = PCsOverviewV.objects.filter(site_id=site_id).order_by(params["sort"])
+
+        if "name" in params and params["name"]:
+            site_pcs = site_pcs.filter(name__icontains=params["name"])
+        else:
+            site_pcs = site_pcs.all()
+
+        paginator = Paginator(site_pcs, 50)  # page size 50
+        site_pcs = paginator.get_page(params["page"])
 
         for p in site_pcs:
-            p.badgeclass = get_badge_class(p.product.id)
+            p.badgeclass = get_badge_class(p.product_id)
 
-        # Top level list of new PCs etc.
-        context["ls_pcs"] = site_pcs
-
-        context["total_pcs_count"] = context["ls_pcs"].count()
-        context["activated_pcs_count"] = site_pcs.filter(is_activated=True).count()
-        context["online_pcs_count"] = online_pcs_count_filter(site_pcs)
-
+        context["params"] = params
+        context["site_pcs"] = site_pcs
         return context
 
 

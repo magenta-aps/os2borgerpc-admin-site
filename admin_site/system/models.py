@@ -856,6 +856,46 @@ class PC(models.Model):
         ordering = ["name"]
 
 
+class PCsOverviewV(models.Model):
+    """RDB view of joined PC, product and configurationentry data for view PCsOverview"""
+
+    id = models.IntegerField(primary_key=True, verbose_name=_("ID"))
+
+    # In this specific model we should NOT introduce FK joint's in python code
+    # as it destroys the efficiency of the generated SQL code to use them ...
+    # The sole purpose of this model and the underlying RDB view is to aggregate
+    # many thousand individually emmitted SQL queries into one single.
+    # Therefore I did not add declarations like these:
+    # site = models.ForeignKey(Site)
+    # product = models.ForeignKey(Product)
+    # configuration = models.OneToOneField(Configuration)
+
+    site_id = models.IntegerField()
+    product_id = models.IntegerField()
+    configuration_id = models.IntegerField()
+    configurationentry_id = models.IntegerField()
+
+    created = models.DateTimeField()
+    description = models.CharField()
+    is_activated = models.BooleanField(verbose_name=_("activated"))
+    last_seen = models.DateTimeField(verbose_name=_("last seen"))
+    location = models.CharField()
+    mac = models.CharField(verbose_name=_("MAC"))
+    name = models.CharField()
+    online = models.BooleanField()
+    os_release = models.CharField(verbose_name=_("OS release"))
+    product_short_name = models.CharField(verbose_name=_("product short name"))
+    uid = models.CharField(verbose_name=_("UID"))
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        # ordering = ["name"]
+        managed = False
+        db_table = "system_pc_overview_v"
+
+
 class ScriptTag(models.Model):
     """A tag model for scripts."""
 

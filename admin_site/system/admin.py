@@ -406,6 +406,7 @@ class FeaturePermissionAdmin(admin.ModelAdmin):
     )
     list_filter = ("name",)
     search_fields = ("name", "uid")
+    filter_horizontal = ("customers",)
 
 
 @admin.register(m.FileParameter)

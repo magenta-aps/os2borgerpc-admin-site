@@ -13,11 +13,7 @@
 {% endblock %}
 
 {% block subnav %}
-  <nav  id="site-computer-navigationlist" class="sublevelnav"
-        hx-get="{% url "computers_navigationlist" site.url selected_pc.uid %}?name={{ params | params_get:'name' }}"
-        hx-target="#site-computer-navigationlist" hx-swap="outerHTML"
-        hx-trigger="revealed">
-  </nav>
+  {% include "system/pcs/pcs_navigation_list.html" %}
 {% endblock %}
 
 {% block specific_content %}

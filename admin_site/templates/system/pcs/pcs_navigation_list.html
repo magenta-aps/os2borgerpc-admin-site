@@ -2,7 +2,6 @@
 {% load custom_tags %}
 
 {% url "computers_navigationlist" site.url selected_pc.uid as navigationlist_url %}
-
 <nav id="site-computer-navigationlist" class="sublevelnav">
   <ul class="item-list">
     <li class="p-3">
@@ -22,7 +21,9 @@
          href="{% url "computer" site.url pc.uid %}?name={{ params | params_get:'name' }}">
         {% if pc.is_activated %}
         <span>{{ pc.name }}</span>
-        <span class="ms-auto badge bg-{{ pc.badgeclass }}">{% if multiple_products %}{{ pc.product.short_name }}{% endif %}</span>
+        <span class="ms-auto badge bg-{{ pc.badgeclass }}">
+          {% if multiple_products %}{{ pc.product.short_name }}{% endif %}
+        </span>
         {% else %}
         <span>
           {{ pc.name }}
@@ -30,12 +31,16 @@
         <br>
         <div class="ms-auto">
           <span class="badge bg-danger">{% translate "Not activated" %}</span>
-          <span class="badge bg-{{ pc.badgeclass }}">{% if multiple_products %}{{ pc.product.short_name }}{% endif %}</span>
+          <span class="badge bg-{{ pc.badgeclass }}">
+            {% if multiple_products %}{{ pc.product.short_name }}{% endif %}
+          </span>
         </div>
         {% endif %}
       </a>
       {% if pc == selected_pc %}
-      <a class="item-list-deletable material-symbols-outlined" href="{% url "computer_delete" site.url pc.uid %}" title="{% translate "Delete computer" %}">
+      <a class="item-list-deletable material-symbols-outlined"
+         href="{% url "computer_delete" site.url pc.uid %}"
+         title="{% translate "Delete computer" %}">
           clear
         </a>
       {% else %}

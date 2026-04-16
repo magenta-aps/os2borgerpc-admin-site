@@ -97,10 +97,12 @@
                         </p>
                     </header>
                     <div class="clearfix"></div>
-                    <p>
-                    {{ entry.description }}<br/><br/>
-                        <em>{% translate "Read more" %}</em>...
-                    </p>
+                    {% if entry.description %}
+                        <p>
+                        {{ entry.description }}<br/><br/>
+                            <em>{% translate "Read more" %}</em>...
+                        </p>
+                    {% endif %}
                     <footer>
                         <div class="changelog-tags">
                             <h3>{% translate "News categories" %}</h3>

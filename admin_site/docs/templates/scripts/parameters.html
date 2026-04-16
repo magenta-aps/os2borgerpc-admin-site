@@ -9,9 +9,9 @@
   </p>
   <p>
     {% blocktranslate trimmed %}
-    The script arguments make it possible to supply input parameters
+    The script parameters make it possible to supply parameters
     when a script needs to be run. One can choose between these types
-    of input parameters:
+    of parameters:
     {% endblocktranslate %}
     <ul>
       <li>
@@ -55,7 +55,7 @@
         Makes it possible to supply a password string. This type of parameter
         functions like the regular string parameter except that the chosen
         password will be hidden in the log output and all other places
-        where the chosen input parameters are displayed.
+        where the chosen parameters are displayed.
         {% endblocktranslate %}
       </li>
       <li>
@@ -77,22 +77,22 @@
     {% translate "Time"|bold as time %}
     {% translate "Choices"|bold as choices %}
     {% blocktranslate trimmed %}
-    In order to add an argument to a script, you must click on the button
-    "Add arguments". This will add a new row to the list of arguments where
-    you must fill out the name and type for the argument. It is also possible
-    to specify a default value for the argument, which will be entered by default
-    when running the script or adding it as an associated script. Only arguments
+    In order to add a parameter to a script, you must click on the button
+    "Add parameters". This will add a new row to the list of parameters where
+    you must fill out the name and type for the parameter. It is also possible
+    to specify a default value for the parameter, which will be entered by default
+    when running the script or adding it as an associated script. Only parameters
     of the types {{str}}, {{int}}, {{date}}, {{choices}} and {{time}} can have default values. Lastly,
-    an argument can be set as required or not. Required parameters must be supplied
+    a parameter can be set as required or not. Required parameters must be supplied
     when running the script whereas non-required parameters can be left blank.
-    Booleans and choices cannot be required. If you wish to remove an argument, you
+    Booleans and choices cannot be required. If you wish to remove a parameter, you
     must click on "Remove" to the right in the list.
     {% endblocktranslate %}
   </p>
   <p>
     {% blocktranslate trimmed %}
     You must click on the button "Save changes" at the bottom of the script
-    editing interface before changes to script arguments are made permanent.
+    editing interface before changes to script parameters are made permanent.
     {% endblocktranslate %}
   </p>
 {% endblock %}

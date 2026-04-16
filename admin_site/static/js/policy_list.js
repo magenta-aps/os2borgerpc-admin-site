@@ -247,7 +247,7 @@ class PolicyList {
     }
 
     /**
-     * Renders the form in the modal, created when clicking to edit the values for the input parameters of an associated script,
+     * Renders the form in the modal, created when clicking to edit the values for the parameters of an associated script,
      * based on data in the hidden params (policy-script-param)
      */
     editScriptInputParams(clickedElement, defaultValues) {

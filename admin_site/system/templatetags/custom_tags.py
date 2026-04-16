@@ -49,7 +49,7 @@ def render_custom_links_markdown(text, site_uid):
 def file_basename(value):
     """
     Print out the file name without the full path.
-    Used to show file input parameters in policies to the user.
+    Used to show file parameters in policies to the user.
     """
     try:
         if not value:

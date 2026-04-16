@@ -1163,7 +1163,7 @@ class ScriptMixin(object):
                     value for (value, name) in Input.VALUE_CHOICES
                 ]:
                     data["type_error"] = _(
-                        "Error: You must provide a correct input parameter type"
+                        "Error: You must provide a correct parameter type"
                     )
                     success = False
 

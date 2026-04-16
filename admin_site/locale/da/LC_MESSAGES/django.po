@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-12 11:51+0100\n"
+"POT-Creation-Date: 2026-04-16 16:41+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -193,40 +193,15 @@ msgstr "Vis"
 msgid "chat"
 msgstr "chat"
 
-#: changelog/templates/list.html
-msgid "Page"
-msgstr "Side"
-
-#: changelog/templates/list.html
-msgid "First"
-msgstr "Første"
-
-#: changelog/templates/list.html
+#: changelog/templates/list.html templates/htmx_paginator.html
 msgid "Previous"
 msgstr "Forrige"
 
-#: changelog/templates/list.html templates/system/scripts/run_step1.html
+#: changelog/templates/list.html templates/htmx_paginator.html
+#: templates/system/scripts/run_step1.html
 #: templates/two_factor/_wizard_actions.html
 msgid "Next"
 msgstr "Næste"
-
-#: changelog/templates/list.html
-msgid "Last"
-msgstr "Sidste"
-
-#: changelog/templates/list.html
-msgid "of"
-msgstr "af"
-
-#: changelog/templates/list.html
-msgid "Filter by computer names"
-msgstr "Filtrer efter computernavn"
-
-
-#: changelog/templates/list.html
-msgid "No results are matching this query"
-msgstr "Ingen resultater matcher denne forespørgsel"
-
 
 #: changelog/views.py
 #, python-format
@@ -1174,7 +1149,8 @@ msgstr ""
 #: docs/templates/configuration/index.html
 #: templates/system/configs/templates.html
 #: templates/system/file_archive/file_archive.html
-#: templates/system/pcs/pcs.html templates/system/scripts/update_form.html
+#: templates/system/pcs/pcs_table.html
+#: templates/system/scripts/update_form.html
 #: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid "Name"
 msgstr "Navn"
@@ -1736,11 +1712,10 @@ msgstr ""
 #: docs/templates/groups/scripts.html
 msgid ""
 "Associated Scripts have a position that determines the order in which they "
-"are run and they may have a number of input parameters that they are run "
-"with."
+"are run and they may have a number of parameters that they are run with."
 msgstr ""
 "Tilknyttede Scripts har en position, der angiver i hvilken rækkefølge, de "
-"bliver kørt, og de kan have nogle inputparametre, som de køres med."
+"bliver kørt, og de kan have nogle parametre, som de køres med."
 
 #: docs/templates/groups/scripts.html
 msgid "A computer can be added to multiple groups."
@@ -1765,12 +1740,12 @@ msgid ""
 "We recommend using Associated Scripts where possible as they make it simpler "
 "to set up new computers in a department. All you need to do is to add the "
 "new computers to the group, and then the relevant scripts will automatically "
-"be run on them with the correct input parameters."
+"be run on them with the correct parameters."
 msgstr ""
 "Vi anbefaler at bruge Tilknyttede Scripts hvor det er muligt, da det kan "
 "gøre det lettere at sætte nye computere op på en afdeling. Alt man så skal "
 "gøre er at tilmelde de nye computere til gruppen, og så køres de relevante "
-"Scripts automatisk derpå med rette inputparametre."
+"Scripts automatisk derpå med rette parametre."
 
 #: docs/templates/groups/scripts.html
 msgid "Final remarks"
@@ -1804,28 +1779,28 @@ msgstr ""
 #: docs/templates/groups/scripts.html
 #, python-format
 msgid ""
-"If the added script requires input parameters, these parameters are set by "
+"If the added script requires parameters, these parameters are set by "
 "clicking %(edit)s and this %(must)s be done before the changes can be saved. "
-"I.e. a Script that requires input parameters cannot be assigned with empty "
-"input parameters."
+"I.e. a Script that requires parameters cannot be assigned with empty "
+"parameters."
 msgstr ""
-"Hvis Scriptet du tilføjer benytter inputparametre, sættes værdierne for "
-"disse ved at trykke på %(edit)s, og dette %(must)s gøres før ændringerne kan "
-"gemmes. Dvs. et Script der benytter inputparametre kan ikke tilknyttes, med "
-"tomme inputparametre."
+"Hvis Scriptet du tilføjer benytter parametre, sættes værdierne for disse ved "
+"at trykke på %(edit)s, og dette %(must)s gøres før ændringerne kan gemmes. "
+"Dvs. et Script der benytter parametre kan ikke tilknyttes, med tomme "
+"parametre."
 
 #: docs/templates/groups/scripts.html
 #, python-format
 msgid ""
-"You can change the input parameters for a script by clicking %(edit)s, "
-"making the desired changes and then saving the changes. However, this will "
-"only cause the script to be rerun on the computers in the group if the "
-"relevant setting under Site settings has been checked."
+"You can change the parameters for a script by clicking %(edit)s, making the "
+"desired changes and then saving the changes. However, this will only cause "
+"the script to be rerun on the computers in the group if the relevant setting "
+"under Site settings has been checked."
 msgstr ""
-"Du kan ændre inputparametrene for et script ved at klikke på %(edit)s, "
-"foretage de ønskede ændringer og så gemme ændringerne. Dette vil dog kun "
-"medføre at scriptet genkøres på computerne i gruppen, hvis den relevante "
-"indstilling under Site-indstillinger er slået til."
+"Du kan ændre parametrene for et script ved at klikke på %(edit)s, foretage "
+"de ønskede ændringer og så gemme ændringerne. Dette vil dog kun medføre at "
+"scriptet genkøres på computerne i gruppen, hvis den relevante indstilling "
+"under Site-indstillinger er slået til."
 
 #: docs/templates/index.html
 msgid ""
@@ -1930,15 +1905,15 @@ msgstr ""
 msgid ""
 "If you click on the small icon on the right of an entry in the list, you "
 "will be shown the log output from that job. If the job has not yet been "
-"executed, the log output will only contain the chosen input parameters. If "
-"the job has finished, there will also be a button that you can press in "
-"order to restart the job (mainly relevant if the job failed)."
+"executed, the log output will only contain the chosen parameters. If the job "
+"has finished, there will also be a button that you can press in order to "
+"restart the job (mainly relevant if the job failed)."
 msgstr ""
 "Hvis man klikker på det lille ikon til højre på et job i listen, får man "
 "vist log-outputtet for det job. Hvis jobbet endnu ikke er blevet afviklet, "
-"indeholder log-outputtet kun de valgte inputparametre. Hvis jobbet er "
-"afsluttet, vil der også være en knap, som man kan trykke på for at genstarte "
-"jobbet (dette er primært relevant hvis jobbet fejlede)."
+"indeholder log-outputtet kun de valgte parametre. Hvis jobbet er afsluttet, "
+"vil der også være en knap, som man kan trykke på for at genstarte jobbet "
+"(dette er primært relevant hvis jobbet fejlede)."
 
 #: docs/templates/jobs/index.html
 msgid "Statuses"
@@ -2468,11 +2443,11 @@ msgstr "Et Sikkerhedsscript er et script, som indsamler"
 
 #: docs/templates/monitoring_rules/securityscripts.html
 msgid ""
-"A security script does not have any input parameters, and it must follow a "
+"A security script does not have any parameters, and it must follow a "
 "specific format."
 msgstr ""
-"Et Sikkerhedscript tager ikke nogen inputparametre, og det skal følge et "
-"bestemt format."
+"Et Sikkerhedscript tager ikke nogen parametre, og det skal følge et bestemt "
+"format."
 
 #: docs/templates/monitoring_rules/securityscripts.html
 msgid ""
@@ -2756,7 +2731,7 @@ msgstr "Redigering af Scripts"
 #: docs/templates/scripts/__submenu__.html
 #: docs/templates/scripts/parameters.html
 msgid "Editing parameters"
-msgstr "Redigering af inputparametre"
+msgstr "Redigering af parametre"
 
 #: docs/templates/scripts/__submenu__.html docs/templates/scripts/running.html
 #: templates/site_with_navigation.html
@@ -2804,8 +2779,8 @@ msgid "In the last tab, you can"
 msgstr "I sidste fane har du mulighed for at"
 
 #: docs/templates/scripts/edit.html
-msgid "adjust the arguments for the script"
-msgstr "tilpasse inputparametre for Scriptet"
+msgid "adjust the parameters for the script"
+msgstr "tilpasse parametre for scriptet"
 
 #: docs/templates/scripts/index.html docs/templates/users/index.html
 #: docs/views.py templates/site_with_navigation.html
@@ -2858,7 +2833,7 @@ msgid ""
 "the list of scripts. This will open a modal where you can fill out the name "
 "and description and upload the script code. When you then click on \"Create "
 "script\", the script will be created, and you will be redirected to the "
-"editing interface for the newly created script where you can add arguments "
+"editing interface for the newly created script where you can add parameters "
 "for the script."
 msgstr ""
 "Hvis du ønsker at oprette et nyt script skal du klikke på \"Tilføj nyt "
@@ -2866,21 +2841,19 @@ msgstr ""
 "udfylde script navn, beskrivelse og uploade script-kode. Når du derefter "
 "klikker på \"Opret Script\" vil scriptet blive oprettet, og du vil blive "
 "viderestillet til redigeringssiden for det nyoprettede script, hvor du vil "
-"have mulighed for at tilføje inputparametre til scriptet."
+"have mulighed for at tilføje parametre til scriptet."
 
 #: docs/templates/scripts/parameters.html
 msgid "Note that only Magenta can edit the parameters of global scripts."
-msgstr ""
-"Bemærk at kun Magenta kan redigere inputparametrene for globale scripts."
+msgstr "Bemærk at kun Magenta kan redigere parametrene for globale scripts."
 
 #: docs/templates/scripts/parameters.html
 msgid ""
-"The script arguments make it possible to supply input parameters when a "
-"script needs to be run. One can choose between these types of input "
-"parameters:"
+"The script parameters make it possible to supply parameters when a script "
+"needs to be run. One can choose between these types of parameters:"
 msgstr ""
-"Script-inputparametre gør det muligt at angive inputparametre, når et script "
-"skal køres. Der er disse typer inputparametre man kan vælge imellem:"
+"Script-parametre gør det muligt at angive parametre, når et script skal "
+"køres. Der er disse typer parametre man kan vælge imellem:"
 
 #: docs/templates/scripts/parameters.html system/models.py
 msgid "String"
@@ -2953,13 +2926,13 @@ msgstr "Adgangskode"
 msgid ""
 "Makes it possible to supply a password string. This type of parameter "
 "functions like the regular string parameter except that the chosen password "
-"will be hidden in the log output and all other places where the chosen input "
+"will be hidden in the log output and all other places where the chosen "
 "parameters are displayed."
 msgstr ""
-"Giver mulighed for at angive en adgangskode. Denne type af inputparameter "
-"fungerer ligesom streng-inputparametertypen bortset fra at den valgte "
-"adgangskode vil være skjult i log-outputtet og alle andre steder hvor de "
-"valgte inputparametre vises."
+"Giver mulighed for at angive en adgangskode. Denne type af parameter "
+"fungerer ligesom streng-parametertypen bortset fra at den valgte adgangskode "
+"vil være skjult i log-outputtet og alle andre steder hvor de valgte "
+"parametre vises."
 
 #: docs/templates/scripts/parameters.html system/models.py
 msgid "Choices"
@@ -2984,37 +2957,37 @@ msgstr ""
 #: docs/templates/scripts/parameters.html
 #, python-format
 msgid ""
-"In order to add an argument to a script, you must click on the button \"Add "
-"arguments\". This will add a new row to the list of arguments where you must "
-"fill out the name and type for the argument. It is also possible to specify "
-"a default value for the argument, which will be entered by default when "
-"running the script or adding it as an associated script. Only arguments of "
-"the types %(str)s, %(int)s, %(date)s, %(choices)s and %(time)s can have "
-"default values. Lastly, an argument can be set as required or not. Required "
-"parameters must be supplied when running the script whereas non-required "
-"parameters can be left blank. Booleans and choices cannot be required. If "
-"you wish to remove an argument, you must click on \"Remove\" to the right in "
-"the list."
+"In order to add a parameter to a script, you must click on the button \"Add "
+"parameters\". This will add a new row to the list of parameters where you "
+"must fill out the name and type for the parameter. It is also possible to "
+"specify a default value for the parameter, which will be entered by default "
+"when running the script or adding it as an associated script. Only "
+"parameters of the types %(str)s, %(int)s, %(date)s, %(choices)s and %(time)s "
+"can have default values. Lastly, a parameter can be set as required or not. "
+"Required parameters must be supplied when running the script whereas non-"
+"required parameters can be left blank. Booleans and choices cannot be "
+"required. If you wish to remove a parameter, you must click on \"Remove\" to "
+"the right in the list."
 msgstr ""
-"For at tilføje en input-parameter til et script skal man klikke på knappen "
-"\"Tilføj parametre\". Dette vil tilføje en ny række i listen over "
-"inputparametre, hvor man skal udfylde navn og type for inputparametren. Det "
-"er også muligt at angive en standardværdi for inputparameteren, som "
-"automatisk vil være angivet når man kører scriptet eller knytter det til en "
-"gruppe. Kun parametre af typerne %(str)s, %(int)s, %(date)s, %(choices)s  og "
-"%(time)s kan have standardværdier. Endelig kan en inputparameter sættes som "
-"påkrævet. Påkrævede parametre skal udfyldes, når man kører scriptet, mens "
-"ikke-påkrævede parametre kan efterlades tomme. Afkrydsningsfelter og "
-"valgmuligheder kan ikke være påkrævede. Hvis man ønsker at fjerne en "
-"parameter, skal man klikke på \"Fjern\" til højre i listen."
+"For at tilføje et parameter til et script skal man klikke på knappen "
+"\"Tilføj parametre\". Dette vil tilføje en ny række i listen over parametre, "
+"hvor man skal udfylde navn og type for parametren. Det er også muligt at "
+"angive en standardværdi for parameteren, som automatisk vil være angivet når "
+"man kører scriptet eller knytter det til en gruppe. Kun parametre af typerne "
+"%(str)s, %(int)s, %(date)s, %(choices)s  og %(time)s kan have "
+"standardværdier. Endelig kan en parameter sættes som påkrævet. Påkrævede "
+"parametre skal udfyldes, når man kører scriptet, mens ikke-påkrævede "
+"parametre kan efterlades tomme. Afkrydsningsfelter og valgmuligheder kan "
+"ikke være påkrævede. Hvis man ønsker at fjerne en parameter, skal man klikke "
+"på \"Fjern\" til højre i listen."
 
 #: docs/templates/scripts/parameters.html
 msgid ""
 "You must click on the button \"Save changes\" at the bottom of the script "
-"editing interface before changes to script arguments are made permanent."
+"editing interface before changes to script parameters are made permanent."
 msgstr ""
 "Man skal klikke på knappen \"Gem ændringer\" nederst på script-"
-"redigeringssiden før ændringer foretaget til inputparametre træder i kraft."
+"redigeringssiden før ændringer foretaget til parametre træder i kraft."
 
 #: docs/templates/scripts/running.html
 msgid ""
@@ -3053,19 +3026,19 @@ msgstr ""
 
 #: docs/templates/scripts/running.html
 msgid ""
-"You will now be asked to enter input parameters for the script. If an input "
-"parameter has a default value, it will be entered by default. The value can "
-"be changed. Fill out the fields and press \"Run\" in order to start the "
-"script execution. This will result in a job being created for every computer "
-"that the script is to be executed on. You can click on the link in the last "
+"You will now be asked to enter parameters for the script. If a parameter has "
+"a default value, it will be entered by default. The value can be changed. "
+"Fill out the fields and press \"Run\" in order to start the script "
+"execution. This will result in a job being created for every computer that "
+"the script is to be executed on. You can click on the link in the last "
 "section of the modal in order to jump to"
 msgstr ""
-"Du vil nu blive bedt om at udfylde inputparametre for scriptet. Hvis en "
-"inputparameter har en standardværdi, vil denne være angivet på forhånd. "
-"Værdien kan godt ændres. Udfyld felterne og klik på \"Kør\" for at starte "
-"afviklingen af scriptet. Dette vil medføre, at der bliver oprettet et job "
-"for hver computer du valgte at udføre scriptet på. Du kan klikke på linket i "
-"den sidste side i dialogen for at gå til"
+"Du vil nu blive bedt om at udfylde parametre for scriptet. Hvis et parameter "
+"har en standardværdi, vil denne være angivet på forhånd. Værdien kan godt "
+"ændres. Udfyld felterne og klik på \"Kør\" for at starte afviklingen af "
+"scriptet. Dette vil medføre, at der bliver oprettet et job for hver computer "
+"du valgte at udføre scriptet på. Du kan klikke på linket i den sidste side i "
+"dialogen for at gå til"
 
 #: docs/templates/scripts/running.html
 msgid "and track the execution of jobs on the individual computers."
@@ -3150,7 +3123,7 @@ msgid ""
 msgstr "Samlet antal computere registreret på de sites, som du har adgang til"
 
 #: docs/templates/sites_overview/index.html templates/system/pcs/pcs.html
-#: templates/system/sites/list.html
+#: templates/system/pcs/pcs_table.html templates/system/sites/list.html
 msgid "Online"
 msgstr "Online"
 
@@ -3762,7 +3735,7 @@ msgstr ""
 "tidsplanen til højre i skærmbilledet."
 
 #: docs/templates/wake_plans/edit_settings.html
-#: templates/system/jobs/site_jobs.html templates/system/pcs/pcs.html
+#: templates/system/jobs/site_jobs.html templates/system/pcs/pcs_table.html
 #: templates/system/pcs/update.html
 #: templates/system/security_events/site_security_events.html
 msgid "Status"
@@ -4470,8 +4443,7 @@ msgstr "Karantæneperiode, når den tilladte logintid er brugt"
 
 #: system/models.py
 msgid "Automatically rerun associated scripts when you update their arguments"
-msgstr ""
-"Genkør automatisk tilknyttede scripts når I opdaterer deres inputparametre"
+msgstr "Genkør automatisk tilknyttede scripts når I opdaterer deres parametre"
 
 #: system/models.py
 msgid "identifier"
@@ -4666,6 +4638,18 @@ msgid "location"
 msgstr "placering"
 
 #: system/models.py
+msgid "ID"
+msgstr "ID"
+
+#: system/models.py
+msgid "OS release"
+msgstr ""
+
+#: system/models.py
+msgid "product short name"
+msgstr "kort produktnavn"
+
+#: system/models.py
 msgid "executable code"
 msgstr "eksekverbar kode"
 
@@ -4813,7 +4797,7 @@ msgstr "modtagelses&shy;tidspunkt"
 msgid "assigned user"
 msgstr "håndteres af"
 
-#: system/models.py templates/system/pcs/pcs.html
+#: system/models.py templates/system/pcs/pcs_table.html
 msgid "product"
 msgstr "produkt"
 
@@ -4869,8 +4853,8 @@ msgid "Error: You must provide a name"
 msgstr "Fejl: Du skal angive et navn"
 
 #: system/views.py
-msgid "Error: You must provide a correct input parameter type"
-msgstr "Fejl: Du skal angive en korrekt input-parameter-type"
+msgid "Error: You must provide a correct parameter type"
+msgstr "Fejl: Du skal angive en korrekt parameter-type"
 
 #: system/views.py
 #, python-format
@@ -5147,6 +5131,22 @@ msgstr "Der er sket en serverfejl og vi er blevet notificeret om fejlen."
 #: templates/base.html
 msgid "OS2borgerPC Administration"
 msgstr "OS2borgerPC Administration"
+
+#: templates/htmx_paginator.html
+msgid "Page"
+msgstr "Side"
+
+#: templates/htmx_paginator.html
+msgid "of"
+msgstr "af"
+
+#: templates/htmx_paginator.html
+msgid "First"
+msgstr "Første"
+
+#: templates/htmx_paginator.html
+msgid "Last"
+msgstr "Sidste"
 
 #: templates/logout.html
 msgid "You have been logged out"
@@ -5628,13 +5628,13 @@ msgid "Upload new file"
 msgstr "Upload ny fil"
 
 #: templates/system/file_archive/file_archive.html
-#: templates/system/pcs/pcs.html
-msgid "Description"
-msgstr "Beskrivelse"
-
-#: templates/system/file_archive/file_archive.html
 msgid "File name"
 msgstr "Filnavn"
+
+#: templates/system/file_archive/file_archive.html
+#: templates/system/pcs/pcs_table.html
+msgid "Description"
+msgstr "Beskrivelse"
 
 #: templates/system/file_archive/file_archive.html
 #: templates/system/jobs/site_jobs.html templates/system/pcs/update.html
@@ -5774,9 +5774,8 @@ msgid "Position"
 msgstr "Position"
 
 #: templates/system/pcgroups/policy_list/list.html
-#: templates/system/scripts/update_form.html
 msgid "Arguments"
-msgstr "Inputparametre"
+msgstr "Parametre"
 
 #: templates/system/pcgroups/site_groups.html
 msgid "Add new group"
@@ -5853,16 +5852,16 @@ msgid ""
 "Editing the script arguments will make the script run again on all Computers "
 "in the Group. This can be toggled off under Site settings"
 msgstr ""
-"Redigering af inputparametre medfører, at et script køres på ny på alle "
-"Computere i Gruppen. Dette kan slås fra under Site-indstillinger"
+"Redigering af parametre medfører, at et script køres på ny på alle Computere "
+"i Gruppen. Dette kan slås fra under Site-indstillinger"
 
 #: templates/system/pcgroups/site_groups.html
 msgid ""
 "Editing the script arguments will not make the script run again. This can be "
 "changed under Site settings"
 msgstr ""
-"Redigering af inputparametre medfører ikke, at et script køres på ny. Dette "
-"kan ændres under Site-indstillinger"
+"Redigering af parametre medfører ikke, at et script køres på ny. Dette kan "
+"ændres under Site-indstillinger"
 
 #: templates/system/pcgroups/site_groups.html
 msgid ""
@@ -5935,39 +5934,47 @@ msgstr "Totalt antal Kiosk PC'er"
 msgid "Activated:"
 msgstr "Aktiverede:"
 
-#: templates/system/pcs/pcs.html
+#: templates/system/pcs/pcs_table.html
+msgid "Filter by computer names"
+msgstr "Filtrer efter computernavn"
+
+#: templates/system/pcs/pcs_table.html
 msgid "Activated"
 msgstr "Aktiveret"
 
-#: templates/system/pcs/pcs.html
+#: templates/system/pcs/pcs_table.html
 msgid "Location"
 msgstr "Placering"
 
-#: templates/system/pcs/pcs.html templates/system/pcs/update.html
+#: templates/system/pcs/pcs_table.html templates/system/pcs/update.html
 msgid "Ubuntu version"
 msgstr "Ubuntu-version"
 
-#: templates/system/pcs/pcs.html
+#: templates/system/pcs/pcs_table.html
 msgid "Latest check-in"
 msgstr "Seneste tjek-ind"
 
-#: templates/system/pcs/pcs.html templates/system/pcs/update.html
+#: templates/system/pcs/pcs_table.html templates/system/pcs/update.html
 msgid "Not activated"
 msgstr "Ikke aktiveret"
 
-#: templates/system/pcs/pcs.html
+#: templates/system/pcs/pcs_table.html
 msgid "Offline"
 msgstr "Offline"
 
-#: templates/system/pcs/pcs.html templates/system/pcs/update.html
+#: templates/system/pcs/pcs_table.html templates/system/pcs/update.html
 #: templates/system/site_dashboard.html
 msgid "ago"
 msgstr "siden"
 
-#: templates/system/pcs/pcs.html templates/system/pcs/update.html
+#: templates/system/pcs/pcs_table.html templates/system/pcs/update.html
 #: templates/system/users/update.html
 msgid "Never"
 msgstr "Aldrig"
+
+#: templates/system/pcs/pcs_table.html
+msgid "No results are matching this query"
+msgstr "Ingen resultater matcher denne forespørgsel"
 
 #: templates/system/pcs/update.html
 msgid "There are no computers"
@@ -6120,6 +6127,10 @@ msgstr "Ryd filter"
 #: templates/system/scripts/update_form.html
 msgid "Code"
 msgstr "Kode"
+
+#: templates/system/scripts/update_form.html
+msgid "Parameters"
+msgstr "Parametre"
 
 #: templates/system/scripts/update_form.html
 msgid "Download the script"
@@ -6331,8 +6342,7 @@ msgid ""
 "Copy the security key from step 1 and run the two-factor script with it as "
 "input"
 msgstr ""
-"Kopier sikkerhedsnøglen fra trin 1 og kør totrinsscriptet med den som "
-"inputparameter"
+"Kopier sikkerhedsnøglen fra trin 1 og kør totrinsscriptet med den som input"
 
 #: templates/system/site_two_factor_pc.html
 msgid "Click on"
@@ -6938,8 +6948,8 @@ msgid ""
 "You are about to take your account security to the next level. Follow this "
 "wizard to enable two-factor authentication."
 msgstr ""
-"Du er ved at forøge sikkerheden på din brugerkonto. Følg denne "
-"wizard for at aktivere totrinsbekræftelse."
+"Du er ved at forøge sikkerheden på din brugerkonto. Følg denne wizard for at "
+"aktivere totrinsbekræftelse."
 
 #: templates/two_factor/core/setup.html
 msgid "Please select which authentication method you would like to use."

@@ -3,9 +3,9 @@
 
 {% url "computers_navigationlist" site.url selected_pc.uid as navigationlist_url %}
 <nav id="site-computer-navigationlist" class="sublevelnav">
-  <ul class="item-list">
-    <li class="p-3">
-      <input id="site-computer-navigationlist-input" class="form-control d-inline w-auto" type="search"
+  <div class="listutils">
+    <div class="input-group px-3 py-2">
+      <input id="site-computer-navigationlist-input" class="form-control" type="search"
              name="name"
              value="{{ params | params_get:'name' }}"
              placeholder="{% translate 'Filter by computer names' %}"
@@ -14,7 +14,19 @@
              hx-target="#site-computer-navigationlist" hx-swap="outerHTML"
              hx-on::after-swap="htmx.find('#site-computer-navigationlist-input').focus()"
              />
-    </li>
+      <span class="input-group-text bg-white">
+        <button type="button" class="btn btn-close btn-lg"
+                onclick="htmx.find('#site-computer-navigationlist-input').value=''"
+                hx-get="{{ navigationlist_url }}?{{ params | params_set_name:'' | params_urlencode }}"
+                hx-trigger="click, keyup[key=='Enter']"
+                hx-target="#site-computer-navigationlist" hx-swap="outerHTML"
+                />
+          <span class="visually-hidden">{% translate "Clear the filter"}</span>
+        </button>
+      </span>
+    </div>
+  </div>
+  <ul class="item-list">
     {% for pc in pc_list %}
     <li class="{% if pc == selected_pc %}active{% endif %}">
       <a class="item-list-link pc-status-list-link" id="{{pc.uid}}"

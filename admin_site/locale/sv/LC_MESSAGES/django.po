@@ -6104,7 +6104,7 @@ msgstr "skript"
 msgid "Find ..."
 msgstr "Hitta ..."
 
-#: templates/system/scripts/update.html templates/widgets/scriptsearch.html
+#: templates/system/scripts/update.html templates/widgets/scriptsearch.html templates/system/pcs/pcs_navigation_list.html
 msgid "Clear the filter"
 msgstr "Rensa filter"
 

@@ -123,6 +123,13 @@ def params_get(params, params_key):
 
 
 @register.filter
+def params_set_name(params, name):
+    new_params = params.copy()
+    new_params["name"] = name
+    return new_params
+
+
+@register.filter
 def params_set_page(params, page):
     new_params = params.copy()
     new_params["page"] = page

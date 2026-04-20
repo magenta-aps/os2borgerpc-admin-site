@@ -33,9 +33,9 @@
          href="{% url "computer" site.url pc.uid %}?name={{ params | params_get:'name' }}">
         {% if pc.is_activated %}
         <span>{{ pc.name }}</span>
-        <span class="ms-auto badge bg-{{ pc.badgeclass }}">
-          {% if multiple_products %}{{ pc.product.short_name }}{% endif %}
-        </span>
+        {% if multiple_products %}
+          <span class="ms-auto badge bg-{{ pc.badgeclass }}">{{ pc.product.short_name }}</span>
+        {% endif %}
         {% else %}
         <span>
           {{ pc.name }}
@@ -43,9 +43,9 @@
         <br>
         <div class="ms-auto">
           <span class="badge bg-danger">{% translate "Not activated" %}</span>
-          <span class="badge bg-{{ pc.badgeclass }}">
-            {% if multiple_products %}{{ pc.product.short_name }}{% endif %}
-          </span>
+          {% if multiple_products %}
+            <span class="badge bg-{{ pc.badgeclass }}">{{ pc.product.short_name }}</span>
+          {% endif %}
         </div>
         {% endif %}
       </a>

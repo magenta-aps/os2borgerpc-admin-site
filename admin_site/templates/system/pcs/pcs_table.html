@@ -15,7 +15,7 @@
         <input id="site-status-table-input" class="form-control d-inline w-auto" type="search"
                name="name"
                placeholder="{% translate 'Filter by computer names' %}"
-               value="{{ params | params_get:'name' }}"
+               value="{{ params | dict_get:'name' }}"
                hx-get="{{ table_url }}?{{ params | params_set_page:1 | params_urlencode }}"
                hx-trigger="input changed delay:1000ms, keyup[key=='Enter']"
                hx-target="#site-status-table" hx-swap="outerHTML"

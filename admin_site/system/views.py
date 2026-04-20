@@ -1697,6 +1697,12 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         params = self.request.GET.dict() or self.request.POST.dict()
 
         all_pcs = site.pcs.select_related("product")
+
+        product_ids = all_pcs.values_list("product_id", flat=True).distinct()
+        if len(product_ids) > 1:
+            context["multiple_products"] = True
+            params["multiple_products"] = True
+
         if "name" in params and params["name"]:
             all_pcs = all_pcs.filter(name__icontains=params["name"])
         else:
@@ -1706,15 +1712,6 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
             p.badgeclass = get_badge_class(p.product.id)
 
         context["pc_list"] = all_pcs
-
-        product_ids = (
-            all_pcs.values_list("product_id", flat=True)
-            .order_by("product_id")
-            .distinct()
-        )
-        if len(product_ids) > 1:
-            context["multiple_products"] = True
-            params["multiple_products"] = True
 
         context["params"] = params
 

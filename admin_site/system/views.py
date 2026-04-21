@@ -1622,6 +1622,44 @@ class PCUpdateRedirect(SelectionMixin, SiteView):
             return super().render_to_response(context)
 
 
+class PCNavigationList(DetailView, SiteMixin, SuperAdminOrThisSiteMixin):
+    model = Site
+    slug_field = "uid"
+
+    template_name = "system/pcs/pcs_navigation_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        site = context["site"]
+
+        try:
+            pc = PC.objects.get(uid=self.kwargs["pc_uid"])
+        except PC.DoesNotExist:
+            pc = None
+
+        context["selected_pc"] = pc
+
+        params = self.request.GET.dict() or self.request.POST.dict()
+
+        context["params"] = params
+
+        site_pcs = site.pcs.select_related("product")
+        if "name" in params and params["name"]:
+            site_pcs = site_pcs.filter(name__icontains=params["name"])
+        else:
+            site_pcs = site_pcs.all()
+
+        for p in site_pcs:
+            p.badgeclass = get_badge_class(p.product.id)
+
+        context["pc_list"] = site_pcs
+
+        if "multiple_products" in params and params["multiple_products"]:
+            context["multiple_products"] = True
+
+        return context
+
+
 class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
     template_name = "system/pcs/update.html"
     form_class = PCForm
@@ -1655,22 +1693,27 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         site = context["site"]
         form = context["form"]
         pc = self.object
-        params = self.request.GET or self.request.POST
 
-        all_pcs = site.pcs.all()
+        params = self.request.GET.dict() or self.request.POST.dict()
+
+        all_pcs = site.pcs.select_related("product")
+
+        product_ids = all_pcs.values_list("product_id", flat=True).distinct()
+        if len(product_ids) > 1:
+            context["multiple_products"] = True
+            params["multiple_products"] = True
+
+        if "name" in params and params["name"]:
+            all_pcs = all_pcs.filter(name__icontains=params["name"])
+        else:
+            all_pcs = all_pcs.all()
 
         for p in all_pcs:
             p.badgeclass = get_badge_class(p.product.id)
 
         context["pc_list"] = all_pcs
 
-        product_ids = (
-            all_pcs.values_list("product_id", flat=True)
-            .order_by("product_id")
-            .distinct()
-        )
-        if len(product_ids) > 1:
-            context["multiple_products"] = True
+        context["params"] = params
 
         # Group picklist related:
         group_set = site.groups.all()

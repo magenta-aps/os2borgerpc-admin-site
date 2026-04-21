@@ -117,9 +117,16 @@ def params_show_sort_arrow(params, sort_tag):
 
 
 @register.filter
-def params_get(params, params_key):
+def dict_get(dictionary, dict_key):
     # avoid display 'None' in search field
-    return params.get(params_key, "")
+    return dictionary.get(dict_key, "")
+
+
+@register.filter
+def params_set_name(params, name):
+    new_params = params.copy()
+    new_params["name"] = name
+    return new_params
 
 
 @register.filter
@@ -143,12 +150,6 @@ def params_urlencode(params):
 def add_class(field, class_name):
     """Add CSS classes to tags, e.g. django generated forms."""
     return field.as_widget(attrs={"class": " ".join((field.css_classes(), class_name))})
-
-
-# Used when you have a dictionary and the key is in a variable
-@register.filter
-def get_item(dictionary, key):
-    return dictionary.get(key)
 
 
 ### DEBUGGING ###

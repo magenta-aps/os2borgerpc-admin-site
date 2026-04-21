@@ -6120,7 +6120,7 @@ msgstr "script"
 msgid "Find ..."
 msgstr "Find ..."
 
-#: templates/system/scripts/update.html templates/widgets/scriptsearch.html
+#: templates/system/scripts/update.html templates/widgets/scriptsearch.html templates/system/pcs/pcs_navigation_list.html
 msgid "Clear the filter"
 msgstr "Ryd filter"
 

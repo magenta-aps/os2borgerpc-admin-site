@@ -1,0 +1,66 @@
+{% load i18n %}
+{% load custom_tags %}
+
+{% url "computers_navigationlist" site.url selected_pc.uid as navigationlist_url %}
+<nav id="site-computer-navigationlist" class="sublevelnav">
+  <div class="listutils">
+    <div class="input-group px-3 py-2">
+      <input id="site-computer-navigationlist-input" class="form-control" type="search"
+             name="name"
+             value="{{ params | dict_get:'name' }}"
+             placeholder="{% translate 'Filter by computer names' %}"
+             hx-get="{{ navigationlist_url }}?{{ params | params_urlencode }}"
+             hx-trigger="input changed delay:1000ms, keyup[key=='Enter']"
+             hx-target="#site-computer-navigationlist" hx-swap="outerHTML"
+             hx-on::after-swap="htmx.find('#site-computer-navigationlist-input').focus()"
+             />
+      <span class="input-group-text bg-white">
+        <button type="button" class="btn btn-close btn-lg"
+                onclick="htmx.find('#site-computer-navigationlist-input').value=''"
+                hx-get="{{ navigationlist_url }}?{{ params | params_set_name:'' | params_urlencode }}"
+                hx-trigger="click, keyup[key=='Enter']"
+                hx-target="#site-computer-navigationlist" hx-swap="outerHTML"
+                />
+          <span class="visually-hidden">{% translate "Clear the filter"}</span>
+        </button>
+      </span>
+    </div>
+  </div>
+  <ul class="item-list">
+    {% for pc in pc_list %}
+    <li class="{% if pc == selected_pc %}active{% endif %}">
+      <a class="item-list-link pc-status-list-link" id="{{pc.uid}}"
+         href="{% url "computer" site.url pc.uid %}?name={{ params | dict_get:'name' }}">
+        {% if pc.is_activated %}
+        <span>{{ pc.name }}</span>
+        {% if multiple_products %}
+          <span class="ms-auto badge bg-{{ pc.badgeclass }}">{{ pc.product.short_name }}</span>
+        {% endif %}
+        {% else %}
+        <span>
+          {{ pc.name }}
+        </span>
+        <br>
+        <div class="ms-auto">
+          <span class="badge bg-danger">{% translate "Not activated" %}</span>
+          {% if multiple_products %}
+            <span class="badge bg-{{ pc.badgeclass }}">{{ pc.product.short_name }}</span>
+          {% endif %}
+        </div>
+        {% endif %}
+      </a>
+      {% if pc == selected_pc %}
+      <a class="item-list-deletable material-symbols-outlined"
+         href="{% url "computer_delete" site.url pc.uid %}"
+         title="{% translate "Delete computer" %}">
+          clear
+        </a>
+      {% else %}
+      <div class="spacer_non_selected_pc"></div>
+      {% endif%}
+    </li>
+    {% empty %}
+    <li>{% translate "There are no computers" %}</li>
+    {% endfor %}
+  </ul>
+</nav>

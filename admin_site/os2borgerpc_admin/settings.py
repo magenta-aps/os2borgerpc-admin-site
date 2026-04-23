@@ -60,7 +60,7 @@ DATABASES = {
         "HOST": os.environ.get("DB_HOST"),
         "PORT": os.environ.get("DB_PORT", ""),
         "OPTIONS": {
-            "connect_timeout": 10,  # Minimum in 2
+            "connect_timeout": 30,  # Minimum is 2
         },
     }
 }

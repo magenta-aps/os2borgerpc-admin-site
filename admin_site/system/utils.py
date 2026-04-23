@@ -3,6 +3,8 @@
 import json
 import logging
 import re
+from json import JSONDecodeError
+
 import requests
 import traceback
 from urllib.parse import quote
@@ -368,7 +370,12 @@ def cicero_validate(loaner_number, pincode, site, pc=None):
         # Just debugging for the moment.
     else:
         # Unable to authenticate with system user - log this.
-        message = response.json()["message"]
+        try:
+            message = response.json()["message"]
+        except JSONDecodeError:
+            # This particular exception is caused by Ciceros API not responding correctly.
+            # We don't need to log this.
+            return 0
         logger.error(
             f"Cicero: {site.name} was unable to log in with configured user name and password: {message}"
         )

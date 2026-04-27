@@ -29,6 +29,31 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+# By default Django uses "cached.Loader"
+# which caches templates quite aggressively.
+# Unfortunately it doesn't include proper detection
+# for html file changes, which causes
+# the served templates to poorly update when doing frontend work
+#
+# We used to work around this by changing
+# the gunicorn settings to --max-requests 1 and --workers 1,
+# which forced a reset through gunicorn.
+# That also made the web page *really* slow
+# in development since gunicorn spent most of the time
+# recreating workers, which was not ideal
+#
+# Caching is of course desired in production,
+# so we just change between cached and
+# not cached loader depending on debug environment
+#
+# Related docs: https://docs.djangoproject.com/en/6.0/ref/templates/api/#django.template.loaders.cached.Loader
+base_loaders = [
+    "django.template.loaders.filesystem.Loader",
+    "django.template.loaders.app_directories.Loader",
+]
+
+production_loaders = [("django.template.loaders.cached.Loader", base_loaders)]
+
 # Template settings
 TEMPLATES = [
     {
@@ -36,7 +61,6 @@ TEMPLATES = [
         "DIRS": [
             BASE_DIR / "templates/",
         ],
-        "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
@@ -47,6 +71,7 @@ TEMPLATES = [
             "builtins": [
                 "system.templatetags.custom_tags",
             ],
+            "loaders": base_loaders if DEBUG else production_loaders,
         },
     },
 ]

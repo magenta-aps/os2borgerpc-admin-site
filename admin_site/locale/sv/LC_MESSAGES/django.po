@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-08 13:16+0100\n"
+"POT-Creation-Date: 2026-04-27 14:48+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -81,6 +81,8 @@ msgstr "Lägg till en kommentar"
 #: templates/system/event_rules/security_problem_confirm_delete.html
 #: templates/system/event_rules/site_event_rules_server.html
 #: templates/system/event_rules/site_security_problems.html
+#: templates/system/file_archive/confirm_delete.html
+#: templates/system/file_archive/file_archive.html
 #: templates/system/pcgroups/confirm_delete.html
 #: templates/system/pcgroups/site_groups.html
 #: templates/system/pcs/confirm_delete.html templates/system/pcs/update.html
@@ -191,11 +193,12 @@ msgstr "Visa"
 msgid "chat"
 msgstr "chat"
 
-#: changelog/templates/list.html
+#: changelog/templates/list.html templates/htmx_paginator.html
 msgid "Previous"
 msgstr "Föregående"
 
-#: changelog/templates/list.html templates/system/scripts/run_step1.html
+#: changelog/templates/list.html templates/htmx_paginator.html
+#: templates/system/scripts/run_step1.html
 #: templates/two_factor/_wizard_actions.html
 msgid "Next"
 msgstr "Nästa"
@@ -829,7 +832,8 @@ msgstr "Observera att gruppmedlemskap kan påverka datorns konfiguration."
 #: templates/system/jobs/site_jobs.html
 #: templates/system/pcgroups/confirm_delete.html
 #: templates/system/pcs/no_pcs.html templates/system/pcs/pcs.html
-#: templates/system/pcs/update.html templates/system/sites/list.html
+#: templates/system/pcs/update.html templates/system/scripts/run_step1.html
+#: templates/system/sites/list.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_plan.html
 msgid "Computers"
@@ -1022,6 +1026,8 @@ msgstr "Redigera"
 
 #: docs/templates/configuration/index.html templates/system/configs/item.html
 #: templates/system/event_rules/shared_navigation.html
+#: templates/system/file_archive/file_archive.html
+#: templates/system/file_archive/partials/list.html
 #: templates/system/scripts/confirm_delete.html
 #: templates/system/scripts/templates.html
 #: templates/system/scripts/update_form.html
@@ -1134,7 +1140,9 @@ msgstr ""
 "ändras via adminsidan."
 
 #: docs/templates/configuration/index.html
-#: templates/system/configs/templates.html templates/system/pcs/pcs.html
+#: templates/system/configs/templates.html
+#: templates/system/file_archive/file_archive.html
+#: templates/system/pcs/pcs_table.html
 #: templates/system/scripts/update_form.html
 #: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid "Name"
@@ -1600,6 +1608,7 @@ msgstr ""
 #: templates/system/event_rules/security_problem_confirm_delete.html
 #: templates/system/jobs/site_jobs.html
 #: templates/system/pcgroups/site_groups.html
+#: templates/system/scripts/run_step1.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_plan.html
 msgid "Groups"
@@ -1693,11 +1702,10 @@ msgstr ""
 #: docs/templates/groups/scripts.html
 msgid ""
 "Associated Scripts have a position that determines the order in which they "
-"are run and they may have a number of input parameters that they are run "
-"with."
+"are run and they may have a number of parameters that they are run with."
 msgstr ""
 "Associerade Skript har en position som anger i vilken ordning de körs, och "
-"de kan ha vissa indataparametrar som de körs med."
+"de kan ha vissa parametrar som de körs med."
 
 #: docs/templates/groups/scripts.html
 msgid "A computer can be added to multiple groups."
@@ -1721,13 +1729,13 @@ msgid ""
 "We recommend using Associated Scripts where possible as they make it simpler "
 "to set up new computers in a department. All you need to do is to add the "
 "new computers to the group, and then the relevant scripts will automatically "
-"be run on them with the correct input parameters."
+"be run on them with the correct parameters."
 msgstr ""
 "Vi rekommenderar att du använder Associerade Script när det är möjligt, "
 "eftersom det kan göra det lättare att ställa in nya datorer upp på en "
 "avdelning. Allt du behöver göra är att lägga till de nya datorerna i "
 "gruppen, och sedan körs de relevanta skripten automatiskt på dem med "
-"korrekta indataparametrar."
+"korrekta parametrar."
 
 #: docs/templates/groups/scripts.html
 msgid "Final remarks"
@@ -1761,26 +1769,26 @@ msgstr ""
 #: docs/templates/groups/scripts.html
 #, python-format
 msgid ""
-"If the added script requires input parameters, these parameters are set by "
+"If the added script requires parameters, these parameters are set by "
 "clicking %(edit)s and this %(must)s be done before the changes can be saved. "
-"I.e. a Script that requires input parameters cannot be assigned with empty "
-"input parameters."
+"I.e. a Script that requires parameters cannot be assigned with empty "
+"parameters."
 msgstr ""
-"Om skriptet du lägger till använder indataparametrar anger du värdena för "
-"dessa genom att trycka på %(edit)s, och detta %(must)s göras innan "
-"ändringarna kan sparas. Det innebär att ett skript som använder "
-"indataparametrar inte kan mappas med tomma indataparametrar."
+"Om skriptet du lägger till använder parametrar anger du värdena för dessa "
+"genom att trycka på %(edit)s, och detta %(must)s göras innan ändringarna kan "
+"sparas. Det innebär att ett skript som använder parametrar inte kan mappas "
+"med tomma parametrar."
 
 #: docs/templates/groups/scripts.html
 #, python-format
 msgid ""
-"You can change the input parameters for a script by clicking %(edit)s, "
-"making the desired changes and then saving the changes. However, this will "
-"only cause the script to be rerun on the computers in the group if the "
-"relevant setting under Site settings has been checked."
+"You can change the parameters for a script by clicking %(edit)s, making the "
+"desired changes and then saving the changes. However, this will only cause "
+"the script to be rerun on the computers in the group if the relevant setting "
+"under Site settings has been checked."
 msgstr ""
-"Du kan ändra indataparametrarna för ett skript genom att klicka på %(edit)s, "
-"göra önskade ändringar och sedan spara ändringarna. Detta gör dock bara att "
+"Du kan ändra parametrarna för ett skript genom att klicka på %(edit)s, göra "
+"önskade ändringar och sedan spara ändringarna. Detta gör dock bara att "
 "skriptet körs om på datorerna i gruppen om den relevanta inställningen under "
 "Inställningar för Site har markerats."
 
@@ -1887,13 +1895,13 @@ msgstr ""
 msgid ""
 "If you click on the small icon on the right of an entry in the list, you "
 "will be shown the log output from that job. If the job has not yet been "
-"executed, the log output will only contain the chosen input parameters. If "
-"the job has finished, there will also be a button that you can press in "
-"order to restart the job (mainly relevant if the job failed)."
+"executed, the log output will only contain the chosen parameters. If the job "
+"has finished, there will also be a button that you can press in order to "
+"restart the job (mainly relevant if the job failed)."
 msgstr ""
 "Om du klickar på den lilla ikonen till höger om en post i listan kommer du "
 "att se loggutdata från det jobbet. Om jobbet ännu inte har utförts kommer "
-"loggutgången endast att innehålla de valda indataparametrar. Om jobbet har "
+"loggutgången endast att innehålla de valda parametrar. Om jobbet har "
 "avslutats kommer det också att finnas en knapp som du kan trycka på för att "
 "starta om jobbet (främst relevant om jobbet misslyckades)."
 
@@ -2419,10 +2427,10 @@ msgstr "Ett säkerhetsskript är ett skript som samlar in"
 
 #: docs/templates/monitoring_rules/securityscripts.html
 msgid ""
-"A security script does not have any input parameters, and it must follow a "
+"A security script does not have any parameters, and it must follow a "
 "specific format."
 msgstr ""
-"Ett säkerhetsskript tar inga indataparametrar, och det måste följa ett visst "
+"Ett säkerhetsskript tar inga parametrar, och det måste följa ett visst "
 "format."
 
 #: docs/templates/monitoring_rules/securityscripts.html
@@ -2709,7 +2717,7 @@ msgstr "Redigering av Skript"
 #: docs/templates/scripts/__submenu__.html
 #: docs/templates/scripts/parameters.html
 msgid "Editing parameters"
-msgstr "Redigering av indataparametrar"
+msgstr "Redigering av parametrar"
 
 #: docs/templates/scripts/__submenu__.html docs/templates/scripts/running.html
 #: templates/site_with_navigation.html
@@ -2756,8 +2764,8 @@ msgid "In the last tab, you can"
 msgstr "På den sista fliken har du möjlighet att"
 
 #: docs/templates/scripts/edit.html
-msgid "adjust the arguments for the script"
-msgstr "anpassa inputparametrar för Scriptet"
+msgid "adjust the parameters for the script"
+msgstr "anpassa parametrar för Scriptet"
 
 #: docs/templates/scripts/index.html docs/templates/users/index.html
 #: docs/views.py templates/site_with_navigation.html
@@ -2809,7 +2817,7 @@ msgid ""
 "the list of scripts. This will open a modal where you can fill out the name "
 "and description and upload the script code. When you then click on \"Create "
 "script\", the script will be created, and you will be redirected to the "
-"editing interface for the newly created script where you can add arguments "
+"editing interface for the newly created script where you can add parameters "
 "for the script."
 msgstr ""
 "Om du vill skapa ett nytt skript klickar du på \"Lägg till nya Skript\" "
@@ -2817,7 +2825,7 @@ msgstr ""
 "skriptnamn, beskrivning och ladda upp skriptkod. När du sedan klickar på "
 "\"Skapa Skript\" kommer skriptet att skapas och du omdirigeras till "
 "redigeringsgränssnittet för det nyskapade skriptet där du kan lägga till "
-"indataparametrar för skriptet."
+"parametrar för skriptet."
 
 #: docs/templates/scripts/parameters.html
 msgid "Note that only Magenta can edit the parameters of global scripts."
@@ -2826,12 +2834,11 @@ msgstr ""
 
 #: docs/templates/scripts/parameters.html
 msgid ""
-"The script arguments make it possible to supply input parameters when a "
-"script needs to be run. One can choose between these types of input "
-"parameters:"
+"The script parameters make it possible to supply parameters when a script "
+"needs to be run. One can choose between these types of parameters:"
 msgstr ""
-"Med skript-indataparametrar kan du ange indataparametrar när ett skript "
-"behöver springa. Det finns dessa typer av indataparametrar att välja mellan:"
+"Med skript-parametrar kan du ange parametrar när ett skript behöver springa. "
+"Det finns dessa typer av parametrar att välja mellan:"
 
 #: docs/templates/scripts/parameters.html system/models.py
 msgid "String"
@@ -2903,7 +2910,7 @@ msgstr "Lösenord"
 msgid ""
 "Makes it possible to supply a password string. This type of parameter "
 "functions like the regular string parameter except that the chosen password "
-"will be hidden in the log output and all other places where the chosen input "
+"will be hidden in the log output and all other places where the chosen "
 "parameters are displayed."
 msgstr ""
 "Gör det möjligt att ange ett lösenord. Denna typ av parameter fungerar som "
@@ -2935,25 +2942,25 @@ msgstr ""
 #: docs/templates/scripts/parameters.html
 #, python-format
 msgid ""
-"In order to add an argument to a script, you must click on the button \"Add "
-"arguments\". This will add a new row to the list of arguments where you must "
-"fill out the name and type for the argument. It is also possible to specify "
-"a default value for the argument, which will be entered by default when "
-"running the script or adding it as an associated script. Only arguments of "
-"the types %(str)s, %(int)s, %(date)s, %(choices)s and %(time)s can have "
-"default values. Lastly, an argument can be set as required or not. Required "
-"parameters must be supplied when running the script whereas non-required "
-"parameters can be left blank. Booleans and choices cannot be required. If "
-"you wish to remove an argument, you must click on \"Remove\" to the right in "
-"the list."
+"In order to add a parameter to a script, you must click on the button \"Add "
+"parameters\". This will add a new row to the list of parameters where you "
+"must fill out the name and type for the parameter. It is also possible to "
+"specify a default value for the parameter, which will be entered by default "
+"when running the script or adding it as an associated script. Only "
+"parameters of the types %(str)s, %(int)s, %(date)s, %(choices)s and %(time)s "
+"can have default values. Lastly, a parameter can be set as required or not. "
+"Required parameters must be supplied when running the script whereas non-"
+"required parameters can be left blank. Booleans and choices cannot be "
+"required. If you wish to remove a parameter, you must click on \"Remove\" to "
+"the right in the list."
 msgstr ""
-"Om du vill lägga till en indataparameter i ett skript klickar du på ikonen "
-"\"Lägg till parametrar\". Detta lägger till en ny rad i listan över "
-"ingångsparametrar, var du ska fylla i namn och typ av inmatningsparameter. "
-"Det är också möjligt att ange ett standardvärde för argumentet, som kommer "
-"att anges som standard när skriptet körs eller läggs till som ett associerat "
-"skript. Endast argument av typerna %(str)s, %(int)s, %(date)s, %(choices)s "
-"och %(time)s kan ha standardvärden. Slutligen kan ett argument anges som "
+"Om du vill lägga till en parameter i ett skript klickar du på ikonen \"Lägg "
+"till parametrar\". Detta lägger till en ny rad i listan över "
+"ingångsparametrar, var du ska fylla i namn och typ av parameter. Det är "
+"också möjligt att ange ett standardvärde för parametern, som kommer att "
+"anges som standard när skriptet körs eller läggs till som ett associerat "
+"skript. Endast parameter av typerna %(str)s, %(int)s, %(date)s, %(choices)s "
+"och %(time)s kan ha standardvärden. Slutligen kan ett parameter anges som "
 "krävs. Krävda parametrar måste anges när skriptet körs medan icke-krävda "
 "parametrar kan lämnas tomma. Kryssrutor och valmöjligheter kan inte krävas. "
 "Om man vill ta bort en parameter, klicka på \"Ta bort\" till höger i listan."
@@ -2961,11 +2968,10 @@ msgstr ""
 #: docs/templates/scripts/parameters.html
 msgid ""
 "You must click on the button \"Save changes\" at the bottom of the script "
-"editing interface before changes to script arguments are made permanent."
+"editing interface before changes to script parameters are made permanent."
 msgstr ""
 "Man måste klicka på knappen \"Spara ändringar\" längst ner på "
-"skriptredigeringssidan innan ändringar som görs i indataparametrar träder i "
-"kraft."
+"skriptredigeringssidan innan ändringar som görs i parametrar träder i kraft."
 
 #: docs/templates/scripts/running.html
 msgid ""
@@ -3002,19 +3008,19 @@ msgstr ""
 
 #: docs/templates/scripts/running.html
 msgid ""
-"You will now be asked to enter input parameters for the script. If an input "
-"parameter has a default value, it will be entered by default. The value can "
-"be changed. Fill out the fields and press \"Run\" in order to start the "
-"script execution. This will result in a job being created for every computer "
-"that the script is to be executed on. You can click on the link in the last "
+"You will now be asked to enter parameters for the script. If a parameter has "
+"a default value, it will be entered by default. The value can be changed. "
+"Fill out the fields and press \"Run\" in order to start the script "
+"execution. This will result in a job being created for every computer that "
+"the script is to be executed on. You can click on the link in the last "
 "section of the modal in order to jump to"
 msgstr ""
-"Du uppmanas nu att fylla i indataparametrar för skriptet. Om en "
-"indataparameter har ett standardvärde, kommer den att anges som standard. "
-"Värdet kan ändras. Fyll i fälten och klicka på \"Kör\" för att börja köra "
-"skriptet. Detta kommer att innebära, att ett jobb kommer att skapas för "
-"varje dator du väljer att utföra skriptas på. Du kan klicka på länken på den "
-"sista sidan i dialogrutan för att gå till"
+"Du uppmanas nu att fylla i parametrar för skriptet. Om en parameter har ett "
+"standardvärde, kommer den att anges som standard. Värdet kan ändras. Fyll i "
+"fälten och klicka på \"Kör\" för att börja köra skriptet. Detta kommer att "
+"innebära, att ett jobb kommer att skapas för varje dator du väljer att "
+"utföra skriptas på. Du kan klicka på länken på den sista sidan i dialogrutan "
+"för att gå till"
 
 #: docs/templates/scripts/running.html
 msgid "and track the execution of jobs on the individual computers."
@@ -3099,7 +3105,7 @@ msgstr ""
 "Det totala antalet datorer registrerade på de sites som du har tillgång till"
 
 #: docs/templates/sites_overview/index.html templates/system/pcs/pcs.html
-#: templates/system/sites/list.html
+#: templates/system/pcs/pcs_table.html templates/system/sites/list.html
 msgid "Online"
 msgstr "Online"
 
@@ -3109,7 +3115,7 @@ msgid ""
 msgstr "Det totala antalet online datorer på de sites som du har tillgång till"
 
 #: docs/templates/sites_overview/index.html templates/system/pcs/pcs.html
-#: templates/system/scripts/run_step1.html templates/system/sites/list.html
+#: templates/system/sites/list.html
 msgid "BorgerPC"
 msgstr "MedborgarPC"
 
@@ -3122,7 +3128,7 @@ msgstr ""
 "tillgång till"
 
 #: docs/templates/sites_overview/index.html templates/system/pcs/pcs.html
-#: templates/system/scripts/run_step1.html templates/system/sites/list.html
+#: templates/system/sites/list.html
 msgid "Kiosk"
 msgstr "Kiosk"
 
@@ -3710,7 +3716,7 @@ msgstr ""
 "schemat till höger på skärmen."
 
 #: docs/templates/wake_plans/edit_settings.html
-#: templates/system/jobs/site_jobs.html templates/system/pcs/pcs.html
+#: templates/system/jobs/site_jobs.html templates/system/pcs/pcs_table.html
 #: templates/system/pcs/update.html
 #: templates/system/security_events/site_security_events.html
 msgid "Status"
@@ -4310,7 +4316,7 @@ msgstr "De två lösenorden måste vara desamma"
 msgid "A user named \"%s\" already exists."
 msgstr "En användare med namnet \"%s\" finns redan."
 
-#: system/mixins.py
+#: system/mixins.py system/models.py
 msgid "modified"
 msgstr "modifierad"
 
@@ -4611,6 +4617,18 @@ msgid "location"
 msgstr "placering"
 
 #: system/models.py
+msgid "ID"
+msgstr "ID"
+
+#: system/models.py
+msgid "OS release"
+msgstr ""
+
+#: system/models.py
+msgid "product short name"
+msgstr "kort produktnamn"
+
+#: system/models.py
 msgid "executable code"
 msgstr "körbar kod"
 
@@ -4689,6 +4707,18 @@ msgstr "standardvärde"
 msgid "mandatory"
 msgstr "krävs"
 
+#: system/models.py templates/system/file_archive/file_archive.html
+msgid "file"
+msgstr "fil"
+
+#: system/models.py
+msgid "created by"
+msgstr "skapad av"
+
+#: system/models.py
+msgid "site"
+msgstr "site"
+
 # Konsistens ml. navn i sikkerhedsregel og sikkerhedshændelse
 #: system/models.py
 msgid "level"
@@ -4746,7 +4776,7 @@ msgstr "rapporterat"
 msgid "assigned user"
 msgstr "hanteras av"
 
-#: system/models.py templates/system/pcs/pcs.html
+#: system/models.py templates/system/pcs/pcs_table.html
 msgid "product"
 msgstr "produkt"
 
@@ -4802,8 +4832,8 @@ msgid "Error: You must provide a name"
 msgstr "Fejl: Du ska ange ett namn"
 
 #: system/views.py
-msgid "Error: You must provide a correct input parameter type"
-msgstr "Fejl: Du måste ange en korrekt typ av indataparameter."
+msgid "Error: You must provide a correct parameter type"
+msgstr "Fejl: Du måste ange en korrekt typ av parameter."
 
 #: system/views.py
 #, python-format
@@ -5016,6 +5046,25 @@ msgstr "Du har ingen offline-regel med följande ID: %s"
 msgid "No product matches the given ID: %s"
 msgstr "Ingen produkt matchar det angivna ID: %s"
 
+#: system/views.py
+#, python-format
+msgid "File %s created"
+msgstr "Site %s skapad"
+
+#: system/views.py
+#, python-format
+msgid ""
+"There was an error handling the selected file %s and it was not uploaded. Is "
+"the file empty?"
+msgstr ""
+"Det uppstod ett fel vid hanteringen av den valda filen %s och den laddades "
+"inte upp. Är filen tom?"
+
+#: system/views.py
+#, python-format
+msgid "File %s deleted"
+msgstr "Site %s raderad"
+
 #: templates/403.html
 msgid "Permission denied"
 msgstr "Rättigheter förbjudna"
@@ -5065,6 +5114,22 @@ msgstr "Ett serverfel har inträffat och vi har informerats om felet."
 msgid "OS2borgerPC Administration"
 msgstr "Sambruk MedborgarPC Administration"
 
+#: templates/htmx_paginator.html
+msgid "Page"
+msgstr "Sida"
+
+#: templates/htmx_paginator.html
+msgid "of"
+msgstr "av"
+
+#: templates/htmx_paginator.html
+msgid "First"
+msgstr "Första"
+
+#: templates/htmx_paginator.html
+msgid "Last"
+msgstr "Sista"
+
 #: templates/logout.html
 msgid "You have been logged out"
 msgstr "Du är nu utloggad"
@@ -5094,12 +5159,17 @@ msgid "Scripting"
 msgstr "Scripting"
 
 #: templates/site_with_navigation.html
+#: templates/system/file_archive/file_archive.html
+msgid "File archive"
+msgstr "Filarkiv"
+
+#: templates/site_with_navigation.html
 msgid "Users & Images"
 msgstr "Användare och Images"
 
 #: templates/site_with_navigation.html templates/system/site_images.html
 msgid "Images"
-msgstr ""
+msgstr "Images"
 
 #: templates/site_with_navigation.html
 msgid "About the dashboard"
@@ -5313,6 +5383,7 @@ msgstr "Är du säker på att du vill radera Offline-regeln"
 
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
 #: templates/system/event_rules/security_problem_confirm_delete.html
+#: templates/system/file_archive/confirm_delete.html
 #: templates/system/pcgroups/confirm_delete.html
 #: templates/system/pcs/confirm_delete.html
 #: templates/system/scripts/confirm_delete.html
@@ -5498,6 +5569,78 @@ msgstr "Mottagare av e-postvarning"
 msgid "New security rule"
 msgstr "Ny säkerhetsregel"
 
+#: templates/system/file_archive/confirm_delete.html
+msgid "Delete file"
+msgstr "Ta bort fil"
+
+#: templates/system/file_archive/confirm_delete.html
+msgid "This file parameter cannot currently be deleted"
+msgstr "Denna filparameter kan för närvarande inte raderas."
+
+#: templates/system/file_archive/confirm_delete.html
+msgid ""
+"The reason is it's currently used by at least one associated script in the "
+"following groups: "
+msgstr ""
+"Anledningen är att det för närvarande används av minst ett associerat skript "
+"i följande grupper: "
+
+#: templates/system/file_archive/confirm_delete.html
+msgid ""
+"Either replace it where it's used, or if the group(s) it's used in are no "
+"longer needed, remove the groups."
+msgstr ""
+"Antingen ersätt det där det används, eller om gruppen/grupperna det används "
+"i inte längre behövs, ta bort grupperna."
+
+#: templates/system/file_archive/confirm_delete.html
+msgid "Afterwards you can return here and delete it."
+msgstr "Efteråt kan du återvända hit och radera det."
+
+#: templates/system/file_archive/confirm_delete.html
+msgid "Go back"
+msgstr "Gå tillbaka"
+
+#: templates/system/file_archive/confirm_delete.html
+msgid "Are you sure you wish to delete the file"
+msgstr "Är du säker på att du vill radera filen"
+
+#: templates/system/file_archive/file_archive.html
+msgid "Upload new file"
+msgstr "Ladda upp ny fil"
+
+#: templates/system/file_archive/file_archive.html
+msgid "File name"
+msgstr "filnamn"
+
+#: templates/system/file_archive/file_archive.html
+#: templates/system/pcs/pcs_table.html
+msgid "Description"
+msgstr "Beskrivning"
+
+#: templates/system/file_archive/file_archive.html
+#: templates/system/jobs/site_jobs.html templates/system/pcs/update.html
+#: templates/system/scripts/update.html templates/system/users/update.html
+msgid "Created"
+msgstr "Skapad"
+
+#: templates/system/file_archive/file_archive.html
+#: templates/system/scripts/update.html
+msgid "Modified"
+msgstr "Ändrat"
+
+#: templates/system/file_archive/file_archive.html
+msgid "Created by"
+msgstr "Skapad av"
+
+#: templates/system/file_archive/file_archive.html
+msgid "Upload new"
+msgstr "Ladda upp nytt"
+
+#: templates/system/file_archive/partials/list.html
+msgid "You currently have no files in your archive"
+msgstr "Du har för närvarande inga filer i ditt arkiv."
+
 #: templates/system/jobs/info.html templates/system/jobs/restart.html
 msgid "Restart job"
 msgstr "Omstart av jobb"
@@ -5551,11 +5694,6 @@ msgstr "Skript"
 #: templates/system/jobs/site_jobs.html
 msgid "User"
 msgstr "Användare"
-
-#: templates/system/jobs/site_jobs.html templates/system/pcs/update.html
-#: templates/system/scripts/update.html templates/system/users/update.html
-msgid "Created"
-msgstr "Skapad"
 
 #: templates/system/jobs/site_jobs.html templates/system/pcs/update.html
 msgid "Started"
@@ -5618,9 +5756,8 @@ msgid "Position"
 msgstr "Position"
 
 #: templates/system/pcgroups/policy_list/list.html
-#: templates/system/scripts/update_form.html
 msgid "Arguments"
-msgstr "Inputparametrar"
+msgstr "Parametrar"
 
 #: templates/system/pcgroups/site_groups.html
 msgid "Add new group"
@@ -5749,7 +5886,8 @@ msgstr "Skapa en grupp"
 msgid "Edit script"
 msgstr "Redigera skript"
 
-#: templates/system/pcs/confirm_delete.html templates/system/pcs/update.html
+#: templates/system/pcs/confirm_delete.html
+#: templates/system/pcs/pcs_navigation_list.html
 msgid "Delete computer"
 msgstr "Radera dator"
 
@@ -5781,47 +5919,53 @@ msgstr "Totalt antal Kiosk PC'er"
 msgid "Activated:"
 msgstr "Aktiverade:"
 
-#: templates/system/pcs/pcs.html
-msgid "Activated"
-msgstr "Aktiverad"
+#: templates/system/pcs/pcs_navigation_list.html
+#: templates/system/pcs/pcs_table.html
+msgid "Filter by computer names"
+msgstr "Filtrera efter datornamn"
 
-#: templates/system/pcs/pcs.html
-msgid "Description"
-msgstr "Beskrivning"
-
-#: templates/system/pcs/pcs.html
-msgid "Location"
-msgstr "Placering"
-
-#: templates/system/pcs/pcs.html templates/system/pcs/update.html
-msgid "Ubuntu version"
-msgstr "Ubuntu version"
-
-#: templates/system/pcs/pcs.html
-msgid "Latest check-in"
-msgstr "Senaste incheckning"
-
-#: templates/system/pcs/pcs.html templates/system/pcs/update.html
+#: templates/system/pcs/pcs_navigation_list.html
+#: templates/system/pcs/pcs_table.html
 msgid "Not activated"
 msgstr "Inte aktiverad"
 
-#: templates/system/pcs/pcs.html
+#: templates/system/pcs/pcs_navigation_list.html
+msgid "There are no computers"
+msgstr "Det finns inga datorer"
+
+#: templates/system/pcs/pcs_table.html
+msgid "Activated"
+msgstr "Aktiverad"
+
+#: templates/system/pcs/pcs_table.html
+msgid "Location"
+msgstr "Placering"
+
+#: templates/system/pcs/pcs_table.html templates/system/pcs/update.html
+msgid "Ubuntu version"
+msgstr "Ubuntu version"
+
+#: templates/system/pcs/pcs_table.html
+msgid "Latest check-in"
+msgstr "Senaste incheckning"
+
+#: templates/system/pcs/pcs_table.html
 msgid "Offline"
 msgstr "Offline"
 
-#: templates/system/pcs/pcs.html templates/system/pcs/update.html
+#: templates/system/pcs/pcs_table.html templates/system/pcs/update.html
 #: templates/system/site_dashboard.html
 msgid "ago"
 msgstr "sedan"
 
-#: templates/system/pcs/pcs.html templates/system/pcs/update.html
+#: templates/system/pcs/pcs_table.html templates/system/pcs/update.html
 #: templates/system/users/update.html
 msgid "Never"
 msgstr "Aldrig"
 
-#: templates/system/pcs/update.html
-msgid "There are no computers"
-msgstr "Det finns inga datorer"
+#: templates/system/pcs/pcs_table.html
+msgid "No results are matching this query"
+msgstr "Inga resultat matchar den här frågan"
 
 #: templates/system/pcs/update.html
 msgid "Registered"
@@ -5967,13 +6111,13 @@ msgstr "Hitta ..."
 msgid "Clear the filter"
 msgstr "Rensa filter"
 
-#: templates/system/scripts/update.html
-msgid "Modified"
-msgstr "Ändrat"
-
 #: templates/system/scripts/update_form.html
 msgid "Code"
 msgstr "Kod"
+
+#: templates/system/scripts/update_form.html
+msgid "Parameters"
+msgstr "Parametrar"
 
 #: templates/system/scripts/update_form.html
 msgid "Download the script"
@@ -6117,8 +6261,8 @@ msgid "Are you sure you want to delete the following API Key?:"
 msgstr "Är du säker på att du vill ta bort följande API-nyckel?:"
 
 #: templates/system/site_settings/api_keys/partials/list.html
-msgid "There are currently no API keys"
-msgstr "Det finns för närvarande inga API-nycklar"
+msgid "You currently have no API keys"
+msgstr "Du har för närvarande inga API-nycklar"
 
 #: templates/system/site_two_factor_pc.html
 msgid ""
@@ -6186,7 +6330,7 @@ msgid ""
 "input"
 msgstr ""
 "Kopiera säkerhetsnyckeln från steg 1 och kör tvåstegsskriptet med den som "
-"Ingångsparameter."
+"input"
 
 #: templates/system/site_two_factor_pc.html
 msgid "Click on"
@@ -6690,16 +6834,14 @@ msgstr ""
 "dokumentation och en länk till källkoden här"
 
 #: templates/two_factor/_base.html
+msgid "You can contact us at "
+msgstr "Du kan kontakta oss på "
+
+#: templates/two_factor/_base.html
 msgid "Check updates for OS2borgerPC"
 msgstr "Se uppdateringar i Sambruk MedborgarPC"
 
-#: templates/two_factor/_base.html
-msgid "Send a message to Magenta"
-msgstr "Skicka ett meddelande till Magenta"
-
 #: templates/two_factor/core/backup_tokens.html
-#: templates/two_factor/core/setup.html
-#: templates/two_factor/core/setup_complete.html
 #: templates/two_factor/profile/disable.html
 msgid "Two-factor authentication for admin portal login"
 msgstr "Tvåstegsverifiering for adminsida inloggning"
@@ -6786,16 +6928,16 @@ msgstr "SSO-inloggning"
 
 #: templates/two_factor/core/setup.html
 #: templates/two_factor/core/setup_complete.html
-msgid "Enable Two-Factor Authentication for"
-msgstr "Aktivera Tvåstegsverifiering för"
+msgid "Enable two-factor authentication for admin-site login for"
+msgstr "Aktivera tvåstegsverifiering för inloggning på adminsidan för"
 
 #: templates/two_factor/core/setup.html
 msgid ""
-"You are about to take your account security to the next level. Follow the "
-"steps in this wizard to enable two-factor authentication."
+"You are about to take your account security to the next level. Follow this "
+"wizard to enable two-factor authentication."
 msgstr ""
-"Du är på väg att öka säkerheten för din användarkonto. Följ stegen i denna "
-"guide för att aktivera tvåstegsverifiering."
+"Du är på väg att öka säkerheten för din användarkonto. Följ denna guide för "
+"att aktivera tvåstegsverifiering."
 
 #: templates/two_factor/core/setup.html
 msgid "Please select which authentication method you would like to use."
@@ -6804,10 +6946,10 @@ msgstr ""
 #: templates/two_factor/core/setup.html
 msgid ""
 "To start using an authenticator app, please use your smartphone to scan the "
-"QR code below. For example, use FreeOTP Authenticator."
+"QR code below. For example, use Aegis Authenticator or FreeOTP Authenticator."
 msgstr ""
 "Använd din autentiseringsapp för att skanna QR-koden nedan. Du kan t.ex. "
-"använd FreeOTP Authenticator."
+"använd Aegis Authenticator eller FreeOTP Authenticator."
 
 #: templates/two_factor/core/setup.html
 msgid ""

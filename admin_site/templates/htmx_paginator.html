@@ -1,0 +1,44 @@
+{% load i18n %}
+{% load custom_tags %}
+{% if paginated_list.paginator and paginated_list.paginator.num_pages > 1 %}
+<nav>
+  <span style="float: left">
+    <span class="px-2">
+      {% translate 'Page' %}&nbsp;{{ paginated_list.number }}&nbsp;/&nbsp;{{ paginated_list.paginator.num_pages }}
+    </span>
+    <span class="px-2">
+      {{ paginated_list.start_index }}&nbsp;-&nbsp;{{ paginated_list.end_index }}&nbsp;{% translate 'of' %}&nbsp;{{ paginated_list.paginator.count }}
+    </span>
+  </span>
+
+  <span style="float: right">
+    {% if paginated_list.has_previous %}
+    <span class="table-navigation px-2" hx-trigger="click"
+          hx-get="{{ action_url }}?{{ params | params_set_page:1 | params_urlencode }}"
+          hx-target="{{ target_selector }}" hx-swap="outerHTML"><span class="material-symbols-outlined">first_page</span>&nbsp;{% translate 'First' %}</span>
+    <span class="table-navigation px-2" hx-trigger="click"
+          hx-get="{{ action_url }}?{{ params | params_set_page:paginated_list.previous_page_number | params_urlencode }}"
+          hx-target="{{ target_selector }}" hx-swap="outerHTML"><span class="material-symbols-outlined">navigate_before</span>&nbsp;{% translate 'Previous' %}</span>
+    {% endif %}
+
+    {% for num in paginated_list.paginator.page_range %}
+    {% if paginated_list.number == num %}
+    <span class="px-2 border-bottom border-dark">{{ num }}</span>
+    {% elif num <= paginated_list.number|add:3 and num >= paginated_list.number|add:-3  %}
+      <span class="table-navigation px-2" hx-trigger="click"
+            hx-get="{{ action_url }}?{{ params | params_set_page:num | params_urlencode }}"
+            hx-target="{{ target_selector }}" hx-swap="outerHTML">{{ num }}</span>
+      {% endif %}
+      {% endfor %}
+
+      {% if paginated_list.has_next %}
+      <span class="table-navigation px-2" hx-trigger="click"
+            hx-get="{{ action_url }}?{{ params | params_set_page:paginated_list.next_page_number | params_urlencode }}"
+            hx-target="{{ target_selector }}" hx-swap="outerHTML">{% translate 'Next' %}&nbsp;<span class="material-symbols-outlined">navigate_next</span></span>
+      <span class="table-navigation px-2" hx-trigger="click"
+            hx-get="{{ action_url }}?{{ params | params_set_page:paginated_list.paginator.num_pages | params_urlencode }}"
+            hx-target="{{ target_selector }}">{% translate 'Last' %}&nbsp;<span class="material-symbols-outlined">last_page</span></span>
+      {% endif %}
+  </span>
+</nav>
+{% endif %}

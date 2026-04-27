@@ -33,17 +33,39 @@ variables:
 #  Lint stage  #
 ################
 
-.lint-default: &lint-default
+pre-commit:
   stage: lint
+  image: alpine:edge
+  before_script:
+    - apk add pre-commit git
+    # Prepare bin cache
+    - mkdir --parents ${BIN_CACHE_DIR}
+    - export PATH=$PATH:${BIN_CACHE_DIR}
+  script:
+    pre-commit run --all-files --verbose
+  variables:
+    # GitLab can only cache paths that are in the local working copy, so we
+    # change directories to be inside the project directory.
+    # https://docs.gitlab.com/ee/ci/yaml/index.html#cache
+    # https://pre-commit.com/index.html#gitlab-ci-example
+    PIP_CACHE_DIR: ${CI_PROJECT_DIR}/.cache/pip
+    PRE_COMMIT_HOME: ${CI_PROJECT_DIR}/.cache/pre-commit
+    BIN_CACHE_DIR: ${CI_PROJECT_DIR}/.cache/bin
+  cache:
+    # The cache is tied to the pre-commit and gitlab-ci config, so it is reused
+    # as long as .pre-commit-config.yaml and .gitlab-ci.yml is unchanged.
+    # https://docs.gitlab.com/ee/ci/yaml/index.html#cachekeyfiles
+    key:
+      files:
+        - .pre-commit-config.yaml
+        - .gitlab-ci.yml
+    paths:
+      - ${PIP_CACHE_DIR}
+      - ${PRE_COMMIT_HOME}
+      - ${BIN_CACHE_DIR}
 
-Lint Python:
-  <<: *lint-default
-  image: python:3.13-alpine
-  before_script: [pip3 install black]
-  script: [cd admin_site, black --version, black --check --diff .]
-
-Lint Dockerfiles:
-  <<: *lint-default
+lint dockerfiles:
+  stage: lint
   image: hadolint/hadolint:latest-alpine
   script:
     - find . -name Dockerfile -exec hadolint {} \;
@@ -52,12 +74,12 @@ Lint Dockerfiles:
 #  Build stage  #
 #################
 
-Build app image:
+build app image:
   extends: .build-docker
   # Minimize unnecessary builds, specified because the extended template sets needs to []
   needs:
-    - Lint Python
-    - Lint Dockerfiles
+    - pre-commit
+    - lint dockerfiles
 
 ###################
 #  Release stage  #
@@ -70,7 +92,7 @@ Build app image:
     GIT_STRATEGY: none  # We do not need the source code
   before_script: [apk add skopeo]
 
-Release versioned:
+release versioned:
   <<: *release-default
   extends: [.rules:semver-all]
   script:
@@ -79,7 +101,7 @@ Release versioned:
       "docker://${IMAGE_SHA}"
       "docker://${RELEASE_IMAGE_TAG}"
 
-Release latest:
+release latest:
   <<: *release-default
   extends: [.rules:semver-core]
   script:
@@ -92,17 +114,17 @@ Release latest:
 #  Deploy stage  #
 ##################
 
-TESTING update version salt:
+testing update version salt:
   extends: [.rules:semver-all, .config:endpoint-with-tag]
-  needs: [Release versioned]
+  needs: [release versioned]
   when: manual
   variables:
     ENDPOINT: os2bpc/salt/update-test
     CONFIG_UPDATER_USERNAME: os2bpc
 
-TESTING trigger salt deployment:
+testing trigger salt deployment:
   extends: [.rules:semver-all, .saltbert]
-  needs: [TESTING update version salt]
+  needs: [testing update version salt]
   when: manual
   variables:
     SALTBERT_ORCHESTRATION: os2bpc.test
@@ -112,17 +134,17 @@ TESTING trigger salt deployment:
     name: os2borgerpc-test
     url: https://os2borgerpc-test.magenta.dk
 
-PROD update version salt:
+prod update version salt:
   extends: [.rules:semver-core, .config:endpoint-with-tag]
-  needs: [Release latest, TESTING trigger salt deployment]
+  needs: [release latest, testing trigger salt deployment]
   when: manual
   variables:
     ENDPOINT: os2bpc/salt/update-production
     CONFIG_UPDATER_USERNAME: os2bpc
 
-PROD trigger salt deployment:
+prod trigger salt deployment:
   extends: [.rules:semver-core, .saltbert]
-  needs: [PROD update version salt]
+  needs: [prod update version salt]
   when: manual
   variables:
     SALTBERT_ORCHESTRATION: os2bpc.production

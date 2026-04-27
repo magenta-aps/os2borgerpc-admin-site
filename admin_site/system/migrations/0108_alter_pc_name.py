@@ -6,7 +6,6 @@ import re
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("system", "0107_alter_pc_name"),
     ]

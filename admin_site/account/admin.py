@@ -32,7 +32,7 @@ class SiteMembershipInline(admin.TabularInline):
 
 
 @admin.register(User)
-class MyUserAdmin(UserAdmin):
+class CustomUserAdmin(UserAdmin):
     inlines = [UserProfileInline]
     list_display = (
         "username",
@@ -56,6 +56,14 @@ class MyUserAdmin(UserAdmin):
         ("is_staff", admin.BooleanFieldListFilter),
     )
     search_fields = ("username", "email")
+
+    # Temporary-ish function to remove staff status
+    def remove_staff_status(modeladmin, request, queryset):
+        queryset.update(is_staff=False)
+
+    actions = [
+        remove_staff_status,
+    ]
 
     @transaction.atomic
     def save_model(self, request, obj, form, change):
@@ -82,7 +90,7 @@ class MyUserAdmin(UserAdmin):
 
 
 @admin.register(m.UserProfile)
-class MyUserProfileAdmin(admin.ModelAdmin):
+class UserProfileAdmin(admin.ModelAdmin):
     inlines = [SiteMembershipInline]
     list_display = ("user",)
     search_fields = ("user__username",)

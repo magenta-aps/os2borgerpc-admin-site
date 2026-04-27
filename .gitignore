@@ -13,6 +13,8 @@ venv/
 *.swp
 *.mo
 
+dev-environment/overrides.env
+
 # These files are created when running "npm run build-for-dev"
 admin_site/static/css/bootstrap.css
 admin_site/static/css/bootstrap.css.map

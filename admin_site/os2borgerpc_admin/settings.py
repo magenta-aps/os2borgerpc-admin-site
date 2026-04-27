@@ -5,7 +5,9 @@ import os
 from datetime import datetime
 from pathlib import Path
 
-from google.oauth2 import service_account
+if os.environ.get("GS_BUCKET_NAME"):
+    # Importing it here so it's not a hard requirement
+    from google.oauth2 import service_account
 
 logger = logging.getLogger(__name__)
 
@@ -58,7 +60,7 @@ DATABASES = {
         "HOST": os.environ.get("DB_HOST"),
         "PORT": os.environ.get("DB_PORT", ""),
         "OPTIONS": {
-            "connect_timeout": 10,  # Minimum in 2
+            "connect_timeout": 30,  # Minimum is 2
         },
     }
 }
@@ -241,6 +243,12 @@ LOGGING = {
         "console": {
             "class": "logging.StreamHandler",
             "formatter": "console",
+        },
+    },
+    "loggers": {
+        "django.db.backends": {
+            "level": os.environ.get("DB_LOG_LEVEL", "CRITICAL"),
+            "handlers": ["console"],
         },
     },
     "root": {

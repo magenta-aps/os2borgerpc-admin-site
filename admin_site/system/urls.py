@@ -1,9 +1,7 @@
+from django.templatetags.static import static
 from django.urls import path
 from django.views.generic import RedirectView
-from django.templatetags.static import static
-
 from django.views.i18n import JavaScriptCatalog
-
 from system.views import (
     AdminIndex,
     APIKeyCreate,
@@ -11,6 +9,10 @@ from system.views import (
     APIKeyUpdate,
     ConfigurationEntryCreate,
     ConfigurationEntryUpdate,
+    FileArchive,
+    FileArchiveCreate,
+    FileArchiveDelete,
+    GlobalScriptRedirect,
     ImageVersionRedirect,
     ImageVersionRedirectSite,
     ImageVersionView,
@@ -25,24 +27,16 @@ from system.views import (
     PCGroupRedirect,
     PCGroupUpdate,
     PCsOverview,
-    PCUpdateRedirect,
-    PCUpdate,
+    PCsOverviewTable,
     PCDelete,
-    WakePlanCreate,
-    WakePlanDuplicate,
-    WakePlanDelete,
-    WakePlanRedirect,
-    WakePlanUpdate,
-    WakeChangeEventCreate,
-    WakeChangeEventDelete,
-    WakeChangeEventRedirect,
-    WakeChangeEventUpdate,
+    PCNavigationList,
+    PCUpdate,
+    PCUpdateRedirect,
     ScriptCreate,
     ScriptDelete,
     ScriptRedirect,
     ScriptRun,
     ScriptUpdate,
-    GlobalScriptRedirect,
     SecurityEventSearch,
     SecurityEventsUpdate,
     SecurityEventsView,
@@ -62,16 +56,21 @@ from system.views import (
     SiteDelete,
     SiteSettings,
     TwoFactor,
-    AdminTwoFactorSetup,
-    AdminTwoFactorSetupComplete,
-    AdminTwoFactorDisable,
-    AdminTwoFactorBackupTokens,
     UserCreate,
     UserDelete,
     UserLink,
     UserRedirect,
     UserRedirectSite,
     UserUpdate,
+    WakeChangeEventCreate,
+    WakeChangeEventDelete,
+    WakeChangeEventRedirect,
+    WakeChangeEventUpdate,
+    WakePlanCreate,
+    WakePlanDelete,
+    WakePlanDuplicate,
+    WakePlanRedirect,
+    WakePlanUpdate,
 )
 
 urlpatterns = [
@@ -161,27 +160,6 @@ urlpatterns = [
     ),
     # Two-factor for OS2borgerPC machines
     path("site/<slug>/two-factor/", TwoFactor.as_view(), name="two_factor"),
-    # Two-factor for admin-site
-    path(
-        "site/<slug>/admin-two-factor/<username>/setup/",
-        AdminTwoFactorSetup.as_view(),
-        name="admin_otp_setup",
-    ),
-    path(
-        "site/<slug>/admin-two-factor/<username>/setup-complete/",
-        AdminTwoFactorSetupComplete.as_view(),
-        name="admin_otp_setup_complete",
-    ),
-    path(
-        "site/<slug>/admin-two-factor/<username>/disable/",
-        AdminTwoFactorDisable.as_view(),
-        name="admin_otp_disable",
-    ),
-    path(
-        "site/<slug>/admin-two-factor/<username>/backup-tokens/",
-        AdminTwoFactorBackupTokens.as_view(),
-        name="admin_otp_backup",
-    ),
     # Sites
     path("", AdminIndex.as_view(), name="index"),
     path("sites/", SiteList.as_view(), name="sites"),
@@ -223,6 +201,11 @@ urlpatterns = [
         "site/<slug>/computers/<pc_uid>/",
         PCUpdate.as_view(),
         name="computer",
+    ),
+    path(
+        "site/<slug>/computers/<pc_uid>/navigationlist",
+        PCNavigationList.as_view(),
+        name="computers_navigationlist",
     ),
     path(
         "site/<slug>/computers/<pc_uid>/delete/",
@@ -385,6 +368,28 @@ urlpatterns = [
         ImageVersionView.as_view(),
         name="images-product",
     ),
+    # Files
+    path(
+        "site/<slug>/file_archive/",
+        FileArchive.as_view(),
+        name="file_archive",
+    ),
+    path(
+        "site/<slug>/file_archive/new/",
+        FileArchiveCreate.as_view(),
+        name="file_archive_new",
+    ),
+    path(
+        "site/<slug>/file_archive/<int:pk>/update/",
+        FileArchive.as_view(),
+        name="file_archive_update",
+    ),
+    path(
+        "site/<slug>/file_archive/<int:pk>/delete/",
+        FileArchiveDelete.as_view(),
+        name="file_archive_delete",
+    ),
+    # API Key
     # This contains both a regular view and an HTMX view
     path(
         "site/<slug>/api-keys/",
@@ -396,6 +401,7 @@ urlpatterns = [
 # Define HTMX URL Patterns here, and add them to the urlpatterns list
 # Basically these are views that only return partial HTML fragments rather than entire pages
 htmx_urlpatterns = [
+    # API Key
     path(
         "site/<slug>/api-keys/new/",
         APIKeyCreate.as_view(),
@@ -416,10 +422,17 @@ htmx_urlpatterns = [
         SiteDashboardJobListUpdate.as_view(),
         name="dashboard_jobs",
     ),
+    # Sites overview
     path(
         "sites/new-validate/",
         SiteUIDAvailableCheck.as_view(),
         name="site_uid_available_check",
+    ),
+    # Computers overview table
+    path(
+        "site/<slug>/status/table",
+        PCsOverviewTable.as_view(),
+        name="computers_overview_table",
     ),
 ]
 

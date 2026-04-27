@@ -117,6 +117,11 @@ detailpage
       <span class="material-symbols-outlined">code</span> {% translate "Scripts" %}
     </a>
 
+    {% set_css_class_active request.resolver_match.url_name "file_archive" as current_url_file_archive %}
+    <a class="nav-link d-none {{ current_url_file_archive }}" href="{% url 'file_archive' slug=site.url %}">
+      <span class="material-symbols-outlined">upload_file</span> {% translate "File archive" %}
+    </a>
+
     <hr>
     <h2 class="text-light">{% translate "Users & Images" %}</h2>
     {% set_css_class_active request.resolver_match.url_name "user" as current_url_users %}

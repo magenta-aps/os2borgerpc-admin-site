@@ -5,14 +5,6 @@ table {
         box-shadow: none !important;
         vertical-align: middle;
 
-        &:first-child {
-            border-radius: .33rem 0 0 0;
-        }
-
-        &:last-child {
-            border-radius: 0 .33rem 0 0;
-        }
-
         &.orderby {
             cursor: pointer;
 
@@ -24,6 +16,15 @@ table {
                 background-color: $orange !important;
                 color: $white;
             }
+        }
+    }
+
+    thead tr:first-child {
+        td:first-child, th:first-child {
+            border-radius: .33rem 0 0 0;
+        }
+        td:last-child, th:last-child {
+            border-radius: 0 .33rem 0 0;
         }
     }
 
@@ -39,16 +40,24 @@ table {
         }
     }
 
+    // jobs table uses td inside tfoot
     tfoot td {
         background-color: $gray-400 !important;
-        border-radius: 0 0 .33rem .33rem;
+    }
+
+    tfoot tr:last-child {
+        td, th {
+            border-radius: 0 0 .33rem .33rem;
+        }
     }
 
     &.table-extendable {
         tbody tr:last-child td {
             border-radius: 0;
         }
+
     }
+
 
     &.table-configs {
 

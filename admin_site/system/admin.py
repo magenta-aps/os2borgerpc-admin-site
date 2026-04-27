@@ -1,8 +1,6 @@
 from hashlib import md5
 
 from django.contrib import admin
-from django.db.models import Count
-from django.utils import timezone
 from django.utils.html import format_html_join, escape, mark_safe
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
@@ -230,7 +228,7 @@ class BatchAdmin(admin.ModelAdmin):
     list_display = ("id", "site", "name", "script")
     fields = ("site", "name", "script")
     list_filter = ("site",)
-    search_fields = ("name", "site__name", "script__name")
+    search_fields = ("id", "name", "site__name", "script__name")
     readonly_fields = ("script",)
     inlines = [JobInline, BatchParameterInline]
 
@@ -397,7 +395,6 @@ class EventRuleServerAdmin(admin.ModelAdmin):
 
 @admin.register(m.FeaturePermission)
 class FeaturePermissionAdmin(admin.ModelAdmin):
-
     @admin.display(description=_("customers with access"))
     def customers_with_access(self, obj):
         return list(obj.customers.all())
@@ -409,6 +406,21 @@ class FeaturePermissionAdmin(admin.ModelAdmin):
     )
     list_filter = ("name",)
     search_fields = ("name", "uid")
+    filter_horizontal = ("customers",)
+
+
+@admin.register(m.FileParameter)
+class FileParameterAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "file",
+        "name",
+        "description",
+        "created",
+        "modified",
+        "created_by",
+        "site",
+    )
 
 
 @admin.register(m.ImageVersion)
@@ -436,7 +448,7 @@ class JobAdmin(admin.ModelAdmin):
         "finished",
     )
     list_filter = ("status",)
-    search_fields = ("batch__script__name", "user__username", "pc__name")
+    search_fields = ("id", "batch__script__name", "user__username", "pc__name")
     readonly_fields = ("created", "started", "finished", "batch", "pc")
 
 

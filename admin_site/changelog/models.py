@@ -21,7 +21,9 @@ class ChangelogTag(models.Model):
 # A model that represents one changelog entry, used to showcase changes/new features to users
 class Changelog(models.Model):
     title = models.CharField(verbose_name=_("title"), max_length=100)
-    description = models.TextField(verbose_name=_("description"), max_length=240)
+    description = models.TextField(
+        verbose_name=_("description"), max_length=240, blank=True
+    )
     content = MarkdownxField(verbose_name=_("content"))
     tags = models.ManyToManyField(ChangelogTag, related_name="changelogs", blank=True)
     created = models.DateTimeField(verbose_name=_("created"), default=timezone.now)

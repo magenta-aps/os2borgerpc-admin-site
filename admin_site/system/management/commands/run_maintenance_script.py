@@ -97,8 +97,7 @@ class Command(BaseCommand):
                     Job.objects.create(user=user, batch=batch, pc=pc)
                     self.stdout.write(
                         self.style.SUCCESS(
-                            f"Maintenance job was created for pc: {pc}"
-                            f" for site: {site}"
+                            f"Maintenance job was created for pc: {pc} for site: {site}"
                         )
                     )
         else:

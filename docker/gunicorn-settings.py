@@ -4,12 +4,21 @@
 # Used by Dockerfile - compose does a few overrides
 import multiprocessing
 
+num_workers = multiprocessing.cpu_count() * 3
+
+worker_class = "gthread"
 bind = "0.0.0.0:9999"
-workers = multiprocessing.cpu_count() * 2 + 1
+# The recommendations in regards to both workers and threads are:
+# "A positive integer generally in the 2-4 x $(NUM_CORES) range. You’ll want to vary this a bit to find the best for your particular application’s work load."
+# https://gunicorn.org/reference/settings/?h=settings#worker-processes
+workers = num_workers
+threads = num_workers * 4
 accesslog = "-"
 errorlog = "-"
 worker_tmp_dir = "/dev/shm"
-max_requests = 1000
+# To help reduce potential memory leaks
+max_requests = 1500
+# To reduce the risk of many workers restarting simultaneously
 max_requests_jitter = 50
 # The IP of the traefik container - if not specified, gunicorn
 # only trusts x forwarded for coming from 127.0.0.1

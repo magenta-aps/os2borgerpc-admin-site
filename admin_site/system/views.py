@@ -2,39 +2,27 @@
 import json
 import secrets
 
-from django.http import Http404, JsonResponse, HttpResponse
-from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.utils.decorators import method_decorator
-from django.utils.translation import gettext_lazy as _
-from django.utils.html import escape
-from django.contrib.auth.models import User, Permission
+from django.contrib.auth.models import Permission, User
+from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator
+from django.db import transaction
+from django.db.models import F, Q
+from django.http import Http404, HttpResponse, HttpResponseRedirect, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import resolve, reverse
-
+from django.utils.decorators import method_decorator
+from django.utils.html import escape
+from django.utils.translation import gettext_lazy as _
+from django.views.generic import DetailView, ListView, RedirectView, TemplateView, View
 from django.views.generic.edit import (
     CreateView,
+    DeleteView,
     DeletionMixin,
     FormView,
     UpdateView,
-    DeleteView,
 )
-from django.views.generic import View, ListView, DetailView, RedirectView, TemplateView
 from django.views.generic.list import BaseListView
-
-from django.db import transaction
-from django.db.models import Q, F
-
-from django.core.exceptions import PermissionDenied
-
-import django_otp
-from two_factor.forms import TOTPDeviceForm
-from two_factor.utils import default_device
-from two_factor import views as otp_views
-from two_factor.plugins.phonenumber.utils import get_available_phone_methods
-from django_otp.decorators import otp_required
-from django_otp import devices_for_user, user_has_device
-from django_otp.plugins.otp_static.models import StaticToken
-from django.forms import Form
 
 from os2borgerpc_admin import utils as global_utils
 
@@ -61,6 +49,7 @@ from system.models import (
     Configuration,
     ConfigurationEntry,
     Customer,
+    FileParameter,
     ImageVersion,
     Input,
     Job,
@@ -68,6 +57,7 @@ from system.models import (
     Product,
     PC,
     PCGroup,
+    PCsOverviewV,
     WakeWeekPlan,
     WakeChangeEvent,
     Script,
@@ -83,13 +73,14 @@ from system.models import (
 from system.forms import (
     ConfigurationEntryForm,
     EventRuleServerForm,
+    FileParameterForm,
+    ParameterForm,
     PCForm,
     PCGroupForm,
-    ParameterForm,
     ScriptForm,
     SecurityEventForm,
-    SiteForm,
     SiteCreateForm,
+    SiteForm,
     UserForm,
     UserFormSSO,
     UserLinkForm,
@@ -106,29 +97,6 @@ def run_wake_plan_script(site, pcs, args, user, type="remove"):
     script.run_on(site, pcs, *args, user=user)
 
 
-def otp_check(
-    view=None, redirect_field_name="next", login_url=None, if_configured=False
-):
-    """
-    Modfied version of otp_required that redirects to site root if you do not have a device configured
-    The normal version redirects to the login page, which results in a loop of logging in,
-    hitting a url that requires otp and being redirected back to login
-    """
-    if login_url is None:
-        login_url = "/"
-
-    def test(user):
-        return user.is_verified() or (
-            if_configured and user.is_authenticated and not user_has_device(user)
-        )
-
-    decorator = user_passes_test(
-        test, login_url=login_url, redirect_field_name=redirect_field_name
-    )
-
-    return decorator if (view is None) else decorator(view)
-
-
 def site_pcs_stats(context, site_list):
     context["borgerpc_count"] = PC.objects.filter(
         site__in=site_list,
@@ -140,6 +108,15 @@ def site_pcs_stats(context, site_list):
         configuration__entries__key="os2_product",
         configuration__entries__value="os2borgerpc kiosk",
     ).count()
+    context["total_pcs_count"] = PC.objects.filter(
+        site__in=site_list,
+    ).count()
+    context["activated_pcs_count"] = PC.objects.filter(
+        site__in=site_list, is_activated=True
+    ).count()
+    context["online_pcs_count"] = online_pcs_count_filter(
+        PC.objects.filter(site__in=site_list)
+    )
     # Add counts for each _os_release
     context["releases"] = []
     for release in (
@@ -246,6 +223,7 @@ class SelectionMixin(View):
 class JSONResponseMixin:
     """
     A mixin that can be used to render a JSON response.
+    Used by SecurityEvents and Jobs for pagination/filtering.
     """
 
     def render_to_json_response(self, context, **response_kwargs):
@@ -282,7 +260,6 @@ class SiteMixin(View):
 
 
 class SiteUIDAvailableCheck(LoginRequiredMixin):
-
     def dispatch(self, *args, **kwargs):
         site_prefix = self.request.user.user_profile.sites.first().customer.site_prefix
         uid_postfix = self.request.GET["uid"]
@@ -368,7 +345,7 @@ class SiteList(ListView, LoginRequiredMixin):
         context["user_sites"] = user_sites
         # The dictionary to generate the customer-site list has the following structure:
         # {"Denmark": [Customer1, Customer2], "Sweden": [Customer3, ...] ...}
-        # Handling the logic for non-superusers differently because it can be done in a much less complex way
+        # Handling the logic for superusers differently because it can be done in a less complex way
         if self.request.user.is_superuser:
             countries = Country.objects.all()
         else:
@@ -762,172 +739,6 @@ class APIKeyDelete(TemplateView, DeletionMixin, SuperAdminOrThisSiteMixin):
         )
 
 
-class AdminTwoFactorDisable(otp_views.DisableView, SuperAdminOrThisSiteMixin):
-    form_class = Form
-
-    def get_success_url(self):
-        return reverse(
-            "user",
-            kwargs={
-                "slug": self.kwargs["slug"],
-                "username": self.kwargs["username"],
-            },
-        )
-
-    def get_context_data(self, **kwargs):
-        site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        context = {"site": site, "user": self.request.user, "form": Form}
-        return context
-
-    def dispatch(self, *args, **kwargs):
-        """This function has been overwritten to make it use get_success_url
-        and to redirect when the username does not match"""
-        # If the username in the url doesn't match request.user.username,
-        # redirect back to the main site
-        if self.request.user.username != self.kwargs["username"]:
-            return redirect("/")
-        fn = otp_required(
-            super().dispatch, login_url=self.get_success_url(), redirect_field_name=None
-        )
-        return fn(*args, **kwargs)
-
-    def form_valid(self, form):
-        """This function has been overwritten to make it use get_success_url"""
-        for device in devices_for_user(self.request.user):
-            device.delete()
-        return redirect(self.get_success_url())
-
-
-class AdminTwoFactorSetup(otp_views.SetupView, SuperAdminOrThisSiteMixin):
-    def get_success_url(self):
-        return reverse(
-            "admin_otp_setup_complete",
-            kwargs={"slug": self.kwargs["slug"], "username": self.kwargs["username"]},
-        )
-
-    def get_context_data(self, form, **kwargs):
-        context = super().get_context_data(form, **kwargs)
-        user = self.request.user
-        site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        context["site"] = site
-        # url to redirect to when the user clicks cancel
-        context["cancel_url"] = reverse("users", kwargs={"slug": site.uid})
-        return context
-
-    def get(self, request, *args, **kwargs):
-        """
-        Start the setup wizard. Redirect if already enabled.
-        This function has been overwritten in order to redirect
-        when the username does not match
-        """
-        # If the username in the url doesn't match request.user.username,
-        # redirect back to the main site
-        if self.request.user.username != self.kwargs["username"]:
-            return redirect("/")
-        elif default_device(self.request.user):
-            return redirect(self.get_success_url())
-        return super().get(request, *args, **kwargs)
-
-    def done(self, form_list, **kwargs):
-        """
-        Finish the wizard. Save all forms and redirect.
-        This function has been overwritten to make it
-        use get_success_url in the final redirect.
-        All other lines are unchanged.
-        """
-        # Remove secret key used for QR code generation
-        try:
-            del self.request.session[self.session_key_name]
-        except KeyError:
-            pass
-
-        method = self.get_method()
-        # TOTPDeviceForm
-        if method.code == "generator":
-            form = [form for form in form_list if isinstance(form, TOTPDeviceForm)][0]
-            device = form.save()
-
-        # PhoneNumberForm / YubiKeyDeviceForm / EmailForm / WebauthnDeviceValidationForm
-        elif method.code in ("call", "sms", "yubikey", "email", "webauthn"):
-            device = self.get_device()
-            device.save()
-
-        else:
-            raise NotImplementedError("Unknown method '%s'" % method.code)
-
-        django_otp.login(self.request, device)
-        return redirect(self.get_success_url())
-
-
-@method_decorator(otp_check, name="dispatch")
-class AdminTwoFactorSetupComplete(
-    otp_views.SetupCompleteView, SuperAdminOrThisSiteMixin
-):
-    def get_context_data(self, **kwargs):
-        context = {
-            "phone_methods": get_available_phone_methods(),
-        }
-        user = self.request.user
-        site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        context["site"] = site
-        context["user"] = user
-        return context
-
-    def dispatch(self, request, *args, **kwargs):
-        # Override the dispatch method in order to redirect to site root
-        # if the url username does not match request.user.username
-        if request.user.username != kwargs["username"]:
-            return redirect("/")
-        # Everything below this point is unchanged from the
-        # standard django View dispatch
-        if request.method.lower() in self.http_method_names:
-            handler = getattr(
-                self, request.method.lower(), self.http_method_not_allowed
-            )
-        else:
-            handler = self.http_method_not_allowed
-        return handler(request, *args, **kwargs)
-
-
-@method_decorator(otp_check, name="dispatch")
-class AdminTwoFactorBackupTokens(otp_views.BackupTokensView, SuperAdminOrThisSiteMixin):
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["user"] = self.request.user
-        context["site"] = get_object_or_404(Site, uid=self.kwargs["slug"])
-        return context
-
-    def dispatch(self, request, *args, **kwargs):
-        # Override the dispatch method in order to redirect to site root
-        # if the url username does not match request.user.username
-        if request.user.username != kwargs["username"]:
-            return redirect("/")
-        # Everything below this point is unchanged from the
-        # standard django View dispatch
-        if request.method.lower() in self.http_method_names:
-            handler = getattr(
-                self, request.method.lower(), self.http_method_not_allowed
-            )
-        else:
-            handler = self.http_method_not_allowed
-        return handler(request, *args, **kwargs)
-
-    def form_valid(self, form):
-        """
-        Delete existing backup codes and generate new ones.
-        This function has been overwritten in order to change success_url
-        """
-        device = self.get_device()
-        device.token_set.all().delete()
-        for n in range(self.number_of_tokens):
-            device.token_set.create(token=StaticToken.random_token())
-
-        # Stay on this page after generating new backup tokens
-        success_url = reverse("admin_otp_backup", kwargs=self.kwargs)
-
-        return redirect(success_url)
-
-
 # Now follows all site-based views, i.e. subclasses of SiteView.
 class JobsView(SiteView):
     template_name = "system/jobs/site_jobs.html"
@@ -1025,6 +836,7 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
             )
         else:
             queryset = Job.objects.all()
+
         params = self.request.GET
 
         query = {"batch__site": site}
@@ -1046,6 +858,20 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
             orderby = "-pk"
 
         queryset = queryset.filter(**query).order_by(orderby, "pk")
+
+        # prefetch selected batches and scripts to get rid of many individual SQL queries
+        # INNER JOIN "system_batch" ON ("system_job"."batch_id" = "system_batch"."id"
+        # INNER JOIN "system_script" ON ("system_batch"."script_id" = "system_script"."id"
+        queryset = queryset.select_related("batch__script")
+
+        # prefetch selected pcs to get rid of many individual SQL queries
+        # INNER JOIN "system_pc" ON ("system_job"."pc_id" = "system_pc"."id"
+        queryset = queryset.select_related("pc")
+
+        # prefetch selected users to get rid of many individual SQL queries
+        # notice that not all jobs have users associated
+        # LEFT OUTER JOIN "auth_user" ON ("system_job"."user_id" = "auth_user"."id")
+        queryset = queryset.select_related("user")
 
         return queryset
 
@@ -1198,6 +1024,7 @@ class JobInfo(DetailView, SuperAdminOrThisSiteMixin):
         return context
 
 
+# Used by ScriptCreate, Update and Delete
 class ScriptMixin(object):
     script = None
     script_inputs = ""
@@ -1336,7 +1163,7 @@ class ScriptMixin(object):
                     value for (value, name) in Input.VALUE_CHOICES
                 ]:
                     data["type_error"] = _(
-                        "Error: You must provide a correct input parameter type"
+                        "Error: You must provide a correct parameter type"
                     )
                     success = False
 
@@ -1486,10 +1313,8 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             self.script.is_hidden
             and not self.request.user.is_superuser
             and not self.request.user.user_profile.is_hidden
-            and not (
-                self.script.feature_permission
-                in self.site.customer.feature_permission.all()
-            )
+            and self.script.feature_permission
+            not in self.site.customer.feature_permission.all()
         ):
             raise PermissionDenied
         return self.script
@@ -1572,6 +1397,10 @@ class ScriptRun(SiteView):
         all_groups = self.object.groups.all()
         context["groups"] = [group for group in all_groups if group.pcs.count() > 0]
 
+        # TODO: Figure out if we want the badges
+        for p in context["pcs"]:
+            p.badgeclass = get_badge_class(p.product.id)
+
         if len(context["script"].ordered_inputs) > 0:
             context["action"] = ScriptRun.STEP2
         else:
@@ -1596,7 +1425,9 @@ class ScriptRun(SiteView):
     def step3(self, context):
         self.template_name = "system/scripts/run_step3.html"
         form = ParameterForm(
-            self.request.POST, self.request.FILES, script=context["script"]
+            self.request.POST,
+            self.request.FILES,
+            script=context["script"],
         )
         context["form"] = form
 
@@ -1702,25 +1533,67 @@ class PCsOverview(SiteView):
 
     template_name = "system/pcs/pcs.html"
 
-    # For hver pc skal vi hente seneste security event.
     def get_context_data(self, **kwargs):
-        context = super(PCsOverview, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context = site_pcs_stats(context, [kwargs["object"]])
 
-        site_pcs = self.object.pcs.all().order_by(
-            "is_activated", F("last_seen").desc(nulls_last=True)
-        )
+        return context
+
+
+class PCsOverviewTable(DetailView, SuperAdminOrThisSiteMixin):
+    """Class for showing the pcs overview table block"""
+
+    model = Site
+    slug_field = "uid"
+
+    template_name = "system/pcs/pcs_table.html"
+
+    VALID_ORDER_BY = []
+    for i in [
+        "created",
+        "description",
+        "is_activated",
+        "last_seen",
+        "location",
+        "mac",
+        "name",
+        "online",
+        "os_release",
+        "product_short_name",
+        "uid",
+    ]:
+        VALID_ORDER_BY.append(i)
+        VALID_ORDER_BY.append("-" + i)
+
+    # For hver pc skal vi hente seneste security event.
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        site_id = context["site"].id
+
+        params = self.request.GET.dict() or self.request.POST.dict()
+        params["page"] = int(params["page"]) if "page" in params else 1
+
+        if "sort" not in params or params["sort"] not in self.VALID_ORDER_BY:
+            params["sort"] = "-last_seen"
+
+        # filter by computer 'name'
+        # prefetch foreign key SQL tables 'system_configuration' 'system_product'
+        site_pcs = PCsOverviewV.objects.filter(site_id=site_id).order_by(params["sort"])
+
+        if "name" in params and params["name"]:
+            site_pcs = site_pcs.filter(name__icontains=params["name"])
+        else:
+            site_pcs = site_pcs.all()
+
+        paginator = Paginator(site_pcs, 50)  # page size 50
+        site_pcs = paginator.get_page(params["page"])
 
         for p in site_pcs:
-            p.badgeclass = get_badge_class(p.product.id)
+            p.badgeclass = get_badge_class(p.product_id)
 
-        # Top level list of new PCs etc.
-        context["ls_pcs"] = site_pcs
-
-        context["total_pcs_count"] = context["ls_pcs"].count()
-        context["activated_pcs_count"] = site_pcs.filter(is_activated=True).count()
-        context["online_pcs_count"] = online_pcs_count_filter(site_pcs)
-
+        context["params"] = params
+        context["site_pcs"] = site_pcs
         return context
 
 
@@ -1747,6 +1620,44 @@ class PCUpdateRedirect(SelectionMixin, SiteView):
             )
         else:
             return super().render_to_response(context)
+
+
+class PCNavigationList(DetailView, SuperAdminOrThisSiteMixin):
+    model = Site
+    slug_field = "uid"
+
+    template_name = "system/pcs/pcs_navigation_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        site = context["site"]
+
+        try:
+            pc = PC.objects.get(uid=self.kwargs["pc_uid"])
+        except PC.DoesNotExist:
+            pc = None
+
+        context["selected_pc"] = pc
+
+        params = self.request.GET.dict() or self.request.POST.dict()
+
+        context["params"] = params
+
+        site_pcs = site.pcs.select_related("product")
+        if "name" in params and params["name"]:
+            site_pcs = site_pcs.filter(name__icontains=params["name"])
+        else:
+            site_pcs = site_pcs.all()
+
+        for p in site_pcs:
+            p.badgeclass = get_badge_class(p.product.id)
+
+        context["pc_list"] = site_pcs
+
+        if "multiple_products" in params and params["multiple_products"]:
+            context["multiple_products"] = True
+
+        return context
 
 
 class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
@@ -1782,22 +1693,27 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         site = context["site"]
         form = context["form"]
         pc = self.object
-        params = self.request.GET or self.request.POST
 
-        all_pcs = site.pcs.all()
+        params = self.request.GET.dict() or self.request.POST.dict()
+
+        all_pcs = site.pcs.select_related("product")
+
+        product_ids = all_pcs.values_list("product_id", flat=True).distinct()
+        if len(product_ids) > 1:
+            context["multiple_products"] = True
+            params["multiple_products"] = True
+
+        if "name" in params and params["name"]:
+            all_pcs = all_pcs.filter(name__icontains=params["name"])
+        else:
+            all_pcs = all_pcs.all()
 
         for p in all_pcs:
             p.badgeclass = get_badge_class(p.product.id)
 
         context["pc_list"] = all_pcs
 
-        product_ids = (
-            all_pcs.values_list("product_id", flat=True)
-            .order_by("product_id")
-            .distinct()
-        )
-        if len(product_ids) > 1:
-            context["multiple_products"] = True
+        context["params"] = params
 
         # Group picklist related:
         group_set = site.groups.all()
@@ -2425,9 +2341,6 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
 
             return response
 
-    def form_invalid(self, form):
-        return super().form_invalid(form)
-
     def check_settings_updates(self, plan_pre, events_pre):
         """Helper function used to check if the plan settings have changed."""
         plan_post = self.object
@@ -2668,9 +2581,6 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
 
         return response
 
-    def form_invalid(self, form):
-        return super().form_invalid(form)
-
     def check_settings_updates(self, event_pre):
         """Helper function used to check if the settings have changed
         and the event is used by an active wake plan"""
@@ -2720,9 +2630,6 @@ class WakeChangeEventCreate(WakeChangeEventBaseMixin, CreateView):
             )
 
         return response
-
-    def form_invalid(self, form):
-        return super().form_invalid(form)
 
 
 class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):
@@ -3164,9 +3071,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
                     user_type < site_membership.SITE_ADMIN
                     for user_type in self.selected_user.user_profile.sitemembership_set.exclude(
                         site=site
-                    ).values_list(
-                        "site_user_type", flat=True
-                    )
+                    ).values_list("site_user_type", flat=True)
                 )
             ):
                 self.object.is_staff = False
@@ -3384,12 +3289,15 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         del context["newform"].fields["pcs"]
         del context["newform"].fields["supervisors"]
 
+        # For Associated Scripts
         context["all_scripts"] = Script.objects.filter(
             Q(site=site) | Q(site=None),
             Q(is_hidden=False)
             | Q(feature_permission__in=site.customer.feature_permission.all()),
             is_security_script=False,
         )
+
+        context["site_files"] = FileParameter.objects.filter(site=site)
 
         return context
 
@@ -3549,9 +3457,6 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                 error=True,
             )
             return response
-
-    def form_invalid(self, form):
-        return super().form_invalid(form)
 
     def get_notification_strings(self, pc_names, plan_names):
         """Helper function used to generate strings for the notification displayed
@@ -4099,7 +4004,6 @@ class ImageVersionView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
 
     template_name = "system/site_images.html"
     model = ImageVersion
-    selection_class = ImageVersion
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -4151,3 +4055,95 @@ class ImageVersionView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
         context["user_language"] = user_language
 
         return context
+
+
+# Handles listing and updates via HTMX
+class FileArchive(SiteMixin, ListView, SuperAdminOrThisSiteMixin):
+    model = FileParameter
+    template_name = "system/file_archive/file_archive.html"
+    ordering = "-modified"
+    context_object_name = "files"
+
+    def get_context_data(self, **kwargs):
+        # First, get basic context from superclass
+        context = super().get_context_data(**kwargs)
+        context["form"] = FileParameterForm()
+
+        return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        queryset = queryset.filter(site=site)
+
+        return queryset
+
+    def post(self, request, *args, **kwargs):
+        obj = get_object_or_404(FileParameter, pk=kwargs["pk"])
+
+        if "name" in request.POST:
+            obj.name = request.POST["name"]
+        elif "description" in request.POST:
+            obj.description = request.POST["description"]
+
+        obj.save()
+
+        return HttpResponse("OK")
+
+
+class FileArchiveCreate(CreateView, SuperAdminOrThisSiteMixin):
+    form_class = FileParameterForm
+
+    def get_success_url(self):
+        return reverse(
+            "file_archive",
+            kwargs={
+                "slug": self.kwargs["slug"],
+            },
+        )
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        self.object.created_by = self.request.user
+
+        response = super().form_valid(form)
+
+        set_notification_cookie(response, _("File %s created") % self.object.name)
+
+        return response
+
+    def form_invalid(self, form):
+        response = HttpResponseRedirect(
+            reverse("file_archive", kwargs={"slug": self.kwargs["slug"]})
+        )
+        set_notification_cookie(
+            response,
+            _(
+                "There was an error handling the selected file %s and it was not uploaded. Is the file empty?"
+            )
+            % self.request.POST["name"],
+            error=True,
+        )
+        return response
+
+
+class FileArchiveDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
+    model = FileParameter
+    template_name = "system/file_archive/confirm_delete.html"
+    context_object_name = "file"
+
+    def get_success_url(self):
+        return reverse("file_archive", kwargs={"slug": self.kwargs["slug"]})
+
+    def form_valid(self, form, *args, **kwargs):
+        if self.object.site not in self.request.user.user_profile.sites.all():
+            return self.form_invalid(form)
+
+        response = super().delete(form, *args, **kwargs)
+
+        set_notification_cookie(
+            response,
+            _("File %s deleted") % self.object,
+        )
+        return response

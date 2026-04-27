@@ -1,4 +1,5 @@
 import datetime
+from pathlib import Path
 import random
 import re
 import string
@@ -855,6 +856,46 @@ class PC(models.Model):
         ordering = ["name"]
 
 
+class PCsOverviewV(models.Model):
+    """RDB view of joined PC, product and configurationentry data for view PCsOverview"""
+
+    id = models.IntegerField(primary_key=True, verbose_name=_("ID"))
+
+    # In this specific model we should NOT introduce FK joint's in python code
+    # as it destroys the efficiency of the generated SQL code to use them ...
+    # The sole purpose of this model and the underlying RDB view is to aggregate
+    # many thousand individually emmitted SQL queries into one single.
+    # Therefore I did not add declarations like these:
+    # site = models.ForeignKey(Site)
+    # product = models.ForeignKey(Product)
+    # configuration = models.OneToOneField(Configuration)
+
+    site_id = models.IntegerField()
+    product_id = models.IntegerField()
+    configuration_id = models.IntegerField()
+    configurationentry_id = models.IntegerField()
+
+    created = models.DateTimeField()
+    description = models.CharField()
+    is_activated = models.BooleanField(verbose_name=_("activated"))
+    last_seen = models.DateTimeField(verbose_name=_("last seen"))
+    location = models.CharField()
+    mac = models.CharField(verbose_name=_("MAC"))
+    name = models.CharField()
+    online = models.BooleanField()
+    os_release = models.CharField(verbose_name=_("OS release"))
+    product_short_name = models.CharField(verbose_name=_("product short name"))
+    uid = models.CharField(verbose_name=_("UID"))
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        # ordering = ["name"]
+        managed = False
+        db_table = "system_pc_overview_v"
+
+
 class ScriptTag(models.Model):
     """A tag model for scripts."""
 
@@ -915,27 +956,26 @@ class Script(AuditModelMixin):
         batch = Batch(site=site, script=self, name="")
         batch.save()
 
-        parameter_values = "["
+        log_parameter_values = ""
 
         # Add parameters
         for i, inp in enumerate(self.ordered_inputs):
             if i < len(args):
                 value = args[i]
                 if inp.value_type == Input.PASSWORD:
-                    parameter_values += "*****, "
+                    log_parameter_values += "*****, "
                 else:
-                    parameter_values += str(value) + ", "
+                    log_parameter_values += str(value) + ", "
                 if inp.value_type == Input.FILE:
                     p = BatchParameter(input=inp, batch=batch, file_value=value)
                 else:
                     p = BatchParameter(input=inp, batch=batch, string_value=value)
                 p.save()
 
-        if len(parameter_values) > 1:
-            parameter_values = parameter_values[:-2]
-        parameter_values += "]"
+        if len(log_parameter_values) > 1:
+            log_parameter_values = log_parameter_values[:-2]
 
-        log_output = f"New job with arguments {parameter_values}"
+        log_output = f"New job with arguments [{log_parameter_values}]"
 
         for pc in pc_list:
             job = Job(batch=batch, pc=pc, user=user, log_output=log_output)
@@ -1204,7 +1244,7 @@ class Job(models.Model):
 
 
 class Input(models.Model):
-    """Input for a script"""
+    """Input for a script."""
 
     # Value types
     STRING = "STRING"
@@ -1257,16 +1297,72 @@ def upload_file_name(instance, filename):
     return "/".join(["parameter_uploads", random_dirname, filename])
 
 
+class FileParameter(models.Model):
+    file = models.FileField(
+        verbose_name=_("file"),
+        # TODO: This upload_to was originally meant to just be the base dir - it's could be overwritten in views to get a dir per customer.
+        #       Alternatively we could just rely on the standard "automatic renaming when there's a conflict" handling
+        upload_to="file_parameters",
+    )
+    name = models.CharField(verbose_name=_("name"), max_length=50, blank=True)
+    description = models.CharField(
+        verbose_name=_("description"), max_length=200, blank=True
+    )
+    # TODO: Make these only update when the file itself is updated, rather than when anything in the object is updated?
+    created = models.DateTimeField(
+        verbose_name=_("created"), editable=False, auto_now_add=True
+    )
+    modified = models.DateTimeField(
+        verbose_name=_("modified"), editable=False, auto_now=True
+    )
+    created_by = models.ForeignKey(
+        User,
+        editable=False,
+        verbose_name=_("created by"),
+        related_name="file_parameters",
+        on_delete=models.SET_NULL,
+        null=True,
+    )
+    site = models.ForeignKey(
+        Site,
+        editable=False,
+        verbose_name=_("site"),
+        related_name="file_parameters",
+        on_delete=models.CASCADE,
+    )
+
+    def __str__(self):
+        # Isolate filename from the directory name
+        filename = Path(self.file.name).name
+        return f"{self.name} ({filename})" if self.name else filename
+
+    def delete(self, *args, **kwargs):
+        """
+        Delete the file from the filesystem
+        when the corresponding `FileParameter` object is deleted.
+        """
+        num_references = FileParameter.objects.filter(file=self.file).count()
+        if num_references == 1 and self.file.storage.exists(self.file.name):
+            self.file.storage.delete(self.file.name)
+        # self.file.delete(save=False)
+        super(FileParameter, self).delete(*args, **kwargs)
+
+
 class Parameter(models.Model):
     """A concrete value for the Input of a Script."""
 
     string_value = models.CharField(max_length=4096, blank=True)
     file_value = models.FileField(upload_to=upload_file_name, null=True, blank=True)
-    # which input does this belong to?
+
+    # which input is this a parameter for?
     input = models.ForeignKey(Input, on_delete=models.CASCADE)
 
     @property
     def transfer_value(self):
+        """
+        Used when retrieving the value of a parameter for script running,
+        and to make the string representations of a BatchParameter and AssociatedScriptParameter
+        """
         input_type = self.input.value_type
         if input_type == Input.FILE:
             return self.file_value.url if self.file_value else ""

@@ -2,7 +2,6 @@ from django.db import models
 
 
 class SecurityEventQuerySet(models.QuerySet):
-
     def priority_events_for_site(self, site):
         """Get priority events for a site."""
         from system.models import EventLevels, SecurityEvent

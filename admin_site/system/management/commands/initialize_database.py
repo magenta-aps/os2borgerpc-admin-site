@@ -2,12 +2,10 @@
 # Contact: info@magenta.dk.
 
 import os
+from pathlib import Path
 
-from django.conf import settings
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
-
-fixtures_base_dir = settings.BASE_DIR / "fixtures"
 
 
 class Command(BaseCommand):
@@ -22,6 +20,12 @@ class Command(BaseCommand):
 
     help = """Populate the database with initial data."""
 
+    def add_arguments(self, parser):
+        parser.add_argument(
+            "path",
+            help="The path to a directory that will be recursively scanned for fixtures",
+        )
+
     def handle(self, *args, **options):
         """Initialize all the basic data we want at start."""
 
@@ -30,11 +34,14 @@ class Command(BaseCommand):
         try:
             open("/tmp/initialized", "r")
         except FileNotFoundError:
+            fixtures_base_dir = Path(options["path"])
             print(
-                f"Populate database with (static) basic data. Dir: f{fixtures_base_dir}"
+                f"Populate database with (static) basic data. Dir: {fixtures_base_dir}"
             )
+            fixtures = sorted(fixtures_base_dir.rglob("*.json"))
+            print(f"Found {len(fixtures)} fixtures files under the directory.")
 
-            for file in sorted(fixtures_base_dir.rglob("*.json")):
+            for file in fixtures:
                 if os.path.isfile(file):
                     call_command("loaddata", file, verbosity=3)
 

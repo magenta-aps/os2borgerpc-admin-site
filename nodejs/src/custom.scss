@@ -21,6 +21,7 @@
 @import "errors";
 @import "dropdown";
 @import "bootstrap_table_overrides";
+@import "htmx_navigation";
 
 hr {
   border-top: 1px solid $gray-700;
@@ -249,4 +250,8 @@ blockquote p::before {
 
 blockquote p::after {
   content: '"'
+}
+
+.policy-script-print-name {
+  font-weight: bold;
 }

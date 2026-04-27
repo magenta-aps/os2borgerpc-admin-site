@@ -1,5 +1,6 @@
 {% extends "system/scripts/header.html" %}
 {% load i18n %}
+{% load static %}
 
 {% block subnav %}
 
@@ -116,7 +117,7 @@
     <!-- MODAL FOR SCRIPT RUNNING: -->
     {% if not is_security %}
     <div id="runscriptmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog" style="width: 650px; max-width: 90vw;">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <iframe id="runscriptmodaliframe" src="{% url 'run_script' site.uid script.pk %}" style="border: 0; width: 100%; height: 80vh;"></iframe>
         </div>

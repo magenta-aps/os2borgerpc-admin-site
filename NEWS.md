@@ -1,3 +1,14 @@
+## Version 7.2.0, April 27, 2026
+
+- Improve support for many computers:
+    - Pagination and search on the computer overview
+    - Search on the computer list
+- Change gunicorn settings towards handling more traffic
+- Make Google deps "soft"
+- Update gunicorn to 25.0.3
+- Update django patch version to 4.2.30
+- Renamed "Input parameters" to "Parameters"
+
 ## Version 7.1.0, March 5, 2026
 
 - Update BorgerPC installation guides

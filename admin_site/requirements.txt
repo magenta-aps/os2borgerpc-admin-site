@@ -6,7 +6,7 @@ django-markdownx==4.0.7
 django-ninja==0.22.2
 django-storages==1.14.6
 django-two-factor-auth[phonenumberslite]==1.18.0
-gunicorn==23.0.0
+gunicorn==25.0.3
 mozilla-django-oidc==4.0.1
 psycopg-binary==3.3.3             # Postgres support
 psycopg==3.3.3                    # Postgres support

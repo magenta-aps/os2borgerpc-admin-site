@@ -1,15 +1,30 @@
-Django==4.2.30
-crispy-bootstrap5==2025.6
-django-crispy-forms==2.5.0
-django-extensions==3.2.3
-django-markdownx==4.0.7
-django-ninja==0.22.2
+# Django
+django==5.1.15
+django-crispy-forms==2.5
+django-extensions==4.1
+django-markdownx==4.0.9
+django-ninja==1.6.2
 django-storages==1.14.6
-django-two-factor-auth[phonenumberslite]==1.18.0
-gunicorn==25.0.3
+django-two-factor-auth[phonenumberslite]==1.18.1
+
+# Auth
 mozilla-django-oidc==4.0.1
-psycopg-binary==3.3.3             # Postgres support
-psycopg==3.3.3                    # Postgres support
-PyJWT==2.10.1                     # Support for decoding JWT's
-requests==2.32.3
-whitenoise==6.9.0                 # If you don't have a web server in front to serve static files
+
+# Forms
+crispy-bootstrap5==2026.3
+
+# HTTP
+requests==2.33.1
+
+# JWT decoding
+pyjwt==2.12.1
+
+# Postgres support
+psycopg-binary==3.3.3
+psycopg==3.3.3
+
+# Server for dynamic content
+gunicorn==25.0.3
+
+# Server for static files
+whitenoise==6.12.0

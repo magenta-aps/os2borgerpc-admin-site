@@ -19,9 +19,9 @@ class PCSchema(ModelSchema):
     def resolve_ip_addresses(obj):
         return obj.get_config_value("_ip_addresses") or ""
 
-    class Config:
+    class Meta:
         model = PC
-        model_fields = [
+        fields = [
             "id",
             "uid",
             "name",
@@ -58,9 +58,9 @@ class SecurityEventSchema(ModelSchema):
     def resolve_pc_name(obj):
         return obj.pc.name
 
-    class Config:
+    class Meta:
         model = SecurityEvent
-        model_fields = [
+        fields = [
             "id",
             "occurred_time",
             "pc",
@@ -72,9 +72,9 @@ class SecurityEventSchema(ModelSchema):
 
 
 class ConfigurationEntrySchema(ModelSchema):
-    class Config:
+    class Meta:
         model = ConfigurationEntry
-        model_fields = ["key", "value"]
+        fields = ["key", "value"]
 
 
 class JobSchema(ModelSchema):
@@ -84,9 +84,9 @@ class JobSchema(ModelSchema):
     def resolve_pc_name(obj):
         return obj.pc.name
 
-    class Config:
+    class Meta:
         model = Job
-        model_fields = ["id", "status", "created", "started", "finished", "pc"]
+        fields = ["id", "status", "created", "started", "finished", "pc"]
 
 
 class PCLoginsSchema(Schema):

@@ -126,12 +126,12 @@ def list_events(
 
 # Configurations
 @router.get(
-    "/configuration/{int:configuration_id}",
+    "/configuration/{configuration_id}",
     response={200: List[ConfigurationEntrySchema], 204: None},
     url_name="configuration",
     description="Fetch data on a specific Computer Configuration, from a CONFIGURATION_ID which can be found via the Computer endpoints. The configurations contain extended info about a PC, such as hostname, IP etc.",
 )
-def get_pc_configuration(request, configuration_id):
+def get_pc_configuration(request, configuration_id: int):
     site = get_site_from_request(request)
     config = Configuration.objects.filter(id=configuration_id).first()
     if config:
@@ -182,13 +182,13 @@ def get_pcs_logins_per_day(
 
 # Logins per day for a single PC
 @router.get(
-    "/computers/{int:pc_id}/logins-per-day",
+    "/computers/{pc_id}/logins-per-day",
     response={200: PCLoginsSchema, 204: None},
     url_name="computer-logins-per-day",
 )
 def get_pc_logins_per_day(
     request,
-    pc_id,
+    pc_id: int,
     from_date: date = date(1970, 1, 1),
     to_date: date = date.today(),
 ):

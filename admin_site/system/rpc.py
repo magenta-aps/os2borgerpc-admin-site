@@ -282,7 +282,7 @@ def push_config_keys(pc_uid, config_dict, read_only=False, api_call=False):
             raise Exception(error_string)
 
     if not pc.is_activated:
-        return 0
+        return ""
 
     # We need two config dicts: one from the PC itself and one from groups
     # and global configuration
@@ -308,7 +308,7 @@ def push_config_keys(pc_uid, config_dict, read_only=False, api_call=False):
         else:
             pc.configuration.update_entry(key, value, read_only)
 
-    return True
+    return ""
 
 
 # TODO: Log events for SecurityProblems that don't exist

@@ -30,8 +30,10 @@
   background: white;
 }
 
-#pcs tr {
-  border: none !important;
+#pcs {
+  display: grid;
+  grid-template-columns: 23px 1fr;
+  align-items: flex-end;
 }
 
 .modal-body {

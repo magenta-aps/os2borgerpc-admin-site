@@ -1622,7 +1622,7 @@ class PCUpdateRedirect(SelectionMixin, SiteView):
             return super().render_to_response(context)
 
 
-class PCNavigationList(DetailView, SiteMixin, SuperAdminOrThisSiteMixin):
+class PCNavigationList(DetailView, SuperAdminOrThisSiteMixin):
     model = Site
     slug_field = "uid"
 

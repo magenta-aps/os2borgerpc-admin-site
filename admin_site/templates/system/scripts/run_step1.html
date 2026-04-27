@@ -31,39 +31,29 @@
             </li>
           {% endfor %}
         </ul>
-        <table id="pcs" class="table table-sm table-bordered">
-          <tbody>
-            {% for pc in pcs %}
-              {% if pc.is_activated %}
-                <tr>
-                  <td class="bg-transparent ps-0 pe-1 py-0">
-                    <input type="checkbox"
-                           name = "pcs"
-                           class ="pc pc-{{pc.product.id}} form-check-input"
-                           id="check-pc-{{pc.pk}}"
-                           value="{{pc.pk}}">
-                  </td>
-                  {% comment %}
-                  <td class="bg-transparent ps-0 pe-0">
-                    <label for="check-pc-{{pc.pk}}">
-                      {% if products|length > 1 %}
-                      {#({{pc.product.short_name}}) #}
-                        {# TODO: Figure out if we want the badges instead #}
-                        <span class="badge bg-{{ pc.badgeclass }}">{{pc.product.short_name}}</span>
-                      {% endif %}
-                    </label>
-                  </td>
-                  {% endcomment %}
-                  <td class="bg-transparent ps-0 pe-1 py-0">
-                    <label for="check-pc-{{pc.pk}}">
-                      {{pc.name}}
-                    </label>
-                  </td>
-                 </tr>
-              {% endif %}
-            {% endfor %}
-          </tbody>
-        </table>
+        <div id="pcs">
+          {% for pc in pcs %}
+            {% if pc.is_activated %}
+                <input type="checkbox"
+                       name = "pcs"
+                       class ="pc pc-{{pc.product.id}} form-check-input"
+                       id="check-pc-{{pc.pk}}"
+                       value="{{pc.pk}}">
+                {% comment %}
+                  <label for="check-pc-{{pc.pk}}">
+                    {% if products|length > 1 %}
+                    {#({{pc.product.short_name}}) #}
+                      {# TODO: Figure out if we want the badges instead #}
+                      <span class="badge bg-{{ pc.badgeclass }}">{{pc.product.short_name}}</span>
+                    {% endif %}
+                  </label>
+                {% endcomment %}
+                  <label for="check-pc-{{pc.pk}}">
+                    {{pc.name}}
+                  </label>
+            {% endif %}
+          {% endfor %}
+        </div>
       </div>
       <div class="col-6">
         <h4>{% translate "Groups" %}</h4>

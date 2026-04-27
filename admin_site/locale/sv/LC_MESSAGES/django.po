@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-16 16:41+0200\n"
+"POT-Creation-Date: 2026-04-27 14:48+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -5886,7 +5886,8 @@ msgstr "Skapa en grupp"
 msgid "Edit script"
 msgstr "Redigera skript"
 
-#: templates/system/pcs/confirm_delete.html templates/system/pcs/update.html
+#: templates/system/pcs/confirm_delete.html
+#: templates/system/pcs/pcs_navigation_list.html
 msgid "Delete computer"
 msgstr "Radera dator"
 
@@ -5918,9 +5919,19 @@ msgstr "Totalt antal Kiosk PC'er"
 msgid "Activated:"
 msgstr "Aktiverade:"
 
+#: templates/system/pcs/pcs_navigation_list.html
 #: templates/system/pcs/pcs_table.html
 msgid "Filter by computer names"
 msgstr "Filtrera efter datornamn"
+
+#: templates/system/pcs/pcs_navigation_list.html
+#: templates/system/pcs/pcs_table.html
+msgid "Not activated"
+msgstr "Inte aktiverad"
+
+#: templates/system/pcs/pcs_navigation_list.html
+msgid "There are no computers"
+msgstr "Det finns inga datorer"
 
 #: templates/system/pcs/pcs_table.html
 msgid "Activated"
@@ -5937,10 +5948,6 @@ msgstr "Ubuntu version"
 #: templates/system/pcs/pcs_table.html
 msgid "Latest check-in"
 msgstr "Senaste incheckning"
-
-#: templates/system/pcs/pcs_table.html templates/system/pcs/update.html
-msgid "Not activated"
-msgstr "Inte aktiverad"
 
 #: templates/system/pcs/pcs_table.html
 msgid "Offline"
@@ -5959,10 +5966,6 @@ msgstr "Aldrig"
 #: templates/system/pcs/pcs_table.html
 msgid "No results are matching this query"
 msgstr "Inga resultat matchar den här frågan"
-
-#: templates/system/pcs/update.html
-msgid "There are no computers"
-msgstr "Det finns inga datorer"
 
 #: templates/system/pcs/update.html
 msgid "Registered"
@@ -6104,7 +6107,7 @@ msgstr "skript"
 msgid "Find ..."
 msgstr "Hitta ..."
 
-#: templates/system/scripts/update.html templates/widgets/scriptsearch.html templates/system/pcs/pcs_navigation_list.html
+#: templates/system/scripts/update.html templates/widgets/scriptsearch.html
 msgid "Clear the filter"
 msgstr "Rensa filter"
 
@@ -6831,12 +6834,12 @@ msgstr ""
 "dokumentation och en länk till källkoden här"
 
 #: templates/two_factor/_base.html
-msgid "Check updates for OS2borgerPC"
-msgstr "Se uppdateringar i Sambruk MedborgarPC"
+msgid "You can contact us at "
+msgstr "Du kan kontakta oss på "
 
 #: templates/two_factor/_base.html
-msgid "Send a message to Magenta"
-msgstr "Skicka ett meddelande till Magenta"
+msgid "Check updates for OS2borgerPC"
+msgstr "Se uppdateringar i Sambruk MedborgarPC"
 
 #: templates/two_factor/core/backup_tokens.html
 #: templates/two_factor/profile/disable.html

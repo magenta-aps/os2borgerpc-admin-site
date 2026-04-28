@@ -38,4 +38,23 @@ urlpatterns = [
         account_views.AdminTwoFactorBackupTokens.as_view(),
         name="admin_otp_backup",
     ),
+    # Users
+    path("site/<slug>/users/", account_views.UserRedirect.as_view(), name="users"),
+    path(
+        "users/", account_views.UserRedirectSite.as_view(), name="users_redirect_site"
+    ),
+    path("site/<slug>/users/new/", account_views.UserCreate.as_view(), name="new_user"),
+    path(
+        "site/<slug>/users/link/", account_views.UserLink.as_view(), name="link_users"
+    ),
+    path(
+        "site/<slug>/users/<username>/",
+        account_views.UserUpdate.as_view(),
+        name="user",
+    ),
+    path(
+        "site/<slug>/users/<username>/delete/",
+        account_views.UserDelete.as_view(),
+        name="user_delete",
+    ),
 ]

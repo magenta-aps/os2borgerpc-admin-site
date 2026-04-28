@@ -58,11 +58,13 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ("username", "email")
 
     # Temporary-ish function to remove staff status
-    def remove_staff_status(modeladmin, request, queryset):
+    def remove_staff_status_and_perms(modeladmin, request, queryset):
         queryset.update(is_staff=False)
+        for u in queryset:
+            u.user_permissions.set([])
 
     actions = [
-        remove_staff_status,
+        remove_staff_status_and_perms,
     ]
 
     @transaction.atomic

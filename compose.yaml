@@ -57,13 +57,13 @@ services:
         depends_on:
             - application
     db:
-        image: postgres:13
+        image: postgres:18
         container_name: bpc-db
         restart: always
         env_file:
             - path: ./dev-environment/bpc.env
         volumes:
-            - postgres-data:/var/lib/postgresql/data
+            - postgres-data:/var/lib/postgresql
 
 volumes:
     postgres-data:

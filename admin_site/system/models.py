@@ -732,7 +732,7 @@ class PC(models.Model):
         verbose_name=_("name"),
         max_length=40,
         help_text=_(
-            "Valid characters are (English) letters, numbers and hyphens, and it may not start with a hyphen. The length must be 1-40 characters.<br/>Note: If you change this, the computer's hostname will be updated, becoming a lowercased version of the new name."
+            "Valid characters are (English) letters, numbers and hyphens, and it may not start with a hyphen. The length must be 2-40 characters.<br/>Note: If you change this, the computer's hostname will be updated to match."
         ),
         validators=[
             RegexValidator(

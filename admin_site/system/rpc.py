@@ -52,10 +52,10 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
     # If we are here then no matching PC object exists
     # Check if the chosen name is too long to prevent old clients
     # from setting names that are too long
-    if len(name) < 1 or len(name) > 40:
+    if len(name) < 2 or len(name) > 40:
         error_string = (
             f"The chosen name {name} has a length of {len(name)} characters. "
-            "The name must have a length of 1-40 characters."
+            "The name must have a length of 2-40 characters."
         )
         # See comment at the previous use of api_call
         if api_call:

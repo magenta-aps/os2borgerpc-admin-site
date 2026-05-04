@@ -1820,8 +1820,8 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
             # Keep the name and hostname configuration in sync
             hostname_config = pc.configuration.entries.filter(key="hostname").first()
-            if hostname_config and pc.name.lower() != hostname_config.value:
-                hostname_config.value = pc.name.lower()
+            if hostname_config and pc.name != hostname_config.value:
+                hostname_config.value = pc.name
                 hostname_config.save()
 
             # If this PC has joined any groups that have policies attached

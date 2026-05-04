@@ -2889,8 +2889,9 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                 policy_for_all = list(policy_for_all)
                 policy_for_all.sort(key=lambda asc: asc.position)
                 # ... and run new policy scripts on old PCs
-                for asc in policy_for_all:
-                    asc.run_on(self.request.user, surviving_members)
+                if surviving_members:
+                    for asc in policy_for_all:
+                        asc.run_on(self.request.user, surviving_members)
 
                 # If the group belongs to an active wake plan
                 if self.object.wake_week_plan and self.object.wake_week_plan.enabled:

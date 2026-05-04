@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-30 14:51+0200\n"
+"POT-Creation-Date: 2026-05-04 11:32+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -34,6 +34,31 @@ msgstr "Site-admin"
 #: account/models.py docs/templates/users/index.html
 msgid "Customer Admin"
 msgstr "Kunde-admin"
+
+#: account/views.py
+#, python-format
+msgid "The user(s) %s have been added to the site %s "
+msgstr "Användarna %s har lagts till på sitet %s"
+
+#: account/views.py
+#, python-format
+msgid "You have no user with the following username: %s"
+msgstr "Du har ingen användare med följande användarnamn: %s"
+
+#: account/views.py
+#, python-format
+msgid "User %s updated"
+msgstr "Användare %s uppdaterad"
+
+#: account/views.py
+#, python-format
+msgid "User %s removed from the site %s"
+msgstr "Användaren %s togs bort från sitet %s"
+
+#: account/views.py
+#, python-format
+msgid "User %s deleted"
+msgstr "Användaren %s raderad"
 
 #: changelog/models.py system/models.py
 msgid "name"
@@ -799,10 +824,10 @@ msgstr ""
 #: docs/templates/computers/edit.html
 msgid ""
 "If you change the computer's name, its hostname will automatically be "
-"updated to match the new name (in lower case) during the next check-in."
+"updated to match the new name during the next check-in."
 msgstr ""
 "Om du ändrar datorns namn kommer värdnamnet automatiskt att uppdateras så "
-"att det matchar det nya namnet (endast med gemener) vid nästa incheckning."
+"att det matchar det nya namnet vid nästa incheckning."
 
 #: docs/templates/computers/edit.html
 msgid ""
@@ -4970,31 +4995,6 @@ msgstr "De valda datumen skulle överlappa med undantaget %s i schemat %s"
 #, python-format
 msgid "The end date cannot be before the start date %s"
 msgstr "Datumet Till får inte vara före datumet Från %s"
-
-#: system/views.py
-#, python-format
-msgid "The user(s) %s have been added to the site %s "
-msgstr "Användarna %s har lagts till på sitet %s"
-
-#: system/views.py
-#, python-format
-msgid "You have no user with the following username: %s"
-msgstr "Du har ingen användare med följande användarnamn: %s"
-
-#: system/views.py
-#, python-format
-msgid "User %s updated"
-msgstr "Användare %s uppdaterad"
-
-#: system/views.py
-#, python-format
-msgid "User %s removed from the site %s"
-msgstr "Användaren %s togs bort från sitet %s"
-
-#: system/views.py
-#, python-format
-msgid "User %s deleted"
-msgstr "Användaren %s raderad"
 
 #: system/views.py
 #, python-format

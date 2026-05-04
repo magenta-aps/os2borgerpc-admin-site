@@ -144,8 +144,8 @@ div.docscontainer .nav-list>li>a:hover {background: var(--bs-gray-dark); text-de
 /* Media queries / Responsiveness */
 
 @media screen and (max-width: 1735px) {
+  .sublevelnav:not(#scripts-nav) { width: 12rem; }
   /* Make jobs and computer -> jobs look decent down until around 1080px width */
-  #jobsearchnav { width: 9rem; }
   .jobtable th, .jobtable td { padding: .75rem .75rem!important; }
 
   /* Make images look better at a lower res too */

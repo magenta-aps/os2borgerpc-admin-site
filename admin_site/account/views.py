@@ -31,7 +31,7 @@ from account.models import SiteMembership, UserProfile
 from system.models import SecurityEvent, Site
 
 
-from system.forms import (
+from account.forms import (
     UserForm,
     UserFormSSO,
     UserLinkForm,

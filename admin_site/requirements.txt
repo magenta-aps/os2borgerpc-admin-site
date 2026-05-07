@@ -1,6 +1,6 @@
-# Django
-django==5.1.15
-django-crispy-forms==2.5
+# Django using python 3.12.13
+django==5.2.13
+django-crispy-forms==2.6
 django-extensions==4.1
 django-markdownx==4.0.9
 django-ninja==1.6.2
@@ -8,6 +8,7 @@ django-storages==1.14.6
 django-two-factor-auth[phonenumberslite]==1.18.1
 
 # Auth
+# Check upgrade to 5.0.2 with KK
 mozilla-django-oidc==4.0.1
 
 # Forms
@@ -20,8 +21,7 @@ requests==2.33.1
 pyjwt==2.12.1
 
 # Postgres support
-psycopg-binary==3.3.3
-psycopg==3.3.3
+psycopg[binary]==3.3.4 # pre-compiled binary libpq
 
 # Server for dynamic content
 gunicorn==25.0.3

@@ -221,7 +221,6 @@ LOCAL_APPS = (
 )
 
 THIRD_PARTY_APPS = (
-    "django_extensions",
     "crispy_forms",
     "crispy_bootstrap5",
     "markdownx",
@@ -238,7 +237,6 @@ DJANGO_APPS = (
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # Uncomment the next line to enable the admin:
     "django.contrib.admin",
 )
 

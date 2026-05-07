@@ -1,14 +1,12 @@
 # Django using python 3.12.13
 django==5.2.13
 django-crispy-forms==2.6
-django-extensions==4.1
 django-markdownx==4.0.9
 django-ninja==1.6.2
 django-storages==1.14.6
 django-two-factor-auth[phonenumberslite]==1.18.1
 
-# Auth
-# Check upgrade to 5.0.2 with KK
+# Auth (SSO)
 mozilla-django-oidc==4.0.1
 
 # Forms

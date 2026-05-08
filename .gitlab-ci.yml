@@ -35,7 +35,8 @@ variables:
 
 pre-commit:
   stage: lint
-  image: alpine:edge
+  # NOTE: Some use alpine:edge which is their main branch, but sometimes it understandably seems to break, sooo
+  image: alpine:latest
   before_script:
     - apk add pre-commit git
     # Prepare bin cache

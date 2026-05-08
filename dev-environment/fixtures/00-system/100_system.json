@@ -87097,7 +87097,7 @@
         "country": 1,
         "site_prefix": "magenta",
         "paid_for_access_until": null,
-        "is_test": false,
+        "status": 1,
         "using_sso": false
     }
 },
@@ -87110,7 +87110,7 @@
         "country": 2,
         "site_prefix": "kunde-sverige",
         "paid_for_access_until": null,
-        "is_test": false,
+        "status": 1,
         "using_sso": false
     }
 },
@@ -87123,7 +87123,7 @@
         "country": 1,
         "site_prefix": "test-kunde-danmark",
         "paid_for_access_until": null,
-        "is_test": true,
+        "status": 2,
         "using_sso": false
     }
 },
@@ -87136,7 +87136,7 @@
         "country": 1,
         "site_prefix": "sso-kunde",
         "paid_for_access_until": null,
-        "is_test": false,
+        "status": 0,
         "using_sso": true
     }
 },

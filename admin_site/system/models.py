@@ -163,6 +163,12 @@ class Country(models.Model):
 class Customer(models.Model):
     """A customer that can have one or more sites"""
 
+    class Status(models.IntegerChoices):
+        ONBOARDING = 0, _("Onboarding")
+        ABOARD = 1, _("Aboard")
+        OFFBOARDING = 2, _("Offboarding")
+        OFFBOARD = 3, _("Offboard")
+
     created = models.DateTimeField(
         verbose_name=_("created"), auto_now_add=True, null=True
     )
@@ -176,7 +182,7 @@ class Customer(models.Model):
     paid_for_access_until = models.DateField(
         verbose_name=_("Paid for access until this date"), null=True, blank=True
     )
-    is_test = models.BooleanField(verbose_name=_("Is a test customer"), default=False)
+    status = models.IntegerField(choices=Status, default=Status.ONBOARDING)
 
     using_sso = models.BooleanField(
         verbose_name=_("Enable to require SSO"), default=False

@@ -1,6 +1,9 @@
 # python 3.12.*
 # Keep in sync with the image version specified in Dockerfile
 target-version = "py312"
+exclude = [
+    "**/migrations/*"
+]
 
 [lint]
 ignore = ["E501"]

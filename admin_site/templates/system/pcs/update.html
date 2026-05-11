@@ -130,8 +130,12 @@
             {% for job in joblist %}
             <tr class="muted">
               <td>
+                {% if job.batch.script %}
                   <a href="{% url 'script' site.uid job.batch.script.pk %}"><strong>{{job.batch.script.name}}</strong></a>
                   <span class="batch">{{job.batch.name}}</span>
+                {% else %}
+                  <a><strong>{{job.batch.name}}</strong></a>
+                {% endif %}
               </td>
               <td>{{job.created|default:'-'}}</td>
               <td>{{job.started|default:'-'}}</td>

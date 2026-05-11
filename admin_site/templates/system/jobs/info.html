@@ -1,6 +1,6 @@
 {% load i18n %}
 
-{% if job.finished %}
+{% if job.finished and job.batch.script %}
   <a class="btn btn-primary mb-3" href="{% url 'restart_job' site.uid job.pk %}">
       <span>
           <span class="material-symbols-outlined">

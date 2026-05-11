@@ -542,6 +542,11 @@ class ScriptAdmin(admin.ModelAdmin):
     search_fields = ("name", "executable_code")
     inlines = [InputInline]
 
+    # Override delete_queryset to use the model delete function
+    def delete_queryset(self, request, queryset):
+        for obj in queryset:
+            obj.delete()
+
     # Using is_global from the model, but also setting is as a boolean type so we get a checkmark instead
     @admin.display(boolean=True, description=_("Global"), ordering="site")
     def _is_global(self, obj):

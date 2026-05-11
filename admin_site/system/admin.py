@@ -43,7 +43,7 @@ class ConfigurationEntryInline(admin.TabularInline):
 
 class CustomerInlineForCountryAdmin(admin.TabularInline):
     model = m.Customer
-    fields = ("name", "is_test")
+    fields = ("name", "status")
     extra = 0
 
     def has_add_permission(self, request, obj):
@@ -328,10 +328,10 @@ class CountryAdmin(admin.ModelAdmin):
 
 @admin.register(m.Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    list_filter = ("country", "is_test")
+    list_filter = ("country", "status")
     list_display = (
         "name",
-        "is_test",
+        "status",
         "created",
         "using_sso",
         "number_of_computers",

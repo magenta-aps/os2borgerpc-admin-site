@@ -90,7 +90,7 @@
         {% endif %}
         {% for customer in all_customers_in_country %}
           {% if customer.sites %} {# Don't display the customer if they have zero sites #}
-              <div class="customer d-inline-flex me-3 mt-4 position-relative {% if customer.is_test %}bg-info{% endif %}">
+              <div class="customer d-inline-flex me-3 mt-4 position-relative {% if customer.status == customer.Status.ONBOARDING %}bg-info{% elif customer.status == customer.Status.OFFBOARDING %}bg-dark{% endif %}">
                 <small class="d-block position-absolute">{{customer.name}}</small>
                 {% for site in customer.sites.all %}
                   {% if site in user_sites %}

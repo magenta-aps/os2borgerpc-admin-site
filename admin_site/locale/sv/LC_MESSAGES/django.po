@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-05 12:45+0200\n"
+"POT-Creation-Date: 2026-05-08 15:37+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -4386,6 +4386,22 @@ msgid "country name"
 msgstr "lands namn"
 
 #: system/models.py
+msgid "Onboarding"
+msgstr "Onboarding"
+
+#: system/models.py
+msgid "Aboard"
+msgstr "Aboard"
+
+#: system/models.py
+msgid "Offboarding"
+msgstr "Offboarding"
+
+#: system/models.py
+msgid "Offboard"
+msgstr "Offboard"
+
+#: system/models.py
 msgid "customer name"
 msgstr "kundnamn"
 
@@ -4396,10 +4412,6 @@ msgstr "site prefix"
 #: system/models.py
 msgid "Paid for access until this date"
 msgstr "Betalat för tillträde fram till detta datum"
-
-#: system/models.py
-msgid "Is a test customer"
-msgstr "Är en test kund"
 
 #: system/models.py
 msgid "Enable to require SSO"
@@ -5129,12 +5141,20 @@ msgid "Last"
 msgstr "Sista"
 
 #: templates/logout.html
+msgid "OS2borgerPC admin"
+msgstr "Sambruk MedborgarPC admin"
+
+#: templates/logout.html
 msgid "You have been logged out"
 msgstr "Du är nu utloggad"
 
 #: templates/logout.html
 msgid "Click here to log in again"
 msgstr "Klicka här för att logga in igen"
+
+#: templates/site_with_navigation.html
+msgid " (Test)"
+msgstr " (Test)"
 
 #: templates/site_with_navigation.html templates/system/site_dashboard.html
 msgid "Dashboard"

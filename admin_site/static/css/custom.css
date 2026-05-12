@@ -143,10 +143,21 @@ div.docscontainer .nav-list>li>a:hover {background: var(--bs-gray-dark); text-de
 
 /* Media queries / Responsiveness */
 
+/* Cutoff at a higher viewport width on events because it scales less well than the others currently */
+@media screen and (max-width: 1800px) {
+  .sublevelnav#securityeventsearchnav {
+    width: 12rem;
+  }
+}
+
 @media screen and (max-width: 1735px) {
-  .sublevelnav:not(#scripts-nav) { width: 12rem; }
+  .sublevelnav:not(#scripts-nav) {
+    width: 12rem;
+  }
   /* Make jobs and computer -> jobs look decent down until around 1080px width */
-  .jobtable th, .jobtable td { padding: .75rem .75rem!important; }
+  .jobtable th, .jobtable td {
+    padding: .75rem .75rem!important;
+  }
 
   /* Make images look better at a lower res too */
   .images .sublevelnav {
@@ -154,7 +165,7 @@ div.docscontainer .nav-list>li>a:hover {background: var(--bs-gray-dark); text-de
   }
 
   .images th {
-    word-wrap: anywhere;
+    overflow-wrap: anywhere;
   }
 }
 
@@ -176,7 +187,7 @@ div.docscontainer .nav-list>li>a:hover {background: var(--bs-gray-dark); text-de
 }
 
 #site_securityevents_table th {
-  word-wrap: break-word;
+  overflow-wrap: break-word;
   max-width: 160px;
 }
 

@@ -134,6 +134,10 @@ input[type="checkbox"] {
   color: $gray-900;
 }
 
+.sublevelnav ul {
+  overflow-wrap: anywhere;
+}
+
 /* Used on the user section sublevelnav */
 .sublevelnav .btn-link.active {
   background-color: $warning;

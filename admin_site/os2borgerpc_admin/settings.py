@@ -198,14 +198,18 @@ MIDDLEWARE = (
 
 # Email settings
 
+# FROM field for regular e-mails sent by django. Ought to match the SMTP user.
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
-ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL")
-EMAIL_HOST = os.environ.get("EMAIL_HOST")
-EMAIL_PORT = os.environ.get("EMAIL_PORT")
+# FROM field for server-error emails (see mail_admins). Ought to match the SMTP user
 SERVER_EMAIL = os.environ.get("SERVER_EMAIL")
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# The recipient for server error e-mails
+ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL")
+# SMTP host/username/password
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+# Django's default email backend
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 ROOT_URLCONF = "os2borgerpc_admin.urls"
 
@@ -242,40 +246,49 @@ DJANGO_APPS = (
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
-# A sample logging configuration. The only tangible logging
-# performed by this configuration is to send an email to
-# the site admins on every HTTP 500 error when DEBUG=False.
+# Django's logging is basically Python's logging with only a few additions.
+# The below config sends an email to the site admins on every HTTP 500 error when DEBUG=False.
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
-        "console": {
+        "bpc": {
+            # https://docs.python.org/3/library/logging.html#levels
             "format": "{levelname} {asctime} {message}",
             "style": "{",
         }
     },
-    "filters": {"require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}},
+    "filters": {
+        # This is a default filter - filtering away all logs when Debug=TRUE
+        "require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}
+    },
     "handlers": {
+        # mail_admins is default
+        # Uses the default formatter, which is only the message
         "mail_admins": {
             "level": "ERROR",
             "filters": ["require_debug_false"],
             "class": "django.utils.log.AdminEmailHandler",
         },
-        "console": {
+        # Changes the formatter from the default "console" handler
+        "custom_console": {
             "class": "logging.StreamHandler",
-            "formatter": "console",
+            "formatter": "bpc",
         },
     },
     "loggers": {
+        # This is not default
         "django.db.backends": {
             "level": os.environ.get("DB_LOG_LEVEL", "CRITICAL"),
-            "handlers": ["console"],
+            "handlers": ["custom_console"],
+            "propagate": False,
         },
     },
+    # This is not default
     "root": {
-        "handlers": ["console", "mail_admins"],
+        "handlers": ["custom_console", "mail_admins"],
         "level": os.environ.get("LOG_LEVEL", "ERROR"),
     },
 }

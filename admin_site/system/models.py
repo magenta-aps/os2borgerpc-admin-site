@@ -958,6 +958,15 @@ class Script(AuditModelMixin):
     def __str__(self):
         return self.name
 
+    def delete(self, *args, **kwargs):
+        """
+        Set the script name as the name of any related batches
+        before deleting the script.
+        """
+        batches = self.batch_set.all()
+        batches.update(name=self.name)
+        super().delete(*args, **kwargs)
+
     def run_on(self, site, pc_list, *args, user):
         batch = Batch(site=site, script=self, name="")
         batch.save()
@@ -1017,7 +1026,7 @@ class Batch(models.Model):
     # TODO: The name should probably be generated automatically from ID and
     # script and date, etc. Or just write a more useful __str__ or similar
     name = models.CharField(verbose_name=_("name"), max_length=255)
-    script = models.ForeignKey(Script, on_delete=models.CASCADE)
+    script = models.ForeignKey(Script, on_delete=models.SET_NULL, null=True)
     site = models.ForeignKey(Site, related_name="batches", on_delete=models.CASCADE)
 
     def __str__(self):

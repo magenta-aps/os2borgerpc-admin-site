@@ -826,7 +826,8 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
             and not self.request.user.user_profile.is_hidden
         ):
             queryset = Job.objects.filter(
-                Q(batch__script__is_hidden=False)
+                Q(batch__script=None)
+                | Q(batch__script__is_hidden=False)
                 | Q(
                     batch__script__feature_permission__in=site.customer.feature_permission.all()
                 )
@@ -918,7 +919,9 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
             "results": [
                 {
                     "pk": job.pk,
-                    "script_name": job.batch.script.name,
+                    "script_name": job.batch.script.name
+                    if job.batch.script
+                    else job.batch.name,
                     "started": (
                         job.started.strftime("%Y-%m-%d %H:%M:%S")
                         if job.started
@@ -943,7 +946,9 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
                     "has_info": job.has_info,
                     "script_url": reverse(
                         "script", args=[site.uid, job.batch.script.id]
-                    ),
+                    )
+                    if job.batch.script
+                    else "",
                     "pc_url": reverse("computer", args=[site.uid, job.pc.uid]),
                     "restart_url": reverse("restart_job", args=[site.uid, job.pk]),
                 }
@@ -966,6 +971,15 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
         )
         return response
 
+    def missing_script_response(self):
+        response = redirect(self.get_success_url())
+        set_notification_cookie(
+            response,
+            _("Cannot restart the job because the related script has been deleted %s")
+            % "",
+        )
+        return response
+
     def get(self, request, *args, **kwargs):
         self.site = get_object_or_404(Site, uid=kwargs["slug"])
         self.object = self.get_object()
@@ -973,6 +987,10 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
         # Only restart jobs that have failed or succeeded
         if not self.object.finished:
             return self.status_fail_response()
+
+        # We can't restart the job if the related script has been deleted
+        if not self.object.batch.script:
+            return self.missing_script_response()
 
         context = self.get_context_data(object=self.object)
 
@@ -1731,7 +1749,8 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
             and not self.request.user.user_profile.is_hidden
         ):
             visible_jobs = pc.jobs.filter(
-                Q(batch__script__is_hidden=False)
+                Q(batch__script=None)
+                | Q(batch__script__is_hidden=False)
                 | Q(
                     batch__script__feature_permission__in=site.customer.feature_permission.all()
                 )

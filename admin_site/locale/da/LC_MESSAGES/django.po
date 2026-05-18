@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-08 15:37+0200\n"
+"POT-Creation-Date: 2026-05-12 15:19+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -4872,6 +4872,11 @@ msgstr "Site %s slettet"
 #, python-format
 msgid "Settings for %s updated"
 msgstr "Indstillinger for %s opdateret"
+
+#: system/views.py
+#, python-format
+msgid "Cannot restart the job because the related script has been deleted %s"
+msgstr "Kan ikke genstarte jobbet, da det relaterede script er blevet slettet %s"
 
 #: system/views.py
 #, python-format

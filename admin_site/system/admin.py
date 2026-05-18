@@ -422,6 +422,11 @@ class FileParameterAdmin(admin.ModelAdmin):
         "site",
     )
 
+    # Override delete_queryset to use the model delete function
+    def delete_queryset(self, request, queryset):
+        for obj in queryset:
+            obj.delete()
+
 
 @admin.register(m.ImageVersion)
 class ImageVersionAdmin(admin.ModelAdmin):

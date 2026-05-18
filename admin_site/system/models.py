@@ -1360,7 +1360,7 @@ class FileParameter(models.Model):
         if num_references == 1 and self.file.storage.exists(self.file.name):
             self.file.storage.delete(self.file.name)
         # self.file.delete(save=False)
-        super(FileParameter, self).delete(*args, **kwargs)
+        super().delete(*args, **kwargs)
 
 
 class Parameter(models.Model):

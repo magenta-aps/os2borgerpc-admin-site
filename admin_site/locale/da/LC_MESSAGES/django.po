@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-12 15:19+0200\n"
+"POT-Creation-Date: 2026-05-19 13:07+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -15,9 +15,43 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: account/models.py docs/templates/users/index.html system/forms.py
+#: account/forms.py
+msgid "Select users to be added to this site"
+msgstr "Vælg brugere som skal tilføjes til dette site"
+
+#: account/forms.py
+msgid "Hold down Ctrl to select multiple users"
+msgstr "Hold Ctrl nede for at vælge flere brugere"
+
+#: account/forms.py
+msgid "Select the usertype that the users should be added with"
+msgstr "Vælg den brugertype som brugerne skal tilføjes med"
+
+#: account/forms.py docs/templates/users/index.html
+msgid "Usertype"
+msgstr "Brugertype"
+
+#: account/forms.py account/models.py docs/templates/users/index.html
 msgid "Language"
 msgstr "Sprog"
+
+#: account/forms.py docs/templates/scripts/parameters.html
+#: docs/templates/users/index.html system/models.py
+msgid "Password"
+msgstr "Adgangskode"
+
+#: account/forms.py
+msgid "Password (again)"
+msgstr "Adgangskode (igen)"
+
+#: account/forms.py
+msgid "Passwords must be identical."
+msgstr "De to adgangskoder skal være ens"
+
+#: account/forms.py
+#, python-format
+msgid "A user named \"%s\" already exists."
+msgstr "En bruger med navnet \"%s\" eksisterer allerede."
 
 #: account/models.py
 msgid "hidden user"
@@ -1070,14 +1104,14 @@ msgstr "Slet"
 #, python-format
 msgid ""
 "In order to edit or delete a value, you must click on %(edit)s or %(delete)s "
-"to the right of the individual key. Note that most of the built-in "
-"configurations that are created automatically by the OS2borgerPC system "
-"cannot be edited or deleted via the admin interface. This is meant to "
-"prevent users from accidentally deleting relevant information or making "
-"changes that negatively impact their computers."
+"to the right of the individual key. Note that the built-in configurations "
+"that are created automatically by the OS2borgerPC system cannot be edited or "
+"deleted via the admin interface. This is meant to prevent users from "
+"accidentally deleting relevant information or making changes that negatively "
+"impact their computers."
 msgstr ""
 "For at rette eller slette en værdi, skal du klikke på %(edit)s eller "
-"%(delete)s ud for den enkelte nøgle. Bemærk at størstedelen af de indbyggede "
+"%(delete)s ud for den enkelte nøgle. Bemærk at de indbyggede "
 "konfigurationer, som automatisk oprettes af OS2borgerPC-systemet, ikke kan "
 "redigeres eller slettes via admininistrationsinterfacet. Dette har til "
 "formål at forhindre at anvendere ved en fejl kommer til at slette relevant "
@@ -1149,26 +1183,26 @@ msgstr "Betydningen af de indbyggede konfigurationer"
 
 #: docs/templates/configuration/index.html
 msgid ""
-"All values without _ in front are controlled by the admin portal while "
-"values with _ are controlled by the computer / the client. Values with _ in "
-"front can thus not be changed via the admin interface."
+"All built-in values without _ in front are controlled by the admin portal "
+"while built-in values with _ are controlled by the computer / the client. "
+"Built-in values with _ in front can thus not be changed via the admin "
+"interface."
 msgstr ""
-"Alle værdier uden _ foran bestemmes af adminportalen, mens værdier med _ "
-"bestemmes af computeren / klienten. Værdier med _ foran kan således ikke "
-"ændres via administrationsinterfacet."
+"Alle indbyggede værdier uden _ foran bestemmes af adminportalen, mens "
+"indbyggede værdier med _ bestemmes af computeren / klienten. Indbyggede "
+"værdier med _ foran kan således ikke ændres via administrationsinterfacet."
 
 #: docs/templates/configuration/index.html
 #, python-format
 msgid ""
 "This means that if one were to change e.g. %(version)s on the computer, then "
 "the value would be overwritten during the next check-in with the admin "
-"portal. Note that \"job_timeout\" is the only built-in configuration that "
-"can be changed via the admin portal."
+"portal. Note that the built-in configurations can't be changed via the admin "
+"portal."
 msgstr ""
 "Det vil i praksis sige, at hvis man eks. ændrer %(version)s på computeren, "
 "så vil den blive overskrevet efter næste tjek-ind med adminportalen. Bemærk "
-"at \"job_timeout\" er den eneste indbyggede konfiguration, som kan ændres "
-"via adminportalen."
+"at de indbyggede konfigurationer ikke kan ændres via adminportalen."
 
 #: docs/templates/configuration/index.html
 #: templates/system/configs/templates.html
@@ -2941,11 +2975,6 @@ msgstr "Tid"
 msgid "Makes it possible to supply a time of day"
 msgstr "Giver mulighed for at angive et tidspunkt"
 
-#: docs/templates/scripts/parameters.html docs/templates/users/index.html
-#: system/forms.py system/models.py
-msgid "Password"
-msgstr "Adgangskode"
-
 #: docs/templates/scripts/parameters.html
 msgid ""
 "Makes it possible to supply a password string. This type of parameter "
@@ -3377,10 +3406,6 @@ msgstr "E-mailadresse"
 #: docs/templates/users/index.html
 msgid "Here you can enter the user's email address. It is optional."
 msgstr "Her kan du angive brugerens e-mail-adresse. Det er valgfrit."
-
-#: docs/templates/users/index.html system/forms.py
-msgid "Usertype"
-msgstr "Brugertype"
 
 #: docs/templates/users/index.html
 msgid "The options in this field depend on your own usertype"
@@ -4339,31 +4364,6 @@ msgstr "Udfyldes hvis du ønsker at opdatere det nuværende kodeord"
 msgid "Fill out if you want to update the current value"
 msgstr "Udfyldes hvis du ønsker at opdatere den nuværende værdi"
 
-#: system/forms.py
-msgid "Select users to be added to this site"
-msgstr "Vælg brugere som skal tilføjes til dette site"
-
-#: system/forms.py
-msgid "Hold down Ctrl to select multiple users"
-msgstr "Hold Ctrl nede for at vælge flere brugere"
-
-#: system/forms.py
-msgid "Select the usertype that the users should be added with"
-msgstr "Vælg den brugertype som brugerne skal tilføjes med"
-
-#: system/forms.py
-msgid "Password (again)"
-msgstr "Adgangskode (igen)"
-
-#: system/forms.py
-msgid "Passwords must be identical."
-msgstr "De to adgangskoder skal være ens"
-
-#: system/forms.py
-#, python-format
-msgid "A user named \"%s\" already exists."
-msgstr "En bruger med navnet \"%s\" eksisterer allerede."
-
 #: system/mixins.py system/models.py
 msgid "modified"
 msgstr "ændret"
@@ -4876,7 +4876,8 @@ msgstr "Indstillinger for %s opdateret"
 #: system/views.py
 #, python-format
 msgid "Cannot restart the job because the related script has been deleted %s"
-msgstr "Kan ikke genstarte jobbet, da det relaterede script er blevet slettet %s"
+msgstr ""
+"Kan ikke genstarte jobbet, da det relaterede script er blevet slettet %s"
 
 #: system/views.py
 #, python-format

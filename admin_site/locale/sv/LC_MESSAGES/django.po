@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-12 15:19+0200\n"
+"POT-Creation-Date: 2026-05-19 13:07+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -15,9 +15,43 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: account/models.py docs/templates/users/index.html system/forms.py
+#: account/forms.py
+msgid "Select users to be added to this site"
+msgstr "Välj användare som ska läggas till på detta site"
+
+#: account/forms.py
+msgid "Hold down Ctrl to select multiple users"
+msgstr "Håll ned Ctrl för att välja flera användare"
+
+#: account/forms.py
+msgid "Select the usertype that the users should be added with"
+msgstr "Välj den användartyp som användarna ska läggas till med"
+
+#: account/forms.py docs/templates/users/index.html
+msgid "Usertype"
+msgstr "Typ av användare"
+
+#: account/forms.py account/models.py docs/templates/users/index.html
 msgid "Language"
 msgstr "Språk"
+
+#: account/forms.py docs/templates/scripts/parameters.html
+#: docs/templates/users/index.html system/models.py
+msgid "Password"
+msgstr "Lösenord"
+
+#: account/forms.py
+msgid "Password (again)"
+msgstr "Lösenord (igen)"
+
+#: account/forms.py
+msgid "Passwords must be identical."
+msgstr "De två lösenorden måste vara desamma"
+
+#: account/forms.py
+#, python-format
+msgid "A user named \"%s\" already exists."
+msgstr "En användare med namnet \"%s\" finns redan."
 
 #: account/models.py
 msgid "hidden user"
@@ -1064,18 +1098,18 @@ msgstr "Ta bort"
 #, python-format
 msgid ""
 "In order to edit or delete a value, you must click on %(edit)s or %(delete)s "
-"to the right of the individual key. Note that most of the built-in "
-"configurations that are created automatically by the OS2borgerPC system "
-"cannot be edited or deleted via the admin interface. This is meant to "
-"prevent users from accidentally deleting relevant information or making "
-"changes that negatively impact their computers."
+"to the right of the individual key. Note that the built-in configurations "
+"that are created automatically by the OS2borgerPC system cannot be edited or "
+"deleted via the admin interface. This is meant to prevent users from "
+"accidentally deleting relevant information or making changes that negatively "
+"impact their computers."
 msgstr ""
 "Om du vill korrigera eller ta bort ett värde klickar du på %(edit)s eller "
-"%(delete)s bredvid varje nyckel. Observera att de flesta av de inbyggda "
-"konfigurationerna som skapas automatiskt av medborgarPC-systemet inte kan "
-"redigeras eller raderas via administrationsgränssnittet. Detta är avsett att "
-"förhindra användare från att av misstag radera relevant information eller "
-"göra ändringar som påverkar deras datorer negativt."
+"%(delete)s bredvid varje nyckel. Observera att de inbyggda konfigurationerna "
+"som skapas automatiskt av medborgarPC-systemet inte kan redigeras eller "
+"raderas via administrationsgränssnittet. Detta är avsett att förhindra "
+"användare från att av misstag radera relevant information eller göra "
+"ändringar som påverkar deras datorer negativt."
 
 #: docs/templates/configuration/index.html
 msgid "Configurations at different levels"
@@ -1143,26 +1177,26 @@ msgstr "Vikten av de inbyggda konfigurationerna"
 
 #: docs/templates/configuration/index.html
 msgid ""
-"All values without _ in front are controlled by the admin portal while "
-"values with _ are controlled by the computer / the client. Values with _ in "
-"front can thus not be changed via the admin interface."
+"All built-in values without _ in front are controlled by the admin portal "
+"while built-in values with _ are controlled by the computer / the client. "
+"Built-in values with _ in front can thus not be changed via the admin "
+"interface."
 msgstr ""
-"Alla värden utan _ framför bestäms av adminsidan, medan värden med _ bestäms "
-"av datorn/klienten. Värden med _ framför kan därför inte ändras via "
-"administrationsgränssnittet."
+"Alla inbyggda värden utan _ framför bestäms av adminsidan, medan inbyggda "
+"värden med _ bestäms av datorn/klienten. Inbyggda värden med _ framför kan "
+"därför inte ändras via administrationsgränssnittet."
 
 #: docs/templates/configuration/index.html
 #, python-format
 msgid ""
 "This means that if one were to change e.g. %(version)s on the computer, then "
 "the value would be overwritten during the next check-in with the admin "
-"portal. Note that \"job_timeout\" is the only built-in configuration that "
-"can be changed via the admin portal."
+"portal. Note that the built-in configurations can't be changed via the admin "
+"portal."
 msgstr ""
 "I praktiken innebär det att om man skulle ändra t.ex. %(version)s på datorn, "
 "då kommer det att skrivas över efter nästa incheckning med adminsidan. "
-"Observera att \"job_timeout\" är den enda inbyggda konfigurationen som kan "
-"ändras via adminsidan."
+"Observera att de inbyggda konfigurationerna inte kan ändras via adminsidan."
 
 #: docs/templates/configuration/index.html
 #: templates/system/configs/templates.html
@@ -2926,11 +2960,6 @@ msgstr "Tid"
 msgid "Makes it possible to supply a time of day"
 msgstr "Ger möjlighet att ange tid"
 
-#: docs/templates/scripts/parameters.html docs/templates/users/index.html
-#: system/forms.py system/models.py
-msgid "Password"
-msgstr "Lösenord"
-
 #: docs/templates/scripts/parameters.html
 msgid ""
 "Makes it possible to supply a password string. This type of parameter "
@@ -3361,10 +3390,6 @@ msgstr "E-postadress"
 #: docs/templates/users/index.html
 msgid "Here you can enter the user's email address. It is optional."
 msgstr "Här kan du ange användarens e-postadress. Det är valfritt."
-
-#: docs/templates/users/index.html system/forms.py
-msgid "Usertype"
-msgstr "Typ av användare"
 
 #: docs/templates/users/index.html
 msgid "The options in this field depend on your own usertype"
@@ -4316,31 +4341,6 @@ msgstr "Utfylles om du vill uppdatera den nuvarande koden"
 msgid "Fill out if you want to update the current value"
 msgstr "Fyll i om du vill uppdatera det aktuella värdet"
 
-#: system/forms.py
-msgid "Select users to be added to this site"
-msgstr "Välj användare som ska läggas till på detta site"
-
-#: system/forms.py
-msgid "Hold down Ctrl to select multiple users"
-msgstr "Håll ned Ctrl för att välja flera användare"
-
-#: system/forms.py
-msgid "Select the usertype that the users should be added with"
-msgstr "Välj den användartyp som användarna ska läggas till med"
-
-#: system/forms.py
-msgid "Password (again)"
-msgstr "Lösenord (igen)"
-
-#: system/forms.py
-msgid "Passwords must be identical."
-msgstr "De två lösenorden måste vara desamma"
-
-#: system/forms.py
-#, python-format
-msgid "A user named \"%s\" already exists."
-msgstr "En användare med namnet \"%s\" finns redan."
-
 #: system/mixins.py system/models.py
 msgid "modified"
 msgstr "modifierad"
@@ -4855,7 +4855,9 @@ msgstr "Inställningar för %s uppdaterat"
 #: system/views.py
 #, python-format
 msgid "Cannot restart the job because the related script has been deleted %s"
-msgstr "Det går inte att starta om jobbet eftersom det relaterade skriptet har tagits bort %s"
+msgstr ""
+"Det går inte att starta om jobbet eftersom det relaterade skriptet har "
+"tagits bort %s"
 
 #: system/views.py
 #, python-format

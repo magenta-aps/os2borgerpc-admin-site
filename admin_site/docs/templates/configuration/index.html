@@ -68,7 +68,7 @@
     {% translate "Delete"|bold as delete %}
     {% blocktranslate trimmed %}
     In order to edit or delete a value, you must click on {{ edit }} or {{ delete }} to the
-    right of the individual key. Note that most of the built-in configurations that are
+    right of the individual key. Note that the built-in configurations that are
     created automatically by the OS2borgerPC system cannot be edited or deleted via the
     admin interface. This is meant to prevent users from accidentally deleting relevant
     information or making changes that negatively impact their computers.
@@ -115,14 +115,14 @@
 
   <p class="alert alert-info">
     {% blocktranslate trimmed %}
-    All values without _ in front are controlled by the admin portal while values with _ are controlled
-    by the computer / the client. Values with _ in front can thus not be changed via the admin interface.
+    All built-in values without _ in front are controlled by the admin portal while built-in values with _ are controlled
+    by the computer / the client. Built-in values with _ in front can thus not be changed via the admin interface.
     {% endblocktranslate %}
     <br/>
     {% blocktranslate trimmed with version="os2borgerpc_version"|bold %}
     This means that if one were to change e.g. {{ version }} on the computer, then the value would be overwritten
-    during the next check-in with the admin portal. Note that "job_timeout" is the only
-    built-in configuration that can be changed via the admin portal.
+    during the next check-in with the admin portal. Note that the built-in configurations can't be changed
+    via the admin portal.
     {% endblocktranslate %}
   </p>
 

@@ -128,6 +128,7 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
             "pc_cpus",
             "pc_manufacturer",
             "pc_model",
+            "serial_number",
             "pc_ram",
             "os_name",
             "_os_release",

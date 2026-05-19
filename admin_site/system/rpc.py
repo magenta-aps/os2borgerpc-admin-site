@@ -110,11 +110,15 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
     except Product.DoesNotExist:
         pass
 
-    # remove mac and uid from the configuration
+    # remove mac, uid and name from the configuration
     # We don't need them saved as both attributes and configuration entries
+    # Note that the order matters. Mac will be included during every registration
+    # but uid and name will only exist in the configuration during reregistration
+    # of an existing computer. We therefore have to delete mac first
     try:
         del configuration["mac"]
         del configuration["uid"]
+        del configuration["name"]
     except KeyError:
         pass
 
@@ -123,6 +127,11 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
         if k in [
             "admin_url",
             "hostname",
+            "_ip_addresses",
+            "job_timeout",
+            "_kernel_version",
+            "_last_automatic_update_time",
+            "_os2borgerpc.client_version",
             "os2_product",
             "os2borgerpc_version",
             "pc_cpus",

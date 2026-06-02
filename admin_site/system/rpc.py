@@ -112,15 +112,14 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
 
     # remove mac, uid and name from the configuration
     # We don't need them saved as both attributes and configuration entries
-    # Note that the order matters. Mac will be included during every registration
+    # Mac used to be included during every registration
     # but uid and name will only exist in the configuration during reregistration
-    # of an existing computer. We therefore have to delete mac first
-    try:
+    if "mac" in configuration:
         del configuration["mac"]
+    if "uid" in configuration:
         del configuration["uid"]
+    if "name" in configuration:
         del configuration["name"]
-    except KeyError:
-        pass
 
     for k, v in list(configuration.items()):
         # List of our configurations that should be read_only

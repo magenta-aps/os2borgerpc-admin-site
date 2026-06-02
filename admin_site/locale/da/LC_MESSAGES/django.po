@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 13:07+0200\n"
+"POT-Creation-Date: 2026-06-02 13:09+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -892,7 +892,7 @@ msgstr ""
 "konfiguration."
 
 #: docs/templates/computers/index.html docs/templates/users/index.html
-#: docs/views.py templates/site_with_navigation.html
+#: docs/views.py system/admin.py templates/site_with_navigation.html
 #: templates/system/jobs/site_jobs.html
 #: templates/system/pcgroups/confirm_delete.html
 #: templates/system/pcs/no_pcs.html templates/system/pcs/pcs.html
@@ -4295,16 +4295,12 @@ msgid "Audit: FAQ (PDF)"
 msgstr "Revision: Ofte stillede spørgsmål (PDF)"
 
 #: system/admin.py
-msgid "Number of computers"
-msgstr "Antal computere"
+msgid "BorgerPC computers"
+msgstr "BorgerPC computere"
 
 #: system/admin.py
-msgid "Number of BorgerPC computers"
-msgstr "Antal BorgerPC computere"
-
-#: system/admin.py
-msgid "Number of KioskPC computers"
-msgstr "Antal KioskPC computere"
+msgid "KioskPC computers"
+msgstr "KioskPC computere"
 
 #: system/admin.py
 msgid "Feature permissions"
@@ -4321,6 +4317,10 @@ msgstr "Site"
 #: system/admin.py templates/system/scripts/search_result.html
 msgid "Global"
 msgstr "Global"
+
+#: system/admin.py
+msgid "Number of computers"
+msgstr "Antal computere"
 
 #: system/forms.py system/models.py
 msgid "Password for login API (e.g. Cicero)"
@@ -4433,12 +4433,12 @@ msgid "site prefix"
 msgstr "site-præfiks"
 
 #: system/models.py
-msgid "Paid for access until this date"
-msgstr "Betalt for adgang indtil denne dato"
+msgid "Version access until"
+msgstr "Versionsadgang indtil"
 
 #: system/models.py
-msgid "Enable to require SSO"
-msgstr "Aktiver for at kræve SSO"
+msgid "Require SSO"
+msgstr "Kræv SSO"
 
 #: system/models.py templates/system/sites/list.html
 msgid "UID"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 13:07+0200\n"
+"POT-Creation-Date: 2026-06-02 13:09+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -887,7 +887,7 @@ msgid "Note that group membership can affect the computer's configuration."
 msgstr "Observera att gruppmedlemskap kan påverka datorns konfiguration."
 
 #: docs/templates/computers/index.html docs/templates/users/index.html
-#: docs/views.py templates/site_with_navigation.html
+#: docs/views.py system/admin.py templates/site_with_navigation.html
 #: templates/system/jobs/site_jobs.html
 #: templates/system/pcgroups/confirm_delete.html
 #: templates/system/pcs/no_pcs.html templates/system/pcs/pcs.html
@@ -4273,16 +4273,12 @@ msgid "Audit: FAQ (PDF)"
 msgstr "Revision: Vanliga frågor (PDF)"
 
 #: system/admin.py
-msgid "Number of computers"
-msgstr "Antal datorer"
+msgid "BorgerPC computers"
+msgstr "MedborgarPC-datorer"
 
 #: system/admin.py
-msgid "Number of BorgerPC computers"
-msgstr "Antal MedborgarPC-datorer"
-
-#: system/admin.py
-msgid "Number of KioskPC computers"
-msgstr "Antal KioskPC-datorer"
+msgid "KioskPC computers"
+msgstr "KioskPC-datorer"
 
 #: system/admin.py
 msgid "Feature permissions"
@@ -4299,6 +4295,10 @@ msgstr "Site"
 #: system/admin.py templates/system/scripts/search_result.html
 msgid "Global"
 msgstr "Global"
+
+#: system/admin.py
+msgid "Number of computers"
+msgstr "Antal datorer"
 
 #: system/forms.py system/models.py
 msgid "Password for login API (e.g. Cicero)"
@@ -4410,12 +4410,12 @@ msgid "site prefix"
 msgstr "site prefix"
 
 #: system/models.py
-msgid "Paid for access until this date"
-msgstr "Betalat för tillträde fram till detta datum"
+msgid "Version access until"
+msgstr "Versionsåtkomst tills"
 
 #: system/models.py
-msgid "Enable to require SSO"
-msgstr "Aktivera för att kräva sso"
+msgid "Require SSO"
+msgstr "Kräver SSO"
 
 #: system/models.py templates/system/sites/list.html
 msgid "UID"

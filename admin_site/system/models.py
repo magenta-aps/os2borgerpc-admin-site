@@ -179,14 +179,12 @@ class Customer(models.Model):
     site_prefix = models.CharField(
         verbose_name=_("site prefix"), max_length=40, null=True
     )  # TODO: Remove null=True
-    paid_for_access_until = models.DateField(
-        verbose_name=_("Paid for access until this date"), null=True, blank=True
+    version_access_until = models.DateField(
+        verbose_name=_("Version access until"), null=True, blank=True
     )
     status = models.IntegerField(choices=Status, default=Status.ONBOARDING)
 
-    using_sso = models.BooleanField(
-        verbose_name=_("Enable to require SSO"), default=False
-    )
+    using_sso = models.BooleanField(verbose_name=_("Require SSO"), default=False)
 
     def __str__(self):
         return self.name

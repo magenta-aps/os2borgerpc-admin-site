@@ -334,11 +334,11 @@ class CustomerAdmin(admin.ModelAdmin):
         "status",
         "created",
         "using_sso",
+        "feature_permissions",
         "number_of_computers",
         "number_of_borgerpc_computers",
         "number_of_kioskpc_computers",
-        "paid_for_access_until",
-        "feature_permissions",
+        "version_access_until",
         "sites",
     )
     search_fields = ("name",)
@@ -351,12 +351,12 @@ class CustomerAdmin(admin.ModelAdmin):
     def sites(self, obj):
         return list(obj.sites.all())
 
-    @admin.display(description=_("Number of computers"))
+    @admin.display(description=_("Computers"))
     def number_of_computers(self, obj):
         computers_count = m.PC.objects.filter(site__customer=obj).count()
         return computers_count
 
-    @admin.display(description=_("Number of BorgerPC computers"))
+    @admin.display(description=_("BorgerPC computers"))
     def number_of_borgerpc_computers(self, obj):
         borgerpc_computers_count = (
             m.PC.objects.filter(site__in=obj.sites.all())
@@ -366,7 +366,7 @@ class CustomerAdmin(admin.ModelAdmin):
 
         return borgerpc_computers_count
 
-    @admin.display(description=_("Number of KioskPC computers"))
+    @admin.display(description=_("KioskPC computers"))
     def number_of_kioskpc_computers(self, obj):
         kioskpc_computers_count = (
             m.PC.objects.filter(site__in=obj.sites.all())

@@ -3542,8 +3542,8 @@ class ImageVersionRedirectSite(RedirectView, LoginRequiredMixin):
 
 
 class ImageVersionView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
-    """Displays all of the image versions that this site has access to (i.e.,
-    all versions released before the site's paid_for_access_until datestamp).
+    """Displays all of the image versions that this customer has access to (i.e.,
+    all versions released before the customer's version_access_until datestamp).
     """
 
     template_name = "system/site_images.html"
@@ -3571,14 +3571,14 @@ class ImageVersionView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
 
         # If client's last pay date is set, exclude versions where
         # image release date > client's last pay date.
-        if not site.customer.paid_for_access_until:
+        if not site.customer.version_access_until:
             versions_accessible_by_user = visible_image_versions.filter(
                 product=selected_product
             ).order_by("-image_version")
         else:
             versions_accessible_by_user = (
                 visible_image_versions.exclude(
-                    release_date__gt=site.customer.paid_for_access_until
+                    release_date__gt=site.customer.version_access_until
                 )
                 .filter(product=selected_product)
                 .order_by("-image_version")

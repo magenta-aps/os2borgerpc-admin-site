@@ -87096,7 +87096,7 @@
         "name": "Magenta",
         "country": 1,
         "site_prefix": "magenta",
-        "paid_for_access_until": null,
+        "version_access_until": null,
         "status": 1,
         "using_sso": false
     }
@@ -87109,7 +87109,7 @@
         "name": "Kunde Sverige",
         "country": 2,
         "site_prefix": "kunde-sverige",
-        "paid_for_access_until": null,
+        "version_access_until": null,
         "status": 1,
         "using_sso": false
     }
@@ -87122,7 +87122,7 @@
         "name": "Test Kunde Danmark",
         "country": 1,
         "site_prefix": "test-kunde-danmark",
-        "paid_for_access_until": null,
+        "version_access_until": null,
         "status": 2,
         "using_sso": false
     }
@@ -87135,7 +87135,7 @@
         "name": "SSO kunde",
         "country": 1,
         "site_prefix": "sso-kunde",
-        "paid_for_access_until": null,
+        "version_access_until": null,
         "status": 0,
         "using_sso": true
     }

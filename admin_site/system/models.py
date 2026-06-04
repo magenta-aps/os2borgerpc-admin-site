@@ -825,9 +825,9 @@ class PC(models.Model):
         for conf in configs:
             for entry in conf.entries.all():
                 result[entry.key] = entry.value
-        if "mac" not in result.keys():
-            result["mac"] = self.mac
+        # NOTE: If the protocol was changed so configs aren't deleted this shouldn't be necessary to send
         result["uid"] = self.uid
+        # TODO: Once hostname is generally equivalent to pc name, this should be removable
         result["name"] = self.name
         return result
 

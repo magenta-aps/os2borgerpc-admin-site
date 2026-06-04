@@ -19,6 +19,8 @@ AUTH_PROFILE_MODULE = "account.UserProfile"
 
 DEBUG = os.environ.get("DEBUG") == "True"
 
+# "A list of all the people who get code error notifications."
+# https://docs.djangoproject.com/en/6.0/ref/settings/#std-setting-ADMINS
 ADMINS = (
     [
         (os.environ.get("ADMIN_NAME"), os.environ.get("ADMIN_EMAIL")),
@@ -27,6 +29,7 @@ ADMINS = (
     else None
 )
 
+# "A list [..] that specifies who should get broken link notifications when BrokenLinkEmailsMiddleware is enabled."
 MANAGERS = ADMINS
 
 # By default Django uses "cached.Loader"

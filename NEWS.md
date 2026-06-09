@@ -1,3 +1,14 @@
+## Version 7.3.0, June 8, 2026
+
+- Update to Django 5.2
+- Update other backend dependencies
+- Better handling of narrower viewports/monitors on several pages
+- Don't delete related jobs when scripts are deleted
+- Allow uppercase letters in hostnames
+- Show danish image download for all images
+- Remove django-extensions as a dependency
+- Fix a "bug" resulting in the creation of empty batches
+
 ## Version 7.2.0, April 27, 2026
 
 - Improve support for many computers:

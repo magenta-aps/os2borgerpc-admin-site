@@ -52,10 +52,10 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
     # If we are here then no matching PC object exists
     # Check if the chosen name is too long to prevent old clients
     # from setting names that are too long
-    if len(name) < 1 or len(name) > 40:
+    if len(name) < 2 or len(name) > 40:
         error_string = (
             f"The chosen name {name} has a length of {len(name)} characters. "
-            "The name must have a length of 1-40 characters."
+            "The name must have a length of 2-40 characters."
         )
         # See comment at the previous use of api_call
         if api_call:
@@ -110,24 +110,34 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
     except Product.DoesNotExist:
         pass
 
-    # remove mac and uid from the configuration
+    # remove mac, uid and name from the configuration
     # We don't need them saved as both attributes and configuration entries
-    try:
+    # Mac used to be included during every registration
+    # but uid and name will only exist in the configuration during reregistration
+    if "mac" in configuration:
         del configuration["mac"]
+    if "uid" in configuration:
         del configuration["uid"]
-    except KeyError:
-        pass
+    if "name" in configuration:
+        del configuration["name"]
 
     for k, v in list(configuration.items()):
         # List of our configurations that should be read_only
         if k in [
             "admin_url",
             "hostname",
+            "_ip_addresses",
+            "job_timeout",
+            "_kernel_version",
+            "_last_automatic_update_time",
+            "_os2borgerpc.client_version",
             "os2_product",
             "os2borgerpc_version",
             "pc_cpus",
             "pc_manufacturer",
             "pc_model",
+            "pc_version",
+            "pc_serial_number",
             "pc_ram",
             "os_name",
             "_os_release",
@@ -274,7 +284,7 @@ def push_config_keys(pc_uid, config_dict, read_only=False, api_call=False):
     try:
         pc = PC.objects.get(uid=pc_uid)
     except PC.DoesNotExist:
-        error_string = "This Computer does not appear to be registered with the configured admin portal."
+        error_string = f"Computer with UID {pc_uid} is not registered with the configured admin portal"
         # See comment at the first use of api_call
         if api_call:
             return 400, error_string
@@ -282,7 +292,7 @@ def push_config_keys(pc_uid, config_dict, read_only=False, api_call=False):
             raise Exception(error_string)
 
     if not pc.is_activated:
-        return 0
+        return ""
 
     # We need two config dicts: one from the PC itself and one from groups
     # and global configuration
@@ -308,7 +318,7 @@ def push_config_keys(pc_uid, config_dict, read_only=False, api_call=False):
         else:
             pc.configuration.update_entry(key, value, read_only)
 
-    return True
+    return "OK"
 
 
 # TODO: Log events for SecurityProblems that don't exist

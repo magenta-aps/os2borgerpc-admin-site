@@ -32,7 +32,7 @@ const renderJobTable = (jobs) => {
 // Create a single job row for the table
 const createJobRow = (job) => `
     <tr class="align-middle">
-        <td><strong><a href="${job.script_url}">${job.script_name}</a>${job.batch_name ? `<a> (${job.batch_name})</a>` : ""}</strong></td>
+        <td><strong><a ${job.script_url ? `href="${job.script_url}"` : ""}>${job.script_name}</a></strong>${job.batch_name && job.script_url ? `<a> (${job.batch_name})</a>` : ""}</td>
         <td>${job.user ? `<a href="${job.user_url}">${job.user}</a>` : ""}</td>
         <td>${job.created}</td>
         <td>${job.started}</td>

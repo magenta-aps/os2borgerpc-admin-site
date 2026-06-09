@@ -43,7 +43,7 @@ class ConfigurationEntryInline(admin.TabularInline):
 
 class CustomerInlineForCountryAdmin(admin.TabularInline):
     model = m.Customer
-    fields = ("name", "is_test")
+    fields = ("name", "status")
     extra = 0
 
     def has_add_permission(self, request, obj):
@@ -328,17 +328,17 @@ class CountryAdmin(admin.ModelAdmin):
 
 @admin.register(m.Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    list_filter = ("country", "is_test")
+    list_filter = ("country", "status")
     list_display = (
         "name",
-        "is_test",
+        "status",
         "created",
         "using_sso",
+        "feature_permissions",
         "number_of_computers",
         "number_of_borgerpc_computers",
         "number_of_kioskpc_computers",
-        "paid_for_access_until",
-        "feature_permissions",
+        "version_access_until",
         "sites",
     )
     search_fields = ("name",)
@@ -351,12 +351,12 @@ class CustomerAdmin(admin.ModelAdmin):
     def sites(self, obj):
         return list(obj.sites.all())
 
-    @admin.display(description=_("Number of computers"))
+    @admin.display(description=_("Computers"))
     def number_of_computers(self, obj):
         computers_count = m.PC.objects.filter(site__customer=obj).count()
         return computers_count
 
-    @admin.display(description=_("Number of BorgerPC computers"))
+    @admin.display(description=_("BorgerPC computers"))
     def number_of_borgerpc_computers(self, obj):
         borgerpc_computers_count = (
             m.PC.objects.filter(site__in=obj.sites.all())
@@ -366,7 +366,7 @@ class CustomerAdmin(admin.ModelAdmin):
 
         return borgerpc_computers_count
 
-    @admin.display(description=_("Number of KioskPC computers"))
+    @admin.display(description=_("KioskPC computers"))
     def number_of_kioskpc_computers(self, obj):
         kioskpc_computers_count = (
             m.PC.objects.filter(site__in=obj.sites.all())
@@ -421,6 +421,11 @@ class FileParameterAdmin(admin.ModelAdmin):
         "created_by",
         "site",
     )
+
+    # Override delete_queryset to use the model delete function
+    def delete_queryset(self, request, queryset):
+        for obj in queryset:
+            obj.delete()
 
 
 @admin.register(m.ImageVersion)
@@ -541,6 +546,11 @@ class ScriptAdmin(admin.ModelAdmin):
     readonly_fields = ("user_created", "user_modified")
     search_fields = ("name", "executable_code")
     inlines = [InputInline]
+
+    # Override delete_queryset to use the model delete function
+    def delete_queryset(self, request, queryset):
+        for obj in queryset:
+            obj.delete()
 
     # Using is_global from the model, but also setting is as a boolean type so we get a checkmark instead
     @admin.display(boolean=True, description=_("Global"), ordering="site")

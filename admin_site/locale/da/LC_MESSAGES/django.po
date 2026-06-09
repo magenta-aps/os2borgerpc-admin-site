@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-27 14:48+0200\n"
+"POT-Creation-Date: 2026-06-09 12:46+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -15,9 +15,43 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: account/models.py docs/templates/users/index.html system/forms.py
+#: account/forms.py
+msgid "Select users to be added to this site"
+msgstr "Vælg brugere som skal tilføjes til dette site"
+
+#: account/forms.py
+msgid "Hold down Ctrl to select multiple users"
+msgstr "Hold Ctrl nede for at vælge flere brugere"
+
+#: account/forms.py
+msgid "Select the usertype that the users should be added with"
+msgstr "Vælg den brugertype som brugerne skal tilføjes med"
+
+#: account/forms.py docs/templates/users/index.html
+msgid "Usertype"
+msgstr "Brugertype"
+
+#: account/forms.py account/models.py docs/templates/users/index.html
 msgid "Language"
 msgstr "Sprog"
+
+#: account/forms.py docs/templates/scripts/parameters.html
+#: docs/templates/users/index.html system/models.py
+msgid "Password"
+msgstr "Adgangskode"
+
+#: account/forms.py
+msgid "Password (again)"
+msgstr "Adgangskode (igen)"
+
+#: account/forms.py
+msgid "Passwords must be identical."
+msgstr "De to adgangskoder skal være ens"
+
+#: account/forms.py
+#, python-format
+msgid "A user named \"%s\" already exists."
+msgstr "En bruger med navnet \"%s\" eksisterer allerede."
 
 #: account/models.py
 msgid "hidden user"
@@ -34,6 +68,31 @@ msgstr "Site-admin"
 #: account/models.py docs/templates/users/index.html
 msgid "Customer Admin"
 msgstr "Kunde-admin"
+
+#: account/views.py
+#, python-format
+msgid "The user(s) %s have been added to the site %s "
+msgstr "Bruger(ne) %s er blevet tilføjet til sitet %s "
+
+#: account/views.py
+#, python-format
+msgid "You have no user with the following username: %s"
+msgstr "Du har ikke nogen Bruger med følgende brugernavn: %s"
+
+#: account/views.py
+#, python-format
+msgid "User %s updated"
+msgstr "Bruger %s opdateret"
+
+#: account/views.py
+#, python-format
+msgid "User %s removed from the site %s"
+msgstr "Bruger %s fjernet fra sitet %s"
+
+#: account/views.py
+#, python-format
+msgid "User %s deleted"
+msgstr "Bruger %s slettet"
 
 #: changelog/models.py system/models.py
 msgid "name"
@@ -237,7 +296,6 @@ msgstr "PC"
 
 #: docs/templates/api.html docs/templates/jobs/index.html docs/views.py
 #: templates/site_with_navigation.html templates/system/jobs/site_jobs.html
-#: templates/system/scripts/confirm_delete.html
 msgid "Jobs"
 msgstr "Jobs"
 
@@ -801,11 +859,10 @@ msgstr ""
 #: docs/templates/computers/edit.html
 msgid ""
 "If you change the computer's name, its hostname will automatically be "
-"updated to match the new name (in lower case) during the next check-in."
+"updated to match the new name during the next check-in."
 msgstr ""
 "Hvis du ændrer computerens navn, vil dens hostname automatisk blive "
-"opdateret til at matche det nye navn (med kun små bogstaver) i forbindelse "
-"med næste tjek-ind."
+"opdateret til at matche det nye navn i forbindelse med næste tjek-ind."
 
 #: docs/templates/computers/edit.html
 msgid ""
@@ -834,7 +891,7 @@ msgstr ""
 "konfiguration."
 
 #: docs/templates/computers/index.html docs/templates/users/index.html
-#: docs/views.py templates/site_with_navigation.html
+#: docs/views.py system/admin.py templates/site_with_navigation.html
 #: templates/system/jobs/site_jobs.html
 #: templates/system/pcgroups/confirm_delete.html
 #: templates/system/pcs/no_pcs.html templates/system/pcs/pcs.html
@@ -1046,14 +1103,14 @@ msgstr "Slet"
 #, python-format
 msgid ""
 "In order to edit or delete a value, you must click on %(edit)s or %(delete)s "
-"to the right of the individual key. Note that most of the built-in "
-"configurations that are created automatically by the OS2borgerPC system "
-"cannot be edited or deleted via the admin interface. This is meant to "
-"prevent users from accidentally deleting relevant information or making "
-"changes that negatively impact their computers."
+"to the right of the individual key. Note that the built-in configurations "
+"that are created automatically by the OS2borgerPC system cannot be edited or "
+"deleted via the admin interface. This is meant to prevent users from "
+"accidentally deleting relevant information or making changes that negatively "
+"impact their computers."
 msgstr ""
 "For at rette eller slette en værdi, skal du klikke på %(edit)s eller "
-"%(delete)s ud for den enkelte nøgle. Bemærk at størstedelen af de indbyggede "
+"%(delete)s ud for den enkelte nøgle. Bemærk at de indbyggede "
 "konfigurationer, som automatisk oprettes af OS2borgerPC-systemet, ikke kan "
 "redigeres eller slettes via admininistrationsinterfacet. Dette har til "
 "formål at forhindre at anvendere ved en fejl kommer til at slette relevant "
@@ -1125,26 +1182,26 @@ msgstr "Betydningen af de indbyggede konfigurationer"
 
 #: docs/templates/configuration/index.html
 msgid ""
-"All values without _ in front are controlled by the admin portal while "
-"values with _ are controlled by the computer / the client. Values with _ in "
-"front can thus not be changed via the admin interface."
+"All built-in values without _ in front are controlled by the admin portal "
+"while built-in values with _ are controlled by the computer / the client. "
+"Built-in values with _ in front can thus not be changed via the admin "
+"interface."
 msgstr ""
-"Alle værdier uden _ foran bestemmes af adminportalen, mens værdier med _ "
-"bestemmes af computeren / klienten. Værdier med _ foran kan således ikke "
-"ændres via administrationsinterfacet."
+"Alle indbyggede værdier uden _ foran bestemmes af adminportalen, mens "
+"indbyggede værdier med _ bestemmes af computeren / klienten. Indbyggede "
+"værdier med _ foran kan således ikke ændres via administrationsinterfacet."
 
 #: docs/templates/configuration/index.html
 #, python-format
 msgid ""
 "This means that if one were to change e.g. %(version)s on the computer, then "
 "the value would be overwritten during the next check-in with the admin "
-"portal. Note that \"job_timeout\" is the only built-in configuration that "
-"can be changed via the admin portal."
+"portal. Note that the built-in configurations can't be changed via the admin "
+"portal."
 msgstr ""
 "Det vil i praksis sige, at hvis man eks. ændrer %(version)s på computeren, "
 "så vil den blive overskrevet efter næste tjek-ind med adminportalen. Bemærk "
-"at \"job_timeout\" er den eneste indbyggede konfiguration, som kan ændres "
-"via adminportalen."
+"at de indbyggede konfigurationer ikke kan ændres via adminportalen."
 
 #: docs/templates/configuration/index.html
 #: templates/system/configs/templates.html
@@ -1436,7 +1493,6 @@ msgstr ""
 #: docs/templates/groups/__submenu__.html docs/templates/groups/scripts.html
 #: templates/system/pcgroups/confirm_delete.html
 #: templates/system/pcgroups/site_groups.html
-#: templates/system/scripts/confirm_delete.html
 msgid "Associated Scripts"
 msgstr "Tilknyttede Scripts"
 
@@ -2134,6 +2190,7 @@ msgstr ""
 #: docs/templates/monitoring_rules/index.html docs/views.py
 #: templates/site_with_navigation.html
 #: templates/system/event_rules/shared_navigation.html
+#: templates/system/scripts/confirm_delete.html
 msgid "Monitoring Rules"
 msgstr "Overvågningsregler"
 
@@ -2917,11 +2974,6 @@ msgstr "Tid"
 msgid "Makes it possible to supply a time of day"
 msgstr "Giver mulighed for at angive et tidspunkt"
 
-#: docs/templates/scripts/parameters.html docs/templates/users/index.html
-#: system/forms.py system/models.py
-msgid "Password"
-msgstr "Adgangskode"
-
 #: docs/templates/scripts/parameters.html
 msgid ""
 "Makes it possible to supply a password string. This type of parameter "
@@ -3353,10 +3405,6 @@ msgstr "E-mailadresse"
 #: docs/templates/users/index.html
 msgid "Here you can enter the user's email address. It is optional."
 msgstr "Her kan du angive brugerens e-mail-adresse. Det er valgfrit."
-
-#: docs/templates/users/index.html system/forms.py
-msgid "Usertype"
-msgstr "Brugertype"
 
 #: docs/templates/users/index.html
 msgid "The options in this field depend on your own usertype"
@@ -4246,16 +4294,12 @@ msgid "Audit: FAQ (PDF)"
 msgstr "Revision: Ofte stillede spørgsmål (PDF)"
 
 #: system/admin.py
-msgid "Number of computers"
-msgstr "Antal computere"
+msgid "BorgerPC computers"
+msgstr "BorgerPC computere"
 
 #: system/admin.py
-msgid "Number of BorgerPC computers"
-msgstr "Antal BorgerPC computere"
-
-#: system/admin.py
-msgid "Number of KioskPC computers"
-msgstr "Antal KioskPC computere"
+msgid "KioskPC computers"
+msgstr "KioskPC computere"
 
 #: system/admin.py
 msgid "Feature permissions"
@@ -4272,6 +4316,10 @@ msgstr "Site"
 #: system/admin.py templates/system/scripts/search_result.html
 msgid "Global"
 msgstr "Global"
+
+#: system/admin.py
+msgid "Number of computers"
+msgstr "Antal computere"
 
 #: system/forms.py system/models.py
 msgid "Password for login API (e.g. Cicero)"
@@ -4314,31 +4362,6 @@ msgstr "Udfyldes hvis du ønsker at opdatere det nuværende kodeord"
 #: system/forms.py
 msgid "Fill out if you want to update the current value"
 msgstr "Udfyldes hvis du ønsker at opdatere den nuværende værdi"
-
-#: system/forms.py
-msgid "Select users to be added to this site"
-msgstr "Vælg brugere som skal tilføjes til dette site"
-
-#: system/forms.py
-msgid "Hold down Ctrl to select multiple users"
-msgstr "Hold Ctrl nede for at vælge flere brugere"
-
-#: system/forms.py
-msgid "Select the usertype that the users should be added with"
-msgstr "Vælg den brugertype som brugerne skal tilføjes med"
-
-#: system/forms.py
-msgid "Password (again)"
-msgstr "Adgangskode (igen)"
-
-#: system/forms.py
-msgid "Passwords must be identical."
-msgstr "De to adgangskoder skal være ens"
-
-#: system/forms.py
-#, python-format
-msgid "A user named \"%s\" already exists."
-msgstr "En bruger med navnet \"%s\" eksisterer allerede."
 
 #: system/mixins.py system/models.py
 msgid "modified"
@@ -4385,6 +4408,22 @@ msgid "country name"
 msgstr "landenavn"
 
 #: system/models.py
+msgid "Onboarding"
+msgstr "Onboarding"
+
+#: system/models.py
+msgid "Aboard"
+msgstr "Aboard"
+
+#: system/models.py
+msgid "Offboarding"
+msgstr "Offboarding"
+
+#: system/models.py
+msgid "Offboard"
+msgstr "Offboard"
+
+#: system/models.py
 msgid "customer name"
 msgstr "kundenavn"
 
@@ -4393,16 +4432,12 @@ msgid "site prefix"
 msgstr "site-præfiks"
 
 #: system/models.py
-msgid "Paid for access until this date"
-msgstr "Betalt for adgang indtil denne dato"
+msgid "Version access until"
+msgstr "Versionsadgang indtil"
 
 #: system/models.py
-msgid "Is a test customer"
-msgstr "Er en test kunde"
-
-#: system/models.py
-msgid "Enable to require SSO"
-msgstr "Aktiver for at kræve SSO"
+msgid "Require SSO"
+msgstr "Kræv SSO"
 
 #: system/models.py templates/system/sites/list.html
 msgid "UID"
@@ -4608,14 +4643,13 @@ msgstr "MAC"
 #: system/models.py
 msgid ""
 "Valid characters are (English) letters, numbers and hyphens, and it may not "
-"start with a hyphen. The length must be 1-40 characters.<br/>Note: If you "
-"change this, the computer's hostname will be updated, becoming a lowercased "
-"version of the new name."
+"start with a hyphen. The length must be 2-40 characters.<br/>Note: If you "
+"change this, the computer's hostname will be updated to match."
 msgstr ""
 "Gyldige tegn er (engelske) bogstaver, tal og bindestreger, og det må ikke "
-"starte med bindestreg. Længden skal være 1-40 tegn.<br/>Bemærk: Hvis du "
+"starte med bindestreg. Længden skal være 2-40 tegn.<br/>Bemærk: Hvis du "
 "ændrer dette, vil computerens hostnavn blive opdateret til at matche det nye "
-"navn, med små bogstaver."
+"navn."
 
 #: system/models.py
 msgid ""
@@ -4840,6 +4874,12 @@ msgstr "Indstillinger for %s opdateret"
 
 #: system/views.py
 #, python-format
+msgid "Cannot restart the job because the related script has been deleted %s"
+msgstr ""
+"Kan ikke genstarte jobbet, da det relaterede script er blevet slettet %s"
+
+#: system/views.py
+#, python-format
 msgid "The script %s is being rerun on the computer %s"
 msgstr "Scriptet %s bliver genkørt på computeren %s"
 
@@ -4994,31 +5034,6 @@ msgstr "Til-datoen kan ikke være før fra-datoen %s"
 
 #: system/views.py
 #, python-format
-msgid "The user(s) %s have been added to the site %s "
-msgstr "Bruger(ne) %s er blevet tilføjet til sitet %s "
-
-#: system/views.py
-#, python-format
-msgid "You have no user with the following username: %s"
-msgstr "Du har ikke nogen Bruger med følgende brugernavn: %s"
-
-#: system/views.py
-#, python-format
-msgid "User %s updated"
-msgstr "Bruger %s opdateret"
-
-#: system/views.py
-#, python-format
-msgid "User %s removed from the site %s"
-msgstr "Bruger %s fjernet fra sitet %s"
-
-#: system/views.py
-#, python-format
-msgid "User %s deleted"
-msgstr "Bruger %s slettet"
-
-#: system/views.py
-#, python-format
 msgid ""
 "You have no group with the following ID: %s. Try locating the group in the "
 "list of groups."
@@ -5149,12 +5164,20 @@ msgid "Last"
 msgstr "Sidste"
 
 #: templates/logout.html
+msgid "OS2borgerPC admin"
+msgstr "OS2borgerPC-admin"
+
+#: templates/logout.html
 msgid "You have been logged out"
 msgstr "Du er nu logget ud"
 
 #: templates/logout.html
 msgid "Click here to log in again"
 msgstr "Klik her for at logge ind igen"
+
+#: templates/site_with_navigation.html
+msgid " (Test)"
+msgstr " (Test)"
 
 #: templates/site_with_navigation.html templates/system/site_dashboard.html
 msgid "Dashboard"
@@ -5417,7 +5440,6 @@ msgid "Delete security rule"
 msgstr "Slet sikkerhedsregel"
 
 #: templates/system/event_rules/security_problem_confirm_delete.html
-#: templates/system/scripts/confirm_delete.html
 msgid "Security Rule"
 msgstr "Sikkerhedsregel"
 
@@ -5437,7 +5459,6 @@ msgid "Security Script"
 msgstr "Sikkerhedsscript"
 
 #: templates/system/event_rules/security_problem_confirm_delete.html
-#: templates/system/scripts/confirm_delete.html
 msgid "the Security Rule"
 msgstr "Sikkerhedsreglen"
 
@@ -6009,39 +6030,42 @@ msgid "Info"
 msgstr "Info"
 
 #: templates/system/scripts/confirm_delete.html
-msgid "the Script"
-msgstr "Scriptet"
-
-#: templates/system/scripts/confirm_delete.html
-msgid "Associated Script"
+msgid "Associated script"
 msgstr "Tilknyttet Script"
 
 #: templates/system/scripts/confirm_delete.html
 #, python-format
-msgid "Old %(jobs)s with %(the_script)s will be deleted."
-msgstr "Gamle %(jobs)s med %(the_script)s vil blive slettet."
+msgid ""
+"If the script is used as an %(associated_script)s the list of associated "
+"scripts will be updated, with the script removed."
+msgstr ""
+"Hvis scriptet er sat som %(associated_script)s vil listen af tilknyttede "
+"scripts blive opdateret, med scriptet fjernet."
+
+#: templates/system/scripts/confirm_delete.html
+msgid ""
+"The script's effects will remain on any computer, it has previously been run "
+"on."
+msgstr ""
+"Scriptets effekt vil forblive på enhver computer, som det tidligere er "
+"blevet kørt på."
 
 #: templates/system/scripts/confirm_delete.html
 #, python-format
 msgid ""
-"If %(the_script)s is set as an %(associated_script)s the list of the "
-"%(associated_scripts)s will be updated with %(the_script)s removed."
+"If the security script is used in any %(monitoring_rules)s, then those "
+"monitoring rules will also be deleted."
 msgstr ""
-"Hvis %(the_script)s er sat som %(associated_script)s vil listen af de "
-"%(associated_scripts)s blive opdateret med %(the_script)s fjernet."
-
-#: templates/system/scripts/confirm_delete.html
-#, python-format
-msgid ""
-"If %(the_security_script)s is used in a %(security_rule)s, then "
-"%(the_security_rule)s will also be deleted."
-msgstr ""
-"Hvis %(the_security_script)s bruges i en %(security_rule)s, vil "
-"%(the_security_rule)s også blive slettet."
+"Hvis sikkerhedsscriptet bruges i nogen %(monitoring_rules)s, vil disse "
+"overvågningsregler også blive slettet."
 
 #: templates/system/scripts/confirm_delete.html
 msgid "Are you sure you want to delete"
 msgstr "Er du sikker på, at du ønsker at slette"
+
+#: templates/system/scripts/confirm_delete.html
+msgid "the Script"
+msgstr "Scriptet"
 
 #: templates/system/scripts/create.html templates/system/scripts/update.html
 #: templates/system/wake_plan/wake_change_events/wake_change_event.html
@@ -6233,8 +6257,12 @@ msgid "Download standard image"
 msgstr "Download standard-image"
 
 #: templates/system/site_images.html
-msgid "Download multi language image"
-msgstr "Download flersprogs-image"
+msgid "Download international image"
+msgstr "Download internationalt image"
+
+#: templates/system/site_images.html
+msgid "Download danish image"
+msgstr "Download dansk image"
 
 #: templates/system/site_images.html
 msgid "No images were found"

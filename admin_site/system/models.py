@@ -163,6 +163,12 @@ class Country(models.Model):
 class Customer(models.Model):
     """A customer that can have one or more sites"""
 
+    class Status(models.IntegerChoices):
+        ONBOARDING = 0, _("Onboarding")
+        ABOARD = 1, _("Aboard")
+        OFFBOARDING = 2, _("Offboarding")
+        OFFBOARD = 3, _("Offboard")
+
     created = models.DateTimeField(
         verbose_name=_("created"), auto_now_add=True, null=True
     )
@@ -173,14 +179,12 @@ class Customer(models.Model):
     site_prefix = models.CharField(
         verbose_name=_("site prefix"), max_length=40, null=True
     )  # TODO: Remove null=True
-    paid_for_access_until = models.DateField(
-        verbose_name=_("Paid for access until this date"), null=True, blank=True
+    version_access_until = models.DateField(
+        verbose_name=_("Version access until"), null=True, blank=True
     )
-    is_test = models.BooleanField(verbose_name=_("Is a test customer"), default=False)
+    status = models.IntegerField(choices=Status, default=Status.ONBOARDING)
 
-    using_sso = models.BooleanField(
-        verbose_name=_("Enable to require SSO"), default=False
-    )
+    using_sso = models.BooleanField(verbose_name=_("Require SSO"), default=False)
 
     def __str__(self):
         return self.name
@@ -732,7 +736,7 @@ class PC(models.Model):
         verbose_name=_("name"),
         max_length=40,
         help_text=_(
-            "Valid characters are (English) letters, numbers and hyphens, and it may not start with a hyphen. The length must be 1-40 characters.<br/>Note: If you change this, the computer's hostname will be updated, becoming a lowercased version of the new name."
+            "Valid characters are (English) letters, numbers and hyphens, and it may not start with a hyphen. The length must be 2-40 characters.<br/>Note: If you change this, the computer's hostname will be updated to match."
         ),
         validators=[
             RegexValidator(
@@ -821,9 +825,9 @@ class PC(models.Model):
         for conf in configs:
             for entry in conf.entries.all():
                 result[entry.key] = entry.value
-        if "mac" not in result.keys():
-            result["mac"] = self.mac
+        # NOTE: If the protocol was changed so configs aren't deleted this shouldn't be necessary to send
         result["uid"] = self.uid
+        # TODO: Once hostname is generally equivalent to pc name, this should be removable
         result["name"] = self.name
         return result
 
@@ -952,6 +956,15 @@ class Script(AuditModelMixin):
     def __str__(self):
         return self.name
 
+    def delete(self, *args, **kwargs):
+        """
+        Set the script name as the name of any related batches
+        before deleting the script.
+        """
+        batches = self.batch_set.all()
+        batches.update(name=self.name)
+        super().delete(*args, **kwargs)
+
     def run_on(self, site, pc_list, *args, user):
         batch = Batch(site=site, script=self, name="")
         batch.save()
@@ -1011,7 +1024,7 @@ class Batch(models.Model):
     # TODO: The name should probably be generated automatically from ID and
     # script and date, etc. Or just write a more useful __str__ or similar
     name = models.CharField(verbose_name=_("name"), max_length=255)
-    script = models.ForeignKey(Script, on_delete=models.CASCADE)
+    script = models.ForeignKey(Script, on_delete=models.SET_NULL, null=True)
     site = models.ForeignKey(Site, related_name="batches", on_delete=models.CASCADE)
 
     def __str__(self):
@@ -1345,7 +1358,7 @@ class FileParameter(models.Model):
         if num_references == 1 and self.file.storage.exists(self.file.name):
             self.file.storage.delete(self.file.name)
         # self.file.delete(save=False)
-        super(FileParameter, self).delete(*args, **kwargs)
+        super().delete(*args, **kwargs)
 
 
 class Parameter(models.Model):

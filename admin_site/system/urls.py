@@ -56,12 +56,6 @@ from system.views import (
     SiteDelete,
     SiteSettings,
     TwoFactor,
-    UserCreate,
-    UserDelete,
-    UserLink,
-    UserRedirect,
-    UserRedirectSite,
-    UserUpdate,
     WakeChangeEventCreate,
     WakeChangeEventDelete,
     WakeChangeEventRedirect,
@@ -331,21 +325,6 @@ urlpatterns = [
         "scripts/uid/<script_uid>/",
         GlobalScriptRedirect.as_view(),
         name="script_redirect_uid",
-    ),
-    # Users
-    path("site/<slug>/users/", UserRedirect.as_view(), name="users"),
-    path("users/", UserRedirectSite.as_view(), name="users_redirect_site"),
-    path("site/<slug>/users/new/", UserCreate.as_view(), name="new_user"),
-    path("site/<slug>/users/link/", UserLink.as_view(), name="link_users"),
-    path(
-        "site/<slug>/users/<username>/",
-        UserUpdate.as_view(),
-        name="user",
-    ),
-    path(
-        "site/<slug>/users/<username>/delete/",
-        UserDelete.as_view(),
-        name="user_delete",
     ),
     # Documentation
     path(

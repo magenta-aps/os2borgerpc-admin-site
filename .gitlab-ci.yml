@@ -35,7 +35,8 @@ variables:
 
 pre-commit:
   stage: lint
-  image: alpine:edge
+  # NOTE: Some use alpine:edge which is their main branch, but sometimes it understandably seems to break, sooo
+  image: alpine:latest
   before_script:
     - apk add pre-commit git
     # Prepare bin cache
@@ -114,7 +115,7 @@ release latest:
 #  Deploy stage  #
 ##################
 
-testing update version salt:
+bpc testing update version salt:
   extends: [.rules:semver-all, .config:endpoint-with-tag]
   needs: [release versioned]
   when: manual
@@ -122,9 +123,9 @@ testing update version salt:
     ENDPOINT: os2bpc/salt/update-test
     CONFIG_UPDATER_USERNAME: os2bpc
 
-testing trigger salt deployment:
+bpc testing trigger salt deployment:
   extends: [.rules:semver-all, .saltbert]
-  needs: [testing update version salt]
+  needs: [bpc testing update version salt]
   when: manual
   variables:
     SALTBERT_ORCHESTRATION: os2bpc.test
@@ -134,17 +135,17 @@ testing trigger salt deployment:
     name: os2borgerpc-test
     url: https://os2borgerpc-test.magenta.dk
 
-prod update version salt:
+bpc prod update version salt:
   extends: [.rules:semver-core, .config:endpoint-with-tag]
-  needs: [release latest, testing trigger salt deployment]
+  needs: [release latest, bpc testing trigger salt deployment]
   when: manual
   variables:
     ENDPOINT: os2bpc/salt/update-production
     CONFIG_UPDATER_USERNAME: os2bpc
 
-prod trigger salt deployment:
+bpc prod trigger salt deployment:
   extends: [.rules:semver-core, .saltbert]
-  needs: [prod update version salt]
+  needs: [bpc prod update version salt]
   when: manual
   variables:
     SALTBERT_ORCHESTRATION: os2bpc.production

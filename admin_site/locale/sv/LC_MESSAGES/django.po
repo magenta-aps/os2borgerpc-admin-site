@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-27 14:48+0200\n"
+"POT-Creation-Date: 2026-06-09 13:26+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -15,9 +15,43 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: account/models.py docs/templates/users/index.html system/forms.py
+#: account/forms.py
+msgid "Select users to be added to this site"
+msgstr "Välj användare som ska läggas till på detta site"
+
+#: account/forms.py
+msgid "Hold down Ctrl to select multiple users"
+msgstr "Håll ned Ctrl för att välja flera användare"
+
+#: account/forms.py
+msgid "Select the usertype that the users should be added with"
+msgstr "Välj den användartyp som användarna ska läggas till med"
+
+#: account/forms.py docs/templates/users/index.html
+msgid "Usertype"
+msgstr "Typ av användare"
+
+#: account/forms.py account/models.py docs/templates/users/index.html
 msgid "Language"
 msgstr "Språk"
+
+#: account/forms.py docs/templates/scripts/parameters.html
+#: docs/templates/users/index.html system/models.py
+msgid "Password"
+msgstr "Lösenord"
+
+#: account/forms.py
+msgid "Password (again)"
+msgstr "Lösenord (igen)"
+
+#: account/forms.py
+msgid "Passwords must be identical."
+msgstr "De två lösenorden måste vara desamma"
+
+#: account/forms.py
+#, python-format
+msgid "A user named \"%s\" already exists."
+msgstr "En användare med namnet \"%s\" finns redan."
 
 #: account/models.py
 msgid "hidden user"
@@ -34,6 +68,31 @@ msgstr "Site-admin"
 #: account/models.py docs/templates/users/index.html
 msgid "Customer Admin"
 msgstr "Kunde-admin"
+
+#: account/views.py
+#, python-format
+msgid "The user(s) %s have been added to the site %s "
+msgstr "Användarna %s har lagts till på sitet %s"
+
+#: account/views.py
+#, python-format
+msgid "You have no user with the following username: %s"
+msgstr "Du har ingen användare med följande användarnamn: %s"
+
+#: account/views.py
+#, python-format
+msgid "User %s updated"
+msgstr "Användare %s uppdaterad"
+
+#: account/views.py
+#, python-format
+msgid "User %s removed from the site %s"
+msgstr "Användaren %s togs bort från sitet %s"
+
+#: account/views.py
+#, python-format
+msgid "User %s deleted"
+msgstr "Användaren %s raderad"
 
 #: changelog/models.py system/models.py
 msgid "name"
@@ -237,7 +296,6 @@ msgstr "PC"
 
 #: docs/templates/api.html docs/templates/jobs/index.html docs/views.py
 #: templates/site_with_navigation.html templates/system/jobs/site_jobs.html
-#: templates/system/scripts/confirm_delete.html
 msgid "Jobs"
 msgstr "Jobs"
 
@@ -799,10 +857,10 @@ msgstr ""
 #: docs/templates/computers/edit.html
 msgid ""
 "If you change the computer's name, its hostname will automatically be "
-"updated to match the new name (in lower case) during the next check-in."
+"updated to match the new name during the next check-in."
 msgstr ""
 "Om du ändrar datorns namn kommer värdnamnet automatiskt att uppdateras så "
-"att det matchar det nya namnet (endast med gemener) vid nästa incheckning."
+"att det matchar det nya namnet vid nästa incheckning."
 
 #: docs/templates/computers/edit.html
 msgid ""
@@ -828,7 +886,7 @@ msgid "Note that group membership can affect the computer's configuration."
 msgstr "Observera att gruppmedlemskap kan påverka datorns konfiguration."
 
 #: docs/templates/computers/index.html docs/templates/users/index.html
-#: docs/views.py templates/site_with_navigation.html
+#: docs/views.py system/admin.py templates/site_with_navigation.html
 #: templates/system/jobs/site_jobs.html
 #: templates/system/pcgroups/confirm_delete.html
 #: templates/system/pcs/no_pcs.html templates/system/pcs/pcs.html
@@ -1039,18 +1097,18 @@ msgstr "Ta bort"
 #, python-format
 msgid ""
 "In order to edit or delete a value, you must click on %(edit)s or %(delete)s "
-"to the right of the individual key. Note that most of the built-in "
-"configurations that are created automatically by the OS2borgerPC system "
-"cannot be edited or deleted via the admin interface. This is meant to "
-"prevent users from accidentally deleting relevant information or making "
-"changes that negatively impact their computers."
+"to the right of the individual key. Note that the built-in configurations "
+"that are created automatically by the OS2borgerPC system cannot be edited or "
+"deleted via the admin interface. This is meant to prevent users from "
+"accidentally deleting relevant information or making changes that negatively "
+"impact their computers."
 msgstr ""
 "Om du vill korrigera eller ta bort ett värde klickar du på %(edit)s eller "
-"%(delete)s bredvid varje nyckel. Observera att de flesta av de inbyggda "
-"konfigurationerna som skapas automatiskt av medborgarPC-systemet inte kan "
-"redigeras eller raderas via administrationsgränssnittet. Detta är avsett att "
-"förhindra användare från att av misstag radera relevant information eller "
-"göra ändringar som påverkar deras datorer negativt."
+"%(delete)s bredvid varje nyckel. Observera att de inbyggda konfigurationerna "
+"som skapas automatiskt av medborgarPC-systemet inte kan redigeras eller "
+"raderas via administrationsgränssnittet. Detta är avsett att förhindra "
+"användare från att av misstag radera relevant information eller göra "
+"ändringar som påverkar deras datorer negativt."
 
 #: docs/templates/configuration/index.html
 msgid "Configurations at different levels"
@@ -1118,26 +1176,26 @@ msgstr "Vikten av de inbyggda konfigurationerna"
 
 #: docs/templates/configuration/index.html
 msgid ""
-"All values without _ in front are controlled by the admin portal while "
-"values with _ are controlled by the computer / the client. Values with _ in "
-"front can thus not be changed via the admin interface."
+"All built-in values without _ in front are controlled by the admin portal "
+"while built-in values with _ are controlled by the computer / the client. "
+"Built-in values with _ in front can thus not be changed via the admin "
+"interface."
 msgstr ""
-"Alla värden utan _ framför bestäms av adminsidan, medan värden med _ bestäms "
-"av datorn/klienten. Värden med _ framför kan därför inte ändras via "
-"administrationsgränssnittet."
+"Alla inbyggda värden utan _ framför bestäms av adminsidan, medan inbyggda "
+"värden med _ bestäms av datorn/klienten. Inbyggda värden med _ framför kan "
+"därför inte ändras via administrationsgränssnittet."
 
 #: docs/templates/configuration/index.html
 #, python-format
 msgid ""
 "This means that if one were to change e.g. %(version)s on the computer, then "
 "the value would be overwritten during the next check-in with the admin "
-"portal. Note that \"job_timeout\" is the only built-in configuration that "
-"can be changed via the admin portal."
+"portal. Note that the built-in configurations can't be changed via the admin "
+"portal."
 msgstr ""
 "I praktiken innebär det att om man skulle ändra t.ex. %(version)s på datorn, "
 "då kommer det att skrivas över efter nästa incheckning med adminsidan. "
-"Observera att \"job_timeout\" är den enda inbyggda konfigurationen som kan "
-"ändras via adminsidan."
+"Observera att de inbyggda konfigurationerna inte kan ändras via adminsidan."
 
 #: docs/templates/configuration/index.html
 #: templates/system/configs/templates.html
@@ -1428,7 +1486,6 @@ msgstr ""
 #: docs/templates/groups/__submenu__.html docs/templates/groups/scripts.html
 #: templates/system/pcgroups/confirm_delete.html
 #: templates/system/pcgroups/site_groups.html
-#: templates/system/scripts/confirm_delete.html
 msgid "Associated Scripts"
 msgstr "Associerade skript"
 
@@ -2123,6 +2180,7 @@ msgstr ""
 #: docs/templates/monitoring_rules/index.html docs/views.py
 #: templates/site_with_navigation.html
 #: templates/system/event_rules/shared_navigation.html
+#: templates/system/scripts/confirm_delete.html
 msgid "Monitoring Rules"
 msgstr "Övervakningsregler"
 
@@ -2901,11 +2959,6 @@ msgstr "Tid"
 msgid "Makes it possible to supply a time of day"
 msgstr "Ger möjlighet att ange tid"
 
-#: docs/templates/scripts/parameters.html docs/templates/users/index.html
-#: system/forms.py system/models.py
-msgid "Password"
-msgstr "Lösenord"
-
 #: docs/templates/scripts/parameters.html
 msgid ""
 "Makes it possible to supply a password string. This type of parameter "
@@ -3336,10 +3389,6 @@ msgstr "E-postadress"
 #: docs/templates/users/index.html
 msgid "Here you can enter the user's email address. It is optional."
 msgstr "Här kan du ange användarens e-postadress. Det är valfritt."
-
-#: docs/templates/users/index.html system/forms.py
-msgid "Usertype"
-msgstr "Typ av användare"
 
 #: docs/templates/users/index.html
 msgid "The options in this field depend on your own usertype"
@@ -4223,16 +4272,12 @@ msgid "Audit: FAQ (PDF)"
 msgstr "Revision: Vanliga frågor (PDF)"
 
 #: system/admin.py
-msgid "Number of computers"
-msgstr "Antal datorer"
+msgid "BorgerPC computers"
+msgstr "MedborgarPC-datorer"
 
 #: system/admin.py
-msgid "Number of BorgerPC computers"
-msgstr "Antal MedborgarPC-datorer"
-
-#: system/admin.py
-msgid "Number of KioskPC computers"
-msgstr "Antal KioskPC-datorer"
+msgid "KioskPC computers"
+msgstr "KioskPC-datorer"
 
 #: system/admin.py
 msgid "Feature permissions"
@@ -4249,6 +4294,10 @@ msgstr "Site"
 #: system/admin.py templates/system/scripts/search_result.html
 msgid "Global"
 msgstr "Global"
+
+#: system/admin.py
+msgid "Number of computers"
+msgstr "Antal datorer"
 
 #: system/forms.py system/models.py
 msgid "Password for login API (e.g. Cicero)"
@@ -4290,31 +4339,6 @@ msgstr "Utfylles om du vill uppdatera den nuvarande koden"
 #: system/forms.py
 msgid "Fill out if you want to update the current value"
 msgstr "Fyll i om du vill uppdatera det aktuella värdet"
-
-#: system/forms.py
-msgid "Select users to be added to this site"
-msgstr "Välj användare som ska läggas till på detta site"
-
-#: system/forms.py
-msgid "Hold down Ctrl to select multiple users"
-msgstr "Håll ned Ctrl för att välja flera användare"
-
-#: system/forms.py
-msgid "Select the usertype that the users should be added with"
-msgstr "Välj den användartyp som användarna ska läggas till med"
-
-#: system/forms.py
-msgid "Password (again)"
-msgstr "Lösenord (igen)"
-
-#: system/forms.py
-msgid "Passwords must be identical."
-msgstr "De två lösenorden måste vara desamma"
-
-#: system/forms.py
-#, python-format
-msgid "A user named \"%s\" already exists."
-msgstr "En användare med namnet \"%s\" finns redan."
 
 #: system/mixins.py system/models.py
 msgid "modified"
@@ -4361,6 +4385,22 @@ msgid "country name"
 msgstr "lands namn"
 
 #: system/models.py
+msgid "Onboarding"
+msgstr "Onboarding"
+
+#: system/models.py
+msgid "Aboard"
+msgstr "Aboard"
+
+#: system/models.py
+msgid "Offboarding"
+msgstr "Offboarding"
+
+#: system/models.py
+msgid "Offboard"
+msgstr "Offboard"
+
+#: system/models.py
 msgid "customer name"
 msgstr "kundnamn"
 
@@ -4369,16 +4409,12 @@ msgid "site prefix"
 msgstr "site prefix"
 
 #: system/models.py
-msgid "Paid for access until this date"
-msgstr "Betalat för tillträde fram till detta datum"
+msgid "Version access until"
+msgstr "Versionsåtkomst tills"
 
 #: system/models.py
-msgid "Is a test customer"
-msgstr "Är en test kund"
-
-#: system/models.py
-msgid "Enable to require SSO"
-msgstr "Aktivera för att kräva sso"
+msgid "Require SSO"
+msgstr "Kräver SSO"
 
 #: system/models.py templates/system/sites/list.html
 msgid "UID"
@@ -4587,14 +4623,12 @@ msgstr "MAC"
 #: system/models.py
 msgid ""
 "Valid characters are (English) letters, numbers and hyphens, and it may not "
-"start with a hyphen. The length must be 1-40 characters.<br/>Note: If you "
-"change this, the computer's hostname will be updated, becoming a lowercased "
-"version of the new name."
+"start with a hyphen. The length must be 2-40 characters.<br/>Note: If you "
+"change this, the computer's hostname will be updated to match."
 msgstr ""
 "Giltiga tecken är (engelska) bokstäver, siffror och bindestreck, och det får "
-"inte börja med ett bindestreck. Längden måste vara 1-40 tecken.<br/>Obs! Om "
-"du ändrar detta kommer datorns värdnamn att uppdateras till det nya namnet, "
-"med små bokstäver."
+"inte börja med ett bindestreck. Längden måste vara 2-40 tecken.<br/>Obs! Om "
+"du ändrar detta kommer datorns värdnamn att uppdateras till det nya namnet."
 
 #: system/models.py
 msgid ""
@@ -4819,6 +4853,13 @@ msgstr "Inställningar för %s uppdaterat"
 
 #: system/views.py
 #, python-format
+msgid "Cannot restart the job because the related script has been deleted %s"
+msgstr ""
+"Det går inte att starta om jobbet eftersom det relaterade skriptet har "
+"tagits bort %s"
+
+#: system/views.py
+#, python-format
 msgid "The script %s is being rerun on the computer %s"
 msgstr "Skriptet %s körs på datorn %s"
 
@@ -4975,31 +5016,6 @@ msgstr "Datumet Till får inte vara före datumet Från %s"
 
 #: system/views.py
 #, python-format
-msgid "The user(s) %s have been added to the site %s "
-msgstr "Användarna %s har lagts till på sitet %s"
-
-#: system/views.py
-#, python-format
-msgid "You have no user with the following username: %s"
-msgstr "Du har ingen användare med följande användarnamn: %s"
-
-#: system/views.py
-#, python-format
-msgid "User %s updated"
-msgstr "Användare %s uppdaterad"
-
-#: system/views.py
-#, python-format
-msgid "User %s removed from the site %s"
-msgstr "Användaren %s togs bort från sitet %s"
-
-#: system/views.py
-#, python-format
-msgid "User %s deleted"
-msgstr "Användaren %s raderad"
-
-#: system/views.py
-#, python-format
 msgid ""
 "You have no group with the following ID: %s. Try locating the group in the "
 "list of groups."
@@ -5131,12 +5147,20 @@ msgid "Last"
 msgstr "Sista"
 
 #: templates/logout.html
+msgid "OS2borgerPC admin"
+msgstr "Sambruk MedborgarPC admin"
+
+#: templates/logout.html
 msgid "You have been logged out"
 msgstr "Du är nu utloggad"
 
 #: templates/logout.html
 msgid "Click here to log in again"
 msgstr "Klicka här för att logga in igen"
+
+#: templates/site_with_navigation.html
+msgid " (Test)"
+msgstr " (Test)"
 
 #: templates/site_with_navigation.html templates/system/site_dashboard.html
 msgid "Dashboard"
@@ -5399,7 +5423,6 @@ msgid "Delete security rule"
 msgstr "Ta bort säkerhetsregeln"
 
 #: templates/system/event_rules/security_problem_confirm_delete.html
-#: templates/system/scripts/confirm_delete.html
 msgid "Security Rule"
 msgstr "Säkerhetsregel"
 
@@ -5419,7 +5442,6 @@ msgid "Security Script"
 msgstr "Säkerhetsskript"
 
 #: templates/system/event_rules/security_problem_confirm_delete.html
-#: templates/system/scripts/confirm_delete.html
 msgid "the Security Rule"
 msgstr "Säkerhetsregeln"
 
@@ -5993,39 +6015,42 @@ msgid "Info"
 msgstr "Info"
 
 #: templates/system/scripts/confirm_delete.html
-msgid "the Script"
-msgstr "Skriptet"
-
-#: templates/system/scripts/confirm_delete.html
-msgid "Associated Script"
+msgid "Associated script"
 msgstr "Associerat Skript"
 
 #: templates/system/scripts/confirm_delete.html
 #, python-format
-msgid "Old %(jobs)s with %(the_script)s will be deleted."
-msgstr "Gamla %(jobs)s med %(the_script)s kommer att raderas."
+msgid ""
+"If the script is used as an %(associated_script)s the list of associated "
+"scripts will be updated, with the script removed."
+msgstr ""
+"Om skriptet används som ett %(associated_script)s kommer listan över "
+"associerade skript att uppdateras, och skriptet tas bort."
+
+#: templates/system/scripts/confirm_delete.html
+msgid ""
+"The script's effects will remain on any computer, it has previously been run "
+"on."
+msgstr ""
+"Skriptets effekter kommer att kvarstå på alla datorer där det tidigare har "
+"körts."
 
 #: templates/system/scripts/confirm_delete.html
 #, python-format
 msgid ""
-"If %(the_script)s is set as an %(associated_script)s the list of the "
-"%(associated_scripts)s will be updated with %(the_script)s removed."
+"If the security script is used in any %(monitoring_rules)s, then those "
+"monitoring rules will also be deleted."
 msgstr ""
-"Om %(the_script)s fastställs som %(associated_script)s förteckningen över de "
-"%(associated_scripts)s uppdateras med %(the_script)s tas bort."
-
-#: templates/system/scripts/confirm_delete.html
-#, python-format
-msgid ""
-"If %(the_security_script)s is used in a %(security_rule)s, then "
-"%(the_security_rule)s will also be deleted."
-msgstr ""
-"Om %(the_security_script)sanvänds i en %(security_rule)s, "
-"kommer%(the_security_rule)s också tas bort.."
+"Om säkerhetsskriptet används i några %(monitoring_rules)s kommer även dessa "
+"övervakningsregler att raderas."
 
 #: templates/system/scripts/confirm_delete.html
 msgid "Are you sure you want to delete"
 msgstr "Är du säker på att du vill radera"
+
+#: templates/system/scripts/confirm_delete.html
+msgid "the Script"
+msgstr "Skriptet"
 
 #: templates/system/scripts/create.html templates/system/scripts/update.html
 #: templates/system/wake_plan/wake_change_events/wake_change_event.html
@@ -6217,8 +6242,12 @@ msgid "Download standard image"
 msgstr "Ladda ner standard image"
 
 #: templates/system/site_images.html
-msgid "Download multi language image"
-msgstr "Ladda ner flerspråkig image"
+msgid "Download international image"
+msgstr "Ladda ner standard image"
+
+#: templates/system/site_images.html
+msgid "Download danish image"
+msgstr "Ladda ner danska image"
 
 #: templates/system/site_images.html
 msgid "No images were found"

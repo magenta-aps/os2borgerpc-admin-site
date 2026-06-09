@@ -2,7 +2,10 @@
 {% load i18n %}
 
 {% block header_title %}
-<em>{{ site.name }}:</em> {% block specific_title %}{% endblock %}
+  {% if site.customer.status == site.customer.Status.ONBOARDING %}
+    {% translate " (Test)" as onboarding %}
+  {% endif %}
+  <em>{{ site.name }}{{ onboarding }}</em>: {% block specific_title %}{% endblock %}
 {% endblock %}
 
 {% block page_type_class %}

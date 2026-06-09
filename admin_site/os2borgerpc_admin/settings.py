@@ -19,6 +19,8 @@ AUTH_PROFILE_MODULE = "account.UserProfile"
 
 DEBUG = os.environ.get("DEBUG") == "True"
 
+# "A list of all the people who get code error notifications."
+# https://docs.djangoproject.com/en/6.0/ref/settings/#std-setting-ADMINS
 ADMINS = (
     [
         (os.environ.get("ADMIN_NAME"), os.environ.get("ADMIN_EMAIL")),
@@ -27,7 +29,33 @@ ADMINS = (
     else None
 )
 
+# "A list [..] that specifies who should get broken link notifications when BrokenLinkEmailsMiddleware is enabled."
 MANAGERS = ADMINS
+
+# By default Django uses "cached.Loader"
+# which caches templates quite aggressively.
+# Unfortunately it doesn't include proper detection
+# for html file changes, which causes
+# the served templates to poorly update when doing frontend work
+#
+# We used to work around this by changing
+# the gunicorn settings to --max-requests 1 and --workers 1,
+# which forced a reset through gunicorn.
+# That also made the web page *really* slow
+# in development since gunicorn spent most of the time
+# recreating workers, which was not ideal
+#
+# Caching is of course desired in production,
+# so we just change between cached and
+# not cached loader depending on debug environment
+#
+# Related docs: https://docs.djangoproject.com/en/6.0/ref/templates/api/#django.template.loaders.cached.Loader
+base_loaders = [
+    "django.template.loaders.filesystem.Loader",
+    "django.template.loaders.app_directories.Loader",
+]
+
+production_loaders = [("django.template.loaders.cached.Loader", base_loaders)]
 
 # Template settings
 TEMPLATES = [
@@ -36,7 +64,6 @@ TEMPLATES = [
         "DIRS": [
             BASE_DIR / "templates/",
         ],
-        "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
@@ -47,6 +74,7 @@ TEMPLATES = [
             "builtins": [
                 "system.templatetags.custom_tags",
             ],
+            "loaders": base_loaders if DEBUG else production_loaders,
         },
     },
 ]
@@ -145,7 +173,14 @@ if os.environ.get("GS_BUCKET_NAME"):
     # The Google Cloud Storage bucket name. For `django-storages[google]`
     # https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
     # If it is set, we save all files to Google Cloud.
-    DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
     GS_BUCKET_NAME = os.environ.get("GS_BUCKET_NAME")
     GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
         os.environ.get("GS_CREDENTIALS_FILE")
@@ -173,14 +208,18 @@ MIDDLEWARE = (
 
 # Email settings
 
+# FROM field for regular e-mails sent by django. Ought to match the SMTP user.
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
-ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL")
-EMAIL_HOST = os.environ.get("EMAIL_HOST")
-EMAIL_PORT = os.environ.get("EMAIL_PORT")
+# FROM field for server-error emails (see mail_admins). Ought to match the SMTP user
 SERVER_EMAIL = os.environ.get("SERVER_EMAIL")
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# The recipient for server error e-mails
+ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL")
+# SMTP host/username/password
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+# Django's default email backend
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 ROOT_URLCONF = "os2borgerpc_admin.urls"
 
@@ -196,7 +235,6 @@ LOCAL_APPS = (
 )
 
 THIRD_PARTY_APPS = (
-    "django_extensions",
     "crispy_forms",
     "crispy_bootstrap5",
     "markdownx",
@@ -213,46 +251,54 @@ DJANGO_APPS = (
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # Uncomment the next line to enable the admin:
     "django.contrib.admin",
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
-# A sample logging configuration. The only tangible logging
-# performed by this configuration is to send an email to
-# the site admins on every HTTP 500 error when DEBUG=False.
+# Django's logging is basically Python's logging with only a few additions.
+# The below config sends an email to the site admins on every HTTP 500 error when DEBUG=False.
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
-        "console": {
+        "bpc": {
+            # https://docs.python.org/3/library/logging.html#levels
             "format": "{levelname} {asctime} {message}",
             "style": "{",
         }
     },
-    "filters": {"require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}},
+    "filters": {
+        # This is a default filter - filtering away all logs when Debug=TRUE
+        "require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}
+    },
     "handlers": {
+        # mail_admins is default
+        # Uses the default formatter, which is only the message
         "mail_admins": {
             "level": "ERROR",
             "filters": ["require_debug_false"],
             "class": "django.utils.log.AdminEmailHandler",
         },
-        "console": {
+        # Changes the formatter from the default "console" handler
+        "custom_console": {
             "class": "logging.StreamHandler",
-            "formatter": "console",
+            "formatter": "bpc",
         },
     },
     "loggers": {
+        # This is not default
         "django.db.backends": {
             "level": os.environ.get("DB_LOG_LEVEL", "CRITICAL"),
-            "handlers": ["console"],
+            "handlers": ["custom_console"],
+            "propagate": False,
         },
     },
+    # This is not default
     "root": {
-        "handlers": ["console", "mail_admins"],
+        "handlers": ["custom_console", "mail_admins"],
         "level": os.environ.get("LOG_LEVEL", "ERROR"),
     },
 }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-02 13:09+0200\n"
+"POT-Creation-Date: 2026-06-09 12:46+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -296,7 +296,6 @@ msgstr "PC"
 
 #: docs/templates/api.html docs/templates/jobs/index.html docs/views.py
 #: templates/site_with_navigation.html templates/system/jobs/site_jobs.html
-#: templates/system/scripts/confirm_delete.html
 msgid "Jobs"
 msgstr "Jobs"
 
@@ -1494,7 +1493,6 @@ msgstr ""
 #: docs/templates/groups/__submenu__.html docs/templates/groups/scripts.html
 #: templates/system/pcgroups/confirm_delete.html
 #: templates/system/pcgroups/site_groups.html
-#: templates/system/scripts/confirm_delete.html
 msgid "Associated Scripts"
 msgstr "Tilknyttede Scripts"
 
@@ -2192,6 +2190,7 @@ msgstr ""
 #: docs/templates/monitoring_rules/index.html docs/views.py
 #: templates/site_with_navigation.html
 #: templates/system/event_rules/shared_navigation.html
+#: templates/system/scripts/confirm_delete.html
 msgid "Monitoring Rules"
 msgstr "Overvågningsregler"
 
@@ -5441,7 +5440,6 @@ msgid "Delete security rule"
 msgstr "Slet sikkerhedsregel"
 
 #: templates/system/event_rules/security_problem_confirm_delete.html
-#: templates/system/scripts/confirm_delete.html
 msgid "Security Rule"
 msgstr "Sikkerhedsregel"
 
@@ -5461,7 +5459,6 @@ msgid "Security Script"
 msgstr "Sikkerhedsscript"
 
 #: templates/system/event_rules/security_problem_confirm_delete.html
-#: templates/system/scripts/confirm_delete.html
 msgid "the Security Rule"
 msgstr "Sikkerhedsreglen"
 
@@ -6033,39 +6030,42 @@ msgid "Info"
 msgstr "Info"
 
 #: templates/system/scripts/confirm_delete.html
-msgid "the Script"
-msgstr "Scriptet"
-
-#: templates/system/scripts/confirm_delete.html
-msgid "Associated Script"
+msgid "Associated script"
 msgstr "Tilknyttet Script"
 
 #: templates/system/scripts/confirm_delete.html
 #, python-format
-msgid "Old %(jobs)s with %(the_script)s will be deleted."
-msgstr "Gamle %(jobs)s med %(the_script)s vil blive slettet."
+msgid ""
+"If the script is used as an %(associated_script)s the list of associated "
+"scripts will be updated, with the script removed."
+msgstr ""
+"Hvis scriptet er sat som %(associated_script)s vil listen af tilknyttede "
+"scripts blive opdateret, med scriptet fjernet."
+
+#: templates/system/scripts/confirm_delete.html
+msgid ""
+"The script's effects will remain on any computer, it has previously been run "
+"on."
+msgstr ""
+"Scriptets effekt vil forblive på enhver computer, som det tidligere er "
+"blevet kørt på."
 
 #: templates/system/scripts/confirm_delete.html
 #, python-format
 msgid ""
-"If %(the_script)s is set as an %(associated_script)s the list of the "
-"%(associated_scripts)s will be updated with %(the_script)s removed."
+"If the security script is used in any %(monitoring_rules)s, then those "
+"monitoring rules will also be deleted."
 msgstr ""
-"Hvis %(the_script)s er sat som %(associated_script)s vil listen af de "
-"%(associated_scripts)s blive opdateret med %(the_script)s fjernet."
-
-#: templates/system/scripts/confirm_delete.html
-#, python-format
-msgid ""
-"If %(the_security_script)s is used in a %(security_rule)s, then "
-"%(the_security_rule)s will also be deleted."
-msgstr ""
-"Hvis %(the_security_script)s bruges i en %(security_rule)s, vil "
-"%(the_security_rule)s også blive slettet."
+"Hvis sikkerhedsscriptet bruges i nogen %(monitoring_rules)s, vil disse "
+"overvågningsregler også blive slettet."
 
 #: templates/system/scripts/confirm_delete.html
 msgid "Are you sure you want to delete"
 msgstr "Er du sikker på, at du ønsker at slette"
+
+#: templates/system/scripts/confirm_delete.html
+msgid "the Script"
+msgstr "Scriptet"
 
 #: templates/system/scripts/create.html templates/system/scripts/update.html
 #: templates/system/wake_plan/wake_change_events/wake_change_event.html

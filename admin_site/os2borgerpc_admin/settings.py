@@ -173,7 +173,14 @@ if os.environ.get("GS_BUCKET_NAME"):
     # The Google Cloud Storage bucket name. For `django-storages[google]`
     # https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
     # If it is set, we save all files to Google Cloud.
-    DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
     GS_BUCKET_NAME = os.environ.get("GS_BUCKET_NAME")
     GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
         os.environ.get("GS_CREDENTIALS_FILE")

@@ -120,7 +120,7 @@ bpc testing update version salt:
   needs: [release versioned]
   when: manual
   variables:
-    ENDPOINT: os2bpc/salt/update-test
+    ENDPOINT: os2bpc/salt/os2bpc-update-test
     CONFIG_UPDATER_USERNAME: os2bpc
 
 bpc testing trigger salt deployment:
@@ -140,7 +140,7 @@ bpc prod update version salt:
   needs: [release latest, bpc testing trigger salt deployment]
   when: manual
   variables:
-    ENDPOINT: os2bpc/salt/update-production
+    ENDPOINT: os2bpc/salt/os2bpc-update-production
     CONFIG_UPDATER_USERNAME: os2bpc
 
 bpc prod trigger salt deployment:

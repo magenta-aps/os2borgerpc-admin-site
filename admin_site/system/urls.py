@@ -1,6 +1,4 @@
-from django.templatetags.static import static
 from django.urls import path
-from django.views.generic import RedirectView
 from django.views.i18n import JavaScriptCatalog
 from system.views import (
     AdminIndex,
@@ -325,11 +323,6 @@ urlpatterns = [
         "scripts/uid/<script_uid>/",
         GlobalScriptRedirect.as_view(),
         name="script_redirect_uid",
-    ),
-    # Documentation
-    path(
-        "documentation/os2borgerpc_installation_guide/",
-        RedirectView.as_view(url=static("docs/OS2BorgerPC_installation_guide_da.pdf")),
     ),
     # Image Versions
     path(

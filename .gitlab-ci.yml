@@ -115,6 +115,8 @@ release latest:
 #  Deploy stage  #
 ##################
 
+## BPC ##
+
 bpc testing update version salt:
   extends: [.rules:semver-all, .config:endpoint-with-tag]
   needs: [release versioned]
@@ -154,3 +156,29 @@ bpc prod trigger salt deployment:
   environment:
     name: os2borgerpc-admin
     url: https://os2borgerpc-admin.magenta.dk
+
+## OpenWorkplace ##
+
+ow testing update version salt:
+  extends: [.rules:semver-all, .config:endpoint-with-tag]
+  needs: [release versioned]
+  when: manual
+  variables:
+    ENDPOINT: os2bpc/salt/ow-update-test
+    CONFIG_UPDATER_USERNAME: os2bpc
+
+ow staging update version salt:
+  extends: [.rules:semver-all, .config:endpoint-with-tag]
+  needs: [release versioned]
+  when: manual
+  variables:
+    ENDPOINT: os2bpc/salt/ow-update-staging
+    CONFIG_UPDATER_USERNAME: os2bpc
+
+ow prod update version salt:
+  extends: [.rules:semver-core, .config:endpoint-with-tag]
+  needs: [release latest] # todo: add ow staging trigger salt deployment
+  when: manual
+  variables:
+    ENDPOINT: os2bpc/salt/ow-update-production
+    CONFIG_UPDATER_USERNAME: os2bpc

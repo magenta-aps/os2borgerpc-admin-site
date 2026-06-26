@@ -3539,11 +3539,14 @@ class SecurityEventsUpdate(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
 class ImageVersionRedirect(RedirectView):
     def get_redirect_url(self, **kwargs):
         site = get_object_or_404(Site, uid=kwargs["slug"])
-
-        return reverse(
-            "images-product",
-            kwargs={"slug": site.url, "product_id": Product.objects.first().id},
-        )
+        p = Product.objects.first()
+        if p:
+            return reverse(
+                "images-product",
+                kwargs={"slug": site.url, "product_id": p.id},
+            )
+        else:
+            raise Http404("You have no products to list images for")
 
 
 # To be able to link all customers to images with a single link

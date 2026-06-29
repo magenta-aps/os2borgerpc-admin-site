@@ -5,9 +5,8 @@ django-markdownx==4.0.9
 django-ninja==1.6.2
 django-two-factor-auth[phonenumberslite]==1.18.1
 
-# If using e.g. buckets:
-django-storages==1.14.6
-boto3==1.4.4 # django-storages wants this for storages.backends.s3.S3Storage
+# If using e.g. s3 storage/buckets:
+django-storages[s3]==1.14.6
 
 # Auth (SSO)
 mozilla-django-oidc==4.0.1

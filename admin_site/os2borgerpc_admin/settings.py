@@ -177,6 +177,7 @@ if os.environ.get("BUCKET_NAME"):
     AWS_STORAGE_BUCKET_NAME = os.environ.get("BUCKET_NAME")
     AWS_S3_ACCESS_KEY_ID = os.environ.get("BUCKET_ACCESS_KEY")
     AWS_S3_SECRET_ACCESS_KEY = os.environ.get("BUCKET_SECRET_KEY")
+    AWS_S3_FILE_OVERWRITE = False
 elif os.environ.get("GS_BUCKET_NAME"):
     STORAGE_BACKEND = "storages.backends.gcloud.GoogleCloudStorage"
     # The Google Cloud Storage bucket name. For `django-storages[google]`

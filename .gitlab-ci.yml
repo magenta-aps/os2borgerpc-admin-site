@@ -115,6 +115,8 @@ release latest:
 #  Deploy stage  #
 ##################
 
+# Note: deploy stage is inherited/extended
+
 ## BPC ##
 
 bpc testing update version salt:
@@ -123,7 +125,6 @@ bpc testing update version salt:
   when: manual
   variables:
     ENDPOINT: os2bpc/salt/os2bpc-update-test
-    CONFIG_UPDATER_USERNAME: os2bpc
 
 bpc testing trigger salt deployment:
   extends: [.rules:semver-all, .saltbert]
@@ -143,7 +144,6 @@ bpc prod update version salt:
   when: manual
   variables:
     ENDPOINT: os2bpc/salt/os2bpc-update-production
-    CONFIG_UPDATER_USERNAME: os2bpc
 
 bpc prod trigger salt deployment:
   extends: [.rules:semver-core, .saltbert]
@@ -165,7 +165,6 @@ ow testing update version salt:
   when: manual
   variables:
     ENDPOINT: os2bpc/salt/ow-update-test
-    CONFIG_UPDATER_USERNAME: os2bpc
 
 ow staging update version salt:
   extends: [.rules:semver-all, .config:endpoint-with-tag]
@@ -173,7 +172,6 @@ ow staging update version salt:
   when: manual
   variables:
     ENDPOINT: os2bpc/salt/ow-update-staging
-    CONFIG_UPDATER_USERNAME: os2bpc
 
 ow prod update version salt:
   extends: [.rules:semver-core, .config:endpoint-with-tag]
@@ -181,4 +179,3 @@ ow prod update version salt:
   when: manual
   variables:
     ENDPOINT: os2bpc/salt/ow-update-production
-    CONFIG_UPDATER_USERNAME: os2bpc

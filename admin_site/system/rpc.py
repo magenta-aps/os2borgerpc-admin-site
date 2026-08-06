@@ -122,7 +122,7 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
         del configuration["name"]
 
     for k, v in list(configuration.items()):
-        # List of our configurations that should be read_only
+        # List of our configurations that should be read_only on the admin portal
         if k in [
             "admin_url",
             "hostname",
@@ -309,6 +309,20 @@ def push_config_keys(pc_uid, config_dict, read_only=False, api_call=False):
         for entry in conf.entries.all():
             others_config[entry.key] = entry.value
 
+    # Configs that the client should not be able to overwrite - either for security reasons or simply because it's not needed.
+    # This should be the case for every method in this file.
+    # Scripts currently modify: _os_release, job_timeout, distribution, _last_full_update_time, cicero_age_limit, cicero_no_age_limit_start_times, cicero_no_age_limit_end_times. An old script modified hostname but it's no longer needed.
+    # NOTE: Maybe job_timeout should not be modifiable either
+    read_only_config_keys = [
+        "admin_url",
+        "os2_product",
+        "os2borgerpc_version",
+        "os_name",
+        "pc_model",
+        "pc_serial_number",
+        "pc_version",
+    ]
+
     for key, value in list(config_dict.items()):
         # Special case: If the value we want is in others_config, we just have
         # to remove any pc-specific config:
@@ -316,7 +330,8 @@ def push_config_keys(pc_uid, config_dict, read_only=False, api_call=False):
             if key in pc_config:
                 pc.configuration.remove_entry(key)
         else:
-            pc.configuration.update_entry(key, value, read_only)
+            if key not in read_only_config_keys:
+                pc.configuration.update_entry(key, value, read_only)
 
     return "OK"
 

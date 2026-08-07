@@ -134,12 +134,12 @@ USE_TZ = False
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = "/media"
+MEDIA_ROOT = os.environ.get("MEDIA_ROOT", "/media")
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://example.com/media/", "http://media.example.com/"
-MEDIA_URL = "/media/"
+MEDIA_URL = os.environ.get("MEDIA_URL", "/media/")
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -168,19 +168,21 @@ STATICFILES_FINDERS = (
 )
 
 
-# Storage setup
-if os.environ.get("GS_BUCKET_NAME"):
+# Storage setup - default is file storage
+STORAGE_BACKEND = "django.core.files.storage.FileSystemStorage"
+# Alternative storage backends
+if os.environ.get("BUCKET_NAME"):
+    STORAGE_BACKEND = "storages.backends.s3.S3Storage"
+    AWS_S3_ENDPOINT_URL = os.environ.get("BUCKET_ENDPOINT_URL")
+    AWS_STORAGE_BUCKET_NAME = os.environ.get("BUCKET_NAME")
+    AWS_S3_ACCESS_KEY_ID = os.environ.get("BUCKET_ACCESS_KEY")
+    AWS_S3_SECRET_ACCESS_KEY = os.environ.get("BUCKET_SECRET_KEY")
+    AWS_S3_FILE_OVERWRITE = False
+elif os.environ.get("GS_BUCKET_NAME"):
+    STORAGE_BACKEND = "storages.backends.gcloud.GoogleCloudStorage"
     # The Google Cloud Storage bucket name. For `django-storages[google]`
     # https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
     # If it is set, we save all files to Google Cloud.
-    STORAGES = {
-        "default": {
-            "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
-        },
-        "staticfiles": {
-            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-        },
-    }
     GS_BUCKET_NAME = os.environ.get("GS_BUCKET_NAME")
     GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
         os.environ.get("GS_CREDENTIALS_FILE")
@@ -188,6 +190,13 @@ if os.environ.get("GS_BUCKET_NAME"):
     GS_QUERYSTRING_AUTH = False
     GS_FILE_OVERWRITE = False
     GS_CUSTOM_ENDPOINT = os.environ.get("GS_CUSTOM_ENDPOINT")
+
+STORAGES = {
+    "default": {"BACKEND": STORAGE_BACKEND},
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = os.environ.get("SECRET_KEY")

@@ -29,7 +29,7 @@ services:
         command:
             sh -c "./manage.py initialize_database /code/dev-environment/fixtures &&
                    ./manage.py compilemessages &&
-                   gunicorn --reload
+                   gunicorn --reload --workers 2 --threads 2
                    --reload-extra-file /code/admin_site/locale/da/LC_MESSAGES/django.mo
                    --reload-extra-file /code/admin_site/locale/da/LC_MESSAGES/djangojs.mo
                    --reload-extra-file /code/admin_site/locale/sv/LC_MESSAGES/django.mo

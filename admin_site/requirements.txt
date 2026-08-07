@@ -3,8 +3,10 @@ django==5.2.13
 django-crispy-forms==2.6
 django-markdownx==4.0.9
 django-ninja==1.6.2
-django-storages==1.14.6
 django-two-factor-auth[phonenumberslite]==1.18.1
+
+# If using e.g. s3 storage/buckets:
+django-storages[s3]==1.14.6
 
 # Auth (SSO)
 mozilla-django-oidc==4.0.1
@@ -24,5 +26,5 @@ psycopg[binary]==3.3.4 # pre-compiled binary libpq
 # Server for dynamic content
 gunicorn==25.0.3
 
-# Server for static files
-whitenoise==6.12.0
+# Server for static files - brotli for compression
+whitenoise[brotli]==6.12.0

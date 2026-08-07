@@ -1,3 +1,12 @@
+## Version 7.4.0, August 7, 2026
+
+- Secure various configs from being overwritten after registration
+  Chief among them: admin_url
+- Update settings to be more configurable based on the environment
+  including support for more S3 backends
+- Make whitenoise use brotli compression
+- Autofocus search field on the PC overview
+
 ## Version 7.3.0, June 8, 2026
 
 - Update to Django 5.2

@@ -136,6 +136,8 @@ class ConfigurationEntry(models.Model):
 
     key = models.CharField(max_length=32)
     value = models.CharField(max_length=4096)
+    # NOTE: This property is currently only about whether a given config is editable in the UI or not
+    #       For the client it's not read only
     read_only = models.BooleanField(default=False)
     owner_configuration = models.ForeignKey(
         Configuration,

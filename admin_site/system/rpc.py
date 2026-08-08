@@ -122,7 +122,7 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
         del configuration["name"]
 
     for k, v in list(configuration.items()):
-        # List of our configurations that should be read_only on the admin portal
+        # List of our configurations that should be read_only in the admin portal ui
         if k in [
             "admin_url",
             "hostname",
@@ -142,11 +142,11 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
             "os_name",
             "_os_release",
         ]:
-            read_only = True
+            read_only_in_ui = True
         else:
-            read_only = False
+            read_only_in_ui = False
         entry = ConfigurationEntry(
-            key=k, value=v, read_only=read_only, owner_configuration=my_config
+            key=k, value=v, read_only=read_only_in_ui, owner_configuration=my_config
         )
         entry.save()
     # Set and save PmC
@@ -280,7 +280,7 @@ def confirm_jobs_receipt(pc_uid, job_ids):
     return True
 
 
-def push_config_keys(pc_uid, config_dict, read_only=False, api_call=False):
+def push_config_keys(pc_uid, config_dict, read_only_in_ui=False, api_call=False):
     try:
         pc = PC.objects.get(uid=pc_uid)
     except PC.DoesNotExist:
@@ -313,7 +313,7 @@ def push_config_keys(pc_uid, config_dict, read_only=False, api_call=False):
     # This should be the case for every method in this file.
     # Scripts currently modify: _os_release, job_timeout, distribution, _last_full_update_time, cicero_age_limit, cicero_no_age_limit_start_times, cicero_no_age_limit_end_times. An old script modified hostname but it's no longer needed.
     # NOTE: Maybe job_timeout should not be modifiable either
-    read_only_config_keys = [
+    read_only_by_client_config_keys = [
         "admin_url",
         "os2_product",
         "os2borgerpc_version",
@@ -330,8 +330,8 @@ def push_config_keys(pc_uid, config_dict, read_only=False, api_call=False):
             if key in pc_config:
                 pc.configuration.remove_entry(key)
         else:
-            if key not in read_only_config_keys:
-                pc.configuration.update_entry(key, value, read_only)
+            if key not in read_only_by_client_config_keys:
+                pc.configuration.update_entry(key, value, read_only_in_ui)
 
     return "OK"
 

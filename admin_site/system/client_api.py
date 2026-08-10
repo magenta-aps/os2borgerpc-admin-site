@@ -35,7 +35,7 @@ router = Router()
 
 @router.post("/register_new_computer", response={200: str, 400: str})
 def register_computer_route(request, data: RegisterComputerSchema):
-    return register_new_computer_v2(**data.dict(), api_call=True)
+    return register_new_computer_v2(**data.dict())
 
 
 @router.post("/send_status_info")
@@ -55,7 +55,7 @@ def confirm_jobs_receipt_route(request, data: ConfirmJobsReceiptSchema):
 
 @router.post("/push_config_keys", response={200: str, 400: str})
 def push_config_keys_route(request, data: PushConfigKeysSchema):
-    return push_config_keys(**data.dict(), api_call=True)
+    return push_config_keys(**data.dict())
 
 
 @router.post("/push_security_events")

@@ -26,7 +26,7 @@ from system.utils import (
 logger = logging.getLogger(__name__)
 
 
-def register_new_computer_v2(mac, name, site, configuration, api_call=False):
+def register_new_computer_v2(mac, name, site, configuration):
     """Register a new computer with the admin system - after registration, the
     computer will be submitted for approval."""
 
@@ -41,14 +41,7 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
             "Start by deleting the computer on the computer list on your site "
             "and then restart the registration."
         )
-        # If we simply raise an exception here when using the API, the user
-        # will get a message containing the full traceback, which is more confusing.
-        # To avoid this, we return the error message and make the client itself
-        # raise an exception with that message
-        if api_call:
-            return 400, error_string
-        else:
-            raise Exception(error_string)
+        return 400, error_string
     # If we are here then no matching PC object exists
     # Check if the chosen name is too long to prevent old clients
     # from setting names that are too long
@@ -57,11 +50,7 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
             f"The chosen name {name} has a length of {len(name)} characters. "
             "The name must have a length of 2-40 characters."
         )
-        # See comment at the previous use of api_call
-        if api_call:
-            return 400, error_string
-        else:
-            raise Exception(error_string)
+        return 400, error_string
     new_pc = PC(name=name, uid=uid)
 
     # Run the model validators with a few exceptions for fields that are currently empty, as that's not done automatically
@@ -69,11 +58,7 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
         new_pc.clean_fields(exclude=["configuration", "site"])
     except ValidationError as e:
         error_string = str(e)
-        # See comment at the first use of api_call
-        if api_call:
-            return 400, error_string
-        else:
-            raise Exception(error_string)
+        return 400, error_string
 
     try:
         new_pc.site = Site.objects.get(uid=site)
@@ -81,11 +66,7 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
         error_string = (
             "The chosen site UID does not match any sites on the chosen admin portal."
         )
-        # See comment at the first use of api_call
-        if api_call:
-            return 400, error_string
-        else:
-            raise Exception(error_string)
+        return 400, error_string
 
     new_pc.is_activated = False
     new_pc.mac = mac
@@ -280,16 +261,12 @@ def confirm_jobs_receipt(pc_uid, job_ids):
     return True
 
 
-def push_config_keys(pc_uid, config_dict, read_only_in_ui=False, api_call=False):
+def push_config_keys(pc_uid, config_dict, read_only_in_ui=False):
     try:
         pc = PC.objects.get(uid=pc_uid)
     except PC.DoesNotExist:
         error_string = f"Computer with UID {pc_uid} is not registered with the configured admin portal"
-        # See comment at the first use of api_call
-        if api_call:
-            return 400, error_string
-        else:
-            raise Exception(error_string)
+        return 400, error_string
 
     if not pc.is_activated:
         return ""

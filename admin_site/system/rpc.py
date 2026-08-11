@@ -574,7 +574,7 @@ def general_citizen_login(pc_uid, integration, value_dict):
                     citizen_hash = "logged_in"
                 else:
                     citizen_hash = "no_booking"
-            return int(0), citizen_hash, log_id
+            return 0, citizen_hash, log_id
     # If booking is not required, use the standard quarantine system.
     else:
         try:
@@ -708,11 +708,11 @@ def sms_login(
         pc = PC.objects.get(uid=pc_uid)
         if not pc.is_activated:
             # Fail silently
-            return int(0), citizen_hash
+            return 0, citizen_hash
         site = pc.site
     except PC.DoesNotExist:
         # Fail silently
-        return int(0), citizen_hash
+        return 0, citizen_hash
 
     if login_duration:
         login_duration = timedelta(minutes=login_duration)
@@ -781,7 +781,7 @@ def sms_login(
                     citizen_hash = "logged_in"
                 else:
                     citizen_hash = "no_booking"
-            return int(0), citizen_hash
+            return 0, citizen_hash
     # If booking is not required and the phone number has
     # unlimited access, skip the quarantine system
     elif unlimited_access:

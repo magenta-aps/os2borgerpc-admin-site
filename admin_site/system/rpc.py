@@ -26,7 +26,7 @@ from system.utils import (
 logger = logging.getLogger(__name__)
 
 
-def register_new_computer_v2(mac, name, site, configuration):
+def register_new_computer(mac, name, site, configuration):
     """Register a new computer with the admin system - after registration, the
     computer will be submitted for approval."""
 
@@ -136,12 +136,7 @@ def register_new_computer_v2(mac, name, site, configuration):
     return uid
 
 
-# TODO: Backwards compatible function. Delete once there are no longer active clients calling it.
-def register_new_computer(mac, name, distribution, site, configuration):
-    return register_new_computer_v2(mac, name, site, configuration)
-
-
-def send_status_info_v2(pc_uid, job_data):
+def send_status_info(pc_uid, job_data):
     """Update the status of outstanding jobs.
     If no updates, these will be None. In that
     case, this function really works as an "I'm alive" signal."""
@@ -174,11 +169,6 @@ def send_status_info_v2(pc_uid, job_data):
     pc.save()
 
     return 0
-
-
-# TODO: Backwards compatible function. Delete once there are no longer active clients calling it.
-def send_status_info(pc_uid, package_data, job_data, update_required):
-    return send_status_info_v2(pc_uid, job_data)
 
 
 def get_instructions(pc_uid, jobs_received_check=False):

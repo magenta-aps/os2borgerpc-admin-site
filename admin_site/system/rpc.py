@@ -251,7 +251,7 @@ def confirm_jobs_receipt(pc_uid, job_ids):
     return True
 
 
-def push_config_keys(pc_uid, config_dict, read_only_in_ui=False):
+def push_config_keys(pc_uid, config_dict, read_only=False):
     try:
         pc = PC.objects.get(uid=pc_uid)
     except PC.DoesNotExist:
@@ -298,7 +298,7 @@ def push_config_keys(pc_uid, config_dict, read_only_in_ui=False):
                 pc.configuration.remove_entry(key)
         else:
             if key not in read_only_by_client_config_keys:
-                pc.configuration.update_entry(key, value, read_only_in_ui)
+                pc.configuration.update_entry(key, value, read_only)
 
     return "OK"
 

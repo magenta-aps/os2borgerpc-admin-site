@@ -76,7 +76,11 @@
           {% endif %}
           {% endcomment %}
 
-          <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#runscriptmodal">{% translate "Run script" %}</button>
+          {% with file_exists=selected_script.executable_code.path|file_exists %}
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#runscriptmodal" data-bs-toggle="tooltip"
+              {% if not file_exists %}disabled{% endif %}>{% translate "Run script" %}
+            </button>
+          {% endwith %}
         </div>
       {% endif %}
 

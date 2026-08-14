@@ -46,6 +46,14 @@ def render_custom_links_markdown(text, site_uid):
 
 
 @register.filter
+def file_exists(file_path):
+    """
+    Checks whether a file exists in a way that supports S3 backends
+    """
+    return default_storage.exists(file_path)
+
+
+@register.filter
 def file_basename(value):
     """
     Print out the file name without the full path.

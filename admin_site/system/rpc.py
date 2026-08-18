@@ -278,16 +278,19 @@ def push_config_keys(pc_uid, config_dict, read_only=False):
 
     # Configs that the client should not be able to overwrite - either for security reasons or simply because it's not needed.
     # This should be the case for every method in this file.
-    # Scripts currently modify: _os_release, job_timeout, distribution, _last_full_update_time, cicero_age_limit, cicero_no_age_limit_start_times, cicero_no_age_limit_end_times. An old script modified hostname but it's no longer needed.
-    # NOTE: Maybe job_timeout should not be modifiable either
+    # Scripts currently modify: _os_release, job_timeout, _last_full_update_time, cicero_age_limit, cicero_no_age_limit_start_times, cicero_no_age_limit_end_times.
+    # An old script modified hostname, but it's no longer needed.
     read_only_by_client_config_keys = [
         "admin_url",
         "os2_product",
         "os2borgerpc_version",
         "os_name",
         "pc_model",
+        "pc_manufacturer",
         "pc_serial_number",
         "pc_version",
+        "pc_cpus",
+        "pc_ram",
     ]
 
     for key, value in list(config_dict.items()):

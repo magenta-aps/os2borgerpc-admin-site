@@ -1,3 +1,11 @@
+## Version 7.5.0, August 20, 2026
+
+- Secure more configs from being overwritten after registration
+- Add support for client keys used to validate requests to the client API
+- Autofocus search fields on scripts page and pc editing list
+- Disable the button to run a script if the script file cannot be found
+- Remove legacy xmlrpc endpoints and legacy variable api_call
+
 ## Version 7.4.0, August 7, 2026
 
 - Secure various configs from being overwritten after registration

@@ -734,6 +734,11 @@ class PC(models.Model):
     """This class represents one PC, i.e. one client of the admin system."""
 
     mac = models.CharField(verbose_name=_("MAC"), max_length=255, blank=True)
+    client_key = models.CharField(
+        verbose_name=_("Client key"),
+        max_length=255,
+        blank=True,
+    )
     name = models.CharField(
         verbose_name=_("name"),
         max_length=40,
@@ -862,6 +867,9 @@ class PC(models.Model):
         ordering = ["name"]
 
 
+# NOTE: This model is managed = False, which means that django won't detect and make migrations for it automatically?
+# You have to create those yourself.
+# TODO: Get rid of this again. See #71254
 class PCsOverviewV(models.Model):
     """RDB view of joined PC, product and configurationentry data for view PCsOverview"""
 

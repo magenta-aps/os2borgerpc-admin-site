@@ -63,6 +63,9 @@ def push_security_events_route(request, data: PushSecurityEventsSchema):
     return push_security_events(**data.dict())
 
 
+### LOGIN ENDPOINTS - NOT CALLED BY JOBMANAGER ###
+
+
 # This function is deprecated and only exists because one customer still has old
 # computers that call it. The newer versions of the Cicero integration
 # use general_citizen_login instead.

@@ -155,8 +155,8 @@ def send_status_info(pc_uid, job_data, client_key):
     # 2. Update jobs with job data
     if job_data is not None:
         for jd in job_data:
-            job = Job.objects.filter(pk=jd["id"]).first()
-            if not job:
+            job = pc.jobs.filter(pk=jd["id"]).first()
+            if not job or job.status != Job.SUBMITTED:
                 continue
             job.status = jd["status"]
             # Empty strings might be sent in rare cases, which otherwise cause validation errors

@@ -219,7 +219,14 @@ class PCForm(forms.ModelForm):
 
     class Meta:
         model = PC
-        exclude = ("configuration", "site", "created", "last_seen", "product")
+        exclude = (
+            "configuration",
+            "site",
+            "created",
+            "last_seen",
+            "product",
+            "client_key",
+        )
         widgets = {
             "name": forms.widgets.TextInput(
                 attrs={"pattern": r"[a-z0-9A-Z][\-a-z0-9A-Z]{1,40}"}

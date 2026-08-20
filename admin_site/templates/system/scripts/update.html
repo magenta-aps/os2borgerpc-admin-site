@@ -25,7 +25,7 @@
     <!-- Search box -->
     <div class="mx-3 my-2">
       <div class="input-group">
-        <input id="search_form" type="search" class="form-control" placeholder="{{ph}}">
+        <input id="search_form" type="search" class="form-control" placeholder="{{ph}}" autofocus>
         <span class="input-group-text bg-white">
           <button type="button" class="btn btn-close btn-lg" id="search-clear-btn">
             <span class="visually-hidden">{% translate "Clear the filter" %}</span>
@@ -76,7 +76,11 @@
           {% endif %}
           {% endcomment %}
 
-          <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#runscriptmodal">{% translate "Run script" %}</button>
+          {% with file_exists=selected_script.executable_code.name|file_exists %}
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#runscriptmodal" data-bs-toggle="tooltip"
+              {% if not file_exists %}disabled{% endif %}>{% translate "Run script" %}
+            </button>
+          {% endwith %}
         </div>
       {% endif %}
 

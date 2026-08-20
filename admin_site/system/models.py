@@ -136,6 +136,8 @@ class ConfigurationEntry(models.Model):
 
     key = models.CharField(max_length=32)
     value = models.CharField(max_length=4096)
+    # NOTE: This property is currently only about whether a given config is editable in the UI or not
+    #       For the client it's not read only
     read_only = models.BooleanField(default=False)
     owner_configuration = models.ForeignKey(
         Configuration,
@@ -732,6 +734,11 @@ class PC(models.Model):
     """This class represents one PC, i.e. one client of the admin system."""
 
     mac = models.CharField(verbose_name=_("MAC"), max_length=255, blank=True)
+    client_key = models.CharField(
+        verbose_name=_("Client key"),
+        max_length=255,
+        blank=True,
+    )
     name = models.CharField(
         verbose_name=_("name"),
         max_length=40,
@@ -860,6 +867,9 @@ class PC(models.Model):
         ordering = ["name"]
 
 
+# NOTE: This model is managed = False, which means that django won't detect and make migrations for it automatically?
+# You have to create those yourself.
+# TODO: Get rid of this again. See #71254
 class PCsOverviewV(models.Model):
     """RDB view of joined PC, product and configurationentry data for view PCsOverview"""
 

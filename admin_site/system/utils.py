@@ -1,5 +1,6 @@
 """Utility methods for the OS2borgerPC project."""
 
+from hashlib import sha256
 import json
 import logging
 import re
@@ -17,6 +18,8 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.utils import translation
 from django.utils.translation import gettext_lazy as _
+
+from system.models import PC
 
 
 def notify_users(security_event, security_problem, pc):
@@ -55,6 +58,96 @@ def notify_users(security_event, security_problem, pc):
         return False
 
     return True
+
+
+def get_notification_string(python_list, conjunction="og"):
+    """Helper function used to generate human-readable strings
+    from python lists."""
+    python_list = list(set(python_list))
+    if len(python_list) > 1:
+        string = ", ".join(python_list[:-1])
+        string = " ".join([string, conjunction, python_list[-1]])
+    elif len(python_list) == 1:
+        string = python_list[0]
+    else:
+        string = ""
+    return string
+
+
+def set_notification_cookie(response, message, error=False):
+    descriptor = {"message": message, "type": "success" if not error else "error"}
+
+    response.set_cookie("page-notification", quote(json.dumps(descriptor), safe=""))
+
+
+def notification_changes_saved(response, user_profile_language):
+    translation.activate(user_profile_language)
+    set_notification_cookie(response, _("Changes have been saved %s") % "")
+    translation.deactivate()
+
+    return response
+
+
+def online_pcs_count_filter(pcs):
+    """Online PCs are PCs that have checked in recently, as defined by the model function
+    This function takes a list of PCs and returns the number of those that are online"""
+    return len([pc for pc in pcs if pc.online])
+
+
+def x_minutes_ago(x):
+    """Helper function that returns a datetime object corresponding to
+    the time x minutes ago"""
+    return datetime.now() - timedelta(minutes=x)
+
+
+def x_days_ago(x, datetime_object=False):
+    """Helper function that returns the time x days ago.
+
+    The time can be returned as a string of the format %Y-%m-%d %H:%M (default)
+    or as a datetime object"""
+    val = datetime.now() - timedelta(days=x)
+    if datetime_object:
+        return val
+    else:
+        return val.strftime("%Y-%m-%d %H:%M")
+
+
+def get_badge_class(pID):
+    badge_classes = {
+        1: "primary",
+        2: "secondary text-dark",
+        3: "success",
+        4: "danger",
+        5: "info text-dark",
+        6: "light text-dark",
+        0: "dark",
+    }
+
+    return badge_classes.get(pID % 7, "default")
+
+
+### Helper functions for RPC.py / Client API ###
+
+
+# A helper function called by each endpoint to validate the key.
+# It doesn't respond to the client directly, because currently the format of the response varies
+def validate_request(pc_uid, client_key):
+    try:
+        pc = PC.objects.get(uid=pc_uid)
+    except PC.DoesNotExist:
+        return False, ""
+
+    client_key_hash = sha256(client_key.encode()).hexdigest()
+
+    # TODO: 71150 Temporarily accept client keys from existing computers
+    if not pc.client_key and client_key:
+        pc.client_key = client_key_hash
+        pc.save()
+
+    if not pc.is_activated or pc.client_key != "" and pc.client_key != client_key_hash:
+        return False, pc
+
+    return True, pc
 
 
 def get_citizen_login_api_validator():
@@ -500,69 +593,3 @@ def always_validate_citizen(loaner_number, pincode, site):
         logger.error(f"{site.name}: Agency ID / ISIL MUST be specified.")
         return 0
     return loaner_number
-
-
-def get_notification_string(python_list, conjunction="og"):
-    """Helper function used to generate human-readable strings
-    from python lists."""
-    python_list = list(set(python_list))
-    if len(python_list) > 1:
-        string = ", ".join(python_list[:-1])
-        string = " ".join([string, conjunction, python_list[-1]])
-    elif len(python_list) == 1:
-        string = python_list[0]
-    else:
-        string = ""
-    return string
-
-
-def set_notification_cookie(response, message, error=False):
-    descriptor = {"message": message, "type": "success" if not error else "error"}
-
-    response.set_cookie("page-notification", quote(json.dumps(descriptor), safe=""))
-
-
-def notification_changes_saved(response, user_profile_language):
-    translation.activate(user_profile_language)
-    set_notification_cookie(response, _("Changes have been saved %s") % "")
-    translation.deactivate()
-
-    return response
-
-
-def online_pcs_count_filter(pcs):
-    """Online PCs are PCs that have checked in recently, as defined by the model function
-    This function takes a list of PCs and returns the number of those that are online"""
-    return len([pc for pc in pcs if pc.online])
-
-
-def x_minutes_ago(x):
-    """Helper function that returns a datetime object corresponding to
-    the time x minutes ago"""
-    return datetime.now() - timedelta(minutes=x)
-
-
-def x_days_ago(x, datetime_object=False):
-    """Helper function that returns the time x days ago.
-
-    The time can be returned as a string of the format %Y-%m-%d %H:%M (default)
-    or as a datetime object"""
-    val = datetime.now() - timedelta(days=x)
-    if datetime_object:
-        return val
-    else:
-        return val.strftime("%Y-%m-%d %H:%M")
-
-
-def get_badge_class(pID):
-    badge_classes = {
-        1: "primary",
-        2: "secondary text-dark",
-        3: "success",
-        4: "danger",
-        5: "info text-dark",
-        6: "light text-dark",
-        0: "dark",
-    }
-
-    return badge_classes.get(pID % 7, "default")

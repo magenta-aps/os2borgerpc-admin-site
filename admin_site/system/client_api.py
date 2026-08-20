@@ -23,8 +23,8 @@ from .rpc import (
     get_instructions,
     push_config_keys,
     push_security_events,
-    register_new_computer_v2,
-    send_status_info_v2,
+    register_new_computer,
+    send_status_info,
     sms_login,
     sms_login_finalize,
     sms_logout,
@@ -35,12 +35,12 @@ router = Router()
 
 @router.post("/register_new_computer", response={200: str, 400: str})
 def register_computer_route(request, data: RegisterComputerSchema):
-    return register_new_computer_v2(**data.dict(), api_call=True)
+    return register_new_computer(**data.dict())
 
 
 @router.post("/send_status_info")
 def send_status_info_route(request, data: SendStatusInfoSchema):
-    return send_status_info_v2(**data.dict())
+    return send_status_info(**data.dict())
 
 
 @router.post("/get_instructions")
@@ -55,12 +55,15 @@ def confirm_jobs_receipt_route(request, data: ConfirmJobsReceiptSchema):
 
 @router.post("/push_config_keys", response={200: str, 400: str})
 def push_config_keys_route(request, data: PushConfigKeysSchema):
-    return push_config_keys(**data.dict(), api_call=True)
+    return push_config_keys(**data.dict())
 
 
 @router.post("/push_security_events")
 def push_security_events_route(request, data: PushSecurityEventsSchema):
     return push_security_events(**data.dict())
+
+
+### LOGIN ENDPOINTS - NOT CALLED BY JOBMANAGER ###
 
 
 # This function is deprecated and only exists because one customer still has old

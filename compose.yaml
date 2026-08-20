@@ -1,3 +1,6 @@
+volumes:
+    postgres-data:
+
 services:
     frontend-reloader:
         build:
@@ -64,6 +67,3 @@ services:
             - path: ./dev-environment/bpc.env
         volumes:
             - postgres-data:/var/lib/postgresql
-
-volumes:
-    postgres-data:

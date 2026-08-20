@@ -21,12 +21,14 @@ from system.utils import (
     get_citizen_login_api_validator,
     quria_login_validate,
     send_password_sms,
+    validate_request,
 )
 
 logger = logging.getLogger(__name__)
 
 
-def register_new_computer_v2(mac, name, site, configuration, api_call=False):
+# TODO: Update later once registration should fail if no client key was received
+def register_new_computer(mac, name, site, configuration, client_key):
     """Register a new computer with the admin system - after registration, the
     computer will be submitted for approval."""
 
@@ -41,14 +43,7 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
             "Start by deleting the computer on the computer list on your site "
             "and then restart the registration."
         )
-        # If we simply raise an exception here when using the API, the user
-        # will get a message containing the full traceback, which is more confusing.
-        # To avoid this, we return the error message and make the client itself
-        # raise an exception with that message
-        if api_call:
-            return 400, error_string
-        else:
-            raise Exception(error_string)
+        return 400, error_string
     # If we are here then no matching PC object exists
     # Check if the chosen name is too long to prevent old clients
     # from setting names that are too long
@@ -57,11 +52,7 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
             f"The chosen name {name} has a length of {len(name)} characters. "
             "The name must have a length of 2-40 characters."
         )
-        # See comment at the previous use of api_call
-        if api_call:
-            return 400, error_string
-        else:
-            raise Exception(error_string)
+        return 400, error_string
     new_pc = PC(name=name, uid=uid)
 
     # Run the model validators with a few exceptions for fields that are currently empty, as that's not done automatically
@@ -69,11 +60,7 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
         new_pc.clean_fields(exclude=["configuration", "site"])
     except ValidationError as e:
         error_string = str(e)
-        # See comment at the first use of api_call
-        if api_call:
-            return 400, error_string
-        else:
-            raise Exception(error_string)
+        return 400, error_string
 
     try:
         new_pc.site = Site.objects.get(uid=site)
@@ -81,13 +68,11 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
         error_string = (
             "The chosen site UID does not match any sites on the chosen admin portal."
         )
-        # See comment at the first use of api_call
-        if api_call:
-            return 400, error_string
-        else:
-            raise Exception(error_string)
+        return 400, error_string
 
     new_pc.is_activated = False
+    if client_key:
+        new_pc.client_key = hashlib.sha256(client_key.encode()).hexdigest()
     new_pc.mac = mac
 
     my_config = Configuration.objects.create()
@@ -122,7 +107,7 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
         del configuration["name"]
 
     for k, v in list(configuration.items()):
-        # List of our configurations that should be read_only on the admin portal
+        # List of our configurations that should be read_only in the admin portal ui
         if k in [
             "admin_url",
             "hostname",
@@ -142,11 +127,11 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
             "os_name",
             "_os_release",
         ]:
-            read_only = True
+            read_only_in_ui = True
         else:
-            read_only = False
+            read_only_in_ui = False
         entry = ConfigurationEntry(
-            key=k, value=v, read_only=read_only, owner_configuration=my_config
+            key=k, value=v, read_only=read_only_in_ui, owner_configuration=my_config
         )
         entry.save()
     # Set and save PmC
@@ -155,21 +140,13 @@ def register_new_computer_v2(mac, name, site, configuration, api_call=False):
     return uid
 
 
-# TODO: Backwards compatible function. Delete once there are no longer active clients calling it.
-def register_new_computer(mac, name, distribution, site, configuration):
-    return register_new_computer_v2(mac, name, site, configuration)
-
-
-def send_status_info_v2(pc_uid, job_data):
+def send_status_info(pc_uid, job_data, client_key):
     """Update the status of outstanding jobs.
     If no updates, these will be None. In that
     case, this function really works as an "I'm alive" signal."""
 
-    # 1. Lookup PC, update "last_seen" field
-    pc = PC.objects.get(uid=pc_uid)
-
-    if not pc.is_activated:
-        # Fail silently
+    retval, pc = validate_request(pc_uid, client_key)
+    if not retval:
         return 0
 
     pc.last_seen = datetime.now()
@@ -178,8 +155,8 @@ def send_status_info_v2(pc_uid, job_data):
     # 2. Update jobs with job data
     if job_data is not None:
         for jd in job_data:
-            job = Job.objects.filter(pk=jd["id"]).first()
-            if not job:
+            job = pc.jobs.filter(pk=jd["id"]).first()
+            if not job or job.status != Job.SUBMITTED:
                 continue
             job.status = jd["status"]
             # Empty strings might be sent in rare cases, which otherwise cause validation errors
@@ -195,28 +172,17 @@ def send_status_info_v2(pc_uid, job_data):
     return 0
 
 
-# TODO: Backwards compatible function. Delete once there are no longer active clients calling it.
-def send_status_info(pc_uid, package_data, job_data, update_required):
-    return send_status_info_v2(pc_uid, job_data)
-
-
-def get_instructions(pc_uid, jobs_received_check=False):
+def get_instructions(pc_uid, client_key, jobs_received_check=False):
     """This function will ask for new instructions in the form of a list of
     jobs, which will be scheduled for execution and executed upon receipt.
     These jobs will generally take the form of bash scripts."""
 
-    try:
-        pc = PC.objects.get(uid=pc_uid)
-    except PC.DoesNotExist:
-        # Fail silently
+    retval, pc = validate_request(pc_uid, client_key)
+    if not retval:
         return {}
 
     pc.last_seen = datetime.now()
     pc.save()
-
-    if not pc.is_activated:
-        # Fail silently
-        return {}
 
     jobs = []
     for job in pc.jobs.filter(status=Job.NEW).order_by("pk"):
@@ -262,14 +228,12 @@ def get_instructions(pc_uid, jobs_received_check=False):
     return instructions
 
 
-def confirm_jobs_receipt(pc_uid, job_ids):
+def confirm_jobs_receipt(pc_uid, job_ids, client_key):
     """This function is used by the client to confirm receipt of jobs sent via get_instructions."""
 
-    try:
-        pc = PC.objects.get(uid=pc_uid)
-    except PC.DoesNotExist:
-        # Fail silently
-        return {}
+    retval, pc = validate_request(pc_uid, client_key)
+    if not retval:
+        return False
 
     jobs = pc.jobs.filter(id__in=job_ids)
     for job in jobs:
@@ -280,19 +244,12 @@ def confirm_jobs_receipt(pc_uid, job_ids):
     return True
 
 
-def push_config_keys(pc_uid, config_dict, read_only=False, api_call=False):
-    try:
-        pc = PC.objects.get(uid=pc_uid)
-    except PC.DoesNotExist:
-        error_string = f"Computer with UID {pc_uid} is not registered with the configured admin portal"
-        # See comment at the first use of api_call
-        if api_call:
-            return 400, error_string
-        else:
-            raise Exception(error_string)
+def push_config_keys(pc_uid, config_dict, client_key, read_only=False):
 
-    if not pc.is_activated:
-        return ""
+    retval, pc = validate_request(pc_uid, client_key)
+    if not retval:
+        error_string = "Error pushing config keys"
+        return 400, error_string
 
     # We need two config dicts: one from the PC itself and one from groups
     # and global configuration
@@ -311,16 +268,19 @@ def push_config_keys(pc_uid, config_dict, read_only=False, api_call=False):
 
     # Configs that the client should not be able to overwrite - either for security reasons or simply because it's not needed.
     # This should be the case for every method in this file.
-    # Scripts currently modify: _os_release, job_timeout, distribution, _last_full_update_time, cicero_age_limit, cicero_no_age_limit_start_times, cicero_no_age_limit_end_times. An old script modified hostname but it's no longer needed.
-    # NOTE: Maybe job_timeout should not be modifiable either
-    read_only_config_keys = [
+    # Scripts currently modify: _os_release, job_timeout, _last_full_update_time, cicero_age_limit, cicero_no_age_limit_start_times, cicero_no_age_limit_end_times.
+    # An old script modified hostname, but it's no longer needed.
+    read_only_by_client_config_keys = [
         "admin_url",
         "os2_product",
         "os2borgerpc_version",
         "os_name",
         "pc_model",
+        "pc_manufacturer",
         "pc_serial_number",
         "pc_version",
+        "pc_cpus",
+        "pc_ram",
     ]
 
     for key, value in list(config_dict.items()):
@@ -330,7 +290,7 @@ def push_config_keys(pc_uid, config_dict, read_only=False, api_call=False):
             if key in pc_config:
                 pc.configuration.remove_entry(key)
         else:
-            if key not in read_only_config_keys:
+            if key not in read_only_by_client_config_keys:
                 pc.configuration.update_entry(key, value, read_only)
 
     return "OK"
@@ -340,8 +300,10 @@ def push_config_keys(pc_uid, config_dict, read_only=False, api_call=False):
 # + events where the site's computer and rule's computer don't match
 # TODO: If we update all clients and stop using complete_log just
 # stop handling it here completely as it's null=True
-def push_security_events(pc_uid, events_csv):
-    pc = PC.objects.get(uid=pc_uid)
+def push_security_events(pc_uid, events_csv, client_key):
+    retval, pc = validate_request(pc_uid, client_key)
+    if not retval:
+        return 400
 
     for event in events_csv:
         event_split = event.split(",")
@@ -408,7 +370,10 @@ def push_security_events(pc_uid, events_csv):
     return 0
 
 
-def general_citizen_login(pc_uid, integration, value_dict):
+### LOGIN ENDPOINTS - NOT CALLED BY JOBMANAGER ###
+
+
+def general_citizen_login(pc_uid, integration, value_dict, client_key):
     """Check if the user is allowed to log in by validating
     their login via the indicated login integration.
 
@@ -449,17 +414,14 @@ def general_citizen_login(pc_uid, integration, value_dict):
     log_id = ""
     time_allowed = 0
     is_sms_booking = False
-    try:
-        pc = PC.objects.get(uid=pc_uid)
-        if not pc.is_activated:
-            # Fail silently
-            return int(time_allowed), citizen_hash, log_id
-        site = pc.site
-    except PC.DoesNotExist:
+
+    retval, pc = validate_request(pc_uid, client_key)
+    if not retval:
         logger.error(
-            f"Citizen login: Denied login request from an unknown PC with the UID: {pc_uid}."
+            f"Citizen login: Denied login request from PC with the UID: {pc_uid}."
         )
         return int(time_allowed), citizen_hash, log_id
+    site = pc.site
 
     # Start by validating the credentials to obtain the citizen_hash, which
     # is required for the Citizen quarantine system.
@@ -574,7 +536,7 @@ def general_citizen_login(pc_uid, integration, value_dict):
                     citizen_hash = "logged_in"
                 else:
                     citizen_hash = "no_booking"
-            return int(0), citizen_hash, log_id
+            return 0, citizen_hash, log_id
     # If booking is not required, use the standard quarantine system.
     else:
         try:
@@ -629,6 +591,11 @@ def general_citizen_login(pc_uid, integration, value_dict):
     return int(time_allowed), citizen_hash, log_id
 
 
+# NOTE: This currently does not receive a pc_uid, so it
+# can't validate its client_key
+# But regarding spoofing requests to this endpoint:
+# 1. It already expects an extremely long citizen_hash
+# 2. It's not protecting much - just whether sign in to another computer is allowed
 def general_citizen_logout(citizen_hash, log_id):
     """Update the logout time of the relevant LoginLog object if
     required and/or log out the relevant Citizen object if
@@ -657,6 +624,7 @@ def sms_login(
     phone_number,
     message,
     pc_uid,
+    client_key,
     require_booking=False,
     pc_name=None,
     allow_idle_login=False,
@@ -704,15 +672,10 @@ def sms_login(
                        a future booking starts too soon for an idle
                        login to be possible."""
     citizen_hash = ""
-    try:
-        pc = PC.objects.get(uid=pc_uid)
-        if not pc.is_activated:
-            # Fail silently
-            return int(0), citizen_hash
-        site = pc.site
-    except PC.DoesNotExist:
-        # Fail silently
-        return int(0), citizen_hash
+    retval, pc = validate_request(pc_uid, client_key)
+    if not retval:
+        return 0, citizen_hash
+    site = pc.site
 
     if login_duration:
         login_duration = timedelta(minutes=login_duration)
@@ -781,7 +744,7 @@ def sms_login(
                     citizen_hash = "logged_in"
                 else:
                     citizen_hash = "no_booking"
-            return int(0), citizen_hash
+            return 0, citizen_hash
     # If booking is not required and the phone number has
     # unlimited access, skip the quarantine system
     elif unlimited_access:
@@ -830,6 +793,7 @@ def sms_login_finalize(
     pc_uid,
     require_booking,
     save_log,
+    client_key,
     allow_idle_login=False,
     login_duration=None,
     quarantine_duration=None,
@@ -846,15 +810,12 @@ def sms_login_finalize(
         log_id = int: If a log should be written, this will be the id
                       of the created log object. It is used to update
                       the logout time later."""
-    try:
-        pc = PC.objects.get(uid=pc_uid)
-        if not pc.is_activated:
-            # Fail silently
-            return 0
-        site = pc.site
-    except PC.DoesNotExist:
-        # Fail silently
+
+    retval, pc = validate_request(pc_uid, client_key)
+    if not retval:
         return 0
+
+    site = pc.site
     # If booking is not required, we use the standard quarantine system
     # time_allowed has already been checked by sms_login, so we only need
     # to update last_successful_login and/or logged_in
@@ -909,6 +870,11 @@ def sms_login_finalize(
     return log_id
 
 
+# NOTE: This currently does not receive a pc_uid, so it
+# can't validate its client_key
+# But regarding spoofing requests to this endpoint:
+# 1. It already expects an extremely long citizen_hash
+# 2. It's not protecting much - just whether sign in to another computer is allowed
 def sms_logout(citizen_hash, log_id):
     """Update the logout time of the relevant LoginLog object if
     required and/or log out the relevant Citizen object if
@@ -921,7 +887,7 @@ def sms_logout(citizen_hash, log_id):
 # This function is deprecated and only exists because one customer still has old
 # computers that call it. The newer versions of the Cicero integration
 # use general_citizen_login instead.
-def citizen_login(username, password, pc_uid, prevent_dual_login=True):
+def citizen_login(username, password, pc_uid, client_key, prevent_dual_login=True):
     """Check if user is allowed to log in and give the go-ahead if so.
 
     Return values:
@@ -929,17 +895,15 @@ def citizen_login(username, password, pc_uid, prevent_dual_login=True):
         r = 0: Unable to authenticate.
         r > 0: The user is allowed r minutes of login time.
     """
-
     time_allowed = 0
-    try:
-        pc = PC.objects.get(uid=pc_uid)
-        if not pc.is_activated:
-            # Fail silently
-            return int(time_allowed), ""
-        site = pc.site
-    except PC.DoesNotExist:
+
+    retval, pc = validate_request(pc_uid, client_key)
+    if not retval:
         # Fail silently
         return int(time_allowed), ""
+
+    site = pc.site
+
     login_validator = get_citizen_login_api_validator()
     citizen_id = login_validator(username, password, site)
     citizen_hash = ""
@@ -991,6 +955,11 @@ def citizen_login(username, password, pc_uid, prevent_dual_login=True):
 # This function is deprecated and only exists because one customer still has old
 # computers that call it. The newer versions of the Cicero integration
 # use general_citizen_logout instead.
+# NOTE: This currently does not receive a pc_uid, so it
+# can't validate its client_key
+# But regarding spoofing requests to this endpoint:
+# 1. It already expects an extremely long citizen_hash
+# 2. It's not protecting much - just whether sign in to another computer is allowed
 def citizen_logout(citizen_hash):
     val = general_citizen_logout(citizen_hash, "")
     return val

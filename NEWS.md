@@ -1,3 +1,14 @@
+## Version 7.6.0, August 24, 2026
+
+- Significantly improve security surrounding:
+    - Authenticated users running scripts on PCs outside the current site
+    - Regular authenticated users editing global scripts
+    - Authenticated users creating/updating users who have greater permissions than them
+    - Authenticated users adding groups/exceptions from other sites to wake plans
+    - Authenticated users deleting read_only configs
+- Make SecurityEventSearch require login
+- Remove legacy views for creating/updating configuration entries
+
 ## Version 7.5.0, August 20, 2026
 
 - Add support for client keys used to validate requests to the client API

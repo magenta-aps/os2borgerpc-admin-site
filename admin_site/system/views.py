@@ -1445,6 +1445,7 @@ class ScriptRun(SiteView):
             script=context["script"],
         )
         context["form"] = form
+        site = context["site"]
 
         # When run in step 3 and step 2 wasn't bypassed, don't do this calculation again
         if "selected_pcs" not in context:
@@ -1467,8 +1468,8 @@ class ScriptRun(SiteView):
                 )
 
             context["batch"] = context["script"].run_on(
-                context["site"],
-                PC.objects.filter(pk__in=context["selected_pcs"]),
+                site,
+                site.pcs.filter(pk__in=context["selected_pcs"]),
                 *args,
                 user=self.request.user,
             )
@@ -1778,7 +1779,7 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         pc = self.object
         groups_pre = pc.pc_groups.all()
 
-        selected_groups = form.cleaned_data["pc_groups"]
+        selected_groups = pc.site.groups.filter(id__in=form.cleaned_data["pc_groups"])
         verified_groups = selected_groups.intersection(groups_pre)
         unverified_groups = selected_groups.difference(groups_pre).order_by("name")
 
@@ -2845,6 +2846,9 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         return context
 
     def form_valid(self, form):
+        # Ensure that only pcs belonging to the same site can be added
+        form.cleaned_data["pcs"] = self.object.site.pcs.filter(id__in=form.cleaned_data["pcs"])
+
         # Capture a view of the group's PCs and policy scripts before the
         # update
         members_pre = set(self.object.pcs.all())

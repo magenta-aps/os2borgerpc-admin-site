@@ -70,7 +70,6 @@ from system.models import (
 )
 
 from system.forms import (
-    ConfigurationEntryForm,
     EventRuleServerForm,
     FileParameterForm,
     ParameterForm,
@@ -2700,29 +2699,6 @@ class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):
                     )
 
         return response
-
-
-class ConfigurationEntryCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
-    model = ConfigurationEntry
-    form_class = ConfigurationEntryForm
-
-    def form_valid(self, form):
-        site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        self.object = form.save(commit=False)
-        self.object.owner_configuration = site.configuration
-
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse("settings", kwargs={"slug": self.kwargs["slug"]})
-
-
-class ConfigurationEntryUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
-    model = ConfigurationEntry
-    form_class = ConfigurationEntryForm
-
-    def get_success_url(self):
-        return reverse("settings", kwargs={"slug": self.kwargs["slug"]})
 
 
 class PCGroupRedirect(RedirectView, SuperAdminOrThisSiteMixin):

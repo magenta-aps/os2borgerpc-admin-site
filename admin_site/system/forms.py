@@ -142,12 +142,6 @@ class ScriptForm(forms.ModelForm):
         ]
 
 
-class ConfigurationEntryForm(forms.ModelForm):
-    class Meta:
-        model = ConfigurationEntry
-        exclude = ["owner_configuration", "read_only"]
-
-
 # Currently not used by script run or associated scripts, but only the relevant FileArchive views
 # to create or update FileParameters
 class FileParameterForm(forms.ModelForm):

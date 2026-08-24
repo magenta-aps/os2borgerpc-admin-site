@@ -401,8 +401,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
 
             if (
                 not self.request.user.is_superuser
-                and requested_user_type
-                > site_membership_req_user.site_user_type
+                and requested_user_type > site_membership_req_user.site_user_type
             ):
                 raise PermissionDenied
 

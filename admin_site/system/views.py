@@ -2561,7 +2561,9 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
                             set(plan.groups.all().values_list("pcs", flat=True))
                         )
                         if pcs_to_be_set_pk:
-                            pcs_to_be_set = plan.site.pcs.filter(pk__in=pcs_to_be_set_pk)
+                            pcs_to_be_set = plan.site.pcs.filter(
+                                pk__in=pcs_to_be_set_pk
+                            )
                             args_set = plan.get_script_arguments()
 
                             run_wake_plan_script(
@@ -2820,7 +2822,9 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
 
     def form_valid(self, form):
         # Ensure that only pcs belonging to the same site can be added
-        form.cleaned_data["pcs"] = self.object.site.pcs.filter(id__in=form.cleaned_data["pcs"])
+        form.cleaned_data["pcs"] = self.object.site.pcs.filter(
+            id__in=form.cleaned_data["pcs"]
+        )
 
         # Capture a view of the group's PCs and policy scripts before the
         # update
@@ -3349,7 +3353,9 @@ class SecurityEventsView(SiteView):
         return context
 
 
-class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSiteMixin):
+class SecurityEventSearch(
+    SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSiteMixin
+):
     paginate_by = 20
     http_method_names = ["get"]
     VALID_ORDER_BY = []

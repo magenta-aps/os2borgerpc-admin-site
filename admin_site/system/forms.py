@@ -3,7 +3,6 @@ from django.utils.translation import gettext_lazy as _
 from crispy_forms.helper import FormHelper
 from system.models import (
     PC,
-    ConfigurationEntry,
     EventRuleServer,
     FileParameter,
     Input,

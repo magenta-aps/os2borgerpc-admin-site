@@ -1982,8 +1982,9 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         # Adding wake change events
         # The string currently set to "wake_change_events" must match the submit name
         # chosen for the pick list used to add wake change events
+        site = self.object.site
         exceptions_pk = form["wake_change_events"].value()
-        exceptions_selected = WakeChangeEvent.objects.filter(pk__in=exceptions_pk)
+        exceptions_selected = site.wake_change_events.filter(pk__in=exceptions_pk)
         # Get the related wake change events before the update
         exceptions_pre = self.object.wake_change_events.all()
         # Verify the pre-existing events that are still selected
@@ -2025,18 +2026,10 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         # The string currently set to "groups" must match the submit name
         # chosen for the pick list used to add groups
         groups_pk = form["groups"].value()
-        groups = PCGroup.objects.filter(pk__in=groups_pk)
-        # groups_with_other_plans_names = []
-        # groups_without_other_plans_pk = []
-        # for group in groups:
-        #     if group.wake_week_plan and group.wake_week_plan != self.object:
-        #         groups_with_other_plans_names.append(group.name)
-        #     else:
-        #         groups_without_other_plans_pk.append(group.pk)
-        # groups = PCGroup.objects.filter(pk__in=groups_without_other_plans_pk)
+        groups = site.groups.filter(pk__in=groups_pk)
         # Find the pcs in the groups
         pcs_in_groups_pk = list(set(groups.values_list("pcs", flat=True)))
-        pcs_in_groups = PC.objects.filter(pk__in=pcs_in_groups_pk)
+        pcs_in_groups = site.pcs.filter(pk__in=pcs_in_groups_pk)
         # Find the pcs in the groups that belong to different wake plans
         pcs_with_other_plans = []
         pcs_with_other_plans_names = []
@@ -2049,7 +2042,7 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
                     pcs_with_other_plans_names.append(pc.name)
                     other_plans_names.append(group.wake_week_plan.name)
                     break
-        pcs_with_other_plans = PC.objects.filter(pk__in=pcs_with_other_plans)
+        pcs_with_other_plans = site.pcs.filter(pk__in=pcs_with_other_plans)
         # Verify the groups that do not include pcs belonging to a different wake plan
         # and get the names of the groups that could not be verified
         verified_groups_pk = []
@@ -2059,7 +2052,7 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
                 verified_groups_pk.append(group.pk)
             else:
                 invalid_groups_names.append(group.name)
-        verified_groups = PCGroup.objects.filter(pk__in=verified_groups_pk)
+        verified_groups = site.groups.filter(pk__in=verified_groups_pk)
         # Add the verified groups to the plan
         for g in verified_groups:
             g.wake_week_plan = self.object
@@ -2068,7 +2061,7 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         pcs_in_verified_groups_pk = list(
             set(verified_groups.values_list("pcs", flat=True))
         )
-        pcs_in_verified_groups = PC.objects.filter(pk__in=pcs_in_verified_groups_pk)
+        pcs_in_verified_groups = site.pcs.filter(pk__in=pcs_in_verified_groups_pk)
         # Generate the notification strings
         invalid_groups_string = get_notification_string(invalid_groups_names)
         pcs_with_other_plans_string = get_notification_string(
@@ -2568,7 +2561,7 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
                             set(plan.groups.all().values_list("pcs", flat=True))
                         )
                         if pcs_to_be_set_pk:
-                            pcs_to_be_set = PC.objects.filter(pk__in=pcs_to_be_set_pk)
+                            pcs_to_be_set = plan.site.pcs.filter(pk__in=pcs_to_be_set_pk)
                             args_set = plan.get_script_arguments()
 
                             run_wake_plan_script(
@@ -2918,7 +2911,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                                 new_wake_plan_members.append(member.pk)
                         if new_wake_plan_members:
                             args_set = self.object.wake_week_plan.get_script_arguments()
-                            pcs_to_be_set = PC.objects.filter(
+                            pcs_to_be_set = self.object.site.pcs.filter(
                                 pk__in=new_wake_plan_members
                             )
                             run_wake_plan_script(
@@ -2937,7 +2930,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                             if member not in pcs_in_other_wake_plan_groups:
                                 removed_wake_plan_members.append(member.pk)
                         if removed_wake_plan_members:
-                            pcs_to_be_reset = PC.objects.filter(
+                            pcs_to_be_reset = self.object.site.pcs.filter(
                                 pk__in=removed_wake_plan_members
                             )
                             run_wake_plan_script(

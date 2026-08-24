@@ -1335,6 +1335,10 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         return self.script
 
     def form_valid(self, form):
+        # Only superusers can update global scripts
+        if not self.object.site and not self.request.user.is_superuser:
+            raise PermissionDenied
+
         if self.validate_script_inputs():
             # save the username for the AuditModelMixin.
             form.instance.user_modified = self.request.user.username

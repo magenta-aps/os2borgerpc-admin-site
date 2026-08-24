@@ -3356,7 +3356,7 @@ class SecurityEventsView(SiteView):
         return context
 
 
-class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
+class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSiteMixin):
     paginate_by = 20
     http_method_names = ["get"]
     VALID_ORDER_BY = []

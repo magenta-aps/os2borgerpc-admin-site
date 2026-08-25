@@ -2821,9 +2821,12 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         return context
 
     def form_valid(self, form):
-        # Ensure that only pcs belonging to the same site can be added
+        # Ensure that only pcs or users belonging to the same site can be added
         form.cleaned_data["pcs"] = self.object.site.pcs.filter(
             id__in=form.cleaned_data["pcs"]
+        )
+        form.cleaned_data["supervisors"] = form.cleaned_data["supervisors"].filter(
+            user_profile__sitemembership__site=self.object.site
         )
 
         # Capture a view of the group's PCs and policy scripts before the
@@ -3199,6 +3202,15 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         return context
 
     def form_valid(self, form):
+        # Only allow groups or users belonging to the same site to be added
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        form.cleaned_data["alert_groups"] = site.groups.filter(
+            id__in=form.cleaned_data["alert_groups"]
+        )
+        form.cleaned_data["alert_users"] = form.cleaned_data["alert_users"].filter(
+            user_profile__sitemembership__site=site
+        )
+
         response = super().form_valid(form)
 
         notification_changes_saved(response, self.request.user.user_profile.language)

@@ -10,6 +10,7 @@
     - Authenticated users adding pcs/users from other sites to groups
     - Authenticated users adding groups from other sites to pcs
     - Authenticated users adding local scripts from other sites to their groups
+    - Groups being created with supervisors or pcs
 - Make SecurityEventSearch require login
 - Remove legacy views for creating/updating configuration entries
 

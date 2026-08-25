@@ -2731,6 +2731,10 @@ class PCGroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
 
     def form_valid(self, form):
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        # Ensure that groups cannot be created with pcs or supervisors
+        # TODO: Find a more elegant way to do this
+        if form.cleaned_data["supervisors"] or form.cleaned_data["pcs"]:
+            raise PermissionDenied
         self.object = form.save(commit=False)
         self.object.site = site
 

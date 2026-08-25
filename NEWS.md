@@ -1,3 +1,19 @@
+## Version 7.6.0, August 24, 2026
+
+- Add server-side logic to prevent the following:
+    - Authenticated users running scripts on PCs outside the current site
+    - Regular authenticated users editing global scripts
+    - Authenticated users creating/updating users who have greater permissions than them
+    - Authenticated users adding groups/exceptions from other sites to wake plans
+    - Authenticated users deleting read_only configs
+    - Authenticated users adding groups/users from other sites to monitoring rules
+    - Authenticated users adding pcs/users from other sites to groups
+    - Authenticated users adding groups from other sites to pcs
+    - Authenticated users adding local scripts from other sites to their groups
+    - Groups being created with supervisors or pcs
+- Make SecurityEventSearch require login
+- Remove legacy views for creating/updating configuration entries
+
 ## Version 7.5.0, August 20, 2026
 
 - Add support for client keys used to validate requests to the client API

@@ -83,7 +83,10 @@ class Configuration(models.Model):
                     cnf.save()
             else:
                 # Update submitted entry unless it is read only
-                cnf = ConfigurationEntry.objects.get(pk=pk)
+                try:
+                    cnf = self.entries.get(pk=pk)
+                except Exception:
+                    continue
                 seen_set.add(cnf.pk)
                 if not cnf.read_only:
                     cnf.value = value[0]
@@ -92,7 +95,8 @@ class Configuration(models.Model):
         # Delete entries that were not in the submitted data
         for pk in existing_set - seen_set:
             cnf = ConfigurationEntry.objects.get(pk=pk)
-            cnf.delete()
+            if not cnf.read_only:
+                cnf.delete()
 
     def remove_entry(self, key):
         return self.entries.filter(key=key).delete()
@@ -642,6 +646,8 @@ class PCGroup(models.Model):
 
             script_pk = int(req_params.get(script_param, None))
             script = Script.objects.get(pk=script_pk)
+            if script.site and script.site != self.site:
+                continue
             asc = AssociatedScript(group=self, script=script, position=i)
             if not pk.startswith("new_"):
                 asc.pk = pk

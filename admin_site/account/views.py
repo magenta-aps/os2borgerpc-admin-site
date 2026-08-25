@@ -263,6 +263,7 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
         if (
             self.request.user.is_superuser
             or site_membership.site_user_type >= site_membership.SITE_ADMIN
+            and site_membership.site_user_type >= int(form.cleaned_data["usertype"])
         ):
             self.object = form.save()
             user_profile = UserProfile.objects.create(user=self.object)
@@ -390,8 +391,6 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             >= site_membership_req_user.SITE_ADMIN
             or self.request.user == self.selected_user
         ):
-            self.object = form.save()
-
             user_profile = self.object.user_profile
             site_membership = user_profile.sitemembership_set.get(
                 site=site, user_profile=user_profile
@@ -399,6 +398,14 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             requested_user_type = int(
                 form.cleaned_data.get("usertype") or site_membership.site_user_type
             )
+
+            if (
+                not self.request.user.is_superuser
+                and requested_user_type > site_membership_req_user.site_user_type
+            ):
+                raise PermissionDenied
+
+            self.object = form.save()
 
             # If a user was made a customer admin, ensure that they have access
             # to all sites for this customer

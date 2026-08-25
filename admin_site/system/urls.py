@@ -5,8 +5,6 @@ from system.views import (
     APIKeyCreate,
     APIKeyDelete,
     APIKeyUpdate,
-    ConfigurationEntryCreate,
-    ConfigurationEntryUpdate,
     FileArchive,
     FileArchiveCreate,
     FileArchiveDelete,
@@ -168,16 +166,6 @@ urlpatterns = [
     path("site/<slug>/", SiteDashboardView.as_view(), name="dashboard"),
     # Site Settings
     path("site/<slug>/settings/", SiteSettings.as_view(), name="settings"),
-    path(
-        "site/<slug>/configuration/new/",
-        ConfigurationEntryCreate.as_view(),
-        name="new_configuration",
-    ),
-    path(
-        "site/<slug>/configuration/edit/<int:pk>/",
-        ConfigurationEntryUpdate.as_view(),
-        name="edit_configuration",
-    ),
     # Computers
     path(
         "site/<slug>/status/",

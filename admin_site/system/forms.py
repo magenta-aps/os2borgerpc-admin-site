@@ -3,7 +3,6 @@ from django.utils.translation import gettext_lazy as _
 from crispy_forms.helper import FormHelper
 from system.models import (
     PC,
-    ConfigurationEntry,
     EventRuleServer,
     FileParameter,
     Input,
@@ -140,12 +139,6 @@ class ScriptForm(forms.ModelForm):
             "is_hidden",
             "uid",
         ]
-
-
-class ConfigurationEntryForm(forms.ModelForm):
-    class Meta:
-        model = ConfigurationEntry
-        exclude = ["owner_configuration", "read_only"]
 
 
 # Currently not used by script run or associated scripts, but only the relevant FileArchive views

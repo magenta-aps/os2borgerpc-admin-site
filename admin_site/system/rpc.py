@@ -284,14 +284,15 @@ def push_config_keys(pc_uid, config_dict, client_key, read_only=False):
     ]
 
     for key, value in list(config_dict.items()):
+        if key in read_only_by_client_config_keys:
+            continue
         # Special case: If the value we want is in others_config, we just have
         # to remove any pc-specific config:
         if key in others_config and others_config[key] == value:
             if key in pc_config:
                 pc.configuration.remove_entry(key)
         else:
-            if key not in read_only_by_client_config_keys:
-                pc.configuration.update_entry(key, value, read_only)
+            pc.configuration.update_entry(key, value, read_only)
 
     return "OK"
 

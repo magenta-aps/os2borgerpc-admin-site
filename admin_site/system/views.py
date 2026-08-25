@@ -70,7 +70,6 @@ from system.models import (
 )
 
 from system.forms import (
-    ConfigurationEntryForm,
     EventRuleServerForm,
     FileParameterForm,
     ParameterForm,
@@ -1335,6 +1334,10 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         return self.script
 
     def form_valid(self, form):
+        # Only superusers can update global scripts
+        if not self.object.site and not self.request.user.is_superuser:
+            raise PermissionDenied
+
         if self.validate_script_inputs():
             # save the username for the AuditModelMixin.
             form.instance.user_modified = self.request.user.username
@@ -1445,6 +1448,7 @@ class ScriptRun(SiteView):
             script=context["script"],
         )
         context["form"] = form
+        site = context["site"]
 
         # When run in step 3 and step 2 wasn't bypassed, don't do this calculation again
         if "selected_pcs" not in context:
@@ -1467,8 +1471,8 @@ class ScriptRun(SiteView):
                 )
 
             context["batch"] = context["script"].run_on(
-                context["site"],
-                PC.objects.filter(pk__in=context["selected_pcs"]),
+                site,
+                site.pcs.filter(pk__in=context["selected_pcs"]),
                 *args,
                 user=self.request.user,
             )
@@ -1778,7 +1782,7 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         pc = self.object
         groups_pre = pc.pc_groups.all()
 
-        selected_groups = form.cleaned_data["pc_groups"]
+        selected_groups = pc.site.groups.filter(id__in=form.cleaned_data["pc_groups"])
         verified_groups = selected_groups.intersection(groups_pre)
         unverified_groups = selected_groups.difference(groups_pre).order_by("name")
 
@@ -1978,8 +1982,9 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         # Adding wake change events
         # The string currently set to "wake_change_events" must match the submit name
         # chosen for the pick list used to add wake change events
+        site = self.object.site
         exceptions_pk = form["wake_change_events"].value()
-        exceptions_selected = WakeChangeEvent.objects.filter(pk__in=exceptions_pk)
+        exceptions_selected = site.wake_change_events.filter(pk__in=exceptions_pk)
         # Get the related wake change events before the update
         exceptions_pre = self.object.wake_change_events.all()
         # Verify the pre-existing events that are still selected
@@ -2021,18 +2026,10 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         # The string currently set to "groups" must match the submit name
         # chosen for the pick list used to add groups
         groups_pk = form["groups"].value()
-        groups = PCGroup.objects.filter(pk__in=groups_pk)
-        # groups_with_other_plans_names = []
-        # groups_without_other_plans_pk = []
-        # for group in groups:
-        #     if group.wake_week_plan and group.wake_week_plan != self.object:
-        #         groups_with_other_plans_names.append(group.name)
-        #     else:
-        #         groups_without_other_plans_pk.append(group.pk)
-        # groups = PCGroup.objects.filter(pk__in=groups_without_other_plans_pk)
+        groups = site.groups.filter(pk__in=groups_pk)
         # Find the pcs in the groups
         pcs_in_groups_pk = list(set(groups.values_list("pcs", flat=True)))
-        pcs_in_groups = PC.objects.filter(pk__in=pcs_in_groups_pk)
+        pcs_in_groups = site.pcs.filter(pk__in=pcs_in_groups_pk)
         # Find the pcs in the groups that belong to different wake plans
         pcs_with_other_plans = []
         pcs_with_other_plans_names = []
@@ -2045,7 +2042,7 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
                     pcs_with_other_plans_names.append(pc.name)
                     other_plans_names.append(group.wake_week_plan.name)
                     break
-        pcs_with_other_plans = PC.objects.filter(pk__in=pcs_with_other_plans)
+        pcs_with_other_plans = site.pcs.filter(pk__in=pcs_with_other_plans)
         # Verify the groups that do not include pcs belonging to a different wake plan
         # and get the names of the groups that could not be verified
         verified_groups_pk = []
@@ -2055,7 +2052,7 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
                 verified_groups_pk.append(group.pk)
             else:
                 invalid_groups_names.append(group.name)
-        verified_groups = PCGroup.objects.filter(pk__in=verified_groups_pk)
+        verified_groups = site.groups.filter(pk__in=verified_groups_pk)
         # Add the verified groups to the plan
         for g in verified_groups:
             g.wake_week_plan = self.object
@@ -2064,7 +2061,7 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         pcs_in_verified_groups_pk = list(
             set(verified_groups.values_list("pcs", flat=True))
         )
-        pcs_in_verified_groups = PC.objects.filter(pk__in=pcs_in_verified_groups_pk)
+        pcs_in_verified_groups = site.pcs.filter(pk__in=pcs_in_verified_groups_pk)
         # Generate the notification strings
         invalid_groups_string = get_notification_string(invalid_groups_names)
         pcs_with_other_plans_string = get_notification_string(
@@ -2564,7 +2561,9 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
                             set(plan.groups.all().values_list("pcs", flat=True))
                         )
                         if pcs_to_be_set_pk:
-                            pcs_to_be_set = PC.objects.filter(pk__in=pcs_to_be_set_pk)
+                            pcs_to_be_set = plan.site.pcs.filter(
+                                pk__in=pcs_to_be_set_pk
+                            )
                             args_set = plan.get_script_arguments()
 
                             run_wake_plan_script(
@@ -2697,29 +2696,6 @@ class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):
         return response
 
 
-class ConfigurationEntryCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
-    model = ConfigurationEntry
-    form_class = ConfigurationEntryForm
-
-    def form_valid(self, form):
-        site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        self.object = form.save(commit=False)
-        self.object.owner_configuration = site.configuration
-
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse("settings", kwargs={"slug": self.kwargs["slug"]})
-
-
-class ConfigurationEntryUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
-    model = ConfigurationEntry
-    form_class = ConfigurationEntryForm
-
-    def get_success_url(self):
-        return reverse("settings", kwargs={"slug": self.kwargs["slug"]})
-
-
 class PCGroupRedirect(RedirectView, SuperAdminOrThisSiteMixin):
     def get_redirect_url(self, **kwargs):
         site = get_object_or_404(Site, uid=kwargs["slug"])
@@ -2755,6 +2731,10 @@ class PCGroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
 
     def form_valid(self, form):
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        # Ensure that groups cannot be created with pcs or supervisors
+        # TODO: Find a more elegant way to do this
+        if form.cleaned_data["supervisors"] or form.cleaned_data["pcs"]:
+            raise PermissionDenied
         self.object = form.save(commit=False)
         self.object.site = site
 
@@ -2845,6 +2825,14 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         return context
 
     def form_valid(self, form):
+        # Ensure that only pcs or users belonging to the same site can be added
+        form.cleaned_data["pcs"] = self.object.site.pcs.filter(
+            id__in=form.cleaned_data["pcs"]
+        )
+        form.cleaned_data["supervisors"] = form.cleaned_data["supervisors"].filter(
+            user_profile__sitemembership__site=self.object.site
+        )
+
         # Capture a view of the group's PCs and policy scripts before the
         # update
         members_pre = set(self.object.pcs.all())
@@ -2934,7 +2922,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                                 new_wake_plan_members.append(member.pk)
                         if new_wake_plan_members:
                             args_set = self.object.wake_week_plan.get_script_arguments()
-                            pcs_to_be_set = PC.objects.filter(
+                            pcs_to_be_set = self.object.site.pcs.filter(
                                 pk__in=new_wake_plan_members
                             )
                             run_wake_plan_script(
@@ -2953,7 +2941,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                             if member not in pcs_in_other_wake_plan_groups:
                                 removed_wake_plan_members.append(member.pk)
                         if removed_wake_plan_members:
-                            pcs_to_be_reset = PC.objects.filter(
+                            pcs_to_be_reset = self.object.site.pcs.filter(
                                 pk__in=removed_wake_plan_members
                             )
                             run_wake_plan_script(
@@ -3218,6 +3206,15 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         return context
 
     def form_valid(self, form):
+        # Only allow groups or users belonging to the same site to be added
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        form.cleaned_data["alert_groups"] = site.groups.filter(
+            id__in=form.cleaned_data["alert_groups"]
+        )
+        form.cleaned_data["alert_users"] = form.cleaned_data["alert_users"].filter(
+            user_profile__sitemembership__site=site
+        )
+
         response = super().form_valid(form)
 
         notification_changes_saved(response, self.request.user.user_profile.language)
@@ -3372,7 +3369,9 @@ class SecurityEventsView(SiteView):
         return context
 
 
-class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
+class SecurityEventSearch(
+    SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSiteMixin
+):
     paginate_by = 20
     http_method_names = ["get"]
     VALID_ORDER_BY = []

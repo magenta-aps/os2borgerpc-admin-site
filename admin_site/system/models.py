@@ -646,6 +646,8 @@ class PCGroup(models.Model):
 
             script_pk = int(req_params.get(script_param, None))
             script = Script.objects.get(pk=script_pk)
+            if script.site and script.site != self.site:
+                continue
             asc = AssociatedScript(group=self, script=script, position=i)
             if not pk.startswith("new_"):
                 asc.pk = pk

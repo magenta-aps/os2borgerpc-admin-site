@@ -28,6 +28,7 @@ variables:
   RELEASE_IMAGE: magentaaps/os2borgerpc-admin
   RELEASE_IMAGE_TAG: ${RELEASE_IMAGE}:${CI_COMMIT_TAG}
   RELEASE_IMAGE_LATEST: ${RELEASE_IMAGE}:latest
+  SALTBERT_URL: https://saltmaster.os2borgerpc.magentahosted.dk
 
 ################
 #  Lint stage  #
@@ -131,28 +132,30 @@ bpc testing trigger salt deployment:
   needs: [bpc testing update version salt]
   when: manual
   variables:
-    SALTBERT_ORCHESTRATION: os2bpc.test
-    SALTBERT_URL: https://saltmaster.os2borgerpc.magentahosted.dk
-    SALTBERT_PASSWORD: $SALTBERT_BORGERPC_TEST_PASSWORD
+    SALTBERT_ORCHESTRATION: os2bpc.borgerpc-test
+    SALTBERT_URL: ${SALTBERT_URL}
+    SALTBERT_PASSWORD: ${SALTBERT_BORGERPC_TEST_PASSWORD}
   environment:
+    # NOTE: The URL is technically not required, and the name is not matching up with anything
+    # It's just for GitLab filtering/scoping
     name: os2borgerpc-test
     url: https://os2borgerpc-test.magenta.dk
 
-bpc prod update version salt:
+bpc production update version salt:
   extends: [.rules:semver-core, .config:endpoint-with-tag]
   needs: [release latest, bpc testing trigger salt deployment]
   when: manual
   variables:
     ENDPOINT: os2bpc/salt/os2bpc-update-production
 
-bpc prod trigger salt deployment:
+bpc production trigger salt deployment:
   extends: [.rules:semver-core, .saltbert]
-  needs: [bpc prod update version salt]
+  needs: [bpc production update version salt]
   when: manual
   variables:
-    SALTBERT_ORCHESTRATION: os2bpc.production
-    SALTBERT_URL: https://saltmaster.os2borgerpc.magentahosted.dk
-    SALTBERT_PASSWORD: $SALTBERT_BORGERPC_PRODUCTION_PASSWORD
+    SALTBERT_ORCHESTRATION: os2bpc.borgerpc-production
+    SALTBERT_URL: ${SALTBERT_URL}
+    SALTBERT_PASSWORD: ${SALTBERT_BORGERPC_PRODUCTION_PASSWORD}
   environment:
     name: os2borgerpc-admin
     url: https://os2borgerpc-admin.magenta.dk
@@ -166,6 +169,20 @@ ow testing update version salt:
   variables:
     ENDPOINT: os2bpc/salt/openworkplace-update-test
 
+ow testing trigger salt deployment:
+  extends: [.rules:semver-all, .saltbert]
+  needs: [ow testing update version salt]
+  when: manual
+  variables:
+    SALTBERT_ORCHESTRATION: os2bpc.openworkplace-test
+    SALTBERT_URL: ${SALTBERT_URL}
+    SALTBERT_PASSWORD: ${SALTBERT_OPENWORKPLACE_TEST_PASSWORD}
+  environment:
+    # NOTE: The URL is technically not required, and the name is not matching up with anything
+    # It's just for GitLab filtering/scoping
+    name: openworkplace-test
+    url: https://test.openworkplace.dk
+
 ow staging update version salt:
   extends: [.rules:semver-all, .config:endpoint-with-tag]
   needs: [release versioned]
@@ -173,9 +190,33 @@ ow staging update version salt:
   variables:
     ENDPOINT: os2bpc/salt/openworkplace-update-staging
 
-ow prod update version salt:
+ow staging trigger salt deployment:
+  extends: [.rules:semver-all, .saltbert]
+  needs: [ow staging update version salt]
+  when: manual
+  variables:
+    SALTBERT_ORCHESTRATION: os2bpc.openworkplace-staging
+    SALTBERT_URL: ${SALTBERT_URL}
+    SALTBERT_PASSWORD: ${SALTBERT_OPENWORKPLACE_STAGING_PASSWORD}
+  environment:
+    name: openworkplace-staging
+    url: https://staging.openworkplace.dk
+
+ow production update version salt:
   extends: [.rules:semver-core, .config:endpoint-with-tag]
   needs: [release latest] # todo: add ow staging trigger salt deployment
   when: manual
   variables:
     ENDPOINT: os2bpc/salt/openworkplace-update-production
+
+ow production trigger salt deployment:
+  extends: [.rules:semver-core, .saltbert]
+  needs: [ow production update version salt]
+  when: manual
+  variables:
+    SALTBERT_ORCHESTRATION: os2bpc.openworkplace-production
+    SALTBERT_URL: ${SALTBERT_URL}
+    SALTBERT_PASSWORD: ${SALTBERT_OPENWORKPLACE_PRODUCTION_PASSWORD}
+  environment:
+    name: openworkplace-production
+    url: https://openworkplace.dk

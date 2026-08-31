@@ -3214,6 +3214,15 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         form.cleaned_data["alert_users"] = form.cleaned_data["alert_users"].filter(
             user_profile__sitemembership__site=site
         )
+        if (
+            "security_script" in form.cleaned_data
+            and form.cleaned_data["security_script"].site
+            and form.cleaned_data["security_script"].site != site
+        ):
+            raise PermissionDenied
+        if not self.object:
+            self.object = form.save(commit=False)
+            self.object.site = site
 
         response = super().form_valid(form)
 
@@ -3225,13 +3234,27 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
 class SecurityProblemCreate(EventRuleBaseMixin, CreateView):
     template_name = "system/event_rules/site_security_problems.html"
     model = SecurityProblem
-    fields = "__all__"
+    fields = [
+        "name",
+        "description",
+        "level",
+        "alert_groups",
+        "alert_users",
+        "security_script",
+    ]
 
 
 class SecurityProblemUpdate(EventRuleBaseMixin, UpdateView):
     template_name = "system/event_rules/site_security_problems.html"
     model = SecurityProblem
-    fields = "__all__"
+    fields = [
+        "name",
+        "description",
+        "level",
+        "alert_groups",
+        "alert_users",
+        "security_script",
+    ]
 
     def get_object(self, queryset=None):
         try:

@@ -18,7 +18,6 @@ from django.views.generic import DetailView, ListView, RedirectView, TemplateVie
 from django.views.generic.edit import (
     CreateView,
     DeleteView,
-    DeletionMixin,
     UpdateView,
 )
 from django.views.generic.list import BaseListView
@@ -652,10 +651,12 @@ class TwoFactor(SiteView, SiteMixin):
     template_name = "system/site_two_factor_pc.html"
 
 
-class APIKeyUpdate(UpdateView, SiteView, DeletionMixin):
-    # form_class = ?
+class APIKeyUpdate(SiteView):
     template_name = "system/site_settings/api_keys/api_keys.html"
-    fields = "__all__"
+
+    def get_object(self, queryset=None):
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        return site
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
@@ -665,73 +666,58 @@ class APIKeyUpdate(UpdateView, SiteView, DeletionMixin):
 
         return context
 
-    # def form_valid(self, form):
     def post(self, request, *args, **kwargs):
         new_description = request.POST["description"]
 
-        APIKey.objects.filter(id=kwargs["pk"]).update(description=new_description)
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+
+        site.apikeys.filter(id=kwargs["pk"]).update(description=new_description)
 
         return HttpResponse("OK")
 
 
-class APIKeyCreate(CreateView, SuperAdminOrThisSiteMixin):
+class APIKeyCreate(TemplateView, SuperAdminOrThisSiteMixin):
     model = APIKey
-    fields = "__all__"
     template_name = "system/site_settings/api_keys/partials/list.html"
 
-    # TODO: Consider making a common class they inherit from, to not duplicate get_context_data (and maybe other view functions)
-    def get_context_data(self, **kwargs):
-        # First, get basic context from superclass
-        context = super().get_context_data(**kwargs)
-
-        site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        context["api_keys"] = APIKey.objects.filter(site=site)
-
-        return context
-
-    # def form_valid(self, form):
     def post(self, request, *args, **kwargs):
-        # Do basic method
-        # kwargs["updated"] = True
-        response = self.get(request, *args, **kwargs)
-
-        # Handle saving of data
-        super().post(request, *args, **kwargs)
-
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
         # Generate an API Key
         KEY_LENGTH = 75
         key = secrets.token_urlsafe(KEY_LENGTH)
         while APIKey.objects.filter(key=key).count() > 0:
             key = secrets.token_urlsafe(KEY_LENGTH)
 
-        site = get_object_or_404(Site, uid=self.kwargs["slug"])
         APIKey.objects.create(key=key, site=site)
 
-        return response
-
-
-# class APIKeyDelete(DeleteView, SuperAdminOrThisSiteMixin):
-class APIKeyDelete(TemplateView, DeletionMixin, SuperAdminOrThisSiteMixin):
-    model = APIKey
-    template_name = "system/site_settings/api_keys/partials/list.html"
-
-    # TODO: Consider making a common class they inherit from, to not duplicate get_context_data (and maybe other view functions)
-    def get_context_data(self, **kwargs):
-        # First, get basic context from superclass
-        context = super().get_context_data(**kwargs)
-
-        site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        context["api_keys"] = APIKey.objects.filter(site=site)
-
-        return context
-
-    def delete(self, request, *args, **kwargs):
-        APIKey.objects.get(id=kwargs["pk"]).delete()
+        context = self.get_context_data()
+        context["api_keys"] = site.apikeys.all()
 
         return render(
             request,
             "system/site_settings/api_keys/partials/list.html",
-            self.get_context_data(),
+            context,
+        )
+
+
+class APIKeyDelete(TemplateView, SuperAdminOrThisSiteMixin):
+    model = APIKey
+    template_name = "system/site_settings/api_keys/partials/list.html"
+
+    def delete(self, request, *args, **kwargs):
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        try:
+            APIKey.objects.get(id=kwargs["pk"], site=site).delete()
+        except APIKey.DoesNotExist:
+            pass
+
+        context = self.get_context_data()
+        context["api_keys"] = site.apikeys.all()
+
+        return render(
+            request,
+            "system/site_settings/api_keys/partials/list.html",
+            context,
         )
 
 

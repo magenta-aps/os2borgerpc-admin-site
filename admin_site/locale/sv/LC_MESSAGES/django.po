@@ -1719,7 +1719,6 @@ msgstr ""
 "det kommer att vara möjligt att lägga till datorer i gruppen."
 
 #: docs/templates/groups/scripts.html
-#: templates/system/pcgroups/policy_list/list.html
 msgid "Add script"
 msgstr "Lägg till skript"
 
@@ -5785,6 +5784,10 @@ msgstr "Position"
 #: templates/system/pcgroups/policy_list/list.html
 msgid "Arguments"
 msgstr "Parametrar"
+
+#: templates/system/pcgroups/policy_list/list.html
+msgid "Add script (type at least 3 characters)"
+msgstr "Lägg till skript (skriv minst 3 tecken)"
 
 #: templates/system/pcgroups/site_groups.html
 msgid "Add new group"

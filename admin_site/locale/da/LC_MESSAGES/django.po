@@ -1727,7 +1727,6 @@ msgstr ""
 "gruppen."
 
 #: docs/templates/groups/scripts.html
-#: templates/system/pcgroups/policy_list/list.html
 msgid "Add script"
 msgstr "Tilføj script"
 
@@ -5802,6 +5801,10 @@ msgstr "Position"
 #: templates/system/pcgroups/policy_list/list.html
 msgid "Arguments"
 msgstr "Parametre"
+
+#: templates/system/pcgroups/policy_list/list.html
+msgid "Add script (type at least 3 characters)"
+msgstr "Tilføj script (indtast minimum 3 tegn)"
 
 #: templates/system/pcgroups/site_groups.html
 msgid "Add new group"

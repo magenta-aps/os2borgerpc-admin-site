@@ -637,7 +637,7 @@ class PCGroup(models.Model):
         updated_policy_scripts = set()
 
         for pk in existing_set:
-            asc = AssociatedScript.objects.get(pk=pk)
+            asc = self.policy.get(pk=pk)
             old_params.update(asc.parameters.all())
             asc.delete()
 
@@ -650,6 +650,8 @@ class PCGroup(models.Model):
                 continue
             asc = AssociatedScript(group=self, script=script, position=i)
             if not pk.startswith("new_"):
+                if int(pk) not in existing_set:
+                    continue
                 asc.pk = pk
             asc.save()
 

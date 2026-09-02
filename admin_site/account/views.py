@@ -200,7 +200,9 @@ class UserLink(FormView, UsersMixin, SuperAdminOrThisSiteMixin):
             != SiteMembership.CUSTOMER_ADMIN
         ):
             raise PermissionDenied
-        selected_users = form.cleaned_data["linkable_users"]
+        selected_users = form.cleaned_data["linkable_users"].filter(
+            user_profile__sitemembership__site__customer=site.customer
+        )
         selected_user_type = form.cleaned_data["usertype"]
         selected_users_names = []
         # Add the selected users to the site with

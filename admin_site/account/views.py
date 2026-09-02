@@ -102,11 +102,13 @@ class UsersMixin(object):
     def add_userlist_to_context(self, context):
         if "site" not in context:
             self.add_site_to_context(context)
-        if self.request.user.is_superuser or self.request.user.user_profile.is_hidden:
+        if self.request.user.is_superuser:
             context["user_list"] = context["site"].users
+        elif self.request.user.user_profile.is_hidden:
+            context["user_list"] = context["site"].users.filter(is_superuser=False)
         else:
             context["user_list"] = context["site"].users.filter(
-                user_profile__is_hidden=False
+                user_profile__is_hidden=False, is_superuser=False
             )
         if (
             not self.request.user.is_superuser
@@ -343,11 +345,13 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         if (
             selected_user_site_membership.site_user_type
             == SiteMembership.CUSTOMER_ADMIN
-            and not self.request.user.is_superuser
             and not self.request.user.user_profile.sitemembership_set.filter(
                 site_user_type=SiteMembership.CUSTOMER_ADMIN
             )
-        ):
+            or self.selected_user.is_superuser
+            or self.selected_user.user_profile.is_hidden
+            and not self.request.user.user_profile.is_hidden
+        ) and not self.request.user.is_superuser:
             raise PermissionDenied
 
         return self.selected_user
@@ -506,8 +510,16 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
             )
         if (
             site_membership.site_user_type == SiteMembership.CUSTOMER_ADMIN
-            and not self.request.user.is_superuser
-        ):
+            or self.request.user.user_profile.sitemembership_set.filter(
+                site__uid=self.kwargs["slug"]
+            )
+            .first()
+            .site_user_type
+            < site_membership.SITE_ADMIN
+            or self.selected_user.is_superuser
+            or self.selected_user.user_profile.is_hidden
+            and not self.request.user.user_profile.is_hidden
+        ) and not self.request.user.is_superuser:
             raise PermissionDenied
         return self.selected_user
 
@@ -523,14 +535,6 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
 
     def form_valid(self, form, *args, **kwargs):
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        site_membership = self.request.user.user_profile.sitemembership_set.filter(
-            site_id=site.id
-        ).first()
-        if (
-            not self.request.user.is_superuser
-            and site_membership.site_user_type < site_membership.SITE_ADMIN
-        ):
-            raise PermissionDenied
         # If the selected_user is a member of multiple sites, only remove them from this site
         if len(self.object.user_profile.sitemembership_set.all()) > 1:
             self.object.user_profile.sitemembership_set.get(site_id=site.id).delete()

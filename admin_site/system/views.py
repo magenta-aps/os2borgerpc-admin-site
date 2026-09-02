@@ -1189,8 +1189,14 @@ class ScriptMixin(object):
 
             if "pk" in input_data and not input_data["pk"]:
                 del input_data["pk"]
+            elif "pk" in input_data and not self.script.inputs.filter(
+                pk=input_data["pk"]
+            ):
+                continue
 
-            Input.objects.update_or_create(pk=input_data.get("pk"), defaults=input_data)
+            Input.objects.update_or_create(
+                pk=input_data.get("pk"), script=self.script, defaults=input_data
+            )
 
     def create_associated_script_parameters(self):
         for associated_script in self.script.associations.all():

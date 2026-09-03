@@ -508,6 +508,10 @@ class SiteView(DetailView, SuperAdminOrThisSiteMixin):
     model = Site
     slug_field = "uid"
 
+    def get_object(self, queryset=None):
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        return site
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         site = self.get_object()
@@ -1472,9 +1476,11 @@ class ScriptRun(SiteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["script"] = get_object_or_404(Script, pk=self.kwargs["script_pk"])
+        if context["script"].site and context["script"].site != context["site"]:
+            raise Http404("No Script matches the given query.")
 
         product_ids = (
-            context["object"]
+            context["site"]
             .pcs.all()
             .values_list("product_id", flat=True)
             .order_by("product_id")

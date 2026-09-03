@@ -1,3 +1,22 @@
+## Version 7.7.0, September 3, 2026
+
+- Rewrite APIKeyUpdate to prevent authenticated users using it to delete sites
+- Add server-side logic to prevent the following:
+    - Authenticated users creating event rules for other sites
+    - Authenticated users adding security scripts from other sites to security rules
+    - Authenticated users creating/updating/deleting API keys for other sites
+    - Authenticated customer admins linking users from other customers to their sites
+    - Authenticated users removing parameters from non-local scripts
+    - Authenticated site users deleting users via requests
+    - Authenticated users moving associated scripts between groups
+    - Authenticated users running local scripts from other sites
+    - Authenticated users restarting jobs belonging to other sites
+    - Authenticated users duplicating groups or wake plans from other sites
+    - Authenticated customer admins deleting sites with 5 or more pcs via requests
+- Only allow superusers to modify/delete other superusers
+- Improve handling of pcs with no product
+- Reject registration from pcs without a matching product
+
 ## Version 7.6.0, August 24, 2026
 
 - Add server-side logic to prevent the following:

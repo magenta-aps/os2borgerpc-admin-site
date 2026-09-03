@@ -239,7 +239,7 @@ class EventRuleServerForm(forms.ModelForm):
 
     class Meta:
         model = EventRuleServer
-        fields = "__all__"
+        exclude = ["site"]
         widgets = {
             "monitor_period_start": time_format,
             "monitor_period_end": time_format,

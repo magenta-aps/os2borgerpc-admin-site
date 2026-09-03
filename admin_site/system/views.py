@@ -18,7 +18,6 @@ from django.views.generic import DetailView, ListView, RedirectView, TemplateVie
 from django.views.generic.edit import (
     CreateView,
     DeleteView,
-    DeletionMixin,
     UpdateView,
 )
 from django.views.generic.list import BaseListView
@@ -433,36 +432,18 @@ class SiteDelete(DeleteView, SuperAdminOrThisSiteMixin):
     model = Site
     template_name = "system/sites/confirm_delete.html"
 
-    def get(self, request, *args, **kwargs):
-        """
-        Overwrite the get method to ensure that customer admins
-        can't directly access the delete URL for sites with
-        5 or more computers. We do it this way to avoid
-        using PermissionDenied, which might confuse
-        some customers since customer admins do have
-        permission to delete sites.
-        """
-        # Call the super-method first so non-customer admins
-        # are shown the proper PermissionDenied
-        response = super().get(request, *args, **kwargs)
-        site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        # If the site has 5 or more computers, redirect away
-        # from this view.
-        # Also don't let them delete their last site
-        if site.pcs.count() > 4 or site.customer.sites.count() == 1:
-            return redirect("/")
-        return response
-
     def get_object(self, queryset=None):
         self.selected_site = get_object_or_404(Site, uid=self.kwargs["slug"])
 
         # Only customer admins are allowed to access this view
+        request_user_type = self.request.user.user_profile.sitemembership_set.get(
+            site=self.selected_site
+        ).site_user_type
         if (
             not self.request.user.is_superuser
-            and self.request.user.user_profile.sitemembership_set.get(
-                site=self.selected_site
-            ).site_user_type
-            != SiteMembership.CUSTOMER_ADMIN
+            and request_user_type != SiteMembership.CUSTOMER_ADMIN
+            or self.selected_site.pcs.count() > 4
+            or self.selected_site.customer.sites.count() == 1
         ):
             raise PermissionDenied
 
@@ -478,19 +459,6 @@ class SiteDelete(DeleteView, SuperAdminOrThisSiteMixin):
         return reverse("sites")
 
     def form_valid(self, form, *args, **kwargs):
-        if (
-            (
-                not self.request.user.is_superuser
-                and not self.request.user.user_profile.sitemembership_set.filter(
-                    site_user_type=SiteMembership.CUSTOMER_ADMIN
-                )
-            )
-            or self.selected_site.pcs.count() > 4
-            or self.selected_site.customer.sites.count() == 1
-        ):
-            # You can only get here by deliberately trying to circumvent the system,
-            # so we don't care about possibly showing PermissionDenied to a customer admin
-            raise PermissionDenied
         # Delete any users that only existed on this site
         for user in self.selected_site.users:
             if len(user.user_profile.sitemembership_set.all()) == 1:
@@ -508,6 +476,10 @@ class SiteView(DetailView, SuperAdminOrThisSiteMixin):
 
     model = Site
     slug_field = "uid"
+
+    def get_object(self, queryset=None):
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        return site
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -652,10 +624,12 @@ class TwoFactor(SiteView, SiteMixin):
     template_name = "system/site_two_factor_pc.html"
 
 
-class APIKeyUpdate(UpdateView, SiteView, DeletionMixin):
-    # form_class = ?
+class APIKeyUpdate(SiteView):
     template_name = "system/site_settings/api_keys/api_keys.html"
-    fields = "__all__"
+
+    def get_object(self, queryset=None):
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        return site
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
@@ -665,73 +639,58 @@ class APIKeyUpdate(UpdateView, SiteView, DeletionMixin):
 
         return context
 
-    # def form_valid(self, form):
     def post(self, request, *args, **kwargs):
         new_description = request.POST["description"]
 
-        APIKey.objects.filter(id=kwargs["pk"]).update(description=new_description)
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+
+        site.apikeys.filter(id=kwargs["pk"]).update(description=new_description)
 
         return HttpResponse("OK")
 
 
-class APIKeyCreate(CreateView, SuperAdminOrThisSiteMixin):
+class APIKeyCreate(TemplateView, SuperAdminOrThisSiteMixin):
     model = APIKey
-    fields = "__all__"
     template_name = "system/site_settings/api_keys/partials/list.html"
 
-    # TODO: Consider making a common class they inherit from, to not duplicate get_context_data (and maybe other view functions)
-    def get_context_data(self, **kwargs):
-        # First, get basic context from superclass
-        context = super().get_context_data(**kwargs)
-
-        site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        context["api_keys"] = APIKey.objects.filter(site=site)
-
-        return context
-
-    # def form_valid(self, form):
     def post(self, request, *args, **kwargs):
-        # Do basic method
-        # kwargs["updated"] = True
-        response = self.get(request, *args, **kwargs)
-
-        # Handle saving of data
-        super().post(request, *args, **kwargs)
-
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
         # Generate an API Key
         KEY_LENGTH = 75
         key = secrets.token_urlsafe(KEY_LENGTH)
         while APIKey.objects.filter(key=key).count() > 0:
             key = secrets.token_urlsafe(KEY_LENGTH)
 
-        site = get_object_or_404(Site, uid=self.kwargs["slug"])
         APIKey.objects.create(key=key, site=site)
 
-        return response
-
-
-# class APIKeyDelete(DeleteView, SuperAdminOrThisSiteMixin):
-class APIKeyDelete(TemplateView, DeletionMixin, SuperAdminOrThisSiteMixin):
-    model = APIKey
-    template_name = "system/site_settings/api_keys/partials/list.html"
-
-    # TODO: Consider making a common class they inherit from, to not duplicate get_context_data (and maybe other view functions)
-    def get_context_data(self, **kwargs):
-        # First, get basic context from superclass
-        context = super().get_context_data(**kwargs)
-
-        site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        context["api_keys"] = APIKey.objects.filter(site=site)
-
-        return context
-
-    def delete(self, request, *args, **kwargs):
-        APIKey.objects.get(id=kwargs["pk"]).delete()
+        context = self.get_context_data()
+        context["api_keys"] = site.apikeys.all()
 
         return render(
             request,
             "system/site_settings/api_keys/partials/list.html",
-            self.get_context_data(),
+            context,
+        )
+
+
+class APIKeyDelete(TemplateView, SuperAdminOrThisSiteMixin):
+    model = APIKey
+    template_name = "system/site_settings/api_keys/partials/list.html"
+
+    def delete(self, request, *args, **kwargs):
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        try:
+            site.apikeys.get(id=kwargs["pk"]).delete()
+        except APIKey.DoesNotExist:
+            pass
+
+        context = self.get_context_data()
+        context["api_keys"] = site.apikeys.all()
+
+        return render(
+            request,
+            "system/site_settings/api_keys/partials/list.html",
+            context,
         )
 
 
@@ -962,6 +921,12 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
     template_name = "system/jobs/restart.html"
     model = Job
 
+    def get_object(self, queryset=None):
+        job = get_object_or_404(
+            Job, pk=self.kwargs["pk"], batch__site__uid=self.kwargs["slug"]
+        )
+        return job
+
     def status_fail_response(self):
         response = redirect(self.get_success_url())
         set_notification_cookie(
@@ -1025,14 +990,18 @@ class JobInfo(DetailView, SuperAdminOrThisSiteMixin):
     template_name = "system/jobs/info.html"
     model = Job
 
+    def get_object(self, queryset=None):
+        job = get_object_or_404(
+            Job, pk=self.kwargs["pk"], batch__site__uid=self.kwargs["slug"]
+        )
+        return job
+
     def get(self, request, *args, **kwargs):
         self.site = get_object_or_404(Site, uid=kwargs["slug"])
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.site != self.object.batch.site:
-            raise Http404
         context["site"] = self.site
         context["job"] = self.object
         return context
@@ -1201,10 +1170,19 @@ class ScriptMixin(object):
         for input_data in self.script_inputs:
             input_data["script"] = self.script
 
-            if "pk" in input_data and not input_data["pk"]:
-                del input_data["pk"]
+            if "pk" in input_data:
+                if not input_data["pk"]:
+                    del input_data["pk"]
+                elif not self.script.inputs.filter(pk=input_data["pk"]):
+                    # Ignore pk values that don't match inputs
+                    # belonging to this script.
+                    # The only way to get here is to try to
+                    # circumvent the system.
+                    continue
 
-            Input.objects.update_or_create(pk=input_data.get("pk"), defaults=input_data)
+            Input.objects.update_or_create(
+                pk=input_data.get("pk"), script=self.script, defaults=input_data
+            )
 
     def create_associated_script_parameters(self):
         for associated_script in self.script.associations.all():
@@ -1417,7 +1395,8 @@ class ScriptRun(SiteView):
 
         # TODO: Figure out if we want the badges
         for p in context["pcs"]:
-            p.badgeclass = get_badge_class(p.product.id)
+            if p.product:
+                p.badgeclass = get_badge_class(p.product.id)
 
         if len(context["script"].ordered_inputs) > 0:
             context["action"] = ScriptRun.STEP2
@@ -1480,9 +1459,11 @@ class ScriptRun(SiteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["script"] = get_object_or_404(Script, pk=self.kwargs["script_pk"])
+        if context["script"].site and context["script"].site != context["site"]:
+            raise Http404("No Script matches the given query.")
 
         product_ids = (
-            context["object"]
+            context["site"]
             .pcs.all()
             .values_list("product_id", flat=True)
             .order_by("product_id")
@@ -1609,7 +1590,8 @@ class PCsOverviewTable(DetailView, SuperAdminOrThisSiteMixin):
         site_pcs = paginator.get_page(params["page"])
 
         for p in site_pcs:
-            p.badgeclass = get_badge_class(p.product_id)
+            if p.product_id:
+                p.badgeclass = get_badge_class(p.product_id)
 
         context["params"] = params
         context["site_pcs"] = site_pcs
@@ -1669,7 +1651,8 @@ class PCNavigationList(DetailView, SuperAdminOrThisSiteMixin):
             site_pcs = site_pcs.all()
 
         for p in site_pcs:
-            p.badgeclass = get_badge_class(p.product.id)
+            if p.product:
+                p.badgeclass = get_badge_class(p.product.id)
 
         context["pc_list"] = site_pcs
 
@@ -1728,7 +1711,8 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
             all_pcs = all_pcs.all()
 
         for p in all_pcs:
-            p.badgeclass = get_badge_class(p.product.id)
+            if p.product:
+                p.badgeclass = get_badge_class(p.product.id)
 
         context["pc_list"] = all_pcs
 
@@ -2435,7 +2419,9 @@ class WakePlanDuplicate(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
     model = WakeWeekPlan
 
     def get_redirect_url(self, **kwargs):
-        object_to_copy = WakeWeekPlan.objects.get(id=kwargs["wake_week_plan_id"])
+        object_to_copy = get_object_or_404(
+            WakeWeekPlan, id=kwargs["wake_week_plan_id"], site__uid=kwargs["slug"]
+        )
         if not object_to_copy.site.customer.feature_permission.filter(uid="wake_plan"):
             raise PermissionDenied
 
@@ -3069,7 +3055,9 @@ class PCGroupDuplicate(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
     model = PCGroup
 
     def get_redirect_url(self, **kwargs):
-        object_to_copy = PCGroup.objects.get(id=kwargs["group_id"])
+        object_to_copy = get_object_or_404(
+            PCGroup, id=kwargs["group_id"], site__uid=kwargs["slug"]
+        )
 
         # Before we remove the pk we duplicate all the associated scripts, as they're precisely related through the pk
         ascs = []
@@ -3214,6 +3202,17 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         form.cleaned_data["alert_users"] = form.cleaned_data["alert_users"].filter(
             user_profile__sitemembership__site=site
         )
+        if (
+            "security_script" in form.cleaned_data
+            and form.cleaned_data["security_script"].site
+            and form.cleaned_data["security_script"].site != site
+        ):
+            raise PermissionDenied
+        if not self.object:
+            # This condition is true for CreateViews and false for UpdateViews
+            # We use it to specify the site when creating event rules
+            self.object = form.save(commit=False)
+            self.object.site = site
 
         response = super().form_valid(form)
 
@@ -3225,13 +3224,27 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
 class SecurityProblemCreate(EventRuleBaseMixin, CreateView):
     template_name = "system/event_rules/site_security_problems.html"
     model = SecurityProblem
-    fields = "__all__"
+    fields = [
+        "name",
+        "description",
+        "level",
+        "alert_groups",
+        "alert_users",
+        "security_script",
+    ]
 
 
 class SecurityProblemUpdate(EventRuleBaseMixin, UpdateView):
     template_name = "system/event_rules/site_security_problems.html"
     model = SecurityProblem
-    fields = "__all__"
+    fields = [
+        "name",
+        "description",
+        "level",
+        "alert_groups",
+        "alert_users",
+        "security_script",
+    ]
 
     def get_object(self, queryset=None):
         try:
@@ -3526,11 +3539,14 @@ class SecurityEventsUpdate(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
 class ImageVersionRedirect(RedirectView):
     def get_redirect_url(self, **kwargs):
         site = get_object_or_404(Site, uid=kwargs["slug"])
-
-        return reverse(
-            "images-product",
-            kwargs={"slug": site.url, "product_id": Product.objects.first().id},
-        )
+        p = Product.objects.first()
+        if p:
+            return reverse(
+                "images-product",
+                kwargs={"slug": site.url, "product_id": p.id},
+            )
+        else:
+            raise Http404("You have no products to list images for")
 
 
 # To be able to link all customers to images with a single link
@@ -3622,7 +3638,9 @@ class FileArchive(SiteMixin, ListView, SuperAdminOrThisSiteMixin):
         return queryset
 
     def post(self, request, *args, **kwargs):
-        obj = get_object_or_404(FileParameter, pk=kwargs["pk"])
+        obj = get_object_or_404(
+            FileParameter, pk=kwargs["pk"], site__uid=self.kwargs["slug"]
+        )
 
         if "name" in request.POST:
             obj.name = request.POST["name"]
@@ -3676,13 +3694,16 @@ class FileArchiveDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
     template_name = "system/file_archive/confirm_delete.html"
     context_object_name = "file"
 
+    def get_object(self, queryset=None):
+        file_parameter = get_object_or_404(
+            FileParameter, pk=self.kwargs["pk"], site__uid=self.kwargs["slug"]
+        )
+        return file_parameter
+
     def get_success_url(self):
         return reverse("file_archive", kwargs={"slug": self.kwargs["slug"]})
 
     def form_valid(self, form, *args, **kwargs):
-        if self.object.site not in self.request.user.user_profile.sites.all():
-            return self.form_invalid(form)
-
         response = super().delete(form, *args, **kwargs)
 
         set_notification_cookie(

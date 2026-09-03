@@ -952,6 +952,12 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
     template_name = "system/jobs/restart.html"
     model = Job
 
+    def get_object(self, queryset=None):
+        job = get_object_or_404(
+            Job, pk=self.kwargs["pk"], batch__site__uid=self.kwargs["slug"]
+        )
+        return job
+
     def status_fail_response(self):
         response = redirect(self.get_success_url())
         set_notification_cookie(
@@ -1015,14 +1021,18 @@ class JobInfo(DetailView, SuperAdminOrThisSiteMixin):
     template_name = "system/jobs/info.html"
     model = Job
 
+    def get_object(self, queryset=None):
+        job = get_object_or_404(
+            Job, pk=self.kwargs["pk"], batch__site__uid=self.kwargs["slug"]
+        )
+        return job
+
     def get(self, request, *args, **kwargs):
         self.site = get_object_or_404(Site, uid=kwargs["slug"])
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.site != self.object.batch.site:
-            raise Http404
         context["site"] = self.site
         context["job"] = self.object
         return context

@@ -432,50 +432,18 @@ class SiteDelete(DeleteView, SuperAdminOrThisSiteMixin):
     model = Site
     template_name = "system/sites/confirm_delete.html"
 
-    def get(self, request, *args, **kwargs):
-        """
-        Overwrite the get method to ensure that customer admins
-        can't directly access the delete URL for sites with
-        5 or more computers. We do it this way to avoid
-        using PermissionDenied, which might confuse
-        some customers since customer admins do have
-        permission to delete sites.
-        """
-        # Call the super-method first so non-customer admins
-        # are shown the proper PermissionDenied
-        response = super().get(request, *args, **kwargs)
-        # If the site has 5 or more computers, redirect away
-        # from this view.
-        # Also don't let them delete their last site
-        if (
-            self.selected_site.pcs.count() > 4
-            or self.selected_site.customer.sites.count() == 1
-        ):
-            return redirect("/")
-        return response
-
-    def delete(self, request, *args, **kwargs):
-        """
-        Overwrite the delete method to ensure that customer admins
-        can't delete sites with 5 or more computers by sending a
-        delete request."""
-        site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        if site.pcs.count() > 4 or site.customer.sites.count() == 1:
-            # You can only get here by deliberately trying to circumvent the system,
-            # so we don't care about possibly showing PermissionDenied to a customer admin
-            raise PermissionDenied
-        return super().delete(request, *args, **kwargs)
-
     def get_object(self, queryset=None):
         self.selected_site = get_object_or_404(Site, uid=self.kwargs["slug"])
 
         # Only customer admins are allowed to access this view
+        request_user_type = self.request.user.user_profile.sitemembership_set.get(
+            site=self.selected_site
+        ).site_user_type
         if (
             not self.request.user.is_superuser
-            and self.request.user.user_profile.sitemembership_set.get(
-                site=self.selected_site
-            ).site_user_type
-            != SiteMembership.CUSTOMER_ADMIN
+            and request_user_type != SiteMembership.CUSTOMER_ADMIN
+            or self.selected_site.pcs.count() > 4
+            or self.selected_site.customer.sites.count() == 1
         ):
             raise PermissionDenied
 
@@ -491,13 +459,6 @@ class SiteDelete(DeleteView, SuperAdminOrThisSiteMixin):
         return reverse("sites")
 
     def form_valid(self, form, *args, **kwargs):
-        if (
-            self.selected_site.pcs.count() > 4
-            or self.selected_site.customer.sites.count() == 1
-        ):
-            # You can only get here by deliberately trying to circumvent the system,
-            # so we don't care about possibly showing PermissionDenied to a customer admin
-            raise PermissionDenied
         # Delete any users that only existed on this site
         for user in self.selected_site.users:
             if len(user.user_profile.sitemembership_set.all()) == 1:
@@ -719,7 +680,7 @@ class APIKeyDelete(TemplateView, SuperAdminOrThisSiteMixin):
     def delete(self, request, *args, **kwargs):
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
         try:
-            APIKey.objects.get(id=kwargs["pk"], site=site).delete()
+            site.apikeys.get(id=kwargs["pk"]).delete()
         except APIKey.DoesNotExist:
             pass
 
@@ -1209,12 +1170,15 @@ class ScriptMixin(object):
         for input_data in self.script_inputs:
             input_data["script"] = self.script
 
-            if "pk" in input_data and not input_data["pk"]:
-                del input_data["pk"]
-            elif "pk" in input_data and not self.script.inputs.filter(
-                pk=input_data["pk"]
-            ):
-                continue
+            if "pk" in input_data:
+                if not input_data["pk"]:
+                    del input_data["pk"]
+                elif not self.script.inputs.filter(pk=input_data["pk"]):
+                    # Ignore pk values that don't match inputs
+                    # belonging to this script.
+                    # The only way to get here is to try to
+                    # circumvent the system.
+                    continue
 
             Input.objects.update_or_create(
                 pk=input_data.get("pk"), script=self.script, defaults=input_data
@@ -3245,6 +3209,8 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         ):
             raise PermissionDenied
         if not self.object:
+            # This condition is true for CreateViews and false for UpdateViews
+            # We use it to specify the site when creating event rules
             self.object = form.save(commit=False)
             self.object.site = site
 

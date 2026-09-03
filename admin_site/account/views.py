@@ -508,14 +508,12 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
                 _("You have no user with the following username: %s")
                 % self.kwargs["username"]
             )
+        request_user_type = self.request.user.user_profile.sitemembership_set.get(
+            site__uid=self.kwargs["slug"]
+        ).site_user_type
         if (
             site_membership.site_user_type == SiteMembership.CUSTOMER_ADMIN
-            or self.request.user.user_profile.sitemembership_set.filter(
-                site__uid=self.kwargs["slug"]
-            )
-            .first()
-            .site_user_type
-            < site_membership.SITE_ADMIN
+            or request_user_type < site_membership.SITE_ADMIN
             or self.selected_user.is_superuser
             or self.selected_user.user_profile.is_hidden
             and not self.request.user.user_profile.is_hidden

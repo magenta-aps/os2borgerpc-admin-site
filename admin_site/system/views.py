@@ -1423,7 +1423,8 @@ class ScriptRun(SiteView):
 
         # TODO: Figure out if we want the badges
         for p in context["pcs"]:
-            p.badgeclass = get_badge_class(p.product.id)
+            if p.product:
+                p.badgeclass = get_badge_class(p.product.id)
 
         if len(context["script"].ordered_inputs) > 0:
             context["action"] = ScriptRun.STEP2
@@ -1617,7 +1618,8 @@ class PCsOverviewTable(DetailView, SuperAdminOrThisSiteMixin):
         site_pcs = paginator.get_page(params["page"])
 
         for p in site_pcs:
-            p.badgeclass = get_badge_class(p.product_id)
+            if p.product_id:
+                p.badgeclass = get_badge_class(p.product_id)
 
         context["params"] = params
         context["site_pcs"] = site_pcs
@@ -1677,7 +1679,8 @@ class PCNavigationList(DetailView, SuperAdminOrThisSiteMixin):
             site_pcs = site_pcs.all()
 
         for p in site_pcs:
-            p.badgeclass = get_badge_class(p.product.id)
+            if p.product:
+                p.badgeclass = get_badge_class(p.product.id)
 
         context["pc_list"] = site_pcs
 
@@ -1736,7 +1739,8 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
             all_pcs = all_pcs.all()
 
         for p in all_pcs:
-            p.badgeclass = get_badge_class(p.product.id)
+            if p.product:
+                p.badgeclass = get_badge_class(p.product.id)
 
         context["pc_list"] = all_pcs
 

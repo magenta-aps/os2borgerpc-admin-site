@@ -93,7 +93,11 @@ def register_new_computer(mac, name, site, configuration, client_key):
     try:
         new_pc.product = Product.objects.get(config_name=product)
     except Product.DoesNotExist:
-        pass
+        error_string = (
+            "The product listed in the configuration does not match any "
+            "products on this admin portal."
+        )
+        return 400, error_string
 
     # remove mac, uid and name from the configuration
     # We don't need them saved as both attributes and configuration entries

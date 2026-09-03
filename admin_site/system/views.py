@@ -444,13 +444,27 @@ class SiteDelete(DeleteView, SuperAdminOrThisSiteMixin):
         # Call the super-method first so non-customer admins
         # are shown the proper PermissionDenied
         response = super().get(request, *args, **kwargs)
-        site = get_object_or_404(Site, uid=self.kwargs["slug"])
         # If the site has 5 or more computers, redirect away
         # from this view.
         # Also don't let them delete their last site
-        if site.pcs.count() > 4 or site.customer.sites.count() == 1:
+        if (
+            self.selected_site.pcs.count() > 4
+            or self.selected_site.customer.sites.count() == 1
+        ):
             return redirect("/")
         return response
+
+    def delete(self, request, *args, **kwargs):
+        """
+        Overwrite the delete method to ensure that customer admins
+        can't delete sites with 5 or more computers by sending a
+        delete request."""
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        if site.pcs.count() > 4 or site.customer.sites.count() == 1:
+            # You can only get here by deliberately trying to circumvent the system,
+            # so we don't care about possibly showing PermissionDenied to a customer admin
+            raise PermissionDenied
+        return super().delete(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
         self.selected_site = get_object_or_404(Site, uid=self.kwargs["slug"])
@@ -478,13 +492,7 @@ class SiteDelete(DeleteView, SuperAdminOrThisSiteMixin):
 
     def form_valid(self, form, *args, **kwargs):
         if (
-            (
-                not self.request.user.is_superuser
-                and not self.request.user.user_profile.sitemembership_set.filter(
-                    site_user_type=SiteMembership.CUSTOMER_ADMIN
-                )
-            )
-            or self.selected_site.pcs.count() > 4
+            self.selected_site.pcs.count() > 4
             or self.selected_site.customer.sites.count() == 1
         ):
             # You can only get here by deliberately trying to circumvent the system,

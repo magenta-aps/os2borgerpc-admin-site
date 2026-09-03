@@ -2443,7 +2443,9 @@ class WakePlanDuplicate(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
     model = WakeWeekPlan
 
     def get_redirect_url(self, **kwargs):
-        object_to_copy = WakeWeekPlan.objects.get(id=kwargs["wake_week_plan_id"])
+        object_to_copy = get_object_or_404(
+            WakeWeekPlan, id=kwargs["wake_week_plan_id"], site__uid=kwargs["slug"]
+        )
         if not object_to_copy.site.customer.feature_permission.filter(uid="wake_plan"):
             raise PermissionDenied
 
@@ -3077,7 +3079,9 @@ class PCGroupDuplicate(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
     model = PCGroup
 
     def get_redirect_url(self, **kwargs):
-        object_to_copy = PCGroup.objects.get(id=kwargs["group_id"])
+        object_to_copy = get_object_or_404(
+            PCGroup, id=kwargs["group_id"], site__uid=kwargs["slug"]
+        )
 
         # Before we remove the pk we duplicate all the associated scripts, as they're precisely related through the pk
         ascs = []
@@ -3653,7 +3657,9 @@ class FileArchive(SiteMixin, ListView, SuperAdminOrThisSiteMixin):
         return queryset
 
     def post(self, request, *args, **kwargs):
-        obj = get_object_or_404(FileParameter, pk=kwargs["pk"])
+        obj = get_object_or_404(
+            FileParameter, pk=kwargs["pk"], site__uid=self.kwargs["slug"]
+        )
 
         if "name" in request.POST:
             obj.name = request.POST["name"]
@@ -3707,13 +3713,16 @@ class FileArchiveDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
     template_name = "system/file_archive/confirm_delete.html"
     context_object_name = "file"
 
+    def get_object(self, queryset=None):
+        file_parameter = get_object_or_404(
+            FileParameter, pk=self.kwargs["pk"], site__uid=self.kwargs["slug"]
+        )
+        return file_parameter
+
     def get_success_url(self):
         return reverse("file_archive", kwargs={"slug": self.kwargs["slug"]})
 
     def form_valid(self, form, *args, **kwargs):
-        if self.object.site not in self.request.user.user_profile.sites.all():
-            return self.form_invalid(form)
-
         response = super().delete(form, *args, **kwargs)
 
         set_notification_cookie(

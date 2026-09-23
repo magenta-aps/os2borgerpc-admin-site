@@ -185,7 +185,7 @@ class UserLink(FormView, UsersMixin, SuperAdminOrThisSiteMixin):
         # Limit the possible selections to users for this customer that
         # do not already have access to this site
         users_for_customer_not_on_this_site = User.objects.filter(
-            user_profile__pk__in=user_profiles_for_customer_pk
+            user_profile__pk__in=user_profiles_for_customer_pk, is_superuser=False
         ).exclude(user_profile__sites=site)
         form.fields["linkable_users"].queryset = users_for_customer_not_on_this_site
 
@@ -203,7 +203,8 @@ class UserLink(FormView, UsersMixin, SuperAdminOrThisSiteMixin):
         ):
             raise PermissionDenied
         selected_users = form.cleaned_data["linkable_users"].filter(
-            user_profile__sitemembership__site__customer=site.customer
+            user_profile__sitemembership__site__customer=site.customer,
+            is_superuser=False,
         )
         selected_user_type = form.cleaned_data["usertype"]
         selected_users_names = []

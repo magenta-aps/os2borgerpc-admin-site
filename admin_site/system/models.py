@@ -94,7 +94,7 @@ class Configuration(models.Model):
 
         # Delete entries that were not in the submitted data
         for pk in existing_set - seen_set:
-            cnf = ConfigurationEntry.objects.get(pk=pk)
+            cnf = self.entries.get(pk=pk)
             if not cnf.read_only:
                 cnf.delete()
 

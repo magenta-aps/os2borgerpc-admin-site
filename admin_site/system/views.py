@@ -1634,7 +1634,7 @@ class PCNavigationList(DetailView, SuperAdminOrThisSiteMixin):
         site = context["site"]
 
         try:
-            pc = PC.objects.get(uid=self.kwargs["pc_uid"])
+            pc = site.pcs.get(uid=self.kwargs["pc_uid"])
         except PC.DoesNotExist:
             pc = None
 

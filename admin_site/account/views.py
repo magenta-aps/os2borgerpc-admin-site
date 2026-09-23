@@ -531,22 +531,35 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
     def get_success_url(self):
         return reverse("users", kwargs={"slug": self.kwargs["slug"]})
 
-    def form_valid(self, form, *args, **kwargs):
-        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+    def delete(self, form, *args, **kwargs):
+        """We overwrite the delete function to ensure the same
+        behavior when sending delete requests as when using the UI.
+        Specifically, the point is to ensure that users are only
+        deleted from one site at a time if they belong to multiple sites."""
         # If the selected_user is a member of multiple sites, only remove them from this site
-        if len(self.object.user_profile.sitemembership_set.all()) > 1:
-            self.object.user_profile.sitemembership_set.get(site_id=site.id).delete()
+        selected_user = self.get_object()
+        if len(selected_user.user_profile.sitemembership_set.all()) > 1:
+            selected_user.user_profile.sitemembership_set.get(
+                site__uid=self.kwargs["slug"]
+            ).delete()
             response = redirect(self.get_success_url())
-            set_notification_cookie(
-                response,
-                _("User %s removed from the site %s")
-                % (self.kwargs["username"], site.name),
-            )
         else:
             response = super().delete(form, *args, **kwargs)
-            set_notification_cookie(
-                response, _("User %s deleted") % self.kwargs["username"]
+        return response
+
+    def form_valid(self, form, *args, **kwargs):
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        # Indicate whether the user was deleted from this site
+        # or deleted completely
+        if len(self.object.user_profile.sitemembership_set.all()) > 1:
+            notification_string = _("User %s removed from the site %s") % (
+                self.kwargs["username"],
+                site.name,
             )
+        else:
+            notification_string = _("User %s deleted") % self.kwargs["username"]
+        response = self.delete(form, *args, **kwargs)
+        set_notification_cookie(response, notification_string)
         return response
 
 

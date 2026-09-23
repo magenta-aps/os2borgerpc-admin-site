@@ -3531,6 +3531,14 @@ class SecurityEventsUpdate(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
         assigned_user = params.get("assigned_user")
         note = params.get("note")
 
+        if assigned_user:
+            try:
+                SiteMembership.objects.get(
+                    site__uid=self.kwargs["slug"], user_profile__user=assigned_user
+                )
+            except SiteMembership.DoesNotExist:
+                raise PermissionDenied
+
         queryset.update(status=status, assigned_user=assigned_user, note=note)
 
         return HttpResponse("OK")

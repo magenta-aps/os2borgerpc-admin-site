@@ -364,3 +364,7 @@ if os.environ.get("SECURE_PROXY_SSL_HEADER"):
     SECURE_PROXY_SSL_HEADER = os.environ.get("SECURE_PROXY_SSL_HEADER").split(",")
 else:
     SECURE_PROXY_SSL_HEADER = None
+
+SECURITY_TXT_URL = os.environ.get(
+    "SECURITY_TXT_URL", "https://magenta.dk/.well-known/security.txt"
+)

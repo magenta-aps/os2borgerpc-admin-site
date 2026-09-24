@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="da">
 <head>
@@ -133,7 +134,7 @@
             display: block;
             height: 100vh;
             width: 60%;
-            background: url('/static/img/anne_dorte_bach_sorthvid.jpg') no-repeat center center transparent;
+            background: url('{% static "img/magenta_sorthvid.jpg" %}') no-repeat center center transparent;
             background-size: cover;
         }
 

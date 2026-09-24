@@ -509,6 +509,8 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
                 _("You have no user with the following username: %s")
                 % self.kwargs["username"]
             )
+        if self.request.user.is_superuser:
+            return self.selected_user
         request_user_type = self.request.user.user_profile.sitemembership_set.get(
             site__uid=self.kwargs["slug"]
         ).site_user_type
@@ -518,7 +520,7 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
             or self.selected_user.is_superuser
             or self.selected_user.user_profile.is_hidden
             and not self.request.user.user_profile.is_hidden
-        ) and not self.request.user.is_superuser:
+        ):
             raise PermissionDenied
         return self.selected_user
 

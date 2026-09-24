@@ -435,13 +435,15 @@ class SiteDelete(DeleteView, SuperAdminOrThisSiteMixin):
     def get_object(self, queryset=None):
         self.selected_site = get_object_or_404(Site, uid=self.kwargs["slug"])
 
-        # Only customer admins are allowed to access this view
-        request_user_type = self.request.user.user_profile.sitemembership_set.get(
-            site=self.selected_site
-        ).site_user_type
+        # Only superusers and customer admins are allowed to access this view
+        if self.request.user.is_superuser:
+            request_user_type = SiteMembership.CUSTOMER_ADMIN
+        else:
+            request_user_type = self.request.user.user_profile.sitemembership_set.get(
+                site=self.selected_site
+            ).site_user_type
         if (
-            not self.request.user.is_superuser
-            and request_user_type != SiteMembership.CUSTOMER_ADMIN
+            request_user_type != SiteMembership.CUSTOMER_ADMIN
             or self.selected_site.pcs.count() > 4
             or self.selected_site.customer.sites.count() == 1
         ):

@@ -1,15 +1,16 @@
 {% extends "site_with_navigation.html" %}
 {% load i18n %}
+{% load static %}
 {% block specific_title %}
 {% translate "Enable two-factor authentication for superuser login on OS2borgerPC and OS2borgerPC Kiosk" %}
 {% endblock %}
 
 {% block head_javascripts %}
-  <script type="text/javascript" src="/static/js/qrcode.min.js"></script>
+  <script src="{% static "js/qrcode.min.js" %}"></script>
 {% endblock %}
 
 {% block stylesheets %}
-<style type="text/css" media="screen">
+<style media="screen">
   .tab-content {
     line-height: 2.3em;
   }

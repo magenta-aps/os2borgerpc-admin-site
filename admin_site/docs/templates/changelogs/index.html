@@ -1,6 +1,7 @@
 {% extends 'base_docs.html' %}
 
 {% load i18n %}
+{% load static %}
 
 {% block specific_content %}
     <h1>{% translate "The News site" %}</h1>
@@ -38,17 +39,17 @@
     <h2>{% translate "Detailed view of a post" %}</h2>
     <p>
         {% translate "Each post can be expanded to show a more detailed explanation of the update." %} <br>
-        <img height="500px" src="/static/docs/img/changelogs/1.png"><br>
-        <img height="500px" src="/static/docs/img/changelogs/2.png"><br>
+        <img height="500px" src="{% static "docs/img/changelogs/1.png" %}"><br>
+        <img height="500px" src="{% static "docs/img/changelogs/2.png" %}"><br>
     </p>
     <hr>
     <h2>{% translate "Commenting on a post" %}</h2>
     <p>
         {% translate "If you are logged in to the admin portal, it is possible to add comments to a post." %} <br>
-        <img src="/static/docs/img/changelogs/3.png"><br>
+        <img src="{% static "docs/img/changelogs/3.png" %}"><br>
         {% translate "When you add a comment, your username will be shown above the comment." %} <br>
-        <img src="/static/docs/img/changelogs/4.png"><br>
+        <img src="{% static "docs/img/changelogs/4.png" %}"><br>
         {% translate "Comments can also be answered by both Magenta's employees and other logged-in users." %} <br>
-        <img src="/static/docs/img/changelogs/5.png"><br>
+        <img src="{% static "docs/img/changelogs/5.png" %}"><br>
     </p>
 {% endblock %}

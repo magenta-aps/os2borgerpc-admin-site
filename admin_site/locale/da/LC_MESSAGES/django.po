@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-18 12:54+0200\n"
+"POT-Creation-Date: 2026-09-29 10:24+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -5658,6 +5658,7 @@ msgstr "Filnavn"
 
 #: templates/system/file_archive/file_archive.html
 #: templates/system/pcs/pcs_table.html
+#: templates/system/scripts/update_form.html
 msgid "Description"
 msgstr "Beskrivelse"
 

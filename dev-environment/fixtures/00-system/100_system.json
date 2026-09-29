@@ -108796,9 +108796,9 @@
     "pk": 91,
     "fields": {
         "created": "2026-09-25T10:26:10.603",
-        "modified": "2026-09-25T10:31:51.683",
+        "modified": "2026-09-29T14:11:33.804",
         "user_created": "magenta",
-        "user_modified": "",
+        "user_modified": "magenta",
         "name": "Browser - Chromium: Installer",
         "uid": null,
         "description": "Dette script installerer/fjerner Chromium.\r\n\r\nChromium bruger de samme policies som Google Chrome.\r\nPolicies der fremgår i scriptet, kan man læse mere om ved at søge på en given policy(fx ForceEphemeralProfiles) her: [Chrome Enterprise: Policies](https://chromeenterprise.google/policies/)\r\n\r\n### Parametre\r\n\r\n1. Installer? - Sæt hak for at installere Chromium.\r\nLad stå tom for at fjerne Chromium.\r\n2. Standardsøgemaskine - Den ønskede standardsøgemaskine i Chrome/Chromium.\r\nMulighederne er [Google](https://www.google.com/), [Ecosia](https://www.ecosia.org/), [Qwant](https://www.qwant.com/), [Startpage](https://www.startpage.com/) og [Duckduckgo](https://duckduckgo.com/).\r\nHvis I ønsker at bruge en standardsøgemaskine, som ikke er en mulighed på nuværende tidspunkt, så kontakt Magenta.\r\nDenne parameter har ingen effekt, hvis Chromium fjernes.",
@@ -112335,6 +112335,30 @@
         "position": 0,
         "mandatory": false,
         "script": 88
+    }
+},
+{
+    "model": "system.input",
+    "pk": 111,
+    "fields": {
+        "name": "Installer?",
+        "value_type": "BOOLEAN",
+        "default_value": "",
+        "position": 0,
+        "mandatory": false,
+        "script": 91
+    }
+},
+{
+    "model": "system.input",
+    "pk": 112,
+    "fields": {
+        "name": "Standardsøgemaskine",
+        "value_type": "TEXT_FIELD",
+        "default_value": "ecosia,google,startpage,qwant,duckduckgo",
+        "position": 1,
+        "mandatory": false,
+        "script": 91
     }
 },
 {

@@ -26,18 +26,18 @@ def render_custom_links(text, site_uid, also_markdownify):
 
     index = 0
     while True:
-        match = re.search(f"{DELIMITER}[a-z_]+/?[0-9]*", text[index:])
+        match = re.search(f"{DELIMITER}[a-z_]+/?[0-9a-z_]*", text[index:])
         if not match:
             break
 
         index = match.start()
         m = match.group()
-        # For links to specific objects, that include /something
-        pk = 1
+        # For links to specific objects, that include /something. Can currently be a PK or a Script UID.
+        identifier = 1
         try:
             res = m.split("/")[1]
             if res:
-                pk = res
+                identifier = res
         except Exception:
             pass
         replacement = ""
@@ -59,21 +59,29 @@ def render_custom_links(text, site_uid, also_markdownify):
                 replacement = reverse("jobs_redirect")
         elif "sec_script/" in m:  # This check needs to be before SCRIPT
             if site_uid:
-                replacement = reverse("security_script", args=[site_uid, pk])
+                replacement = reverse("security_script", args=[site_uid, identifier])
             else:
-                replacement = reverse("script_redirect_id", args=[pk])
+                replacement = reverse("script_redirect_id", args=[identifier])
         elif "script/" in m:
             if site_uid:
-                replacement = reverse("script", args=[site_uid, pk])
+                replacement = reverse("script", args=[site_uid, identifier])
             else:
-                replacement = reverse("script_redirect_id", args=[pk])
-        elif "scriptn/" in m:
+                replacement = reverse("script_redirect_id", args=[identifier])
+        elif "scriptn/" in m or "scriptnu/" in m:
+            if "scriptnu/" in m:
+                identifier = (
+                    Script.objects.filter(uid=identifier, site=None)
+                    .values_list("pk", flat=True)
+                    .first()
+                )
             if site_uid:
-                addr = reverse("script", args=[site_uid, pk])
+                addr = reverse("script", args=[site_uid, identifier])
             else:
-                addr = reverse("script_redirect_id", args=[pk])
+                addr = reverse("script_redirect_id", args=[identifier])
             script_name = (
-                Script.objects.filter(pk=pk).values_list("name", flat=True).first()
+                Script.objects.filter(pk=identifier, site=None)
+                .values_list("name", flat=True)
+                .first()
             )
             if script_name:
                 replacement = f"[{script_name}]({addr})"

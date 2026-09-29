@@ -935,6 +935,7 @@ class Script(AuditModelMixin):
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
     # To have a consistent, unique reference to a script locally and across servers
+    # The standard format is lowercase_underscore_separated
     uid = models.CharField(
         verbose_name=_("UID"), max_length=255, unique=True, blank=True, null=True
     )

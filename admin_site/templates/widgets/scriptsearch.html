@@ -69,6 +69,8 @@
                         return script.name.toLowerCase().includes(query)
                     })
                     renderFilteredList(new_list)
+                } else {
+                    list_ul.classList.remove('show')
                 }
             }
 

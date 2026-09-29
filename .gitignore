@@ -14,6 +14,8 @@ venv/
 *.mo
 
 dev-environment/overrides.env
+# Gitignore things in here by default, so they're only added if explicitly wanted
+dev-environment/media/
 
 # These files are created when running "npm run build-for-dev"
 admin_site/static/css/bootstrap.css

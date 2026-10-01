@@ -107670,14 +107670,14 @@
     "pk": 13,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2025-11-20T10:03:03.641",
+        "modified": "2026-10-01T17:17:41.964",
         "user_created": "",
         "user_modified": "magenta",
         "name": "Desktop - Skift baggrundsbillede",
         "uid": null,
         "description": "Dette script skifter baggrundsbillede for borger på en OS2borgerPC.\r\nScriptet tager en baggrundsbillede fil som parameter.\r\nBorger behøver ikke at logge ud før baggrundsbillede skifter.\r\nEfterfølgende vil det ikke være muligt for borger at skifte baggrundsbilledet.\r\n\r\nTestet på Ubuntu 20.04.",
         "site": null,
-        "executable_code": "script_uploads/dconf_policy_desktop.sh",
+        "executable_code": "script_uploads/dconf_desktop_background.sh",
         "is_security_script": false,
         "is_hidden": false,
         "feature_permission": null,
@@ -111419,7 +111419,7 @@
     "fields": {
         "name": "Baggrundsbillede",
         "value_type": "FILE",
-        "default_value": null,
+        "default_value": "",
         "position": 0,
         "mandatory": true,
         "script": 13
@@ -112359,6 +112359,30 @@
         "position": 1,
         "mandatory": false,
         "script": 91
+    }
+},
+{
+    "model": "system.input",
+    "pk": 113,
+    "fields": {
+        "name": "Baggrundsbillede i dark mode (valgfri)",
+        "value_type": "FILE",
+        "default_value": "",
+        "position": 1,
+        "mandatory": false,
+        "script": 13
+    }
+},
+{
+    "model": "system.input",
+    "pk": 114,
+    "fields": {
+        "name": "Billedeindstillinger (se muligheder i beskrivelsen)",
+        "value_type": "TEXT_FIELD",
+        "default_value": "zoom, centered, stretched, scaled, spanned, wallpaper, none",
+        "position": 2,
+        "mandatory": false,
+        "script": 13
     }
 },
 {

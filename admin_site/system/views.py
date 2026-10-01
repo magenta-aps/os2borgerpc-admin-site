@@ -909,7 +909,7 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
                     )
                     if job.batch.script
                     else "",
-                    "pc_url": reverse("computer", args=[site.uid, job.pc.uid]),
+                    "pc_url": reverse("computer", args=[site.uid, job.pc.pk]),
                     "restart_url": reverse("restart_job", args=[site.uid, job.pk]),
                 }
                 for job in page_obj
@@ -1617,7 +1617,7 @@ class PCUpdateRedirect(SelectionMixin, SiteView):
                     "computer",
                     kwargs={
                         "slug": context["site"].uid,
-                        "pc_uid": context["selected_pc"].uid,
+                        "pk": context["selected_pc"].pk,
                     },
                 )
             )
@@ -1627,17 +1627,23 @@ class PCUpdateRedirect(SelectionMixin, SiteView):
 
 class PCNavigationList(DetailView, SuperAdminOrThisSiteMixin):
     model = Site
-    slug_field = "uid"
 
     template_name = "system/pcs/pcs_navigation_list.html"
+
+    def get_object(self, queryset=None):
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        return site
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         site = context["site"]
 
         try:
-            pc = site.pcs.get(uid=self.kwargs["pc_uid"])
-        except PC.DoesNotExist:
+            # Pcs used to be identified by a string UID, so we might get lookups for a string which would
+            # cause a server error. Hence this explicit attempt to convert it to an int first.
+            pk = int(self.kwargs["pk"])
+            pc = site.pcs.get(pk=pk)
+        except (PC.DoesNotExist, ValueError):
             pc = None
 
         context["selected_pc"] = pc
@@ -1667,7 +1673,6 @@ class PCNavigationList(DetailView, SuperAdminOrThisSiteMixin):
 class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
     template_name = "system/pcs/update.html"
     form_class = PCForm
-    slug_field = "uid"
 
     VALID_ORDER_BY = []
     for i in [
@@ -1684,11 +1689,13 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
     def get_object(self, queryset=None):
         try:
             site_id = get_object_or_404(Site, uid=self.kwargs["slug"])
-            return PC.objects.get(uid=self.kwargs["pc_uid"], site=site_id)
-        except PC.DoesNotExist:
+            # Pcs used to be identified by a string UID, so we might get lookups for a string which would
+            # cause a server error. Hence this explicit attempt to convert it to an int first.
+            pk = int(self.kwargs["pk"])
+            return PC.objects.get(pk=pk, site=site_id)
+        except (PC.DoesNotExist, ValueError):
             raise Http404(
-                _("You have no computer with the following UID: %s")
-                % self.kwargs["pc_uid"]
+                _("You have no computer with the following ID: %s") % self.kwargs["pk"]
             )
 
     def get_context_data(self, **kwargs):
@@ -1866,11 +1873,13 @@ class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):  # {{{
     def get_object(self, queryset=None):
         try:
             site_id = get_object_or_404(Site, uid=self.kwargs["slug"])
-            return PC.objects.get(uid=self.kwargs["pc_uid"], site=site_id)
-        except PC.DoesNotExist:
+            # Pcs used to be identified by a string UID, so we might get lookups for a string which would
+            # cause a server error. Hence this explicit attempt to convert it to an int first.
+            pk = int(self.kwargs["pk"])
+            return PC.objects.get(pk=pk, site=site_id)
+        except (PC.DoesNotExist, ValueError):
             raise Http404(
-                _("You have no computer with the following UID: %s")
-                % self.kwargs["pc_uid"]
+                _("You have no computer with the following ID: %s") % self.kwargs["pk"]
             )
 
     def get_success_url(self):
@@ -2779,10 +2788,10 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         selected_pc_ids = form["pcs"].value()
         context["available_pcs"] = pc_queryset.exclude(
             pk__in=selected_pc_ids
-        ).values_list("pk", "name", "uid")
+        ).values_list("pk", "name", "pk")
         context["selected_pcs"] = pc_queryset.filter(
             pk__in=selected_pc_ids
-        ).values_list("pk", "name", "uid")
+        ).values_list("pk", "name", "pk")
 
         # supervisor picklist related
         user_set = User.objects.filter(user_profile__sites=site)
@@ -3493,7 +3502,7 @@ class SecurityEventSearch(
                     ]
                     + "",
                     "pc_name": event.pc.name,
-                    "pc_url": reverse("computer", args=[site.uid, event.pc.uid]),
+                    "pc_url": reverse("computer", args=[site.uid, event.pc.pk]),
                     "assigned_user": (
                         event.assigned_user.username if event.assigned_user else ""
                     ),

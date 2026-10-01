@@ -866,7 +866,7 @@ class PC(models.Model):
         return result
 
     def get_absolute_url(self):
-        return reverse("computer", args=(self.site.uid, self.uid))
+        return reverse("computer", args=(self.site.uid, self.pk))
 
     def __str__(self):
         return self.name

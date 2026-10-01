@@ -4910,8 +4910,8 @@ msgstr "Du skal angive mindst en pc eller gruppe"
 
 #: system/views.py
 #, python-format
-msgid "You have no computer with the following UID: %s"
-msgstr "Du har ingen computer med følgende UID: %s"
+msgid "You have no computer with the following ID: %s"
+msgstr "Du har ingen computer med følgende ID: %s"
 
 #: system/views.py
 #, python-format

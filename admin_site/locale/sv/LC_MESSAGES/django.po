@@ -4890,8 +4890,8 @@ msgstr "Du måste ange minst en dator eller grupp"
 
 #: system/views.py
 #, python-format
-msgid "You have no computer with the following UID: %s"
-msgstr "Du har ingen dator med följande UID: %s"
+msgid "You have no computer with the following ID: %s"
+msgstr "Du har ingen dator med följande ID: %s"
 
 #: system/views.py
 #, python-format

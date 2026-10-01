@@ -178,17 +178,17 @@ urlpatterns = [
         name="computers",
     ),
     path(
-        "site/<slug>/computers/<pc_uid>/",
+        "site/<slug>/computers/<int:pk>/",
         PCUpdate.as_view(),
         name="computer",
     ),
     path(
-        "site/<slug>/computers/<pc_uid>/navigationlist",
+        "site/<slug>/computers/<int:pk>/navigationlist",
         PCNavigationList.as_view(),
         name="computers_navigationlist",
     ),
     path(
-        "site/<slug>/computers/<pc_uid>/delete/",
+        "site/<slug>/computers/<int:pk>/delete/",
         PCDelete.as_view(),
         name="computer_delete",
     ),

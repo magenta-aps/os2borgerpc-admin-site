@@ -56,17 +56,17 @@ class DocView(TemplateView, LoginRequiredMixin):
             ("changelogs", _("The News site")),
             ("api", "API"),
             (
-                self.get_doc_user_lang("docs/OS2borgerPC_security_rules", ".pdf"),
+                self.get_doc_user_lang("pdf/OS2borgerPC_security_rules", ".pdf"),
                 _("Setting up security surveillance (PDF)"),
             ),
             ("", _("OS2borgerPC")),
             (
-                self.get_doc_user_lang("docs/OS2borgerPC_installation_guide", ".pdf"),
+                self.get_doc_user_lang("pdf/OS2borgerPC_installation_guide", ".pdf"),
                 _("Installation Guide (PDF)"),
             ),
             (
                 self.get_doc_user_lang(
-                    "docs/OS2borgerPC_installation_guide_old", ".pdf"
+                    "pdf/OS2borgerPC_installation_guide_old", ".pdf"
                 ),
                 _("Old installation guide (PDF)"),
             ),
@@ -81,7 +81,7 @@ class DocView(TemplateView, LoginRequiredMixin):
             ),
             ("os2borgerpc_kiosk_wifi_guide", _("Updating Wi-Fi setup")),
             ("", _("General")),
-            (self.get_doc_user_lang("docs/Audit_doc", ".pdf"), _("Audit: FAQ (PDF)")),
+            (self.get_doc_user_lang("pdf/Audit_doc", ".pdf"), _("Audit: FAQ (PDF)")),
             ("technical_docs", _("Technical documentation")),
         ]
 

@@ -134,7 +134,7 @@ class ScriptForm(forms.ModelForm):
         exclude = [
             "site",
             "feature_permission",
-            "product",
+            "products",
             "is_security_script",
             "is_hidden",
             "uid",

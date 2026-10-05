@@ -111415,6 +111415,18 @@
 },
 {
     "model": "system.input",
+    "pk": 4,
+    "fields": {
+        "name": "Baggrundsbillede",
+        "value_type": "FILE",
+        "default_value": "",
+        "position": 0,
+        "mandatory": true,
+        "script": 13
+    }
+},
+{
+    "model": "system.input",
     "pk": 5,
     "fields": {
         "name": "Aktivér?",
@@ -112356,7 +112368,7 @@
         "name": "Baggrundsbillede i dark mode (valgfri)",
         "value_type": "FILE",
         "default_value": "",
-        "position": 0,
+        "position": 1,
         "mandatory": false,
         "script": 13
     }
@@ -112368,7 +112380,7 @@
         "name": "Billedeindstillinger (se muligheder i beskrivelsen)",
         "value_type": "TEXT_FIELD",
         "default_value": "zoom, centered, stretched, scaled, spanned, wallpaper, none",
-        "position": 1,
+        "position": 2,
         "mandatory": false,
         "script": 13
     }

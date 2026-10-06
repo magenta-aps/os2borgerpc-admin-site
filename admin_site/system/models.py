@@ -1384,7 +1384,9 @@ class Parameter(models.Model):
     """A concrete value for the Input of a Script."""
 
     string_value = models.CharField(max_length=4096, blank=True)
-    file_value = models.FileField(upload_to=upload_file_name, null=True, blank=True)
+    file_value = models.FileField(
+        upload_to=upload_file_name, null=True, blank=True, max_length=255
+    )
 
     # which input is this a parameter for?
     input = models.ForeignKey(Input, on_delete=models.CASCADE)

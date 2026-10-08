@@ -113,6 +113,15 @@ class DocView(TemplateView, LoginRequiredMixin):
         context["docmenuitems"] = documentation_menu_items
         docnames = self.docname.split("/")
 
+        # Links to the customer admin and wake plan guides
+        # which are used in the relevant sections
+        context["wake_plan_guide"] = self.get_doc_user_lang(
+            "pdf/Wake_plan_user_guide", ".pdf"
+        )
+        context["customer_admin_guide"] = self.get_doc_user_lang(
+            "pdf/customer_admin_guide", ".pdf"
+        )
+
         # Returns the first site the user is a member of
         context["site"] = self.request.user.user_profile.sites.first()
 

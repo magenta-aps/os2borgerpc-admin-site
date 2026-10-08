@@ -26,9 +26,7 @@
     {% blocktranslate trimmed %}
     If you are visiting this page for the first time, we recommend first reading our
     {% endblocktranslate %}
-    {% with "pdf/Wake_plan_user_guide_"|add:user.user_profile.language|add:".pdf" as pdf_link %}
-      <a href="{% static pdf_link %}" target="_blank">{% translate "User guide to power saving functions in OS2borgerPC" %}</a>.
-    {% endwith %}
+      <a href="{% static wake_plan_guide %}" target="_blank">{% translate "User guide to power saving functions in OS2borgerPC" %}</a>.
   </p>
   <h2>{% translate "The suspend script" %}</h2>
   <p>

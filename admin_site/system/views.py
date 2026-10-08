@@ -4,6 +4,7 @@ import secrets
 
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
+from django.contrib.staticfiles.finders import find
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.db import transaction
@@ -1933,6 +1934,19 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         context["wake_week_plans_list"] = WakeWeekPlan.objects.filter(
             site=context["site"]
         )
+
+        # Link to the wake plan user guide
+        file_path = "pdf/Wake_plan_user_guide"
+        extension = ".pdf"
+        user_lang = self.request.user.user_profile.language
+        file_path = f"{file_path}_{user_lang}{extension}"
+        fallback_language = "da"
+
+        if not find(file_path):
+            file_path = file_path.replace(
+                user_lang + extension, fallback_language + extension
+            )
+        context["pdf_link"] = file_path
 
         form = context["form"]
         # params = self.request.GET or self.request.POST

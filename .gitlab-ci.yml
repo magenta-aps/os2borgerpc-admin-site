@@ -133,7 +133,6 @@ bpc testing trigger salt deployment:
   when: manual
   variables:
     SALTBERT_ORCHESTRATION: os2bpc.borgerpc-test
-    SALTBERT_URL: ${SALTBERT_URL}
     SALTBERT_PASSWORD: ${SALTBERT_BORGERPC_TEST_PASSWORD}
   environment:
     # NOTE: The URL is technically not required, and the name is not matching up with anything
@@ -154,7 +153,6 @@ bpc production trigger salt deployment:
   when: manual
   variables:
     SALTBERT_ORCHESTRATION: os2bpc.borgerpc-production
-    SALTBERT_URL: ${SALTBERT_URL}
     SALTBERT_PASSWORD: ${SALTBERT_BORGERPC_PRODUCTION_PASSWORD}
   environment:
     name: os2borgerpc-admin
@@ -175,7 +173,6 @@ ow testing trigger salt deployment:
   when: manual
   variables:
     SALTBERT_ORCHESTRATION: os2bpc.openworkplace-test
-    SALTBERT_URL: ${SALTBERT_URL}
     SALTBERT_PASSWORD: ${SALTBERT_OPENWORKPLACE_TEST_PASSWORD}
   environment:
     # NOTE: The URL is technically not required, and the name is not matching up with anything
@@ -196,7 +193,6 @@ ow staging trigger salt deployment:
   when: manual
   variables:
     SALTBERT_ORCHESTRATION: os2bpc.openworkplace-staging
-    SALTBERT_URL: ${SALTBERT_URL}
     SALTBERT_PASSWORD: ${SALTBERT_OPENWORKPLACE_STAGING_PASSWORD}
   environment:
     name: openworkplace-staging
@@ -215,7 +211,6 @@ ow production trigger salt deployment:
   when: manual
   variables:
     SALTBERT_ORCHESTRATION: os2bpc.openworkplace-production
-    SALTBERT_URL: ${SALTBERT_URL}
     SALTBERT_PASSWORD: ${SALTBERT_OPENWORKPLACE_PRODUCTION_PASSWORD}
   environment:
     name: openworkplace-production

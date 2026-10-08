@@ -1,3 +1,19 @@
+## Version 7.8.0, October 8, 2026
+
+- Add server-side logic to prevent the following:
+  - Using delete requests to fully delete a user instead of deleting it from the current site
+  - Assigning users from other sites to security events
+  - Linking superusers to other sites
+- Make associated script search require at least 3 characters
+- Add support for text links in script descriptions via UID
+- Fix links to wake plan guide and customer admin guide when language is english
+- Make computer urls use pk instead of UID
+- Make whitenoise skip compression of PDFs
+- Update a few backend dependencies
+- Add /.well-known/security.txt link to magenta.dk
+- Add security.md
+- Remove outdated IE support
+
 ## Version 7.7.0, September 3, 2026
 
 - Rewrite APIKeyUpdate to prevent authenticated users using it to delete sites

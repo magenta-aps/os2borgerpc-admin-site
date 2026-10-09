@@ -18,9 +18,7 @@ def get_doc_user_lang(file_path, extension, user_lang):
     if find(file_path):
         return file_path
     else:
-        return file_path.replace(
-            user_lang + extension, fallback_language + extension
-        )
+        return file_path.replace(user_lang + extension, fallback_language + extension)
 
 
 def render_custom_links(text, site_uid, also_markdownify):

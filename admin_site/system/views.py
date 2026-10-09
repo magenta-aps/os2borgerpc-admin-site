@@ -1936,7 +1936,9 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
 
         # Link to the wake plan user guide
         user_lang = self.request.user.user_profile.language
-        context["pdf_link"] = global_utils.get_doc_user_lang("pdf/Wake_plan_user_guide", ".pdf", user_lang)
+        context["pdf_link"] = global_utils.get_doc_user_lang(
+            "pdf/Wake_plan_user_guide", ".pdf", user_lang
+        )
 
         form = context["form"]
         # params = self.request.GET or self.request.POST

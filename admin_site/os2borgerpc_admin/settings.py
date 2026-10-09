@@ -198,30 +198,6 @@ STORAGES = {
     },
 }
 
-# Additional filetypes to not compress, since this generates unique filenames which is great for caching but ugly in terms of human readability, and users download these
-# It's defaults + pdf, and defaults can be found here:
-# https://whitenoise.readthedocs.io/en/stable/django.html#WHITENOISE_SKIP_COMPRESS_EXTENSIONS
-WHITENOISE_SKIP_COMPRESS_EXTENSIONS = (
-    "jpg",
-    "jpeg",
-    "png",
-    "gif",
-    "webp",
-    "zip",
-    "gz",
-    "tgz",
-    "bz2",
-    "tbz",
-    "xz",
-    "br",
-    "swf",
-    "flv",
-    "woff",
-    "woff2",
-    "pdf",
-)
-
-
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = os.environ.get("SECRET_KEY")
 

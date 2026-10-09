@@ -100,6 +100,7 @@ class DocView(TemplateView, LoginRequiredMixin):
 
         context = super().get_context_data(**kwargs)
         context["docmenuitems"] = documentation_menu_items
+        context["static_root"] = settings.STATIC_ROOT
         docnames = self.docname.split("/")
 
         # Links to the customer admin and wake plan guides

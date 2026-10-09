@@ -40,7 +40,9 @@ detailpage
     {% if link %}
       {# References to PDFs #}
       {% if ".pdf" in link %}
-        <a class="nav-link" href="{% static link %}" target="_blank"> {{ name }} </a>
+      {# NOTE: Deliberately Not using static template here currently, to not get ugly looking but nicely cacheable PDFs resulting from whitenoise manifests.
+         An alternative solution would be to serve these as media files instead of static files, or letting a webserver serve them #}
+      <a class="nav-link" href="{{static_root}}/{{ link }}" target="_blank"> {{ name }} </a>
       {# References to other websites #}
       {% elif "http" in link %}
         <a class="nav-link" href="{{link}}" target="_blank"> {{ name }} </a>

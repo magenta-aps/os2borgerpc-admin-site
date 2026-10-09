@@ -26,7 +26,9 @@
     {% blocktranslate trimmed %}
     If you are visiting this page for the first time, we recommend first reading our
     {% endblocktranslate %}
-      <a href="{% static wake_plan_guide %}" target="_blank">{% translate "User guide to power saving functions in OS2borgerPC" %}</a>.
+    {# NOTE: Deliberately Not using static template here currently, to not get ugly looking but nicely cacheable PDFs resulting from whitenoise manifests. #}
+    {# An alternative solution would be to serve these as media files instead of static files, or letting a webserver serve them. #}
+    <a href="{{ wake_plan_guide }}" target="_blank">{% translate "User guide to power saving functions in OS2borgerPC" %}</a>.
   </p>
   <h2>{% translate "The suspend script" %}</h2>
   <p>

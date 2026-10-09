@@ -1,5 +1,6 @@
 import re
 
+from django.conf import settings
 from django.urls import reverse
 from django.contrib.staticfiles.finders import find
 from markdownx.utils import markdownify
@@ -10,15 +11,21 @@ from system.models import Script
 DELIMITER = "€€"
 
 
+# NOTE: Currently appends STATIC_ROOT in front to prevent whitenoise from creating a manifest and referencing that which results in ugly URLs.
+# An alternative solution would be to serve these as media files instead of static files, or letting a webserver serve them.
 def get_doc_user_lang(file_path, extension, user_lang):
     """Get the document in the user's language if available - otherwise fall back to danish."""
     file_path = f"{file_path}_{user_lang}{extension}"
     fallback_language = "da"
 
     if find(file_path):
-        return file_path
+        return settings.STATIC_ROOT + "/" + file_path
     else:
-        return file_path.replace(user_lang + extension, fallback_language + extension)
+        return (
+            settings.STATIC_ROOT
+            + "/"
+            + file_path.replace(user_lang + extension, fallback_language + extension)
+        )
 
 
 def render_custom_links(text, site_uid, also_markdownify):

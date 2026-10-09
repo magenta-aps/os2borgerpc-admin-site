@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext_lazy as _
 from django.utils.decorators import method_decorator
-from django.contrib.staticfiles.finders import find
+from os2borgerpc_admin import utils as global_utils
 
 
 # Mixin class to require login
@@ -25,20 +25,9 @@ class DocView(TemplateView, LoginRequiredMixin):
         fullpath = settings.BASE_DIR / "docs/templates" / subpath
         return os.path.isfile(fullpath)
 
-    def get_doc_user_lang(self, file_path, extension):
-        """Get the document in the user's language if available - otherwise fall back to danish."""
+    def get_context_data(self, **kwargs):
+
         user_lang = self.request.user.user_profile.language
-        file_path = f"{file_path}_{user_lang}{extension}"
-        fallback_language = "da"
-
-        if find(file_path):
-            return file_path
-        else:
-            return file_path.replace(
-                user_lang + extension, fallback_language + extension
-            )
-
-    def get_context_data(self, **kwargs):  # noqa
 
         documentation_menu_items = [
             ("", _("The admin portal")),
@@ -56,17 +45,17 @@ class DocView(TemplateView, LoginRequiredMixin):
             ("changelogs", _("The News site")),
             ("api", "API"),
             (
-                self.get_doc_user_lang("pdf/OS2borgerPC_security_rules", ".pdf"),
+                global_utils.get_doc_user_lang("pdf/OS2borgerPC_security_rules", ".pdf", user_lang),
                 _("Setting up security surveillance (PDF)"),
             ),
             ("", _("OS2borgerPC")),
             (
-                self.get_doc_user_lang("pdf/OS2borgerPC_installation_guide", ".pdf"),
+                global_utils.get_doc_user_lang("pdf/OS2borgerPC_installation_guide", ".pdf", user_lang),
                 _("Installation Guide (PDF)"),
             ),
             (
-                self.get_doc_user_lang(
-                    "pdf/OS2borgerPC_installation_guide_old", ".pdf"
+                global_utils.get_doc_user_lang(
+                    "pdf/OS2borgerPC_installation_guide_old", ".pdf", user_lang
                 ),
                 _("Old installation guide (PDF)"),
             ),
@@ -81,7 +70,7 @@ class DocView(TemplateView, LoginRequiredMixin):
             ),
             ("os2borgerpc_kiosk_wifi_guide", _("Updating Wi-Fi setup")),
             ("", _("General")),
-            (self.get_doc_user_lang("pdf/Audit_doc", ".pdf"), _("Audit: FAQ (PDF)")),
+            (global_utils.get_doc_user_lang("pdf/Audit_doc", ".pdf", user_lang), _("Audit: FAQ (PDF)")),
             ("technical_docs", _("Technical documentation")),
         ]
 
@@ -115,11 +104,11 @@ class DocView(TemplateView, LoginRequiredMixin):
 
         # Links to the customer admin and wake plan guides
         # which are used in the relevant sections
-        context["wake_plan_guide"] = self.get_doc_user_lang(
-            "pdf/Wake_plan_user_guide", ".pdf"
+        context["wake_plan_guide"] = global_utils.get_doc_user_lang(
+            "pdf/Wake_plan_user_guide", ".pdf", user_lang
         )
-        context["customer_admin_guide"] = self.get_doc_user_lang(
-            "pdf/customer_admin_guide", ".pdf"
+        context["customer_admin_guide"] = global_utils.get_doc_user_lang(
+            "pdf/customer_admin_guide", ".pdf", user_lang
         )
 
         # Returns the first site the user is a member of

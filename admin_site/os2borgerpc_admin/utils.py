@@ -1,11 +1,26 @@
 import re
 
 from django.urls import reverse
-from system.models import Script
-
+from django.contrib.staticfiles.finders import find
 from markdownx.utils import markdownify
 
+from system.models import Script
+
+
 DELIMITER = "€€"
+
+
+def get_doc_user_lang(file_path, extension, user_lang):
+    """Get the document in the user's language if available - otherwise fall back to danish."""
+    file_path = f"{file_path}_{user_lang}{extension}"
+    fallback_language = "da"
+
+    if find(file_path):
+        return file_path
+    else:
+        return file_path.replace(
+            user_lang + extension, fallback_language + extension
+        )
 
 
 def render_custom_links(text, site_uid, also_markdownify):

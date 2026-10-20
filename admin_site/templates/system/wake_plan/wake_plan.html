@@ -22,9 +22,9 @@
         <ul>
           <li>
             {% translate "If you are unfamiliar with the functionality of on/off schedules, we recommend first reading our" %}
-            {% with "docs/Wake_plan_user_guide_"|add:user.user_profile.language|add:".pdf" as pdf_link %}
-              <a href="{% static pdf_link %}" target="_blank">{% translate "User guide to power saving functions in OS2borgerPC" %}</a>.
-            {% endwith %}
+            {# NOTE: Deliberately Not using static template here currently, to not get ugly looking but nicely cacheable PDFs resulting from whitenoise manifests. #}
+            {# An alternative solution would be to serve these as media files instead of static files, or letting a webserver serve them. #}
+            <a href="{{pdf_link}}" target="_blank">{% translate "User guide to power saving functions in OS2borgerPC" %}</a>.
           </li>
           <li>
             {% translate "Groups"|bold as groups %}

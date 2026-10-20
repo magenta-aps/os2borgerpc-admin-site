@@ -94,7 +94,7 @@ class Configuration(models.Model):
 
         # Delete entries that were not in the submitted data
         for pk in existing_set - seen_set:
-            cnf = ConfigurationEntry.objects.get(pk=pk)
+            cnf = self.entries.get(pk=pk)
             if not cnf.read_only:
                 cnf.delete()
 
@@ -866,7 +866,7 @@ class PC(models.Model):
         return result
 
     def get_absolute_url(self):
-        return reverse("computer", args=(self.site.uid, self.uid))
+        return reverse("computer", args=(self.site.uid, self.pk))
 
     def __str__(self):
         return self.name
@@ -935,6 +935,7 @@ class Script(AuditModelMixin):
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
     # To have a consistent, unique reference to a script locally and across servers
+    # The standard format is lowercase_underscore_separated
     uid = models.CharField(
         verbose_name=_("UID"), max_length=255, unique=True, blank=True, null=True
     )
@@ -1383,7 +1384,9 @@ class Parameter(models.Model):
     """A concrete value for the Input of a Script."""
 
     string_value = models.CharField(max_length=4096, blank=True)
-    file_value = models.FileField(upload_to=upload_file_name, null=True, blank=True)
+    file_value = models.FileField(
+        upload_to=upload_file_name, null=True, blank=True, max_length=255
+    )
 
     # which input is this a parameter for?
     input = models.ForeignKey(Input, on_delete=models.CASCADE)

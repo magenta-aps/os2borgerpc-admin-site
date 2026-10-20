@@ -1,14 +1,15 @@
 {% extends "site_with_navigation.html" %}
 {% load i18n %}
+{% load static %}
 
 {% block specific_title %}
 {% if is_security %} {% translate "Security Scripts" %} {% else %} {% translate "Scripts" %} {% endif %}
 {% endblock %}
 
 {% block javascripts %}
-<script type="text/javascript" src="/static/js/script_edit.js"></script>
+<script src="{% static "js/script_edit.js" %}"></script>
 
-<script type="text/javascript">
+<script>
     $(function() {
         var inputs = {{ script_inputs_json|safe }}
         $.each(inputs, function() {BibOS.ScriptEdit.addInput('#script-inputs', this)})

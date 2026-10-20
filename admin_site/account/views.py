@@ -185,7 +185,7 @@ class UserLink(FormView, UsersMixin, SuperAdminOrThisSiteMixin):
         # Limit the possible selections to users for this customer that
         # do not already have access to this site
         users_for_customer_not_on_this_site = User.objects.filter(
-            user_profile__pk__in=user_profiles_for_customer_pk
+            user_profile__pk__in=user_profiles_for_customer_pk, is_superuser=False
         ).exclude(user_profile__sites=site)
         form.fields["linkable_users"].queryset = users_for_customer_not_on_this_site
 
@@ -203,7 +203,8 @@ class UserLink(FormView, UsersMixin, SuperAdminOrThisSiteMixin):
         ):
             raise PermissionDenied
         selected_users = form.cleaned_data["linkable_users"].filter(
-            user_profile__sitemembership__site__customer=site.customer
+            user_profile__sitemembership__site__customer=site.customer,
+            is_superuser=False,
         )
         selected_user_type = form.cleaned_data["usertype"]
         selected_users_names = []
@@ -508,6 +509,8 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
                 _("You have no user with the following username: %s")
                 % self.kwargs["username"]
             )
+        if self.request.user.is_superuser:
+            return self.selected_user
         request_user_type = self.request.user.user_profile.sitemembership_set.get(
             site__uid=self.kwargs["slug"]
         ).site_user_type
@@ -517,7 +520,7 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
             or self.selected_user.is_superuser
             or self.selected_user.user_profile.is_hidden
             and not self.request.user.user_profile.is_hidden
-        ) and not self.request.user.is_superuser:
+        ):
             raise PermissionDenied
         return self.selected_user
 
@@ -531,22 +534,35 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
     def get_success_url(self):
         return reverse("users", kwargs={"slug": self.kwargs["slug"]})
 
-    def form_valid(self, form, *args, **kwargs):
-        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+    def delete(self, form, *args, **kwargs):
+        """We overwrite the delete function to ensure the same
+        behavior when sending delete requests as when using the UI.
+        Specifically, the point is to ensure that users are only
+        deleted from one site at a time if they belong to multiple sites."""
         # If the selected_user is a member of multiple sites, only remove them from this site
-        if len(self.object.user_profile.sitemembership_set.all()) > 1:
-            self.object.user_profile.sitemembership_set.get(site_id=site.id).delete()
+        selected_user = self.get_object()
+        if len(selected_user.user_profile.sitemembership_set.all()) > 1:
+            selected_user.user_profile.sitemembership_set.get(
+                site__uid=self.kwargs["slug"]
+            ).delete()
             response = redirect(self.get_success_url())
-            set_notification_cookie(
-                response,
-                _("User %s removed from the site %s")
-                % (self.kwargs["username"], site.name),
-            )
         else:
             response = super().delete(form, *args, **kwargs)
-            set_notification_cookie(
-                response, _("User %s deleted") % self.kwargs["username"]
+        return response
+
+    def form_valid(self, form, *args, **kwargs):
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        # Indicate whether the user was deleted from this site
+        # or deleted completely
+        if len(self.object.user_profile.sitemembership_set.all()) > 1:
+            notification_string = _("User %s removed from the site %s") % (
+                self.kwargs["username"],
+                site.name,
             )
+        else:
+            notification_string = _("User %s deleted") % self.kwargs["username"]
+        response = self.delete(form, *args, **kwargs)
+        set_notification_cookie(response, notification_string)
         return response
 
 

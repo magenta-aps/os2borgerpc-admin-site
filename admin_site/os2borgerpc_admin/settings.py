@@ -177,9 +177,11 @@ if os.environ.get("BUCKET_NAME"):
     AWS_STORAGE_BUCKET_NAME = os.environ.get("BUCKET_NAME")
     AWS_S3_ACCESS_KEY_ID = os.environ.get("BUCKET_ACCESS_KEY")
     AWS_S3_SECRET_ACCESS_KEY = os.environ.get("BUCKET_SECRET_KEY")
+    AWS_QUERYSTRING_AUTH = False
     AWS_S3_FILE_OVERWRITE = False
 elif os.environ.get("GS_BUCKET_NAME"):
     STORAGE_BACKEND = "storages.backends.gcloud.GoogleCloudStorage"
+    GS_CUSTOM_ENDPOINT = os.environ.get("GS_CUSTOM_ENDPOINT")
     # The Google Cloud Storage bucket name. For `django-storages[google]`
     # https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
     # If it is set, we save all files to Google Cloud.
@@ -189,7 +191,6 @@ elif os.environ.get("GS_BUCKET_NAME"):
     )
     GS_QUERYSTRING_AUTH = False
     GS_FILE_OVERWRITE = False
-    GS_CUSTOM_ENDPOINT = os.environ.get("GS_CUSTOM_ENDPOINT")
 
 STORAGES = {
     "default": {"BACKEND": STORAGE_BACKEND},
@@ -364,3 +365,7 @@ if os.environ.get("SECURE_PROXY_SSL_HEADER"):
     SECURE_PROXY_SSL_HEADER = os.environ.get("SECURE_PROXY_SSL_HEADER").split(",")
 else:
     SECURE_PROXY_SSL_HEADER = None
+
+SECURITY_TXT_URL = os.environ.get(
+    "SECURITY_TXT_URL", "https://magenta.dk/.well-known/security.txt"
+)

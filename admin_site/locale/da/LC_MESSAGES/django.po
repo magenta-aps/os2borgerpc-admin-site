@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-18 12:54+0200\n"
+"POT-Creation-Date: 2026-09-29 10:24+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -1727,7 +1727,6 @@ msgstr ""
 "gruppen."
 
 #: docs/templates/groups/scripts.html
-#: templates/system/pcgroups/policy_list/list.html
 msgid "Add script"
 msgstr "Tilføj script"
 
@@ -4911,8 +4910,8 @@ msgstr "Du skal angive mindst en pc eller gruppe"
 
 #: system/views.py
 #, python-format
-msgid "You have no computer with the following UID: %s"
-msgstr "Du har ingen computer med følgende UID: %s"
+msgid "You have no computer with the following ID: %s"
+msgstr "Du har ingen computer med følgende ID: %s"
 
 #: system/views.py
 #, python-format
@@ -5658,6 +5657,7 @@ msgstr "Filnavn"
 
 #: templates/system/file_archive/file_archive.html
 #: templates/system/pcs/pcs_table.html
+#: templates/system/scripts/update_form.html
 msgid "Description"
 msgstr "Beskrivelse"
 
@@ -5801,6 +5801,10 @@ msgstr "Position"
 #: templates/system/pcgroups/policy_list/list.html
 msgid "Arguments"
 msgstr "Parametre"
+
+#: templates/system/pcgroups/policy_list/list.html
+msgid "Add script (type at least 3 characters)"
+msgstr "Tilføj script (indtast minimum 3 tegn)"
 
 #: templates/system/pcgroups/site_groups.html
 msgid "Add new group"

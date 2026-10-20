@@ -1,17 +1,18 @@
 {% extends "site_with_navigation.html" %}
 {% load crispy_forms_tags %}
 {% load i18n %}
+{% load static %}
 
 {% block specific_title %}
 {% translate "Events" %}
 {% endblock %}
 
 {% block head_javascripts %}
-  <script type="text/javascript">
+  <script>
        var security_event_search_url = "{% url 'security_event_search' site.uid %}"
        var security_events_update_url = "{% url 'security_events_update' site.uid %}"
   </script>
-  <script type="text/javascript" src="/static/js/security_events_list.js"></script>
+  <script src="{% static "js/security_events_list.js" %}"></script>
 {% endblock %}
 
 {% block subnav %}

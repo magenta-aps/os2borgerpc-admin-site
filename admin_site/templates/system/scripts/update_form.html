@@ -25,7 +25,7 @@
 
         {% if selected_script.is_global and not user.is_superuser %}
           <div class="p-5 bg-white">
-            <h3>Beskrivelse</h3>
+            <h3>{% translate "Description" %}</h3>
             <div class="markdown-block">{{ selected_script.description|safe }}</div>
           </div>
         {% else %}

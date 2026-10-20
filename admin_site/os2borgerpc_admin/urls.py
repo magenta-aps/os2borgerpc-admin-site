@@ -35,6 +35,10 @@ urlpatterns = [
     # SSO
     path("oidc/", include("mozilla_django_oidc.urls")),
     path("sso/", RedirectView.as_view(url="/oidc/authenticate")),
+    # Assorted
+    path(
+        ".well-known/security.txt", RedirectView.as_view(url=settings.SECURITY_TXT_URL)
+    ),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

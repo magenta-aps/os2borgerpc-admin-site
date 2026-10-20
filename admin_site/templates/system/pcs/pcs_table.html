@@ -77,7 +77,7 @@
     {% for pc in site_pcs %}
       <tr class="click-list--item">
         <td class="text-break">
-          <strong><a href="{% url 'computer' slug=site.uid pc_uid=pc.uid %}">{{ pc.name }}</a></strong>
+          <strong><a href="{% url 'computer' slug=site.uid pk=pc.pk %}">{{ pc.name }}</a></strong>
         </td>
         <td>
           <span class="badge bg-{{ pc.badgeclass }}">

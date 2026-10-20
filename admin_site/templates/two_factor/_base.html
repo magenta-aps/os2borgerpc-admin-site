@@ -1,13 +1,14 @@
 {% load i18n %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="da">
 <head>
   <meta charset="utf-8">
   <title>{% translate "OS2borgerPC Administration Login" %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preload" href="/static/font/lato/Lato-Italic.woff2" as="font" type="font/ttf" crossorigin="">
-  <link rel="icon" href="/static/img/main_icon.svg">
-  <script src="/static/js/custom.js"></script>
+  <link rel="preload" href="{% static "font/lato/Lato-Italic.woff2" %}" as="font" type="font/ttf" crossorigin="">
+  <link rel="icon" href="{% static "img/main_icon.svg" %}">
+  <script src="{% static "js/custom.js" %}"></script>
   <style>
       :root {
 
@@ -39,43 +40,35 @@
         }
 
         @font-face{
-            font-family: 'Lato';src:url(/static/font/lato/Lato-Regular.eot);src:url(/static/font/lato/Lato-Regular.eot?#iefix) format('embedded-opentype'),
-                         url(/static/font/lato/Lato-Regular.woff2) format('woff2'),
-                         url(/static/font/lato/Lato-Regular.woff) format('woff'),
-                         url(/static/font/lato/Lato-Regular.ttf) format('truetype'),
-                         url(/static/font/lato/Lato-Regular.svg#Lato_regularregular) format('svg');
+            font-family: 'Lato';src:
+                             url({% static "font/lato/Lato-Regular.woff2" %}) format('woff2'),
+                             url({% static "font/lato/Lato-Regular.svg#Lato_regularregular" %}) format('svg');
             font-style:normal;
             font-weight:400;
             font-display:fallback;
         }
 
         @font-face{
-            font-family: 'Lato';src:url(/static/font/lato/Lato-Light.eot);src:url(/static/font/lato/Lato-Light.eot?#iefix) format('embedded-opentype'),
-                         url(/static/font/lato/Lato-Light.woff2) format('woff2'),
-                         url(/static/font/lato/Lato-Light.woff) format('woff'),
-                         url(/static/font/lato/Lato-Light.ttf) format('truetype'),
-                         url(/static/font/lato/Lato-Light.svg#Lato_regularregular) format('svg');
+            font-family: 'Lato';src:
+                             url({% static "font/lato/Lato-Light.woff2" %}) format('woff2'),
+                             url({% static "font/lato/Lato-Light.svg#Lato_regularregular" %}) format('svg');
             font-weight:300;
             font-display:fallback
         }
 
 
         @font-face{
-            font-family: 'Lato';src:url(/static/font/lato/Lato-Italic.eot);src:url(/static/font/lato/Lato-Italic.eot?#iefix) format('embedded-opentype'),
-                         url(/static/font/lato/Lato-Italic.woff2) format('woff2'),
-                         url(/static/font/lato/Lato-Italic.woff) format('woff'),
-                         url(/static/font/lato/Lato-Italic.ttf) format('truetype'),
-                         url(/static/font/lato/Lato-Italic.svg#Lato_regularitalic) format('svg');
+            font-family: 'Lato';src:
+                             url({% static "font/lato/Lato-Italic.woff2" %}) format('woff2'),
+                             url({% static "font/lato/Lato-Italic.svg#Lato_regularitalic" %}) format('svg');
             font-style:italic;
             font-weight:400;
             font-display:fallback
         }
 
         @font-face{
-            font-family: 'Lato';src:url(/static/font/lato/Lato-Bold.eot);src:url(/static/font/lato/Lato-Bold.eot?#iefix) format('embedded-opentype'),
-                         url(/static/font/lato/Lato-Bold.woff2) format('woff2'),
-                         url(/static/font/lato/Lato-Bold.woff) format('woff'),
-                         url(/static/font/lato/Lato-Bold.ttf) format('truetype');
+            font-family: 'Lato';src:
+                             url({% static "font/lato/Lato-Bold.woff2" %}) format('woff2');
             font-weight:700;
             font-display:fallback
         }
@@ -133,7 +126,7 @@
             display: block;
             height: 100vh;
             width: 60%;
-            background: url('/static/img/anne_dorte_bach_sorthvid.jpg') no-repeat center center transparent;
+            background: url('{% static "img/magenta_sorthvid.jpg" %}') no-repeat center center transparent;
             background-size: cover;
         }
 
@@ -290,7 +283,7 @@
     <div class="photo"></div>
     <section>
 
-      <img class="logo" src="/static/img/cropped-magenta_logo-2.png" alt="Magenta - open source IT">
+      <img class="logo" src="{% static "img/cropped-magenta_logo-2.png" %}" alt="Magenta - open source IT">
 
        {% block content_wrapper %}
           <div class="container">
@@ -302,7 +295,7 @@
           {% translate "OS2borgerPC is an open source product. You can find documentation and a link to the source code here:" %}<br/>
         <a href="https://www.magenta.dk/loesninger/os2borgerpc" target="_blank">https://www.magenta.dk/loesninger/os2borgerpc</a>
       </p>
-      <p style="">
+      <p>
         {% translate "You can contact us at " %}<a href="mailto:info@magenta.dk">info@magenta.dk</a>
       </p>
 

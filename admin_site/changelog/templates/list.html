@@ -8,11 +8,11 @@
 {% endblock %}
 
 {% block stylesheets %}
-    <link href="/static/css/changelog.css" rel="stylesheet" media="screen">
+    <link href="{% static "css/changelog.css" %}" rel="stylesheet" media="screen">
 {% endblock %}
 
 {% block head_javascripts %}
-    <script type="text/javascript" src="{% static "js/changelog.js" %}"></script>
+    <script src="{% static "js/changelog.js" %}"></script>
 {% endblock %}
 
 

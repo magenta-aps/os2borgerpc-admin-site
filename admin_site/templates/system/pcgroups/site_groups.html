@@ -2,14 +2,15 @@
 {% load crispy_forms_tags %}
 
 {% load i18n %}
+{% load static %}
 
 {% block specific_title %}
 {% translate "Groups" %}
 {% endblock %}
 
 {% block javascripts %}
-<script type="text/javascript" src="/static/js/configlist.js"></script>
-<script type="text/javascript" src="/static/js/policy_list.js"></script>
+<script src="{% static "js/configlist.js" %}"></script>
+<script src="{% static "js/policy_list.js" %}"></script>
 {% endblock %}
 
 {% block groups_active %}

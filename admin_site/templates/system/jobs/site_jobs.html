@@ -1,14 +1,15 @@
 {% extends "site_with_navigation.html" %}
 {% load i18n %}
+{% load static %}
 {% block specific_title %}
     {% translate "Jobs" %}
 {% endblock %}
 {% block head_javascripts %}
-    <script type="text/javascript">
+    <script>
         const JOBS_BASE_URL = "{% url 'jobs' site.uid %}"
         const JOBS_SEARCH_URL = "{% url 'jobsearch' site.uid %}"
     </script>
-    <script type="text/javascript" src="/static/js/jobs_list.js"></script>
+    <script src="{% static "js/jobs_list.js" %}"></script>
 {% endblock %}
 {% block subnav %}
     <!-- Filter Section -->

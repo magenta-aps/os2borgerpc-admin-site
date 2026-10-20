@@ -1,13 +1,14 @@
 {% extends "site_with_navigation.html" %}
 {% load crispy_forms_tags %}
 {% load i18n %}
+{% load static %}
 
 {% block specific_title %}
 {% translate "Site settings" %}
 {% endblock %}
 
 {% block javascripts %}
-  <script type="text/javascript" src="/static/js/configlist.js"></script>
+  <script src="{% static "js/configlist.js" %}"></script>
 {% endblock %}
 
 {% block specific_content %}

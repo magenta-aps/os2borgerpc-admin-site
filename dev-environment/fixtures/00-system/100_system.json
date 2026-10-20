@@ -107458,7 +107458,7 @@
     "model": "system.scripttag",
     "pk": 3,
     "fields": {
-        "name": "Chrome"
+        "name": "Browser"
     }
 },
 {
@@ -107551,85 +107551,13 @@
 },
 {
     "model": "system.script",
-    "pk": 5,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2025-11-20T10:01:01.191",
-        "user_created": "",
-        "user_modified": "magenta",
-        "name": "Chrome - Autostart tilføj/fjern",
-        "uid": null,
-        "description": "Dette script tilføjer eller fjerner Google Chrome fra autostart. Det er endvidere muligt at få Google Chrome til at starte op i fuldskærm.\r\n\r\nAutostart betyder at Google Chrome vil starte op når brugeren logger ind.\r\n\r\nHvis du tilføjer \"Ja\" som argument bliver Google Chrome tilføjet til autostart og åbnet i fuldskærm.\r\nHvis du tilføjer \"Nej\" som argument bliver Google Chrome tilføjet til autostart og åbnet i normal skærm størelse.\r\nHvis du tilføjer \"Fjern\" som argument bliver Google Chrome fjernet fra autostart.\r\n\r\n[Test af link til andet script](€€script/6)\r\n\r\nTestet på Ubuntu 20.04",
-        "site": null,
-        "executable_code": "script_uploads/chrome_autostart_cP5Rsu2.sh",
-        "is_security_script": false,
-        "is_hidden": false,
-        "feature_permission": null,
-        "tags": [
-            3
-        ],
-        "products": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 6,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2025-11-20T10:01:24.776",
-        "user_created": "",
-        "user_modified": "magenta",
-        "name": "Chrome - Deaktiver autologin",
-        "uid": null,
-        "description": "Deaktiverer browserlogin og 'husk password' for Google Chrome.\r\n\r\nDette script kan køres uden at have installeret Google Chrome.\r\n\r\nTestet på Ubuntu 20.04",
-        "site": null,
-        "executable_code": "script_uploads/chrome_policy_deactivate_login_m0TvmUo.sh",
-        "is_security_script": false,
-        "is_hidden": false,
-        "feature_permission": null,
-        "tags": [
-            3
-        ],
-        "products": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 7,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2025-11-20T10:01:34.836",
-        "user_created": "",
-        "user_modified": "magenta",
-        "name": "Chrome - Deaktiver nøglering",
-        "uid": null,
-        "description": "Dette script deaktivere Ubuntu pop-up når Publikumsbruger åbner Google Chrome. \r\nGoogle-Chrome ønsker at oprette en standard nøglering.\r\n\r\nTestet på Ubuntu 20.04.",
-        "site": null,
-        "executable_code": "script_uploads/chrome_disable_keyring.sh",
-        "is_security_script": false,
-        "is_hidden": false,
-        "feature_permission": null,
-        "tags": [
-            3
-        ],
-        "products": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
     "pk": 8,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2025-11-20T10:01:46.315",
+        "modified": "2026-09-25T10:29:12.498",
         "user_created": "",
-        "user_modified": "flash_gordon",
-        "name": "Chrome - Installér",
+        "user_modified": "magenta",
+        "name": "Browser - Chrome: Installér",
         "uid": null,
         "description": "Installerer Google Chrome.",
         "site": null,
@@ -107650,12 +107578,12 @@
     "pk": 9,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2025-11-20T10:02:08.548",
+        "modified": "2026-09-25T10:30:26.711",
         "user_created": "",
         "user_modified": "magenta",
-        "name": "Chrome - Skift startside",
+        "name": "Browser - Chrome/Chromium: Sæt startside(r)",
         "uid": null,
-        "description": "Scriptet skifter startside for Google Chrome for brugeren Borger.\r\nScriptet forventer en hjemmeside URL som parameter.",
+        "description": "Scriptet skifter startside(r) for Google Chrome og Chromium for brugeren Borger.\r\nScriptet forventer en hjemmeside-URL som første input parameter.\r\n\r\nDerudover kan man også tilføje en liste med yderligere ekstra faner, som man kunne tænke sig. Læs mere forneden.\r\n\r\n### Parametre\r\n\r\n1. Startside-URL - URL'en for den ønskede primære startside.\r\n2. Ekstra faneblade - En liste med ekstra startside-faner. Denne parameter er valgfri.\r\n\r\n#### Eksempel med startside plus en ekstra fane\r\n\r\nStartside-URL: https://borger.dk\r\nEkstra faneblade: https://info.jobnet.dk\r\n\r\n#### Eksempel med startside plus 3 ekstra faner\r\n\r\nURL'erne separes med | som forneden.\r\n\r\nEkstra faneblade: https://info.jobnet.dk|https://skat.dk|https://www.sundhed.dk",
         "site": null,
         "executable_code": "script_uploads/chrome_policy_homepage_hd2Rmxs.sh",
         "is_security_script": false,
@@ -107664,9 +107592,7 @@
         "tags": [
             3
         ],
-        "products": [
-            1
-        ]
+        "products": []
     }
 },
 {
@@ -107674,12 +107600,12 @@
     "pk": 10,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2025-11-20T10:01:54.039",
+        "modified": "2026-09-25T10:31:02.569",
         "user_created": "",
-        "user_modified": "flash_gordon",
-        "name": "Chrome - Sæt som default browser",
+        "user_modified": "magenta",
+        "name": "Browser - Sæt standard-browser",
         "uid": null,
-        "description": "Baseret på policies.\r\n\r\nTestet på Ubuntu 20.04.",
+        "description": "Skifter standard-browseren ml. eksempelvis Firefox og Google Chrome. \r\nInstallerer du andre browsere, virker scriptet også med disse.\r\n\r\nStandard-browseren er den browser, som bruges til at åbne genveje/links til hjemmesider. Scriptet påvirker ikke eventuelle genveje til browsere.\r\n\r\nDet kan være nødvendigt med logud, før det tager effekt.\r\n\r\n### Parametre\r\n\r\n1. Ønsket standardbrowser - Vælg din ønskede standardbrowser fra listen.\r\n2. Alternativ standardbrowser (hvis din ønskede browser ikke er på listen) - Denne parameter kan bruges til at angive den ønskede standardbrowser, hvis den ikke findes på listen.\r\nHvis den ønskede standardbrowser findes på listen, skal denne parameter bare efterlades tom.\r\n\r\nVed en frisk installation af BorgerPC er firefox allerede standardbrowser.\r\nHvis computeren i stedet skal bruge Google Chrome, Chromium eller Microsoft Edge som standardbrowser, forudsætter det, at disse browsere først er installeret via de pågældende scripts.",
         "site": null,
         "executable_code": "script_uploads/chrome_policy_default_browser.sh",
         "is_security_script": false,
@@ -107688,9 +107614,7 @@
         "tags": [
             3
         ],
-        "products": [
-            1
-        ]
+        "products": []
     }
 },
 {
@@ -107726,7 +107650,7 @@
         "user_created": "",
         "user_modified": "flash_gordon",
         "name": "Desktop - Fjern besked om opdatering",
-        "uid": null,
+        "uid": "desktop_update",
         "description": "Dette script fjerner popup om ny LTS-version.\r\n\r\nTestet på Ubuntu 20.04.",
         "site": null,
         "executable_code": "script_uploads/remove_new_release_message.sh",
@@ -107746,14 +107670,14 @@
     "pk": 13,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2025-11-20T10:03:03.641",
+        "modified": "2026-10-01T17:17:41.964",
         "user_created": "",
         "user_modified": "magenta",
         "name": "Desktop - Skift baggrundsbillede",
         "uid": null,
         "description": "Dette script skifter baggrundsbillede for borger på en OS2borgerPC.\r\nScriptet tager en baggrundsbillede fil som parameter.\r\nBorger behøver ikke at logge ud før baggrundsbillede skifter.\r\nEfterfølgende vil det ikke være muligt for borger at skifte baggrundsbilledet.\r\n\r\nTestet på Ubuntu 20.04.",
         "site": null,
-        "executable_code": "script_uploads/dconf_policy_desktop.sh",
+        "executable_code": "script_uploads/dconf_desktop_background.sh",
         "is_security_script": false,
         "is_hidden": false,
         "feature_permission": null,
@@ -108828,7 +108752,7 @@
         "user_modified": "magenta",
         "name": "Markdown example",
         "uid": null,
-        "description": "# Header 1\r\n\r\n## Header 2\r\n\r\n[Regular link](https://ecosia.com)\r\n\r\n- List 1\r\n- List 2\r\n- List 3\r\n    - Nested list 1\r\n\r\nThis should be a table:\r\n\r\n| Header 1 | Header 2 |\r\n|--------------|--------------|\r\n| Row 1      | Row 1     |\r\n\r\n### Header 3\r\n\r\n**Bold**\r\n*Italic*\r\n_Also italic but with underscores_\r\n~~Should be strikethrough but isn't~~\r\nUnderlined is not possible by default with markdown syntax\r\n<span style=\"text-decoration: underline\">...but of course a lot more is possible with HTML in markdown</span>\r\n\r\n1. List 1\r\n2. List 2\r\n3. List 3\r\n\r\nThis should have a footnote[^1]\r\n\r\n[^1]: This should be a footnote\r\n\r\n#### Header 4\r\n\r\nRegular text for comparison\r\n\r\n> This should be\r\n> a block quote\r\n\r\nRegular text for comparison\r\n\r\n```html\r\n<span>This should be a code block</span>\r\n```\r\n\r\n€€scriptn/75\r\n[Script](€€script/75)\r\n[Monitoring rules](€€event_rules)\r\n[Jobs](€€jobs)\r\n[Security script](€€sec_script/81)\r\n[Site](€€site)\r\n\r\n##### Header 5\r\n\r\n<span style=\"color: red;\">HTML red text</span>",
+        "description": "# Header 1\r\n\r\n## Header 2\r\n\r\n[Regular link](https://ecosia.com)\r\n\r\n- List 1\r\n- List 2\r\n- List 3\r\n    - Nested list 1\r\n\r\nThis should be a table:\r\n\r\n| Header 1 | Header 2 |\r\n|--------------|--------------|\r\n| Row 1      | Row 1     |\r\n\r\n### Header 3\r\n\r\n**Bold**\r\n*Italic*\r\n_Also italic but with underscores_\r\n~~Should be strikethrough but isn't~~\r\nUnderlined is not possible by default with markdown syntax\r\n<span style=\"text-decoration: underline\">...but of course a lot more is possible with HTML in markdown</span>\r\n\r\n1. List 1\r\n2. List 2\r\n3. List 3\r\n\r\nThis should have a footnote[^1]\r\n\r\n[^1]: This should be a footnote\r\n\r\n#### Header 4\r\n\r\nRegular text for comparison\r\n\r\n> This should be\r\n> a block quote\r\n\r\nRegular text for comparison\r\n\r\n```html\r\n<span>This should be a code block</span>\r\n```\r\n\r\n€€scriptnu/desktop_update\r\n€€scriptn/75\r\n[Script](€€script/75)\r\n[Monitoring rules](€€event_rules)\r\n[Jobs](€€jobs)\r\n[Security script](€€sec_script/81)\r\n[Site](€€site)\r\n\r\n##### Header 5\r\n\r\n<span style=\"color: red;\">HTML red text</span>",
         "site": null,
         "executable_code": "script_uploads/a.txt",
         "is_security_script": false,
@@ -108848,10 +108772,10 @@
     "pk": 90,
     "fields": {
         "created": "2025-11-13T15:03:03.808",
-        "modified": "2025-11-20T10:07:53.119",
+        "modified": "2026-09-25T10:32:48.490",
         "user_created": "magenta",
         "user_modified": "magenta",
-        "name": "Quria",
+        "name": "Inloggning - Aktivera inloggning med Quria",
         "uid": null,
         "description": "Detta skript ställer in en dator att kräva inloggning via Quria och eventuellt även bokning via Easy!Appointments.\r\nDet är också möjligt att välja att medborgare ska boka en specifik dator och om en logg över inloggningar ska skrivas.\r\nOm medborgare ska boka en specifik dator, kan du tillåta dem att logga in utan bokning om det är lång tid til nästa bokning.\r\n\r\nLoggen över inloggningar kommer att innehålla det Quria-nummer/personnummer som användes för inloggning, inloggningsdatum, tid för inloggning och tid för utloggning.\r\nVid inloggning kommer tiden för utloggning att vara lika med tidpunkten för inloggning. Vid utloggning uppdateras tidpunkten för utloggning till aktuell tid.\r\nLoggen kommer att visas på [denna länk](https://os2borgerpc-admin.magenta.dk/admin/system/loginlog/).\r\nEndast site-admins har tillgång till loggen.\r\n\r\n**OBS**: Det här skriptet fungerar bara korrekt om de nödvändiga API-uppgifter anges under inställningar för Site. Kontakta Sambruk eller Magenta för att se den relaterade guiden.\r\n\r\n**OBS**: Om bokningen inte används kommer en ny inloggning att starta en inloggningsperiod som motsvarar den angivna Login-tid, om et värde anges, och i övrigt är lika med värdet som valts under inställningar för Site. Under denna period kan medborgaren logga in och ut (varje inloggning kräver fortfarande Quria information). Efter inloggningsperioden kommer en karantänperiod, som också er lika med den angivna karantänperiod, om ett värde anges, och i övrigt är lika med värdet som väljs under inställningar för Site, där medborgaren inte kan logga in. När karantänen är över kommer medborgaren att kunna starta en ny inloggningsperiod.\r\n\r\n**OBS**: \"Lång tid til nästa bokning\" definieras som en situation där det är längre än den använda Login-tid till nästa bokning.\r\n\r\n**OBS**: Bokning av specifika datorer fungerar endast om tjänsterna som kan bokas i Easy!Appointments har samma namn som hostname för de registrerade maskinerna på admin-sidan. Om du t.ex. har en dator med hostname \"pc1\", då måste den bokas via en tjänst med namnet \"pc1\", om du behöver bokning av specifika datorer. I detta sammanhang görs dock INGEN skillnad mellan stora och små bokstäver. Datorns hostname kan ändras genom att ändra dess namn.\r\n\r\n**OBS**: Om du vill att medborgaren ska loggas ut automatiskt när deras boknings- eller inloggningsperiod har gått ut måste du även använda skriptet [OS2borgerPC - Log altid ud efter X minutter med nedtæller](/scripts/1277). Värdet på skriptets andra parameter \"antal MINUTTER til logud\" är irrelevant i detta sammanhang, eftersom det skrivs över av Quria- och bokningsintegrationen.\r\n\r\nÄndringar av inställningarna träder i kraft först efter utloggning eller omstart.\r\n\r\n### Indataparametrar\r\n\r\n1. Aktivera? - Markera kryssrutan för att aktivera skriptet.\r\nLämna kryssrutan tom för att inaktivera skriptet.\r\nOm kryssrutan lämnas tom har de återstående parametrarna ingen betydelse.\r\n2. Bokning krävs - Markera kryssrutan för att kräva bokning.\r\nLämna kryssrutan tom för att inte använda bokning.\r\n3. Dator-specifik bokning - Markera kryssrutan för att kräva bokning av specifika datorer.\r\nLämna kryssrutan tom för att inte kräva bokning av specifika datorer.\r\n4. Tillåt inloggning utan bokning om det är lång tid till nästa bokning - Markera kryssrutan för att tillåta inloggning utan bokning om det är lång tid till nästa bokning.\r\nLämna kryssrutan tom för att inte tillåta inloggning utan bokning.\r\n5. Login-tid i minuter - Önskad Login-tid i minuter.\r\nOm denna parameter inte anges används den Login-tid som valts under inställningar för Site.\r\n6. Karantänperiod i minuter - Önskad Karantänperiod i minuter.\r\nOm denna parameter inte anges används den Karantänperiod som valts under inställningar för Site.\r\n7. Spara logg - Markera kryssrutan för att spara en logg över inloggningar med Quria-nummer/personnummer, tid för inloggning och tid för utloggning.\r\nLämna kryssrutan tom för att inte spara denna logg.\r\n\r\nTest text efter liste",
         "site": null,
@@ -108859,7 +108783,33 @@
         "is_security_script": false,
         "is_hidden": false,
         "feature_permission": null,
-        "tags": [],
+        "tags": [
+            7
+        ],
+        "products": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 91,
+    "fields": {
+        "created": "2026-09-25T10:26:10.603",
+        "modified": "2026-09-29T14:11:33.804",
+        "user_created": "magenta",
+        "user_modified": "magenta",
+        "name": "Browser - Chromium: Installer",
+        "uid": null,
+        "description": "Dette script installerer/fjerner Chromium.\r\n\r\nChromium bruger de samme policies som Google Chrome.\r\nPolicies der fremgår i scriptet, kan man læse mere om ved at søge på en given policy(fx ForceEphemeralProfiles) her: [Chrome Enterprise: Policies](https://chromeenterprise.google/policies/)\r\n\r\n### Parametre\r\n\r\n1. Installer? - Sæt hak for at installere Chromium.\r\nLad stå tom for at fjerne Chromium.\r\n2. Standardsøgemaskine - Den ønskede standardsøgemaskine i Chrome/Chromium.\r\nMulighederne er [Google](https://www.google.com/), [Ecosia](https://www.ecosia.org/), [Qwant](https://www.qwant.com/), [Startpage](https://www.startpage.com/) og [Duckduckgo](https://duckduckgo.com/).\r\nHvis I ønsker at bruge en standardsøgemaskine, som ikke er en mulighed på nuværende tidspunkt, så kontakt Magenta.\r\nDenne parameter har ingen effekt, hvis Chromium fjernes.",
+        "site": null,
+        "executable_code": "script_uploads/chromium_install_C9qVugN.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "feature_permission": null,
+        "tags": [
+            3
+        ],
         "products": [
             1
         ]
@@ -108871,24 +108821,6 @@
     "fields": {
         "name": "Gruppe1, Chrome - Installér, 2022-01-26 15:22:28",
         "script": 8,
-        "site": 1
-    }
-},
-{
-    "model": "system.batch",
-    "pk": 2,
-    "fields": {
-        "name": "Gruppe1, Chrome - Deaktiver autologin, 2022-01-26 15:22:28",
-        "script": 6,
-        "site": 1
-    }
-},
-{
-    "model": "system.batch",
-    "pk": 3,
-    "fields": {
-        "name": "Gruppe1, Chrome - Deaktiver nøglering, 2022-01-26 15:22:28",
-        "script": 7,
         "site": 1
     }
 },
@@ -108934,24 +108866,6 @@
     "fields": {
         "name": "Gruppe1, Chrome - Installér, 2022-01-26 15:25:06",
         "script": 8,
-        "site": 1
-    }
-},
-{
-    "model": "system.batch",
-    "pk": 9,
-    "fields": {
-        "name": "Gruppe1, Chrome - Deaktiver autologin, 2022-01-26 15:25:06",
-        "script": 6,
-        "site": 1
-    }
-},
-{
-    "model": "system.batch",
-    "pk": 10,
-    "fields": {
-        "name": "Gruppe1, Chrome - Deaktiver nøglering, 2022-01-26 15:25:06",
-        "script": 7,
         "site": 1
     }
 },
@@ -109470,24 +109384,6 @@
 },
 {
     "model": "system.associatedscript",
-    "pk": 13,
-    "fields": {
-        "group": 10,
-        "script": 6,
-        "position": 4
-    }
-},
-{
-    "model": "system.associatedscript",
-    "pk": 14,
-    "fields": {
-        "group": 10,
-        "script": 7,
-        "position": 5
-    }
-},
-{
-    "model": "system.associatedscript",
     "pk": 15,
     "fields": {
         "group": 10,
@@ -109749,126 +109645,6 @@
         "finished": null,
         "user": 36,
         "batch": 8,
-        "pc": 6,
-        "dashboard_hidden": false
-    }
-},
-{
-    "model": "system.job",
-    "pk": 5,
-    "fields": {
-        "status": "NEW",
-        "log_output": "qwertyuiopåäsdfghjklæø'zxcvbnm,.-wertyuiopsdfghjklxcvbnm,dcnjdsnkjsdnckjcnncjkdsnckjndskcjdskjnckjdsncjkdsnckjdsckscndskjcnjkdscksnjdcsnsdnjcnjskdnjcnjcs sdkjcndsdscndsnckjdsnckjnds ndskdsjncksnkcdsnc",
-        "created": null,
-        "started": null,
-        "finished": null,
-        "user": 36,
-        "batch": 9,
-        "pc": 8,
-        "dashboard_hidden": false
-    }
-},
-{
-    "model": "system.job",
-    "pk": 6,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": null,
-        "started": null,
-        "finished": null,
-        "user": 36,
-        "batch": 9,
-        "pc": 9,
-        "dashboard_hidden": false
-    }
-},
-{
-    "model": "system.job",
-    "pk": 7,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": null,
-        "started": null,
-        "finished": null,
-        "user": 36,
-        "batch": 9,
-        "pc": 1,
-        "dashboard_hidden": false
-    }
-},
-{
-    "model": "system.job",
-    "pk": 8,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": null,
-        "started": null,
-        "finished": null,
-        "user": 36,
-        "batch": 9,
-        "pc": 6,
-        "dashboard_hidden": false
-    }
-},
-{
-    "model": "system.job",
-    "pk": 9,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": null,
-        "started": null,
-        "finished": null,
-        "user": 36,
-        "batch": 10,
-        "pc": 8,
-        "dashboard_hidden": false
-    }
-},
-{
-    "model": "system.job",
-    "pk": 10,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": null,
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 10,
-        "pc": 9,
-        "dashboard_hidden": false
-    }
-},
-{
-    "model": "system.job",
-    "pk": 11,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": null,
-        "started": null,
-        "finished": null,
-        "user": 36,
-        "batch": 10,
-        "pc": 1,
-        "dashboard_hidden": false
-    }
-},
-{
-    "model": "system.job",
-    "pk": 12,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": null,
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 10,
         "pc": 6,
         "dashboard_hidden": false
     }
@@ -111615,18 +111391,6 @@
 },
 {
     "model": "system.input",
-    "pk": 1,
-    "fields": {
-        "name": "Ja/Nej/Fjern",
-        "value_type": "STRING",
-        "default_value": null,
-        "position": 0,
-        "mandatory": true,
-        "script": 5
-    }
-},
-{
-    "model": "system.input",
     "pk": 2,
     "fields": {
         "name": "URL",
@@ -111655,7 +111419,7 @@
     "fields": {
         "name": "Baggrundsbillede",
         "value_type": "FILE",
-        "default_value": null,
+        "default_value": "",
         "position": 0,
         "mandatory": true,
         "script": 13
@@ -112571,6 +112335,54 @@
         "position": 0,
         "mandatory": false,
         "script": 88
+    }
+},
+{
+    "model": "system.input",
+    "pk": 111,
+    "fields": {
+        "name": "Installer?",
+        "value_type": "BOOLEAN",
+        "default_value": "",
+        "position": 0,
+        "mandatory": false,
+        "script": 91
+    }
+},
+{
+    "model": "system.input",
+    "pk": 112,
+    "fields": {
+        "name": "Standardsøgemaskine",
+        "value_type": "TEXT_FIELD",
+        "default_value": "ecosia,google,startpage,qwant,duckduckgo",
+        "position": 1,
+        "mandatory": false,
+        "script": 91
+    }
+},
+{
+    "model": "system.input",
+    "pk": 113,
+    "fields": {
+        "name": "Baggrundsbillede i dark mode (valgfri)",
+        "value_type": "FILE",
+        "default_value": "",
+        "position": 1,
+        "mandatory": false,
+        "script": 13
+    }
+},
+{
+    "model": "system.input",
+    "pk": 114,
+    "fields": {
+        "name": "Billedeindstillinger (se muligheder i beskrivelsen)",
+        "value_type": "TEXT_FIELD",
+        "default_value": "zoom, centered, stretched, scaled, spanned, wallpaper, none",
+        "position": 2,
+        "mandatory": false,
+        "script": 13
     }
 },
 {

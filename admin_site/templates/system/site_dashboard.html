@@ -94,7 +94,7 @@
                 {% for pc in latest_offline_pcs %}
                     <tr>
                         <td class="align-middle">
-                            <a href="{% url 'computer' site.uid pc.uid %}">
+                            <a href="{% url 'computer' site.uid pc.pk %}">
                             <strong>{{ pc.name }}</strong>
                             </a>
                         </td>
@@ -165,7 +165,7 @@
                 {% for entry in oldest_full_updates %}
                     <tr>
                         <td>
-                            <a href="{% url 'computer' site.uid entry.owner_configuration.pc.uid %}">
+                            <a href="{% url 'computer' site.uid entry.owner_configuration.pc.pk %}">
                             <strong>{{ entry.owner_configuration.pc.name }}</strong>
                             </a>
                         </td>

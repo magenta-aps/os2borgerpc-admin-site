@@ -1,4 +1,4 @@
-## Version 7.8.0, October 8, 2026
+## Version 7.8.1, October 20, 2026
 
 - Add server-side logic to prevent the following:
   - Using delete requests to fully delete a user instead of deleting it from the current site

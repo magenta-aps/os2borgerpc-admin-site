@@ -87828,6 +87828,16 @@
     }
 },
 {
+    "model": "system.product",
+    "pk": 8,
+    "fields": {
+        "name": "OpenWorkplace",
+        "short_name": "OWP",
+        "config_name": "openworkplace",
+        "multilang": false
+    }
+},
+{
     "model": "system.pc",
     "pk": 1,
     "fields": {

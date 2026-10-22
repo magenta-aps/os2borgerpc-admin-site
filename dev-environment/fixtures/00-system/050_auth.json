@@ -1440,11 +1440,83 @@
     }
 },
 {
+    "model": "auth.permission",
+    "pk": 161,
+    "fields": {
+        "name": "Can add file parameter",
+        "content_type": 41,
+        "codename": "add_fileparameter"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 162,
+    "fields": {
+        "name": "Can change file parameter",
+        "content_type": 41,
+        "codename": "change_fileparameter"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 163,
+    "fields": {
+        "name": "Can delete file parameter",
+        "content_type": 41,
+        "codename": "delete_fileparameter"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 164,
+    "fields": {
+        "name": "Can view file parameter",
+        "content_type": 41,
+        "codename": "view_fileparameter"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 165,
+    "fields": {
+        "name": "Can add p cs overview v",
+        "content_type": 42,
+        "codename": "add_pcsoverviewv"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 166,
+    "fields": {
+        "name": "Can change p cs overview v",
+        "content_type": 42,
+        "codename": "change_pcsoverviewv"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 167,
+    "fields": {
+        "name": "Can delete p cs overview v",
+        "content_type": 42,
+        "codename": "delete_pcsoverviewv"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 168,
+    "fields": {
+        "name": "Can view p cs overview v",
+        "content_type": 42,
+        "codename": "view_pcsoverviewv"
+    }
+},
+{
     "model": "auth.user",
     "pk": 35,
     "fields": {
-        "password": "pbkdf2_sha256$600000$XLry6j5bFIEHNhyuWM1NsT$k29r/18L33xeSmAkMsFGbKmlBMiU8MnaYfcUVIlWBMM=",
-        "last_login": "2026-03-17T11:14:52.892",
+        "password": "pbkdf2_sha256$1000000$GRRIHLaRTd0HcclZRKTB6i$BxO5hE8E6hUw2j8zmijGvo3EMpMMhez9wsrH6N0fg84=",
+        "last_login": "2026-10-22T09:39:33.838",
         "is_superuser": true,
         "username": "magenta",
         "first_name": "",

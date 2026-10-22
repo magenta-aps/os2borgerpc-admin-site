@@ -24,7 +24,7 @@ pyjwt==2.15.1
 psycopg[binary]==3.3.6 # pre-compiled binary libpq
 
 # Server for dynamic content
-gunicorn==26.2.0
+gunicorn==25.0.3
 
 # Server for static files - brotli for compression
 whitenoise[brotli]==6.12.0

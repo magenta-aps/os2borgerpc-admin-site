@@ -14,7 +14,7 @@ CMD npm run watch-sass
 
 
 # Keep in sync with the "target_version" specified in ruff.toml
-FROM python:3.12-slim AS os2borgerpc
+FROM python:3.13-slim AS os2borgerpc
 
 LABEL org.opencontainers.image.title="OS2borgerPC" \
   org.opencontainers.image.vendor="Magenta ApS" \
@@ -60,7 +60,28 @@ COPY VERSION /code/VERSION
 # Install requirements.
 COPY admin_site/requirements.txt /code/admin_site/requirements.txt
 COPY admin_site/google-requirements.txt /code/admin_site/google-requirements.txt
+
+# SECURITY UPDATE TO pip 26.2.2
+# THESE LINES CAN BE REMOVED WHEN python:3.13-slim INCLUDES pip 26.2.2
+# we need at least these versions of the affected packages:
+# certifi 2026.10.19
+# conda 26.9.4
+# pip 26.2.2
+# pixi 0.82.1
+# sigstore 4.5.1
+# uv 0.13.4
+# see https://discuss.python.org/t/information-for-python-users-regarding-emudhra-emsign-ca-certificate-security-incident/109576
+# RUN pip3 install --upgrade --no-cache-dir pip
+# Secure pip upgrade via hash-pinned wheel to pip 26.2.2
+# see https://pypi.org/project/pip/26.2.2/
+# sha sum found at https://pypi.org/project/pip/26.2.2/#security click pip-26.2.2-py3-none-any.whl
+RUN pip3 install --no-cache-dir \
+   "pip @ https://files.pythonhosted.org/packages/3f/06/3e4420302363fbb71be3c7f35ce042f54bfca330e3e66b3a2e3c4cca579f/pip-26.2.2-py3-none-any.whl#sha256=fd7f4dfa8190e014013b9f08f3e973f4e4c26ffd179a204895533a7254813a70"
+
 RUN pip3 install --no-cache-dir --requirement  admin_site/requirements.txt --requirement admin_site/google-requirements.txt
+
+# display version numbers of certificate vulnerable packages
+RUN pip list | grep -e certifi -e pip -e uv -e sigstore -e conda -e pixi
 
 # Install supercronic
 ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.2.25/supercronic-linux-amd64 \

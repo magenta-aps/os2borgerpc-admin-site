@@ -14,7 +14,7 @@ CMD npm run watch-sass
 
 
 # Keep in sync with the "target_version" specified in ruff.toml
-FROM python:3.13-slim AS os2borgerpc
+FROM python:3.14-slim AS os2borgerpc
 
 LABEL org.opencontainers.image.title="OS2borgerPC" \
   org.opencontainers.image.vendor="Magenta ApS" \

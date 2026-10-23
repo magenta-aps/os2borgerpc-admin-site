@@ -28,9 +28,6 @@
         <span class="ms-3 badge bg-secondary text-dark" title="{{total_release_before_str}} {{release}} {{computers_str}}">{{release}}: {{release_count}}</span>
       {% endif %}
     {% endfor %}
-    {% if user.is_superuser %}
-      <span class="badge bg-secondary text-dark float-end ms-3">{% translate "Version" %}: {{version}}</span>
-    {% endif %}
 {% endblock %}
 
 

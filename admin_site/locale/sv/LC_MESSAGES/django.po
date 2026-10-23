@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-29 10:24+0200\n"
+"POT-Creation-Date: 2026-10-23 11:29+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -194,7 +194,7 @@ msgstr "Nyhetskategorier"
 msgid "Comments"
 msgstr "Kommentarer"
 
-#: changelog/templates/list.html docs/templates/index.html docs/views.py
+#: changelog/templates/list.html docs/views.py
 msgid "OS2borgerPC"
 msgstr "Sambruk MedborgarPC"
 
@@ -1849,22 +1849,22 @@ msgstr ""
 "Inställningar för Site har markerats."
 
 #: docs/templates/index.html
+msgid "About OS2borgerPC"
+msgstr "Om Sambruk MedborgarPC"
+
+#: docs/templates/index.html
 msgid ""
 "OS2borgerPC consists of a number of Linux-based operating systems (images) "
 "and a client to communicate with this admin portal which combined enables "
-"you to remotely manage those computers using a large number of scripts. In "
-"the left-hand menu, you can find documentation regarding the different parts "
-"of the system."
+"you to remotely manage and configure those computers using a large number of "
+"scripts. In the left-hand menu, you can find documentation regarding the "
+"different parts of the system."
 msgstr ""
 "OS2borgerPC består av ett antal Linux-baserade operativsystem (avbildningar) "
 "och en klient för att kommunicera med denna administratörsportal, vilket "
-"tillsammans gör det möjligt för dig att fjärrhantera dessa datorer med hjälp "
-"av ett stort antal skript. I menyn till vänster hittar du dokumentation av "
-"systemets olika delar."
-
-#: docs/templates/index.html docs/views.py
-msgid "About"
-msgstr "Om"
+"tillsammans gör det möjligt för dig att fjärrhantera och konfigurera dessa "
+"datorer med hjälp av ett stort antal skript. I menyn till vänster hittar du "
+"dokumentation av systemets olika delar."
 
 #: docs/templates/index.html
 msgid "OS2borgerPC is developed by"
@@ -1876,17 +1876,21 @@ msgid ""
 msgstr ", original i samarbete med biblioteken i Århus och Silkeborg."
 
 #: docs/templates/index.html
-#, python-format
 msgid ""
-"OS2borgerPC and this documentation is 100%% Open Source and can be used and "
+"OS2borgerPC and this documentation is Open Source and can be used and "
 "distributed in accordance with the conditions in version 3 of the"
 msgstr ""
-"Sambruk MedborgarPC och denna dokumentation är 100%% öppen källkod och kan "
+"Sambruk MedborgarPC och denna dokumentation är öppen källkod och kan "
 "användas och avslöjas enligt villkor i version 3 af"
 
 #: docs/templates/index.html
 msgid "The source code for OS2borgerPC can always be found on"
 msgstr "Källkoden för Sambruk MedborgarPC/OS2borgerPC kan alltid hittas på"
+
+#: docs/templates/index.html
+#, python-format
+msgid "The admin portal is currently version %(version)s"
+msgstr "Administratörsportalen är för närvarande i version %(version)s"
 
 #: docs/templates/jobs/index.html
 msgid ""
@@ -4235,6 +4239,10 @@ msgid "The admin portal"
 msgstr "Adminsidan"
 
 #: docs/views.py
+msgid "About"
+msgstr "Om"
+
+#: docs/views.py
 msgid "Setting up security surveillance (PDF)"
 msgstr "Skapande av säkerhetsövervakning (PDF)"
 
@@ -6229,7 +6237,7 @@ msgstr "sedan alla uppdateringar senast kördes"
 msgid "Most recent version of"
 msgstr "Senaste upplagan av"
 
-#: templates/system/site_images.html templates/system/sites/list.html
+#: templates/system/site_images.html
 msgid "Version"
 msgstr "Version"
 

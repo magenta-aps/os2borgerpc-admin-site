@@ -335,7 +335,6 @@ class SiteList(ListView, LoginRequiredMixin):
                 "site_user_type"
             ).last()
         )
-        context["version"] = open("/code/VERSION", "r").read()
         user_sites = self.get_queryset()
         context["user_sites"] = user_sites
         # The dictionary to generate the customer-site list has the following structure:

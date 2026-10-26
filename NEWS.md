@@ -1,3 +1,7 @@
+## Version 7.9.0, October 26, 2026
+
+- Update backend dependencies
+
 ## Version 7.8.1, October 20, 2026
 
 - Add server-side logic to prevent the following:

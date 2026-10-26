@@ -1,24 +1,24 @@
 # Django using python 3.12.13
 django==5.2.18
-django-crispy-forms==2.6
+django-crispy-forms==2.7
 django-markdownx==4.0.11
-django-ninja==1.6.2
+django-ninja==1.7.1
 django-two-factor-auth[phonenumberslite]==1.18.1
 
 # If using e.g. s3 storage/buckets:
 django-storages[s3]==1.14.6
 
 # Auth (SSO)
-mozilla-django-oidc==4.0.1
+mozilla-django-oidc==5.0.2
 
 # Forms
-crispy-bootstrap5==2026.3
+crispy-bootstrap5==2026.9
 
 # HTTP
-requests==2.33.1
+requests==2.34.2
 
 # JWT decoding
-pyjwt==2.12.1
+pyjwt==2.15.1
 
 # Postgres support
 psycopg[binary]==3.3.6 # pre-compiled binary libpq

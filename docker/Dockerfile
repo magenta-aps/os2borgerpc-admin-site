@@ -14,7 +14,7 @@ CMD npm run watch-sass
 
 
 # Keep in sync with the "target_version" specified in ruff.toml
-FROM python:3.12-slim AS os2borgerpc
+FROM python:3.14-slim AS os2borgerpc
 
 LABEL org.opencontainers.image.title="OS2borgerPC" \
   org.opencontainers.image.vendor="Magenta ApS" \
@@ -60,6 +60,7 @@ COPY VERSION /code/VERSION
 # Install requirements.
 COPY admin_site/requirements.txt /code/admin_site/requirements.txt
 COPY admin_site/google-requirements.txt /code/admin_site/google-requirements.txt
+
 RUN pip3 install --no-cache-dir --requirement  admin_site/requirements.txt --requirement admin_site/google-requirements.txt
 
 # Install supercronic

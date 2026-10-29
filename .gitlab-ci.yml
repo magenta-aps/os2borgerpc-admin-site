@@ -200,7 +200,7 @@ ow staging trigger salt deployment:
 
 ow production update version salt:
   extends: [.rules:semver-core, .config:endpoint-with-tag]
-  needs: [release latest] # todo: add ow staging trigger salt deployment
+  needs: [release latest, ow staging trigger salt deployment]
   when: manual
   variables:
     ENDPOINT: os2bpc/salt/openworkplace-update-production

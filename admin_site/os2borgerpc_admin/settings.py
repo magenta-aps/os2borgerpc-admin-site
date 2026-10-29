@@ -369,3 +369,12 @@ else:
 SECURITY_TXT_URL = os.environ.get(
     "SECURITY_TXT_URL", "https://magenta.dk/.well-known/security.txt"
 )
+
+# System settings
+SYSTEM = {
+    "repo_url": os.environ.get(
+        "SYSTEM_REPO_URL",
+        "https://github.com/search?q=org%3Amagenta-aps%20os2borgerpc&type=repositories",
+    ),
+    "repo_name": os.environ.get("SYSTEM_REPO_NAME", "GitHub"),
+}

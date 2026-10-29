@@ -147,4 +147,7 @@ class DocView(TemplateView, LoginRequiredMixin):
         else:
             context["back_link"] = "/"
 
+        context["system"] = settings.SYSTEM
+        context["version"] = open("/code/VERSION", "r").read()
+
         return context

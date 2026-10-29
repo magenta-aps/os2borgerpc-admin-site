@@ -1,3 +1,9 @@
+## Version 7.10.0, October 29, 2026
+
+- Update python version
+- Move version to about page
+- Other minor updates to about page, generalize repo URL logic
+
 ## Version 7.9.0, October 26, 2026
 
 - Update backend dependencies

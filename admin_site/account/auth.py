@@ -105,7 +105,14 @@ class MyOIDCAB(OIDCAuthenticationBackend):
 
     def filter_users_by_claims(self, claims):
         upn = claims.get("upn")
-        return self.UserModel.objects.filter(username__iexact=upn)
+        # Only return users belonging to the OIDC customer
+        customer = Customer.objects.get(id=settings.OIDC_CUSTOMER)
+        return self.UserModel.objects.filter(
+            username__iexact=upn,
+            user_profile__sites__in=customer.sites.all(),
+            is_superuser=False,
+            user_profile__is_hidden=False,
+        )
 
     def configure_sites_access_and_roles(self, roles, user_profile):
         site_uids = list(
@@ -136,8 +143,16 @@ class MyOIDCAB(OIDCAuthenticationBackend):
                 )
 
     def create_user(self, claims):
+        username = claims.get("upn", "")
+        # create_user is only called if the OIDC customer has no existing matching
+        # user so if a matching user still exists, it must belong to a different customer
+        if self.UserModel.objects.filter(username__iexact=username):
+            logger.error(
+                f"SSO error: The username {username} matches a user from a different customer"
+            )
+            return None
         user = super(MyOIDCAB, self).create_user(claims)
-        user.username = claims.get("upn", "")
+        user.username = username
         user.email = claims.get("email", "")
         user.password = ""
         user.save()

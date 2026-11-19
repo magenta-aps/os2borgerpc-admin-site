@@ -1,3 +1,8 @@
+## Version 7.11.0, November 19, 2026
+
+- Prevent oidc integration from overwriting users not belonging to the oidc customer
+- Delete new jobs when the related script is deleted
+
 ## Version 7.10.0, October 29, 2026
 
 - Update python version

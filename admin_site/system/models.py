@@ -978,10 +978,12 @@ class Script(AuditModelMixin):
     def delete(self, *args, **kwargs):
         """
         Set the script name as the name of any related batches
+        and delete all related NEW jobs
         before deleting the script.
         """
         batches = self.batch_set.all()
         batches.update(name=self.name)
+        Job.objects.filter(status="NEW", batch__script=self).delete()
         super().delete(*args, **kwargs)
 
     def run_on(self, site, pc_list, *args, user):
